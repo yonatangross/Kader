@@ -13,5 +13,5 @@ export interface IUser {
   groups: IGroup[];
   posts: IPost[];
   comments: IComment[];
-  imageUrl: string;
+  imageUri: string;
 }

@@ -14,4 +14,6 @@ export interface IPost {
   images: string[];
   creator: IUser;
   groupId: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
