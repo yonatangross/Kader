@@ -2,12 +2,10 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import {ColorSchemeName, View} from 'react-native';
-import { Octicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types/Tabs';
 import MainTabNavigator from './MainTabNavigator';
-import LinkingConfiguration from './LinkingConfiguration';
 import Colors from "../constants/Colors";
 
 // If you are not familiar with React Navigation, we recommend going through the
@@ -15,7 +13,6 @@ import Colors from "../constants/Colors";
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
     <NavigationContainer
-      linking={LinkingConfiguration}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <RootNavigator />
     </NavigationContainer>
@@ -52,8 +49,6 @@ function RootNavigator() {
               justifyContent: 'space-between',
               marginRight: 10,
             }}>
-              <Octicons name="search" size={22} color={'white'} />
-              <MaterialCommunityIcons name="dots-vertical" size={22} color={'white'} />
             </View>
           )
         }}

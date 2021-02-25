@@ -80,7 +80,7 @@ const HomeStack = createStackNavigator<HomeParamList>();
 function HomeNavigator() {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{ headerTitle: 'Tab One Title' }} />
+      <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{ headerTitle: 'Home' }} />
     </HomeStack.Navigator>
   );
 }
@@ -92,7 +92,7 @@ const GroupsStack = createStackNavigator<GroupsParamList>();
 function GroupsNavigator() {
   return (
     <GroupsStack.Navigator>
-      <GroupsStack.Screen name="GroupsScreen" component={GroupsScreen} options={{ headerTitle: 'Tab One Title' }} />
+      <GroupsStack.Screen name="GroupsScreen" component={GroupsScreen} options={{ headerTitle: 'Groups' }} />
     </GroupsStack.Navigator>
   );
 }
@@ -104,7 +104,7 @@ const ProfileStack = createStackNavigator<ProfileParamList>();
 function ProfileNavigator() {
   return (
     <ProfileStack.Navigator>
-      <ProfileStack.Screen name="ProfileScreen" component={ProfileScreen} options={{ headerTitle: 'Tab One Title' }} />
+      <ProfileStack.Screen name="ProfileScreen" component={ProfileScreen} options={{ headerTitle: 'Profile' }} />
     </ProfileStack.Navigator>
   );
 }
@@ -116,7 +116,7 @@ const NotificationsStack = createStackNavigator<NotificationsParamList>();
 function NotificationsNavigator() {
   return (
     <NotificationsStack.Navigator>
-      <NotificationsStack.Screen name="NotificationsScreen" component={NotificationsScreen} options={{ headerTitle: 'Tab One Title' }} />
+      <NotificationsStack.Screen name="NotificationsScreen" component={NotificationsScreen} options={{ headerTitle: 'Notifications' }} />
     </NotificationsStack.Navigator>
   );
 }
