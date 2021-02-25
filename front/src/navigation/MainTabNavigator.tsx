@@ -7,9 +7,12 @@ import { Fontisto } from '@expo/vector-icons';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
-import { MainTabParamList, TabOneParamList, TabTwoParamList } from '../types/Tabs';
+import HomeScreen from '../screens/HomeScreen';
+
+import { MainTabParamList, HomeParamList, NotificationsParamList, GroupsParamList, ProfileParamList } from '../types/Tabs';
+import NotificationsScreen from '../screens/NotificationsScreen';
+import ProfileScreen from '../screens/ProfileScreen';
+import GroupsScreen from '../screens/GroupsScreen';
 
 const MainTab = createMaterialTopTabNavigator<MainTabParamList>();
 
@@ -36,7 +39,7 @@ export default function MainTabNavigator() {
     >
       <MainTab.Screen
         name="Home"
-        component={TabOneNavigator}
+        component={HomeNavigator}
         options={{
           tabBarIcon: ({ color }) => <FontAwesome5 name="home" color={color} size={22} />,
           tabBarLabel: () => null,
@@ -44,7 +47,7 @@ export default function MainTabNavigator() {
       />
       <MainTab.Screen
         name="Groups"
-        component={TabOneNavigator}
+        component={GroupsNavigator}
         options={{
           tabBarIcon: ({ color }) => <FontAwesome name="group" color={color} size={22} />,
           tabBarLabel: () => null,
@@ -52,7 +55,7 @@ export default function MainTabNavigator() {
       />
       <MainTab.Screen
         name="Profile"
-        component={TabOneNavigator}
+        component={ProfileNavigator}
         options={{
           tabBarIcon: ({ color }) => <Ionicons name="person" color={color} size={22} />,
           tabBarLabel: () => null,
@@ -60,7 +63,7 @@ export default function MainTabNavigator() {
       />
       <MainTab.Screen
         name="Notifications"
-        component={TabOneNavigator}
+        component={NotificationsNavigator}
         options={{
           tabBarIcon: ({ color }) => <FontAwesome name="bell" color={color} size={22} />,
           tabBarLabel: () => null,
@@ -72,22 +75,48 @@ export default function MainTabNavigator() {
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator<TabOneParamList>();
+const HomeStack = createStackNavigator<HomeParamList>();
 
-function TabOneNavigator() {
+function HomeNavigator() {
   return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen name="TabOneScreen" component={TabOneScreen} options={{ headerTitle: 'Tab One Title' }} />
-    </TabOneStack.Navigator>
+    <HomeStack.Navigator>
+      <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{ headerTitle: 'Tab One Title' }} />
+    </HomeStack.Navigator>
   );
 }
 
-const TabTwoStack = createStackNavigator<TabTwoParamList>();
+// Each tab has its own navigation stack, you can read more about this pattern here:
+// https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
+const GroupsStack = createStackNavigator<GroupsParamList>();
 
-function TabTwoNavigator() {
+function GroupsNavigator() {
   return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen name="TabTwoScreen" component={TabTwoScreen} options={{ headerTitle: 'Tab Two Title' }} />
-    </TabTwoStack.Navigator>
+    <GroupsStack.Navigator>
+      <GroupsStack.Screen name="GroupsScreen" component={GroupsScreen} options={{ headerTitle: 'Tab One Title' }} />
+    </GroupsStack.Navigator>
+  );
+}
+
+// Each tab has its own navigation stack, you can read more about this pattern here:
+// https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
+const ProfileStack = createStackNavigator<ProfileParamList>();
+
+function ProfileNavigator() {
+  return (
+    <ProfileStack.Navigator>
+      <ProfileStack.Screen name="ProfileScreen" component={ProfileScreen} options={{ headerTitle: 'Tab One Title' }} />
+    </ProfileStack.Navigator>
+  );
+}
+
+// Each tab has its own navigation stack, you can read more about this pattern here:
+// https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
+const NotificationsStack = createStackNavigator<NotificationsParamList>();
+
+function NotificationsNavigator() {
+  return (
+    <NotificationsStack.Navigator>
+      <NotificationsStack.Screen name="NotificationsScreen" component={NotificationsScreen} options={{ headerTitle: 'Tab One Title' }} />
+    </NotificationsStack.Navigator>
   );
 }

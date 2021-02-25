@@ -12,10 +12,19 @@ export type MainTabParamList = {
   Notifications: undefined;
 };
 
-export type TabOneParamList = {
-  TabOneScreen: undefined;
+export type HomeParamList = {
+  HomeScreen: undefined;
 };
 
-export type TabTwoParamList = {
-  TabTwoScreen: undefined;
+export type GroupsParamList = {
+  GroupsScreen: undefined;
+};
+
+export type ProfileParamList = {
+  ProfileScreen: undefined;
+};
+
+
+export type NotificationsParamList = {
+  NotificationsScreen: undefined;
 };
