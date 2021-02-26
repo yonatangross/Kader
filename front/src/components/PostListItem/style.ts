@@ -11,7 +11,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   midContainer: {
-    justifyContent: 'space-around'
+    justifyContent: 'space-evenly',
+    marginLeft: 10
   },
   avatar: {
     width: 60,
@@ -31,6 +32,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: 'grey'
   },
+  imageDesign:{
+    width: 100,
+    height: 100
+  }
 });
 
 export default styles;
