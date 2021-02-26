@@ -23,7 +23,6 @@ const StarRating = (props: RatingProps) => {
 		}
 	}
 
-    console.log(stars);
 	return (
 		<View>
 			<FlatList

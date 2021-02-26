@@ -1,14 +1,23 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+
+  mainContainer:{
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2
+  },
   container: {
     flexDirection: 'row',
     width: "100%",
     justifyContent: 'space-between',
     padding: 10,
+
   },
   lefContainer: {
     flexDirection: 'row',
+    padding: 5,
   },
   midContainer: {
     justifyContent: 'space-evenly',
@@ -33,8 +42,11 @@ const styles = StyleSheet.create({
     color: 'grey'
   },
   imageDesign:{
-    width: 100,
-    height: 100
+    width: 200,
+    height: 100,
+    borderRadius: 15,
+   
+  
   }
 });
 

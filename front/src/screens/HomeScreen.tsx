@@ -1,6 +1,7 @@
 import * as React from "react";
-import { FlatList, StyleSheet } from "react-native";
-
+import { Text, FlatList, StyleSheet, Button, TouchableOpacity } from "react-native";
+import CategoryButton from "../components/Button/Button";
+import DoubleListItem from "../components/DoubleListItem/DoubleListItem";
 import PostListItem from "../components/PostListItem";
 import { View } from "../components/Themed";
 import Posts from "../data/Posts";
@@ -42,12 +43,16 @@ const HomeScreen = (props: HomeProps) => {
 	}
 
 	return (
-		<View style={styles.container}>
+		<View>
+			<View style={styles.buttonContainer}>
+			<CategoryButton buttonContent={'Add Post'}/>
+			<CategoryButton buttonContent={'Create Group'}/>
+			</View>
 			<FlatList
 				style={{ width: "100%" }}
 				data={arr}
 				//@ts-ignore
-				renderItem={({ item }) => <PostListItem post={Posts} />}
+				renderItem={({ item }) => (item.id % 2 == 0 ? <PostListItem post={Posts} /> : <DoubleListItem post={Posts} />)}
 				keyExtractor={(item) => item.id}
 			/>
 		</View>
@@ -59,6 +64,22 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: "center",
 		justifyContent: "center",
+	},
+	buttonContainer: {
+		flexDirection: "row",
+		margin: 10,
+	},
+	roundButton: {
+		width: 100,
+		height: 100,
+		justifyContent: "center",
+		alignItems: "center",
+		padding: 10,
+		borderRadius: 100,
+		backgroundColor: "rgb(124, 210, 147)",
+		margin: 10,
+		marginRight: 40,
+		marginLeft: 40,
 	},
 });
 
