@@ -12,7 +12,6 @@ export interface RatingProps {
 const StarRating = (props: RatingProps) => {
 	const numOfstars = props.numOfStars;
 	const numOfrating = props.numOfRatings;
-	let key = 1;
 	let stars = [];
 
 	for (var i = 1; i <= 5; i++) {
