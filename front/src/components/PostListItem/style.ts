@@ -4,6 +4,7 @@ const styles = StyleSheet.create({
 
   container: {
     marginHorizontal: 10,
+    marginVertical: 5,
     flexDirection: 'row',
     width: "95%",
     padding: 5,
@@ -11,7 +12,6 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderRadius: 25,
     borderStyle: 'dashed',
-    marginBottom: 15,
     backgroundColor: '#fff'
   },
   ImageContainer: {
