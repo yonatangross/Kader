@@ -25,7 +25,7 @@ export default function MainTabNavigator() {
       tabBarOptions={{
         activeTintColor: Colors[colorScheme].background,
         style: {
-          backgroundColor: Colors[colorScheme].tint,
+          backgroundColor: '#9a8194',
         },
         indicatorStyle: {
           backgroundColor: Colors[colorScheme].background,

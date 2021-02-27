@@ -22,7 +22,7 @@ const StarRating = (props: RatingProps) => {
 			stars.push(<Image style={styles.flatListStar} source={unFullStar} />);
 		}
 	}
-
+  
 	return (
 		<View>
 			<FlatList
@@ -31,7 +31,8 @@ const StarRating = (props: RatingProps) => {
 				renderItem={({ item }) => {
 					return item;
 				}}
-				horizontal
+				horizontal 
+				style={styles.starSize}
 			/>
             <Text>{numOfrating} Ratings </Text>
 		</View>

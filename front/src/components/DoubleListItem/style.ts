@@ -8,12 +8,16 @@ const styles = StyleSheet.create({
 
   },
   midContainer: {
-   marginLeft: 5
+   marginLeft: 5,
+   flex: 2,
+   width:24,
+   height: 50
    
   },
   username: {
     fontWeight: 'bold',
     fontSize: 12,
+
   },
   lastMessage: {
     fontSize: 12,

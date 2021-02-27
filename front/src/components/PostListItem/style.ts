@@ -2,33 +2,30 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
 
-  mainContainer:{
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2
-  },
   container: {
     flexDirection: 'row',
-    width: "100%",
+    width: "98%",
     justifyContent: 'space-between',
-    padding: 10,
-
+    padding: 5,
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 25,
+    borderStyle: 'dashed',
+    marginBottom: 15,
+    marginTop: 15,
+    marginLeft: 5,
   },
+
   lefContainer: {
     flexDirection: 'row',
     padding: 5,
   },
+
   midContainer: {
     justifyContent: 'space-evenly',
-    marginLeft: 10
+    marginLeft: 10,
   },
-  avatar: {
-    width: 60,
-    height: 60,
-    borderRadius: 50,
-    marginRight: 15,
-  },
+
   username: {
     fontWeight: 'bold',
     fontSize: 16,
@@ -37,16 +34,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'grey',
   },
-  time: {
-    fontSize: 14,
-    color: 'grey'
-  },
   imageDesign:{
     width: 200,
     height: 100,
     borderRadius: 15,
    
-  
   }
 });
 

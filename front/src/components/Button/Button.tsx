@@ -9,7 +9,7 @@ export interface ButtonItemProps {
 
 const CategoryButton = (props: ButtonItemProps) => {
 
-    const image = {uri:"https://besthqwallpapers.com/Uploads/21-12-2019/116652/thumb2-green-lines-background-green-abstraction-geometric-background-creative-green-background.jpg"};
+    const image = {uri:"https://media.gettyimages.com/videos/abstract-smoke-fog-purple-ink-levitation-background-video-id1195295737?s=640x640"};
 	return (
 		<TouchableOpacity onPress={() => console.log("pressed")}>
 			<View>

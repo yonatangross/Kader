@@ -31,7 +31,7 @@ const DoubleListItem = (props: DoubleListItemProps) => {
 					</View>
 				</View>
 			</TouchableWithoutFeedback>
-		
+		 
 	);
 };
 

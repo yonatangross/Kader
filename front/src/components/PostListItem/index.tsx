@@ -23,8 +23,8 @@ const PostListItem = (props: PostListItemProps) => {
 			// id: post.id,
 			// creator: post.creator,
 		});
-	};
-
+	}; 
+ 
 	return (
 		<TouchableWithoutFeedback onPress={onClick}>
 			<View style={styles.container}>
