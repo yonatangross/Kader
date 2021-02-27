@@ -54,6 +54,7 @@ const HomeScreen = (props: HomeProps) => {
 				//@ts-ignore
 				renderItem={({ item }) => (item.id % 2 == 0 ? <PostListItem post={Posts} /> : <DoubleListItem post={Posts} />)}
 				keyExtractor={(item) => item.id}
+				showsVerticalScrollIndicator={false}
 			/>
 		</View>
 	);
