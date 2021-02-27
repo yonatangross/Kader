@@ -8,6 +8,8 @@ import Posts from "../data/Posts";
 import { IPost } from "../types/IPost";
 import { PostType } from "../types/PostType";
 
+
+
 export interface HomeProps {}
 
 const HomeScreen = (props: HomeProps) => {
@@ -45,7 +47,7 @@ const HomeScreen = (props: HomeProps) => {
 	return (
 		<View style={styles.container}>
 			<View style={styles.buttonContainer}>
-			<CategoryButton buttonContent={'Add Post'}/>
+			<CategoryButton buttonContent={'Add Post'} onPress={() => navigation.navigate('Details')}/>
 			<CategoryButton buttonContent={'Create Group'}/>
 			</View>
 			<FlatList
