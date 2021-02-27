@@ -28,15 +28,15 @@ const PostListItem = (props: PostListItemProps) => {
 	return (
 		<TouchableWithoutFeedback onPress={onClick}>
 			<View style={styles.container}>
-				<View style={styles.lefContainer}>
+				<View style={styles.ImageContainer}> 
 					<Image style={styles.imageDesign} source={testImage} />
-					<View style={styles.midContainer}>
-						<Text style={styles.username}>Looking for ice cream</Text>
-						<Text style={styles.lastMessage}>Psted By: Diana Lanciano</Text>
-						<StarRating numOfStars={3} numOfRatings={4585} />
-					</View>
 				</View>
-				{/* <Text style={styles.time}>{moment(post.updatedAt).format('DD/MM/YYYY hh:mm:ss')}</Text> */}
+				<View style={styles.DetailsContainer}>
+						<Text style={styles.PostTitle}>Looking for ice cream</Text>
+						<Text style={styles.PostedBy}>Psted By: Diana Lanciano</Text>
+						<StarRating numOfStars={3} numOfRatings={4585} />
+				</View>
+				
 			</View>
 		</TouchableWithoutFeedback>
 	);

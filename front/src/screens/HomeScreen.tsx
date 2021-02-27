@@ -43,7 +43,7 @@ const HomeScreen = (props: HomeProps) => {
 	}
 
 	return (
-		<View>
+		<View style={styles.container}>
 			<View style={styles.buttonContainer}>
 			<CategoryButton buttonContent={'Add Post'}/>
 			<CategoryButton buttonContent={'Create Group'}/>
@@ -63,11 +63,12 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		alignItems: "center",
-		justifyContent: "center",
+		backgroundColor: '#f9f3f3'
 	},
 	buttonContainer: {
 		flexDirection: "row",
 		margin: 10,
+		backgroundColor: 'transparent'
 	},
 	roundButton: {
 		width: 100,
@@ -76,7 +77,6 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		padding: 10,
 		borderRadius: 100,
-		backgroundColor: "rgb(124, 210, 147)",
 		margin: 10,
 		marginRight: 40,
 		marginLeft: 40,

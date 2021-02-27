@@ -3,35 +3,35 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
 
   container: {
+    marginHorizontal: 10,
     flexDirection: 'row',
-    width: "98%",
-    justifyContent: 'space-between',
+    width: "95%",
     padding: 5,
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 25,
     borderStyle: 'dashed',
     marginBottom: 15,
-    marginTop: 15,
-    marginLeft: 5,
+    backgroundColor: '#fff'
   },
-
-  lefContainer: {
-    flexDirection: 'row',
+  ImageContainer: {
     padding: 5,
+    alignItems: 'flex-start',
+    
+  
   },
-
-  midContainer: {
+  DetailsContainer: {
     justifyContent: 'space-evenly',
-    marginLeft: 10,
+    marginLeft: 5,
+    marginRight: 5
   },
 
-  username: {
+  PostTitle: {
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 15,
   },
-  lastMessage: {
-    fontSize: 16,
+  PostedBy: {
+    fontSize: 12,
     color: 'grey',
   },
   imageDesign:{

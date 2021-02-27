@@ -2,18 +2,25 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
 
-  container: {
-    flexDirection: 'row',
-    marginLeft: 10
+  MainContainer:{
+    flexDirection: 'row'
+  },
 
+  container: {
+    marginVertical: 10,
+    marginHorizontal: 10,
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 25,
+    borderStyle: 'dashed',
+    padding: 10,
+    alignSelf: 'baseline',
+    height: 200,
+    backgroundColor: '#fff',
+    justifyContent: 'center'
   },
-  midContainer: {
-   marginLeft: 5,
-   flex: 2,
-   width:24,
-   height: 50
-   
-  },
+  DetailsContainer: {
+  }, 
   username: {
     fontWeight: 'bold',
     fontSize: 12,
@@ -24,7 +31,7 @@ const styles = StyleSheet.create({
     color: 'grey',
   },
   imageDesign:{
-    width: 100,
+    width: 150,
     height: 100,
     borderRadius: 15
   }

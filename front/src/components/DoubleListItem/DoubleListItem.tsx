@@ -14,24 +14,26 @@ const DoubleListItem = (props: DoubleListItemProps) => {
 	let { post: post } = props;
 
 	return (
-		
-			<TouchableWithoutFeedback onPress={() => console.log("pressed")}>
+		<TouchableWithoutFeedback onPress={() => console.log("pressed")}>
+			<View style={styles.MainContainer}>
 				<View style={styles.container}>
 					<Image style={styles.imageDesign} source={testImage} />
-					<View style={styles.midContainer}>
-						<Text style={styles.username}>Looking for ice cream</Text>
-						<Text style={styles.lastMessage}>Psted By: Diana Lanciano2</Text>
-						<StarRating numOfStars={3} numOfRatings={4585} />
-					</View>
-					<Image style={styles.imageDesign} source={testImage} />
-					<View style={styles.midContainer}>
+					<View style={styles.DetailsContainer}>
 						<Text style={styles.username}>Looking for ice cream</Text>
 						<Text style={styles.lastMessage}>Psted By: Diana Lanciano2</Text>
 						<StarRating numOfStars={3} numOfRatings={4585} />
 					</View>
 				</View>
-			</TouchableWithoutFeedback>
-		 
+				<View style={styles.container}>
+					<Image style={styles.imageDesign} source={testImage} />
+					<View style={styles.DetailsContainer}>
+						<Text style={styles.username}>Looking for ice cream</Text>
+						<Text style={styles.lastMessage}>Psted By: Diana Lanciano2</Text>
+						<StarRating numOfStars={3} numOfRatings={4585} />
+					</View>
+				</View>
+			</View>
+		</TouchableWithoutFeedback>
 	);
 };
 
