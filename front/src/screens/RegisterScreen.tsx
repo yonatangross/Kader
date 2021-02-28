@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Text, View, StyleSheet, Image, TextInput, Dimensions, TouchableOpacity } from "react-native";
-import logo from "../assets/images/logo.png";
+import logo from "../assets/images/bigLogo.png";
 import { MaterialIcons, Feather, AntDesign, Octicons } from "@expo/vector-icons";
 
 const { width: WIDTH } = Dimensions.get("window");
@@ -11,23 +11,23 @@ export default function RegisterScreen() {
 				<Image source={logo} style={styles.logo} />
 			</View>
 
-			<View style={styles.inputContainer}>
-				<View style={styles.fullName}>
+			
+				<View style={styles.inputContainer}>
 					<MaterialIcons name="person" size={24} color="black" style={styles.inputIcon} />
 					<TextInput
-						style={styles.fullNameInput}
+						style={styles.input}
 						placeholder={"First Name"}
 						placeholderTextColor={"rgba(255, 255, 255, 0.7)"}
 						underlineColorAndroid="transparent"
 					/>
 
 					<TextInput
-						style={styles.fullNameInput}
+						style={styles.input}
 						placeholder={"Last Name"}
 						placeholderTextColor={"rgba(255, 255, 255, 0.7)"}
 						underlineColorAndroid="transparent"
 					/>
-				</View>
+		
 
 				<View>
 					<MaterialIcons name="mail" size={24} color="black" style={styles.inputIcon} />
@@ -54,11 +54,11 @@ export default function RegisterScreen() {
 					</TouchableOpacity>
 				</View>
 			</View>
-	
-      <TouchableOpacity activeOpacity={0.6} style={styles.btnLogin}>
-					<Text style={styles.text}>Login</Text>
-				</TouchableOpacity>
-  	</View>
+
+			<TouchableOpacity activeOpacity={0.6} style={styles.btnLogin}>
+				<Text style={styles.text}>Login</Text>
+			</TouchableOpacity>
+		</View>
 	);
 }
 
@@ -68,11 +68,13 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		backgroundColor: "#f9f3f3",
 		justifyContent: "center",
+		marginLeft: 10,
 	},
 	logo: {
-		width: 200,
+		width: 500,
 		height: 100,
 		resizeMode: "contain",
+		
 	},
 	inputContainer: {
 		marginTop: 10,
@@ -93,20 +95,6 @@ const styles = StyleSheet.create({
 		top: 25,
 		left: 37,
 	},
-	fullName: {
-		flexDirection: "row",
-	},
-	fullNameInput: {
-		width: 170,
-		height: 45,
-		borderRadius: 25,
-		fontSize: 16,
-		paddingLeft: 45,
-		backgroundColor: "rgba(0, 0, 0, 0.35)",
-		color: "rgba(255, 255, 255, 0.7)",
-		marginHorizontal: 25,
-		marginVertical: 15,
-	},
 	btnEye: {
 		position: "absolute",
 		top: 25,
@@ -119,10 +107,11 @@ const styles = StyleSheet.create({
 		backgroundColor: "#763857",
 		justifyContent: "center",
 		marginTop: 20,
+		
 	},
 	text: {
-    color: '#fff',
-    fontSize: 16,
-    textAlign: 'center'
-  },
+		color: "#fff",
+		fontSize: 16,
+		textAlign: "center",
+	},
 });
