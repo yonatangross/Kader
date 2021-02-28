@@ -7,6 +7,7 @@ import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types/Tabs';
 import MainTabNavigator from './MainTabNavigator';
 import Colors from "../constants/Colors";
+import RegisterScreen from '../screens/RegisterScreen';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -52,6 +53,10 @@ function RootNavigator() {
             </View>
           )
         }}
+      />
+      <Stack.Screen
+        name="Register"
+        component={RegisterScreen}
       />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>
