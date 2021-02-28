@@ -5,13 +5,14 @@ import styles from "./style";
 
 export interface ButtonItemProps {
 	buttonContent: string;
+	onClick: Function;
 }
 
 const CategoryButton = (props: ButtonItemProps) => {
 
-    const image = {uri:"https://media.gettyimages.com/videos/abstract-smoke-fog-purple-ink-levitation-background-video-id1195295737?s=640x640"};
+    const image = {uri:"https://images.freecreatives.com/wp-content/uploads/2016/03/Abstract-Purple-Background.jpg"};
 	return (
-		<TouchableOpacity onPress={() => console.log("pressed")}>
+		<TouchableOpacity onPress={() => props.onClick()}>
 			<View>
 				<ImageBackground source={image} style={styles.image}>
                 <Text style={styles.text}>{props.buttonContent}</Text>

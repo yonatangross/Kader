@@ -1,6 +1,6 @@
 import { EvilIcons, Feather, FontAwesome, FontAwesome5, Ionicons } from '@expo/vector-icons';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator  } from '@react-navigation/stack';
 import * as React from 'react';
 
 import { Fontisto } from '@expo/vector-icons';
@@ -9,7 +9,7 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import HomeScreen from '../screens/HomeScreen';
 
-import { MainTabParamList, HomeParamList, NotificationsParamList, GroupsParamList, ProfileParamList } from '../types/Tabs';
+import { MainTabParamList, HomeParamList, NotificationsParamList, GroupsParamList, ProfileParamList, RegisterParamList } from '../types/Tabs';
 import NotificationsScreen from '../screens/NotificationsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import GroupsScreen from '../screens/GroupsScreen';
@@ -73,8 +73,7 @@ export default function MainTabNavigator() {
   );
 }
 
-// Each tab has its own navigation stack, you can read more about this pattern here:
-// https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
+
 const HomeStack = createStackNavigator<HomeParamList>();
 
 function HomeNavigator() {
@@ -85,8 +84,7 @@ function HomeNavigator() {
   );
 }
 
-// Each tab has its own navigation stack, you can read more about this pattern here:
-// https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
+
 const GroupsStack = createStackNavigator<GroupsParamList>();
 
 function GroupsNavigator() {
@@ -97,8 +95,7 @@ function GroupsNavigator() {
   );
 }
 
-// Each tab has its own navigation stack, you can read more about this pattern here:
-// https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
+
 const ProfileStack = createStackNavigator<ProfileParamList>();
 
 function ProfileNavigator() {
@@ -109,8 +106,7 @@ function ProfileNavigator() {
   );
 }
 
-// Each tab has its own navigation stack, you can read more about this pattern here:
-// https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
+
 const NotificationsStack = createStackNavigator<NotificationsParamList>();
 
 function NotificationsNavigator() {
@@ -120,3 +116,4 @@ function NotificationsNavigator() {
     </NotificationsStack.Navigator>
   );
 }
+

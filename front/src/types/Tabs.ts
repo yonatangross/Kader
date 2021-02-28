@@ -28,3 +28,8 @@ export type ProfileParamList = {
 export type NotificationsParamList = {
   NotificationsScreen: undefined;
 };
+
+
+export type RegisterParamList = {
+  RegisterScreen: undefined;
+};

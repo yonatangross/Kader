@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Text, FlatList, StyleSheet, Button, TouchableOpacity } from "react-native";
-import CategoryButton from "../components/Button/Button";
-import DoubleListItem from "../components/DoubleListItem/DoubleListItem";
+import CategoryButton from "../components/Button";
+import DoubleListItem from "../components/DoubleListItem";
 import PostListItem from "../components/PostListItem";
 import { View } from "../components/Themed";
 import Posts from "../data/Posts";
@@ -10,9 +10,13 @@ import { PostType } from "../types/PostType";
 
 
 
+
 export interface HomeProps {}
 
 const HomeScreen = (props: HomeProps) => {
+
+
+
 	let arr: IPost[] = [];
 	for (let index = 0; index < 20; index++) {
 		arr.push({
@@ -47,8 +51,8 @@ const HomeScreen = (props: HomeProps) => {
 	return (
 		<View style={styles.container}>
 			<View style={styles.buttonContainer}>
-			<CategoryButton buttonContent={'Add Post'} onPress={() => navigation.navigate('Details')}/>
-			<CategoryButton buttonContent={'Create Group'}/>
+			<CategoryButton buttonContent={'Add Post'} onClick={() => console.log('Diana2')}/>
+			<CategoryButton buttonContent={'Create Group'} onClick={() => console.log('Diana2')}/>
 			</View>
 			<FlatList
 				style={{ width: "100%" }}
