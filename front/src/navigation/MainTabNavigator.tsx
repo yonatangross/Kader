@@ -1,9 +1,7 @@
 import { EvilIcons, Feather, FontAwesome, FontAwesome5, Ionicons } from '@expo/vector-icons';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { createStackNavigator  } from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-
-import { Fontisto } from '@expo/vector-icons';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -73,47 +71,42 @@ export default function MainTabNavigator() {
   );
 }
 
-
 const HomeStack = createStackNavigator<HomeParamList>();
 
 function HomeNavigator() {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{ headerTitle: 'Home' }} />
+      <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{ headerTitle: 'Home', headerShown: false }} />
     </HomeStack.Navigator>
   );
 }
-
 
 const GroupsStack = createStackNavigator<GroupsParamList>();
 
 function GroupsNavigator() {
   return (
     <GroupsStack.Navigator>
-      <GroupsStack.Screen name="GroupsScreen" component={GroupsScreen} options={{ headerTitle: 'Groups' }} />
+      <GroupsStack.Screen name="GroupsScreen" component={GroupsScreen} options={{ headerTitle: 'Groups', headerShown: false }} />
     </GroupsStack.Navigator>
   );
 }
-
 
 const ProfileStack = createStackNavigator<ProfileParamList>();
 
 function ProfileNavigator() {
   return (
     <ProfileStack.Navigator>
-      <ProfileStack.Screen name="ProfileScreen" component={ProfileScreen} options={{ headerTitle: 'Profile' }} />
+      <ProfileStack.Screen name="ProfileScreen" component={ProfileScreen} options={{ headerTitle: 'Profile', headerShown: false }} />
     </ProfileStack.Navigator>
   );
 }
-
 
 const NotificationsStack = createStackNavigator<NotificationsParamList>();
 
 function NotificationsNavigator() {
   return (
     <NotificationsStack.Navigator>
-      <NotificationsStack.Screen name="NotificationsScreen" component={NotificationsScreen} options={{ headerTitle: 'Notifications' }} />
+      <NotificationsStack.Screen name="NotificationsScreen" component={NotificationsScreen} options={{ headerTitle: 'Notifications', headerShown: false }} />
     </NotificationsStack.Navigator>
   );
 }
-

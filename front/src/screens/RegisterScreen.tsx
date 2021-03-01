@@ -1,12 +1,13 @@
+
 import React, { useReducer } from "react";
 import { Text, View, StyleSheet, Image, TextInput, Dimensions, TouchableOpacity } from "react-native";
-import logo from "../assets/images/bigLogo.png";
+const logo = require('../assets/images/bigLogo.png');
 import { MaterialIcons, Feather, AntDesign, Octicons } from "@expo/vector-icons";
 const { width: WIDTH } = Dimensions.get("window");
 
 
 
-const reducer = (state , action) => {
+const reducer = (state:any , action:any) => {
 	//state === {firstName: string, lastName: string, email: string, password: string}
 	// action === { valueChange: name || email || password,  setInput: userInput}
 
@@ -97,56 +98,54 @@ export default function RegisterScreen() {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
-		alignItems: "center",
-		backgroundColor: "#f9f3f3",
-		justifyContent: "center",
-		marginLeft: 10,
+	  flex: 1,
+	  alignItems: 'center',
+	  backgroundColor: '#f9f3f3',
+	  justifyContent: 'center',
+	  marginLeft: 10,
 	},
 	logo: {
-		width: 500,
-		height: 100,
-		resizeMode: "contain",
+	  width: 500,
+	  height: 100,
+	  resizeMode: 'contain',
 	},
 	inputContainer: {
-		marginTop: 10,
+	  marginTop: 10,
 	},
 	input: {
-		width: WIDTH - 55,
-		height: 45,
-		borderRadius: 25,
-		fontSize: 16,
-		paddingLeft: 45,
-		backgroundColor: "rgba(0, 0, 0, 0.35)",
-		color: "rgba(255, 255, 255, 0.7)",
-		marginHorizontal: 25,
-		marginVertical: 15,
+	  width: WIDTH - 55,
+	  height: 45,
+	  borderRadius: 25,
+	  fontSize: 16,
+	  paddingLeft: 45,
+	  backgroundColor: 'rgba(0, 0, 0, 0.35)',
+	  color: 'rgba(255, 255, 255, 0.7)',
+	  marginHorizontal: 25,
+	  marginVertical: 15,
 	},
 	inputIcon: {
-		position: "absolute",
-		top: 25,
-		left: 37,
+	  position: 'absolute',
+	  top: 25,
+	  left: 37,
 	},
 	btnEye: {
-		position: "absolute",
-		top: 25,
-		right: 50,
+	  position: 'absolute',
+	  top: 25,
+	  right: 70,
 	},
 	btnLogin: {
-		width: WIDTH - 55,
-		height: 45,
-		borderRadius: 25,
-		backgroundColor: "#763857",
-		justifyContent: "center",
-		marginTop: 20,
+	  width: WIDTH - 55,
+	  height: 45,
+	  borderRadius: 25,
+	  backgroundColor: '#763857',
+	  justifyContent: 'center',
+	  marginTop: 20,
 	},
 	text: {
-		color: "#fff",
-		fontSize: 16,
-		textAlign: "center",
+	  color: '#fff',
+	  fontSize: 16,
+	  textAlign: 'center',
 	},
-});
-function valueChange(valueChange: any): void {
-	throw new Error("Function not implemented.");
-}
-
+  
+  });
+  
