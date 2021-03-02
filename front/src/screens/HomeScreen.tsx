@@ -1,6 +1,6 @@
-
+import { Button, Icon } from '@ui-kitten/components';
 import * as React from 'react';
-import { Text, FlatList, StyleSheet, Button, TouchableOpacity } from 'react-native';
+import { Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import CategoryButton from '../components/Button';
 import DoubleListItem from '../components/DoubleListItem';
 import PostListItem from '../components/PostListItem';
@@ -9,11 +9,9 @@ import Posts from '../data/Posts';
 import { IPost } from '../types/IPost';
 import { PostType } from '../types/PostType';
 
-
 export interface HomeProps {}
 
 const HomeScreen = (props: HomeProps) => {
-
   let arr: IPost[] = [];
   for (let index = 0; index < 20; index++) {
     arr.push({
@@ -45,11 +43,14 @@ const HomeScreen = (props: HomeProps) => {
     });
   }
 
+  const PlusIcon = (props: any) => <Icon {...props} name="plus-circle-outline" style={{ width: 40, height:40 }} />;
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
         <CategoryButton buttonContent={'Add Post'} navigationString={'Register'} /* onPress={() => navigation.navigate('Details')}*/ />
         <CategoryButton buttonContent={'Create Group'} navigationString={'create-group'} />
+
+        <Button style={styles.button} status="success" accessoryRight={PlusIcon} size="small" />
       </View>
       <FlatList
         style={{ width: '100%' }}
@@ -75,8 +76,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   roundButton: {
-    width: 100,
-    height: 100,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 10,
@@ -84,6 +83,15 @@ const styles = StyleSheet.create({
     margin: 10,
     marginRight: 40,
     marginLeft: 40,
+  },
+  button: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 100,
+    margin: 10,
+    marginRight: 40,
+    marginLeft: 40,
+    padding: 10,
   },
 });
 

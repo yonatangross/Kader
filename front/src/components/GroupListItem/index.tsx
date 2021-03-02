@@ -1,37 +1,23 @@
 import React from 'react';
-import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import { IGroup } from '../../types/IGroup';
-import { useNavigation } from '@react-navigation/native';
-import styles from './style';
+import { Button, Icon, ListItem, Text } from '@ui-kitten/components';
 
 export interface GroupListItemProps {
-  group: IGroup;
+  item: IGroup;
+  index: number;
 }
 
 const GroupListItem = (props: GroupListItemProps) => {
-  let { group } = props;
+  let { item, index } = props;
 
-  const navigation = useNavigation();
-  //console.log(post);
-  //const user = post.creator;
+  const renderItemAccessory = (props: any) => <Button size="tiny">Join Group</Button>;
 
-  const onClick = () => {
-    navigation.navigate('postPage', {
-      // id: post.id,
-      // creator: post.creator,
-    });
-  };
+  const renderItemIcon = (props: any) => <Icon {...props} name="person" />;
 
   return (
-    <TouchableWithoutFeedback onPress={onClick}>
-      <View style={styles.container}>
-        <View style={styles.DetailsContainer}>
-          <Text style={styles.PostTitle}>{group.name}</Text>
-          <Text style={styles.PostTitle}>{group.description}</Text>
-          <Text style={styles.PostedBy}>Posted By: Diana Lanciano</Text>
-        </View>
-      </View>
-    </TouchableWithoutFeedback>
+    <>
+      <ListItem title={`${item.name} `} description={`${item.description}`} accessoryLeft={renderItemIcon} accessoryRight={renderItemAccessory} />
+    </>
   );
 };
 

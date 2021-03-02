@@ -13,7 +13,7 @@ import RegisterScreen from '../screens/RegisterScreen';
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
     <NavigationContainer
-      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme} >
       <RootNavigator />
     </NavigationContainer>
   );
@@ -34,6 +34,7 @@ function RootNavigator() {
       headerTitleStyle: {
         fontWeight: 'bold',
       }
+      
     }}>
       <Stack.Screen
         name="Root"
