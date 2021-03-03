@@ -2,6 +2,7 @@ export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
   Register:undefined;
+  SinglePost: undefined;
 };
 
 export type MainTabParamList = {
@@ -31,4 +32,10 @@ export type NotificationsParamList = {
 
 export type RegisterParamList = {
   RegisterScreen: undefined;
+};
+
+
+
+export type SinglePostProps = {
+  SinglePostScreen: undefined;
 };
