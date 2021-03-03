@@ -1,10 +1,11 @@
 import React from "react";
 import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
 import { IPost } from "../../types/IPost";
-import testImage from "../../assets/images/test.png";
+const testImage = require("../../assets/images/test.png");
 
 export interface caruselItemProps {
-	post: IPost;
+	//post: IPost;
+    title: string;
 }
 
 const { width, height } = Dimensions.get("window");
@@ -16,7 +17,7 @@ const ImagesCarusel = (props: caruselItemProps) => {
 	    <View style={styles.cardView}>
             <Image style={styles.image} source={testImage} />
             <View style={styles.textView}>
-                <Text style={styles.itemTitle}>{props.post.title}</Text>
+                <Text style={styles.itemTitle}>{props.title}</Text>
             </View>
         </View>
 	);

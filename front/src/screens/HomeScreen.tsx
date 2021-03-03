@@ -47,7 +47,7 @@ const HomeScreen = (props: HomeProps) => {
 	return (
 		<View style={styles.container}>
 			<View style={styles.buttonContainer}>
-				<CategoryButton buttonContent={"Add Post"} navigationString={"Register"} /* onPress={() => navigation.navigate('Details')}*/ />
+				<CategoryButton buttonContent={"Add Post"} navigationString={"Register"}/>
 				<CategoryButton buttonContent={"Create Group"} navigationString={"SinglePost"} />
 
 				<Button style={styles.button} status="success" accessoryRight={PlusIcon} size="small">

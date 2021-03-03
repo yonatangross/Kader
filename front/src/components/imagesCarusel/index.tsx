@@ -3,7 +3,7 @@ import { View, Text, Image, Dimensions, StyleSheet, Platform } from "react-nativ
 import Carousel, { ParallaxImage } from "react-native-snap-carousel";
 import { IPost } from "../../types/IPost";
 import CaruselItem from "../CaruselItem";
-import testImage from "../../assets/images/test.png";
+const testImage = require("../../assets/images/test.png");
 import { color } from "react-native-reanimated";
 
 
