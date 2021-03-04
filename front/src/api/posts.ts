@@ -20,7 +20,7 @@ export const getPost = async (postId: string): Promise<AxiosResponse<PostApiData
     const requestedPost: AxiosResponse<PostApiDataType> = await axios.get(`${baseUrl}/posts/${postId}`);
     return requestedPost;
   } catch (error) {
-    throw new Error(error);
+    throw new Error(`error while fetching post ${postId}, error: ${error}`);
   }
 };
 

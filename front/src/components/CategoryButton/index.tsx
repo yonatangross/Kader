@@ -4,7 +4,6 @@ import { View, Text, TouchableOpacity, ImageBackground } from 'react-native';
 import styles from './style';
 
 export interface ButtonItemProps {
-
   buttonContent: string;
   navigationString: string;
 }
