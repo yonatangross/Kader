@@ -1,17 +1,29 @@
 import { PostType } from './../types/PostType';
 import { CreatePostActionsTypes, CreatePostStateType } from '../types/CreatePostTypes';
 
+export const initCreatePost = () => {
+  return {
+    postType: PostType.REQUEST,
+    category: '',
+    details: { title: '', description: '', location: '', images: [] },
+    groups: [],
+  };
+};
+
 export default (state: CreatePostStateType, action: CreatePostActionsTypes) => {
   switch (action.type) {
     case 'PostType':
       let postType: PostType = <PostType>action.payload;
-      return { ...state, PostType: postType };
+      return { ...state, postType: postType };
     case 'Category':
-      return { ...state, Category: action.payload };
+      return { ...state, category: action.payload };
     case 'Details':
-      return { ...state, Details: action.payload };
+      return { ...state, details: action.payload };
     case 'Groups':
-      return { ...state, Groups: action.payload };
+      return { ...state, groups: action.payload };
+    case 'Reset':
+      return initCreatePost();
+
     default:
       return state;
   }

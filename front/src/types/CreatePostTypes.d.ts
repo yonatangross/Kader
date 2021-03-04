@@ -8,6 +8,6 @@ type CreatePostStateType = {
 };
 
 type CreatePostActionsTypes = {
-  type: 'PostType' | 'Category' | 'Details' | 'Groups';
-  payload: PostType | string | { title: string; description: string; location: string; images: string[] } | IGroup[];
+  type: 'PostType' | 'Category' | 'Details' | 'Groups' | 'Reset';
+  payload: PostType | string | { title: string; description: string; location: string; images: string[] } | IGroup[] | undefined;
 };

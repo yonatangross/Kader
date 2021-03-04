@@ -2,82 +2,55 @@ import { Button, Icon } from '@ui-kitten/components';
 import React, { useEffect, useReducer, useState } from 'react';
 import { Text, StyleSheet, Modal, Alert, Image } from 'react-native';
 import * as Progress from 'react-native-progress';
-import createPostReducer from '../../reducers/createPostReducer';
+import createPostReducer, { initCreatePost } from '../../reducers/createPostReducer';
 import { IPost } from '../../types/IPost';
 import { PostType } from '../../types/PostType';
+import PostTypeSelector from '../PostTypeSelector';
 
 export interface CreatePostModalProps {
   visible: boolean;
   onChange: Function;
 }
-const PlusIcon = () => <Icon name="plus-circle-outline" style={{ width: 32, height: 32 }} fill={'rgba(34, 83, 231)'} />;
+
+const createPostInitState = {
+  postType: PostType.REQUEST,
+  category: '',
+  details: { title: '', description: '', location: '', images: [] },
+  groups: [],
+};
 
 const CreatePostModal = (props: CreatePostModalProps) => {
-  const [state, dispatch] = useReducer(createPostReducer, {
-    postType: PostType.REQUEST,
-    category: '',
-    details: { title: '', description: '', location: '', images: [] },
-    groups: [],
-  });
+  const [state, dispatch] = useReducer(createPostReducer, createPostInitState, initCreatePost);
+  const [activeSection, setActiveSection] = useState<boolean[]>([false, false, false, false]);
 
+  useEffect(() => {
+    if (props.visible) {
+      //modal opened after was closed
+      setActiveSection([true, false, false, false]);
+      console.log(`visible:`);
+      dispatch({ type: 'Reset', payload: undefined });
+      console.log(state);
+    } else {
+      // modal closed after was open.
+      console.log(`not visible:`);
+      setActiveSection([false, false, false, false]);
+      console.log(state);
+    }
+  }, [props.visible]);
   return (
     <Modal
       animationType={'slide'}
       transparent={false}
       visible={props.visible}
       onRequestClose={() => {
-        Alert.alert('Modal has now been closed.');
+        console.log('Modal has now been closed.');
       }}
     >
       <Text style={styles.progressStatus}>Create new post</Text>
       {/* <PostCreationProgressBar  /> */}
       <Progress.Bar progress={0.3} width={250} style={styles.progressBar} />
-      <Button
-        style={styles.button}
-        status="success"
-        accessoryRight={PlusIcon}
-        size="small"
-        onPress={() => {
-          dispatch({ type: 'PostType', payload: PostType.REQUEST });
-        }}
-      >
-        {(buttonProps: any) => (
-          <Text {...buttonProps} style={{ color: 'rgba(34, 83, 231,1)' }}>
-            Request Help
-          </Text>
-        )}
-      </Button>
+      <PostTypeSelector active={activeSection[0]} dispatch={dispatch} />
 
-      <Button
-        style={styles.button}
-        status="success"
-        accessoryRight={PlusIcon}
-        size="small"
-        onPress={() => {
-          dispatch({ type: 'PostType', payload: PostType.OFFER });
-        }}
-      >
-        {(buttonProps: any) => (
-          <Text {...buttonProps} style={{ color: 'rgba(34, 83, 231,1)' }}>
-            Offer Help
-          </Text>
-        )}
-      </Button>
-      <Button
-        style={styles.button}
-        status="success"
-        accessoryRight={PlusIcon}
-        size="small"
-        onPress={() => {
-          dispatch({ type: 'PostType', payload: PostType.HANDOVER });
-        }}
-      >
-        {(buttonProps: any) => (
-          <Text {...buttonProps} style={{ color: 'rgba(34, 83, 231,1)' }}>
-            Handover an item
-          </Text>
-        )}
-      </Button>
       <Text
         style={styles.closeText}
         onPress={() => {
@@ -109,15 +82,6 @@ const styles = StyleSheet.create({
     margin: 10,
     marginRight: 40,
     marginLeft: 40,
-  },
-  button: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 100,
-    margin: 10,
-    marginRight: 40,
-    marginLeft: 40,
-    padding: 10,
   },
 
   modalButton: {
