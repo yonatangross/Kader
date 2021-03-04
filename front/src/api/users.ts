@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { UserApiDataType } from '../types/ApiDataTypes';
 import { IUser } from '../types/IUser';
 
-const baseUrl: string | undefined = 'http://localhost:4000';
+const baseUrl: string | undefined = 'http://localhost:5000';
 
 export const getUsers = async (): Promise<AxiosResponse<UserApiDataType>> => {
   try {

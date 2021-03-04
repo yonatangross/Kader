@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { PostApiDataType } from '../types/ApiDataTypes';
 import { IPost } from '../types/IPost';
 
-const baseUrl: string | undefined = 'http://localhost:4000';
+const baseUrl: string | undefined = 'http://localhost:5000';
 
 export const getPosts = async (): Promise<AxiosResponse<PostApiDataType>> => {
   try {

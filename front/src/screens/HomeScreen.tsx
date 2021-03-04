@@ -52,6 +52,7 @@ const HomeScreen = () => {
       <CreatePostModal visible={visibleCreatePost} onChange={setVisibleCreatePost} />
       <View style={styles.buttonContainer}>
         <CategoryButton buttonContent={'Create Group'} navigationString={'SinglePost'} />
+        <CategoryButton buttonContent={'Register'} navigationString={'Register'} />
         <Button
           style={styles.button}
           status="success"

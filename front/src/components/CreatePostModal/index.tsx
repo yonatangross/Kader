@@ -1,14 +1,25 @@
-import React from 'react';
+import { Button, Icon } from '@ui-kitten/components';
+import React, { useEffect, useReducer, useState } from 'react';
 import { Text, StyleSheet, Modal, Alert, Image } from 'react-native';
 import * as Progress from 'react-native-progress';
-const testImage = require('../../assets/images/scooby.jpeg');
+import createPostReducer from '../../reducers/createPostReducer';
+import { IPost } from '../../types/IPost';
+import { PostType } from '../../types/PostType';
 
 export interface CreatePostModalProps {
   visible: boolean;
   onChange: Function;
 }
+const PlusIcon = () => <Icon name="plus-circle-outline" style={{ width: 32, height: 32 }} fill={'rgba(34, 83, 231)'} />;
 
 const CreatePostModal = (props: CreatePostModalProps) => {
+  const [state, dispatch] = useReducer(createPostReducer, {
+    postType: PostType.REQUEST,
+    category: '',
+    details: { title: '', description: '', location: '', images: [] },
+    groups: [],
+  });
+
   return (
     <Modal
       animationType={'slide'}
@@ -18,9 +29,55 @@ const CreatePostModal = (props: CreatePostModalProps) => {
         Alert.alert('Modal has now been closed.');
       }}
     >
-      <Text style={styles.progressStatus}>Post Creation Status</Text>
+      <Text style={styles.progressStatus}>Create new post</Text>
+      {/* <PostCreationProgressBar  /> */}
       <Progress.Bar progress={0.3} width={250} style={styles.progressBar} />
-      <Image source={testImage} style={styles.image} />
+      <Button
+        style={styles.button}
+        status="success"
+        accessoryRight={PlusIcon}
+        size="small"
+        onPress={() => {
+          dispatch({ type: 'PostType', payload: PostType.REQUEST });
+        }}
+      >
+        {(buttonProps: any) => (
+          <Text {...buttonProps} style={{ color: 'rgba(34, 83, 231,1)' }}>
+            Request Help
+          </Text>
+        )}
+      </Button>
+
+      <Button
+        style={styles.button}
+        status="success"
+        accessoryRight={PlusIcon}
+        size="small"
+        onPress={() => {
+          dispatch({ type: 'PostType', payload: PostType.OFFER });
+        }}
+      >
+        {(buttonProps: any) => (
+          <Text {...buttonProps} style={{ color: 'rgba(34, 83, 231,1)' }}>
+            Offer Help
+          </Text>
+        )}
+      </Button>
+      <Button
+        style={styles.button}
+        status="success"
+        accessoryRight={PlusIcon}
+        size="small"
+        onPress={() => {
+          dispatch({ type: 'PostType', payload: PostType.HANDOVER });
+        }}
+      >
+        {(buttonProps: any) => (
+          <Text {...buttonProps} style={{ color: 'rgba(34, 83, 231,1)' }}>
+            Handover an item
+          </Text>
+        )}
+      </Button>
       <Text
         style={styles.closeText}
         onPress={() => {
