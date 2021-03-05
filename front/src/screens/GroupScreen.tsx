@@ -47,4 +47,3 @@ const GroupScreen = (props: GroupScreenProps) => {
     );
 };
     
-};

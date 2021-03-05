@@ -1,9 +1,8 @@
-import React from 'react';
-import { View, Text, Image, FlatList } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Image } from 'react-native';
 import { IUser } from '../../types/IUser';
 import StarRating from '../StarRating/index';
 import { getUser } from '../../api/users';
-import { useScrollToTop } from '@react-navigation/native';
 
 export interface UserDetailsProps {
     userId : string ;
@@ -13,7 +12,11 @@ export interface UserDetailsProps {
 
 const UserDetails = (props: UserDetailsProps) => {
 
-    const user:IUser = getUser(props.userId);
+    const [user, setUser] = useState<IUser>();
+    
+    getUser(props.userId).then((result) => {
+         setUser(result);
+    });
 
     return <View>
         <Text>{ user.firstName + user.lastName}</Text>
