@@ -1,42 +1,41 @@
-import React from "react";
-import { View, Text, Image, FlatList } from "react-native";
-import styles from "./style";
-import FullStar from "../../assets/images/fullRatedStar.png";
-import unFullStar from "../../assets/images/unfullStar.png";
+import React from 'react';
+import { View, Text, Image, FlatList } from 'react-native';
+import styles from './style';
+const FullStar = require('../../assets/images/fullRatedStar.png');
+const partialStar = require('../../assets/images/partialStar.png');
 
 export interface RatingProps {
-	numOfStars: number;
-	numOfRatings: number;
+  numOfStars: number;
+  numOfRatings: number;
 }
 
 const StarRating = (props: RatingProps) => {
-	const numOfstars = props.numOfStars;
-	const numOfrating = props.numOfRatings;
-	let stars = [];
+  const numOfStars = props.numOfStars;
+  const numOfRatings = props.numOfRatings;
+  let stars = [];
 
-	for (var i = 1; i <= 5; i++) {
-		if (i <= numOfstars) {
-			stars.push(<Image style={styles.flatListStar} source={FullStar} />);
-		} 
-        else {
-			stars.push(<Image style={styles.flatListStar} source={unFullStar} />);
-		}
-	}
-  
-	return (
-		<View>
-			<FlatList
-				keyExtractor={(item, index) => index.toString()}
-				data={stars}
-				renderItem={({ item }) => {
-					return item;
-				}}
-				horizontal 
-				style={styles.starSize}
-			/>
-            <Text>{numOfrating} Ratings </Text>
-		</View>
-	);
+  for (var i = 1; i <= 5; i++) {
+    if (i <= numOfStars) {
+      stars.push(<Image style={styles.flatListStar} source={FullStar} />);
+    } else {
+      stars.push(<Image style={styles.flatListStar} source={partialStar} />);
+    }
+  }
+
+  return (
+    <View>
+      <FlatList
+        keyExtractor={(item, index) => index.toString()}
+        data={stars}
+        renderItem={({ item }) => {
+          return item;
+        }}
+        horizontal
+        style={styles.starSize}
+      />
+      <Text>{numOfRatings} Ratings </Text>
+    </View>
+  );
 };
 
 export default StarRating;

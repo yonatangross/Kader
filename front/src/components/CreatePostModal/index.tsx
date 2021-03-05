@@ -1,9 +1,7 @@
-import { Button, Icon } from '@ui-kitten/components';
 import React, { useEffect, useReducer, useState } from 'react';
-import { Text, StyleSheet, Modal, Alert, Image } from 'react-native';
+import { Text, StyleSheet, Modal } from 'react-native';
 import * as Progress from 'react-native-progress';
-import createPostReducer, { initCreatePost } from '../../reducers/createPostReducer';
-import { IPost } from '../../types/IPost';
+import { createPostReducer, initCreatePost } from '../../reducers/createPostReducer';
 import { PostType } from '../../types/PostType';
 import PostTypeSelector from '../PostTypeSelector';
 
@@ -21,6 +19,7 @@ const createPostInitState = {
 
 const CreatePostModal = (props: CreatePostModalProps) => {
   const [state, dispatch] = useReducer(createPostReducer, createPostInitState, initCreatePost);
+
   const [activeSection, setActiveSection] = useState<boolean[]>([false, false, false, false]);
 
   useEffect(() => {
@@ -28,7 +27,7 @@ const CreatePostModal = (props: CreatePostModalProps) => {
       //modal opened after was closed
       setActiveSection([true, false, false, false]);
       console.log(`visible:`);
-      dispatch({ type: 'Reset', payload: undefined });
+      dispatch({ type: 'Reset' });
       console.log(state);
     } else {
       // modal closed after was open.
@@ -37,6 +36,7 @@ const CreatePostModal = (props: CreatePostModalProps) => {
       console.log(state);
     }
   }, [props.visible]);
+
   return (
     <Modal
       animationType={'slide'}

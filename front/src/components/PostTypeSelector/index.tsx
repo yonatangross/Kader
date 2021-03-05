@@ -1,9 +1,6 @@
 import { Button, Icon } from '@ui-kitten/components';
-import React, { useEffect, useReducer, useState } from 'react';
-import { Text, StyleSheet, Modal, Alert, Image } from 'react-native';
-import * as Progress from 'react-native-progress';
-import createPostReducer from '../../reducers/createPostReducer';
-import { IPost } from '../../types/IPost';
+import React from 'react';
+import { Text, StyleSheet } from 'react-native';
 import { PostType } from '../../types/PostType';
 
 export interface PostTypeSelectorProps {

@@ -1,5 +1,6 @@
 import { PostType } from './PostType';
 import { IGroup } from './IGroup';
+
 type CreatePostStateType = {
   postType: PostType;
   category: string;
@@ -7,7 +8,9 @@ type CreatePostStateType = {
   groups: IGroup[];
 };
 
-type CreatePostActionsTypes = {
-  type: 'PostType' | 'Category' | 'Details' | 'Groups' | 'Reset';
-  payload: PostType | string | { title: string; description: string; location: string; images: string[] } | IGroup[] | undefined;
-};
+type CreatePostActionsTypes =
+  | { type: 'PostType'; payload: PostType }
+  | { type: 'Category'; payload: string }
+  | { type: 'Details'; payload: { title: string; description: string; location: string; images: string[] } }
+  | { type: 'Groups'; payload: IGroup[] }
+  | { type: 'Reset' };
