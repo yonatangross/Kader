@@ -14,8 +14,6 @@ const DoubleListItem = (props: DoubleListItemProps) => {
   let { post: post } = props;
 
   const navigation = useNavigation();
-  //console.log(post);
-  //const user = post.creator;
 
   const onClick = () => {
     navigation.navigate('SinglePost', {
