@@ -7,7 +7,7 @@ import { KeyboardAvoidingView } from '../layouts/auth/login/extra/3rd-party';
 
 export interface LoginScreenProps {}
 
-const LoginScreen = (navigation: any): React.ReactElement => {
+export default function LoginScreen(navigation: any) {
   const [email, setEmail] = React.useState<string>();
   const [password, setPassword] = React.useState<string>();
 
@@ -58,7 +58,7 @@ const LoginScreen = (navigation: any): React.ReactElement => {
       </ImageOverlay>
     </KeyboardAvoidingView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

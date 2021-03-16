@@ -8,6 +8,8 @@ import { RootStackParamList } from "../types/Tabs";
 import MainTabNavigator from "./MainTabNavigator";
 import Colors from "../constants/Colors";
 import RegisterScreen from "../screens/RegisterScreen";
+import LoginScreen from "../screens/LoginScreen";
+
 import SinglePostScreen from "../screens/SinglePostScreen";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
@@ -54,6 +56,8 @@ function RootNavigator() {
 				}}
 			/>
 			<Stack.Screen name="Register" component={RegisterScreen} />
+			<Stack.Screen name="Login" component={LoginScreen} />
+
 
 			<Stack.Screen name="SinglePost" component={SinglePostScreen} />
 

@@ -53,6 +53,8 @@ const HomeScreen = () => {
       <View style={styles.buttonContainer}>
         <CategoryButton buttonContent={'Create Group'} navigationString={'SinglePost'} />
         <CategoryButton buttonContent={'Register'} navigationString={'Register'} />
+        <CategoryButton buttonContent={'Login'} navigationString={'Login'} />
+
         <Button
           style={styles.button}
           status="success"
