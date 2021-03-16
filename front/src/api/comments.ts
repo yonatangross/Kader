@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { CommentApiDataType } from '../types/ApiDataTypes';
 import { IComment } from '../types/IComment';
 
-const baseUrl: string | undefined = 'http://localhost:5000';
+const baseUrl: string | undefined = 'http://193.106.55.127:5000';
 
 export const getComments = async (): Promise<AxiosResponse<CommentApiDataType>> => {
   try {

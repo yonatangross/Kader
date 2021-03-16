@@ -20,6 +20,7 @@ const PostTypeSelector = (props: PostTypeSelectorProps) => {
           size="small"
           onPress={() => {
             props.dispatch({ type: 'PostType', payload: PostType.REQUEST });
+            
           }}
         >
           {(buttonProps: any) => (

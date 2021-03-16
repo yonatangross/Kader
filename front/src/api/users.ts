@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { UserApiDataType } from '../types/ApiDataTypes';
 import { IUser } from '../types/IUser';
 
-const baseUrl: string | undefined = 'http://localhost:5000';
+const baseUrl: string | undefined = 'http://193.106.55.127:5000';
 
 export const getUsers = async (): Promise<AxiosResponse<UserApiDataType>> => {
   try {
@@ -15,9 +15,9 @@ export const getUsers = async (): Promise<AxiosResponse<UserApiDataType>> => {
   }
 };
 
-export const getUser = async (petId: string): Promise<AxiosResponse<UserApiDataType>> => {
+export const getUser = async (userId: string): Promise<AxiosResponse<UserApiDataType>> => {
   try {
-    const requestedUser: AxiosResponse<UserApiDataType> = await axios.get(`${baseUrl}/users/${petId}`);
+    const requestedUser: AxiosResponse<UserApiDataType> = await axios.get(`${baseUrl}/users/${userId}`);
     return requestedUser;
   } catch (error) {
     throw new Error(error);

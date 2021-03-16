@@ -7,6 +7,7 @@ type PostApiDataType = {
   status: string; //200
   posts: IPost[]; // all posts
   post?: IPost; // updated post
+  categories?: string[]; // sports,religion,music...
 };
 
 type CommentApiDataType = {

@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { PostApiDataType } from '../types/ApiDataTypes';
 import { IPost } from '../types/IPost';
 
-const baseUrl: string | undefined = 'http://localhost:5000';
+const baseUrl: string | undefined = 'http://193.106.55.127:5000';
 
 export const getPosts = async (): Promise<AxiosResponse<PostApiDataType>> => {
   try {
@@ -17,8 +17,8 @@ export const getPosts = async (): Promise<AxiosResponse<PostApiDataType>> => {
 
 export const getPost = async (postId: string): Promise<AxiosResponse<PostApiDataType>> => {
   try {
-    const requestedPost: AxiosResponse<PostApiDataType> = await axios.get(`${baseUrl}/posts/${postId}`);
-    return requestedPost;
+    const response: AxiosResponse<PostApiDataType> = await axios.get(`${baseUrl}/posts/${postId}`);
+    return response;
   } catch (error) {
     throw new Error(`error while fetching post ${postId}, error: ${error}`);
   }
@@ -40,8 +40,8 @@ export const addPost = async (formData: IPost): Promise<AxiosResponse<PostApiDat
     };
     //console.log(`post: ${Object.keys(post)}\n ${Object.values(post)}`);
 
-    const savePost: AxiosResponse<PostApiDataType> = await axios.post(`${baseUrl}/posts/${post}`, post);
-    return savePost;
+    const response: AxiosResponse<PostApiDataType> = await axios.post(`${baseUrl}/posts/${post}`, post);
+    return response;
   } catch (error) {
     throw new Error(error);
   }
@@ -49,8 +49,17 @@ export const addPost = async (formData: IPost): Promise<AxiosResponse<PostApiDat
 
 export const updatePost = async (post: IPost): Promise<AxiosResponse<PostApiDataType>> => {
   try {
-    const updatedPost: AxiosResponse<PostApiDataType> = await axios.put(`${baseUrl}/posts/${post.id}`, post);
-    return updatedPost;
+    const response: AxiosResponse<PostApiDataType> = await axios.put(`${baseUrl}/posts/${post.id}`, post);
+    return response;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export const getCategories = async (): Promise<AxiosResponse<PostApiDataType>> => {
+  try {
+    const response: AxiosResponse<PostApiDataType> = await axios.get(`${baseUrl}/posts/categories`);
+    return response;
   } catch (error) {
     throw new Error(error);
   }
@@ -58,8 +67,8 @@ export const updatePost = async (post: IPost): Promise<AxiosResponse<PostApiData
 
 export const deletePost = async (id: string): Promise<AxiosResponse<PostApiDataType>> => {
   try {
-    const deletedPost: AxiosResponse<PostApiDataType> = await axios.delete(`${baseUrl}/posts/${id}`);
-    return deletedPost;
+    const response: AxiosResponse<PostApiDataType> = await axios.delete(`${baseUrl}/posts/${id}`);
+    return response;
   } catch (error) {
     throw new Error(error);
   }

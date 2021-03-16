@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { GroupApiDataType } from '../types/ApiDataTypes';
 import { IGroup } from '../types/IGroup';
 
-const baseUrl: string | undefined = 'http://localhost:5000';
+const baseUrl: string | undefined = 'http://193.106.55.127:5000';
 
 export const getGroups = async (): Promise<AxiosResponse<GroupApiDataType>> => {
   try {
