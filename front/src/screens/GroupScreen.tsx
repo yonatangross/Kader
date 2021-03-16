@@ -1,6 +1,6 @@
 import { useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Button, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Button, FlatList, TouchableOpacity } from 'react-native';
 import { getGroup } from '../api/groups';
 import UserDetails from '../components/UserDetails';
 import { IGroup } from '../types/IGroup';
@@ -28,23 +28,29 @@ const GroupScreen = (props: GroupScreenProps) => {
         // will join the new post to the existing list of posts in group 
     }
 
+    if(group){
+
     const groupMembrsList : IUser[] = group.members;
 
     return (
         <View>
-            <Text>{group?.name}</Text>
-            <Text>{group?.description}</Text>
+            <Text>{group.name}</Text>
+            <Text>{group.description}</Text>
             <Button
                 title="Create post"
                 onPress={() => handleCreate()}
             />
+    
             <FlatList
                 data={groupMembrsList}
-                renderItem={({item, index}) => <UserDetails userId={group?.members[index].id}/>}
+                renderItem={({item}) => <UserDetails userId={item.id} /> }
                 keyExtractor={() => group.id}
-            />
+          />
+        
+    
 
         </View>
     );
+}
 };
     

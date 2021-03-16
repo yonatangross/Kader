@@ -71,6 +71,15 @@ const CreatePostModal = (props: CreatePostModalProps) => {
           // console.log('Modal has now been closed.');
         }}
       >
+<<<<<<< HEAD
+        Cancel post creation
+      </Text>
+    </Modal>
+    
+    <PostCategorySelector active={activeSection[1]} dispatch={dispatch}/>
+    {/* <PostDetailsForm active={activeSection[2]} dispatch={dispatch}/>
+    <GroupsSelector active={activeSection[3]} dispatch={dispatch}/> */}
+=======
         <PostCreationProgressBar activeSection={activeSection} />
         <PostTypeSelector active={activeSection[0]} dispatch={dispatch} setActiveSection={setActiveSection} />
         <PostCategorySelector active={activeSection[1]} dispatch={dispatch} setActiveSection={setActiveSection} />
@@ -80,6 +89,7 @@ const CreatePostModal = (props: CreatePostModalProps) => {
           <CancelPostCreationButton active={props.visible} activeSections={activeSection} setActiveSection={setActiveSection} setActive={props.onChange} />
         </View>
       </Modal>
+>>>>>>> 37e7c29bc2525fdd4ac1bae02cd8c194ec9cc838
     </>
   );
 };
