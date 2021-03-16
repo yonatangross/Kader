@@ -26,7 +26,7 @@ export const getPost = async (postId: string): Promise<AxiosResponse<PostApiData
 
 export const addPost = async (formData: IPost): Promise<AxiosResponse<PostApiDataType>> => {
   try {
-    console.log(formData);
+    //(formData);
     const post: Omit<IPost, 'id'> = {
       type: formData.type,
       category: formData.category,
@@ -38,7 +38,7 @@ export const addPost = async (formData: IPost): Promise<AxiosResponse<PostApiDat
       location: formData.location,
       images: formData.images,
     };
-    console.log(`post: ${Object.keys(post)}\n ${Object.values(post)}`);
+    //console.log(`post: ${Object.keys(post)}\n ${Object.values(post)}`);
 
     const savePost: AxiosResponse<PostApiDataType> = await axios.post(`${baseUrl}/posts/${post}`, post);
     return savePost;

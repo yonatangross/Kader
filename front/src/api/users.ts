@@ -26,7 +26,7 @@ export const getUser = async (petId: string): Promise<AxiosResponse<UserApiDataT
 
 export const addUser = async (formData: IUser): Promise<AxiosResponse<UserApiDataType>> => {
   try {
-    console.log(formData);
+    //console.log(formData);
     const user: Omit<IUser, 'id'> = {
       firstName: formData.firstName,
       lastName: formData.lastName,
@@ -39,7 +39,7 @@ export const addUser = async (formData: IUser): Promise<AxiosResponse<UserApiDat
       posts: [],
       imageUri: undefined,
     };
-    console.log(`user: ${Object.keys(user)}\n ${Object.values(user)}`);
+    //console.log(`user: ${Object.keys(user)}\n ${Object.values(user)}`);
 
     const saveUser: AxiosResponse<UserApiDataType> = await axios.post(`${baseUrl}/users/${user}`, user);
     return saveUser;

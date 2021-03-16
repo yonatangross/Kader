@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, Button, FlatList } from 'react-native';
 import { getGroup } from '../api/groups';
 import UserDetails from '../components/UserDetails';
 import { IGroup } from '../types/IGroup';
+import { IUser } from '../types/IUser';
 
 
 export interface GroupScreenProps {
@@ -12,7 +13,7 @@ export interface GroupScreenProps {
 
 const GroupScreen = (props: GroupScreenProps) => {
     const route = useRoute();
-    console.log(route.params);
+    //console.log(route.params);
     const [group, setGroup] = useState<IGroup>();
 
     useEffect(() => {
@@ -27,7 +28,7 @@ const GroupScreen = (props: GroupScreenProps) => {
         // will join the new post to the existing list of posts in group 
     }
 
-    const groupMembrsList = group?.members;
+    const groupMembrsList : IUser[] = group.members;
 
     return (
         <View>
@@ -40,7 +41,7 @@ const GroupScreen = (props: GroupScreenProps) => {
             <FlatList
                 data={groupMembrsList}
                 renderItem={({item, index}) => <UserDetails userId={group?.members[index].id}/>}
-                keyExtractor={() => group?.id}
+                keyExtractor={() => group.id}
             />
 
         </View>

@@ -26,14 +26,14 @@ const CreatePostModal = (props: CreatePostModalProps) => {
     if (props.visible) {
       //modal opened after was closed
       setActiveSection([true, false, false, false]);
-      console.log(`visible:`);
+      //console.log(`visible:`);
       dispatch({ type: 'Reset' });
-      console.log(state);
+     //console.log(state);
     } else {
       // modal closed after was open.
-      console.log(`not visible:`);
+      //console.log(`not visible:`);
       setActiveSection([false, false, false, false]);
-      console.log(state);
+      //console.log(state);
     }
   }, [props.visible]);
 
@@ -43,7 +43,7 @@ const CreatePostModal = (props: CreatePostModalProps) => {
       transparent={false}
       visible={props.visible}
       onRequestClose={() => {
-        console.log('Modal has now been closed.');
+       // console.log('Modal has now been closed.');
       }}
     >
       <Text style={styles.progressStatus}>Create new post</Text>

@@ -26,11 +26,11 @@ export const getComment = async (commentId: string): Promise<AxiosResponse<Comme
 
 export const addComment = async (formData: IComment): Promise<AxiosResponse<CommentApiDataType>> => {
   try {
-    console.log(formData);
+    //console.log(formData);
     const comment: Omit<IComment, 'id'> = {
       content: formData.content,
     };
-    console.log(`comment: ${Object.keys(comment)}\n ${Object.values(comment)}`);
+   // console.log(`comment: ${Object.keys(comment)}\n ${Object.values(comment)}`);
 
     const saveComment: AxiosResponse<CommentApiDataType> = await axios.post(`${baseUrl}/comments/${comment}`, comment);
     return saveComment;

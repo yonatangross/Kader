@@ -26,5 +26,5 @@ type UserApiDataType = {
   message: string; // post updated
   status: string; //200
   users: IUser[]; // all posts
-  user?: IUser; // updated post
+  user: IUser; // updated post
 };

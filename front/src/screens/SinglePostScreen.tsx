@@ -11,7 +11,7 @@ export interface SinglePostPageProps {
 
 const SinglePostScreen = (props: SinglePostPageProps) => {
   const route = useRoute();
-  console.log(route.params);
+  //console.log(route.params);
   const [post, setPost] = useState<IPost>();
 
   useEffect(() => {

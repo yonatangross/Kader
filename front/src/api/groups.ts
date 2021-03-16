@@ -26,7 +26,7 @@ export const getGroup = async (groupId: string): Promise<AxiosResponse<GroupApiD
 
 export const addGroup = async (formData: IGroup): Promise<AxiosResponse<GroupApiDataType>> => {
   try {
-    console.log(formData);
+    //console.log(formData);
     const group: Omit<IGroup, 'id'> = {
       category: formData.category,
       description: formData.description,
@@ -37,7 +37,7 @@ export const addGroup = async (formData: IGroup): Promise<AxiosResponse<GroupApi
       posts: [],
       searchable: formData.searchable,
     };
-    console.log(`group: ${Object.keys(group)}\n ${Object.values(group)}`);
+    //console.log(`group: ${Object.keys(group)}\n ${Object.values(group)}`);
 
     const saveGroup: AxiosResponse<GroupApiDataType> = await axios.post(`${baseUrl}/groups/${group}`, group);
     return saveGroup;
