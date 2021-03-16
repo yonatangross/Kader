@@ -20,6 +20,7 @@ const SinglePostScreen = (props: SinglePostPageProps) => {
       setPost(post);
     });
   }, [post]);
+  
 
   return (
     <View>

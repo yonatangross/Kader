@@ -65,8 +65,8 @@ const CreatePostModal = (props: CreatePostModalProps) => {
     </Modal>
     
     <PostCategorySelector active={activeSection[1]} dispatch={dispatch}/>
-    <PostDetailsForm active={activeSection[2]} dispatch={dispatch}/>
-    <GroupsSelector active={activeSection[3]} dispatch={dispatch}/>
+    {/* <PostDetailsForm active={activeSection[2]} dispatch={dispatch}/>
+    <GroupsSelector active={activeSection[3]} dispatch={dispatch}/> */}
     </>
   );
 };
