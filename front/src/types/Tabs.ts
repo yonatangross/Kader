@@ -1,7 +1,9 @@
 export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
-  Register:undefined;
+  Register: undefined;
+  Login: undefined;
+
   SinglePost: undefined;
 };
 
@@ -24,22 +26,20 @@ export type ProfileParamList = {
   ProfileScreen: undefined;
 };
 
-
 export type NotificationsParamList = {
   NotificationsScreen: undefined;
 };
-
 
 export type RegisterParamList = {
   RegisterScreen: undefined;
 };
 
-
-
 export type SinglePostProps = {
   SinglePostScreen: undefined;
 };
 
+
 export type GroupProps = {
   SinglePostScreen: undefined;
 };
+
