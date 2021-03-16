@@ -6,6 +6,7 @@ import { getCategories } from '../../api/posts';
 export interface PostCategorySelectorProps {
   active: boolean;
   dispatch: Function;
+  setActiveSection: Function;
 }
 const PlusIcon = () => <Icon name="plus-circle-outline" style={{ width: 32, height: 32 }} fill={'rgba(34, 83, 231)'} />;
 
@@ -30,6 +31,9 @@ const PostCategorySelector = (props: PostCategorySelectorProps) => {
       size="small"
       onPress={() => {
         props.dispatch({ type: 'Category', payload: item });
+        props.setActiveSection([false, false, true, false]);
+
+        console.log(props.dispatch);
       }}
     >
       {(buttonProps: any) => (
@@ -43,7 +47,7 @@ const PostCategorySelector = (props: PostCategorySelectorProps) => {
   if (props.active) {
     return (
       <>
-        <List style={styles.container} data={categories} renderItem={renderItem} />
+        <List data={categories} renderItem={renderItem} />
       </>
     );
   } else {
@@ -52,9 +56,6 @@ const PostCategorySelector = (props: PostCategorySelectorProps) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    maxHeight: 180,
-  },
   button: {
     justifyContent: 'center',
     alignItems: 'center',

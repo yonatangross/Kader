@@ -6,6 +6,7 @@ import { PostType } from '../../types/PostType';
 export interface PostTypeSelectorProps {
   active: boolean;
   dispatch: Function;
+  setActiveSection: Function;
 }
 const PlusIcon = () => <Icon name="plus-circle-outline" style={{ width: 32, height: 32 }} fill={'rgba(34, 83, 231)'} />;
 
@@ -20,7 +21,8 @@ const PostTypeSelector = (props: PostTypeSelectorProps) => {
           size="small"
           onPress={() => {
             props.dispatch({ type: 'PostType', payload: PostType.REQUEST });
-            
+            props.setActiveSection([false, true, false, false]);
+            props.active = false;
           }}
         >
           {(buttonProps: any) => (
@@ -37,6 +39,8 @@ const PostTypeSelector = (props: PostTypeSelectorProps) => {
           size="small"
           onPress={() => {
             props.dispatch({ type: 'PostType', payload: PostType.OFFER });
+            props.setActiveSection([false, true, false, false]);
+            props.active = false;
           }}
         >
           {(buttonProps: any) => (
@@ -52,6 +56,8 @@ const PostTypeSelector = (props: PostTypeSelectorProps) => {
           size="small"
           onPress={() => {
             props.dispatch({ type: 'PostType', payload: PostType.HANDOVER });
+            props.setActiveSection([false, true, false, false]);
+            props.active = false;
           }}
         >
           {(buttonProps: any) => (

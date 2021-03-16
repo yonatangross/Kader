@@ -7,7 +7,7 @@ export const initCreatePost = () => {
     postType: PostType;
     category: string;
     details: { title: string; description: string; location: string; images: string[] };
-    groups: IGroup[];
+    groups: string[];
   } = {
     postType: PostType.REQUEST,
     category: '',

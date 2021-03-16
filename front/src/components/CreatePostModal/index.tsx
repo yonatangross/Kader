@@ -1,9 +1,14 @@
 import React, { useEffect, useReducer, useState } from 'react';
-import { Text, StyleSheet, Modal } from 'react-native';
-import * as Progress from 'react-native-progress';
+import { Text, StyleSheet, Modal, View } from 'react-native';
+import { addPost } from '../../api/posts';
 import { createPostReducer, initCreatePost } from '../../reducers/createPostReducer';
+import { IPost } from '../../types/IPost';
 import { PostType } from '../../types/PostType';
+import CancelPostCreationButton from '../CancelPostCreationButton';
+import GroupsSelector from '../GroupsSelector';
 import PostCategorySelector from '../PostCategorySelector';
+import PostCreationProgressBar from '../PostCreationProgressBar';
+import PostDetailsForm from '../PostDetailsForm';
 import PostTypeSelector from '../PostTypeSelector';
 
 export interface CreatePostModalProps {
@@ -20,46 +25,53 @@ const createPostInitState = {
 
 const CreatePostModal = (props: CreatePostModalProps) => {
   const [state, dispatch] = useReducer(createPostReducer, createPostInitState, initCreatePost);
-
   const [activeSection, setActiveSection] = useState<boolean[]>([false, false, false, false]);
+  const [submitFlag, setSubmitFlag] = useState<boolean>(false);
+  const submitPost = () => {
+    state.groups.forEach((group) => {
+      addPost(
+        {
+          type: state.postType,
+          category: state.category,
+          creator: '1', //todo: add user
+          title: state.details.title,
+          description: state.details.description,
+          groupId: group,
+          comments: [],
+          location: '',
+          images: state.details.images,
+        },
+        group
+      );
+    });
+  };
 
   useEffect(() => {
     if (props.visible) {
       //modal opened after was closed
       setActiveSection([true, false, false, false]);
-      //console.log(`visible:`);
       dispatch({ type: 'Reset' });
-     //console.log(state);
     } else {
       // modal closed after was open.
-      //console.log(`not visible:`);
       setActiveSection([false, false, false, false]);
-      //console.log(state);
     }
-  }, [props.visible]);
+    if (submitFlag) {
+      submitPost();
+      setSubmitFlag(false);
+    }
+  }, [props.visible, submitFlag]);
 
   return (
     <>
-    <Modal
-      animationType={'slide'}
-      transparent={false}
-      visible={props.visible}
-      onRequestClose={() => {
-       // console.log('Modal has now been closed.');
-      }}
-    >
-      <Text style={styles.progressStatus}>Create new post</Text>
-      {/* <PostCreationProgressBar  /> */}
-      <Progress.Bar progress={0.3} width={250} style={styles.progressBar} />
-      <PostTypeSelector active={activeSection[0]} dispatch={dispatch} />
-      
-
-      <Text
-        style={styles.closeText}
-        onPress={() => {
-          props.onChange(!props.visible);
+      <Modal
+        animationType={'slide'}
+        transparent={false}
+        visible={props.visible}
+        onRequestClose={() => {
+          // console.log('Modal has now been closed.');
         }}
       >
+<<<<<<< HEAD
         Cancel post creation
       </Text>
     </Modal>
@@ -67,88 +79,26 @@ const CreatePostModal = (props: CreatePostModalProps) => {
     <PostCategorySelector active={activeSection[1]} dispatch={dispatch}/>
     {/* <PostDetailsForm active={activeSection[2]} dispatch={dispatch}/>
     <GroupsSelector active={activeSection[3]} dispatch={dispatch}/> */}
+=======
+        <PostCreationProgressBar activeSection={activeSection} />
+        <PostTypeSelector active={activeSection[0]} dispatch={dispatch} setActiveSection={setActiveSection} />
+        <PostCategorySelector active={activeSection[1]} dispatch={dispatch} setActiveSection={setActiveSection} />
+        <PostDetailsForm active={activeSection[2]} state={state} dispatch={dispatch} setActiveSection={setActiveSection} setSubmitFlag={setSubmitFlag} />
+        <GroupsSelector active={activeSection[3]} state={state} dispatch={dispatch} setActiveSection={setActiveSection} setVisible={props.onChange} setSubmitFlag={setSubmitFlag} />
+        <View style={styles.bottom}>
+          <CancelPostCreationButton active={props.visible} activeSections={activeSection} setActiveSection={setActiveSection} setActive={props.onChange} />
+        </View>
+      </Modal>
+>>>>>>> 37e7c29bc2525fdd4ac1bae02cd8c194ec9cc838
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  bottom: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    margin: 10,
-    backgroundColor: 'transparent',
-  },
-  roundButton: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 10,
-    borderRadius: 100,
-    margin: 10,
-    marginRight: 40,
-    marginLeft: 40,
-  },
-
-  modalButton: {
-    display: 'flex',
-    height: 60,
-    borderRadius: 6,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    backgroundColor: '#2AC062',
-    shadowColor: '#2AC062',
-    shadowOpacity: 0.5,
-    shadowOffset: {
-      height: 10,
-      width: 0,
-    },
-    shadowRadius: 25,
-  },
-  closeButton: {
-    display: 'flex',
-    height: 60,
-    borderRadius: 6,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#FF3974',
-    shadowColor: '#2AC062',
-    shadowOpacity: 0.5,
-    shadowOffset: {
-      height: 10,
-      width: 0,
-    },
-    shadowRadius: 25,
-  },
-  buttonText: {
-    color: '#FFFFFF',
-    fontSize: 22,
-  },
-  image: {
-    marginTop: 50,
-    marginBottom: 10,
-    width: '100%',
-    height: 300,
-  },
-  text: {
-    fontSize: 24,
-    marginBottom: 30,
-    padding: 40,
-  },
-  closeText: {
-    fontSize: 24,
-    color: '#00479e',
-    textAlign: 'center',
-  },
-  progressBar: { display: 'flex', justifyContent: 'center', alignSelf: 'center', marginTop: 20 },
-  progressStatus: {
-    marginTop: 20,
-    display: 'flex',
-    justifyContent: 'center',
-    alignSelf: 'center',
+    justifyContent: 'flex-end',
+    marginBottom: 36,
   },
 });
 
