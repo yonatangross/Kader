@@ -3,6 +3,7 @@ import { Text, StyleSheet, Modal } from 'react-native';
 import * as Progress from 'react-native-progress';
 import { createPostReducer, initCreatePost } from '../../reducers/createPostReducer';
 import { PostType } from '../../types/PostType';
+import PostCategorySelector from '../PostCategorySelector';
 import PostTypeSelector from '../PostTypeSelector';
 
 export interface CreatePostModalProps {
@@ -38,6 +39,7 @@ const CreatePostModal = (props: CreatePostModalProps) => {
   }, [props.visible]);
 
   return (
+    <>
     <Modal
       animationType={'slide'}
       transparent={false}
@@ -50,6 +52,7 @@ const CreatePostModal = (props: CreatePostModalProps) => {
       {/* <PostCreationProgressBar  /> */}
       <Progress.Bar progress={0.3} width={250} style={styles.progressBar} />
       <PostTypeSelector active={activeSection[0]} dispatch={dispatch} />
+      
 
       <Text
         style={styles.closeText}
@@ -60,6 +63,11 @@ const CreatePostModal = (props: CreatePostModalProps) => {
         Cancel post creation
       </Text>
     </Modal>
+    
+    <PostCategorySelector active={activeSection[1]} dispatch={dispatch}/>
+    <PostDetailsForm active={activeSection[2]} dispatch={dispatch}/>
+    <GroupsSelector active={activeSection[3]} dispatch={dispatch}/>
+    </>
   );
 };
 
