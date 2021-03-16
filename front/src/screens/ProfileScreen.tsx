@@ -1,32 +1,163 @@
-import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import React from 'react';
+import { ImageBackground, ListRenderItemInfo, StyleSheet, View } from 'react-native';
+import { Avatar, Button, Card, Layout, List, Text } from '@ui-kitten/components';
+import { ProfileSocial } from  '../layouts/social/profile/extra/profile-social.component';
+import { HeartIcon } from '../layouts/social/profile/extra/icons';
+import { Post, Profile } from '../layouts/social/profile/extra/data';
 
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
+const profile: Profile = Profile.jenniferGreen();
 
-export default function ProfileScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Profile</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/ProfileScreen.js" />
-    </View>
+const posts: Post[] = [
+  Post.byJenniferGreen(),
+  Post.byAlexaTenorio(),
+];
+
+export default function ProfileScreen (navigation: any) {
+
+  const onFollowButtonPress = (): void => {
+    navigation && navigation.goBack();
+  };
+
+  const renderItemHeader = (info: ListRenderItemInfo<Post>): React.ReactElement => (
+    <ImageBackground
+      style={styles.postHeader}
+      source={info.item.image}
+    />
   );
-}
+
+  const renderItem = (info: ListRenderItemInfo<Post>): React.ReactElement => (
+    <Card
+      style={styles.post}
+      header={() => renderItemHeader(info)}>
+      <View style={styles.postBody}>
+        <Avatar source={info.item.author.photo}/>
+        <View style={styles.postAuthorContainer}>
+          <Text
+            category='s2'>
+            {info.item.author.fullName}
+          </Text>
+          <Text
+            appearance='hint'
+            category='c1'>
+            {info.item.date}
+          </Text>
+        </View>
+        <Button
+          style={styles.iconButton}
+          appearance='ghost'
+          status='danger'
+          accessoryLeft={HeartIcon}>
+          {`${info.item.likes.length}`}
+        </Button>
+      </View>
+    </Card>
+  );
+
+  const renderHeader = (): React.ReactElement => (
+    <Layout
+      style={styles.header}
+      level='1'>
+      <Avatar
+        style={styles.profileAvatar}
+        size='large'
+        source={profile.photo}
+      />
+      <View style={styles.profileDetailsContainer}>
+        <Text category='h4'>
+          {profile.fullName}
+        </Text>
+        <Text
+          appearance='hint'
+          category='s1'>
+          {profile.location}
+        </Text>
+        <View style={styles.profileSocialsContainer}>
+          <ProfileSocial
+            style={styles.profileSocialContainer}
+            hint='Followers'
+            value={`${profile.followers}`}
+          />
+          <ProfileSocial
+            style={styles.profileSocialContainer}
+            hint='Following'
+            value={`${profile.following}`}
+          />
+          <ProfileSocial
+            style={styles.profileSocialContainer}
+            hint='Posts'
+            value={`${profile.posts}`}
+          />
+        </View>
+        <Button
+          style={styles.followButton}
+          onPress={onFollowButtonPress}>
+          FOLLOW
+        </Button>
+      </View>
+    </Layout>
+  );
+
+  return (
+    <List
+      style={styles.list}
+      contentContainerStyle={styles.listContent}
+      data={posts}
+      renderItem={renderItem}
+      ListHeaderComponent={renderHeader}
+    />
+  );
+};
 
 const styles = StyleSheet.create({
-  container: {
+  list: {
     flex: 1,
-    alignItems: 'center',
+  },
+  listContent: {
+    paddingHorizontal: 8,
+    paddingBottom: 8,
+  },
+  header: {
+    flexDirection: 'row',
+    marginHorizontal: -16,
+    paddingHorizontal: 16,
+    paddingTop: 16,
+    marginBottom: 8,
+  },
+  profileAvatar: {
+    marginHorizontal: 8,
+  },
+  profileDetailsContainer: {
+    flex: 1,
+    marginHorizontal: 8,
+  },
+  profileSocialsContainer: {
+    flexDirection: 'row',
+    marginTop: 24,
+  },
+  profileSocialContainer: {
+    flex: 1,
+  },
+  followButton: {
+    marginVertical: 16,
+  },
+  post: {
+    margin: 8,
+  },
+  postHeader: {
+    height: 220,
+  },
+  postBody: {
+    flexDirection: 'row',
+    marginHorizontal: -8,
+  },
+  postAuthorContainer: {
+    flex: 1,
     justifyContent: 'center',
+    marginHorizontal: 16,
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  iconButton: {
+    flexDirection: 'row-reverse',
+    paddingHorizontal: 0,
   },
 });
+

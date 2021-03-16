@@ -11,12 +11,11 @@ export interface SinglePostPageProps {
 
 const SinglePostScreen = (props: SinglePostPageProps) => {
   const route = useRoute();
-  //console.log(route.params);
   const [post, setPost] = useState<IPost>();
 
   useEffect(() => {
     //@ts-ignore
-    getPost(route.params.id).then((post: IPost) => {
+    getPost(post?.id).then((post: IPost) => {
       setPost(post);
     });
   }, [post]);
@@ -24,8 +23,7 @@ const SinglePostScreen = (props: SinglePostPageProps) => {
 
   return (
     <View>
-      {/* <ImagesCarusel title={props.post.title} /> */}
-      <Text>{post?.title}</Text>
+      <Text>dsfsdfsdf</Text>
     </View>
   );
 };

@@ -51,6 +51,7 @@ const GroupScreen = (props: GroupScreenProps) => {
 
         </View>
     );
-}
+}else{return <></>}
 };
     
+export default GroupScreen;

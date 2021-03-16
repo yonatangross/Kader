@@ -39,3 +39,7 @@ export type RegisterParamList = {
 export type SinglePostProps = {
   SinglePostScreen: undefined;
 };
+
+export type GroupProps = {
+  SinglePostScreen: undefined;
+};

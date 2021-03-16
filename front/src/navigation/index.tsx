@@ -9,6 +9,7 @@ import MainTabNavigator from "./MainTabNavigator";
 import Colors from "../constants/Colors";
 import RegisterScreen from "../screens/RegisterScreen";
 import SinglePostScreen from "../screens/SinglePostScreen";
+import GroupScreen from "../screens/GroupScreen";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
 	return (
@@ -56,6 +57,7 @@ function RootNavigator() {
 			<Stack.Screen name="Register" component={RegisterScreen} />
 
 			<Stack.Screen name="SinglePost" component={SinglePostScreen} />
+
 
 			<Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: "Oops!" }} />
 		</Stack.Navigator>
