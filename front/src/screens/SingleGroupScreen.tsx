@@ -1,50 +1,127 @@
-import { useRoute } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Button, FlatList, TouchableOpacity } from 'react-native';
-import { getGroup } from '../api/groups';
-import UserDetails from '../components/UserDetails';
-import { IGroup } from '../types/IGroup';
-import { IUser } from '../types/IUser';
+import React from 'react';
+import { ImageBackground, Platform, View } from 'react-native';
+import { Input, Layout, StyleService, Text, useStyleSheet } from '@ui-kitten/components';
+import { KeyboardAvoidingView } from '../layouts/groups/singleGroup/extra/keyboard-avoiding-view.component';
+import { CommentList } from '../layouts/groups/singleGroup/extra/comment-list.component';
+import { Article } from '../layouts/groups/singleGroup/extra/data';
 
-export interface SingleGroupScreenProps {
-  group: IGroup;
-}
+const data: Article = Article.howToEatHealthy();
 
-const SingleGroupScreen = (props: SingleGroupScreenProps) => {
-  const route = useRoute();
-  const [group, setGroup] = useState<IGroup>(props.group);
+const keyboardOffset = (height: number): number | undefined=> Platform.select({
+  android: 0,
+  ios: height,
+});
 
-  console.log(group);
+export default function singleGroupScreen() {
 
-  useEffect(() => {
-    //@ts-ignore
-    getGroup(route.params.id).then((group: IGroup) => {
-      setGroup(group);
-    });
-  }, [group]);
+  const styles = useStyleSheet(themedStyles);
+  const [inputComment, setInputComment] = React.useState<string>();
 
-  const handleCreate = () =>
-    void (
-      {
-        //will create new post via modal --> yoni
-        // will join the new post to the existing list of posts in group
-      }
-    );
+  const renderCommentsLabel = React.useCallback(evaProps => (
+    <Text 
+      {...evaProps}
+      style={styles.commentInputLabel}>
+      Comments
+    </Text>
+  ), []);
 
-  // if (group) {
-  // const groupMembersList: IUser[] = group.members;
-  return (
-    <View>
-      <Text>Group Title</Text>
-      <Text>Group Description</Text>
-      <Button title="Create post" onPress={() => handleCreate()} />
-
-      {/* <FlatList data={groupMembersList} renderItem={({ item }) => <UserDetails userId={item.id} />} keyExtractor={() => group.id} /> */}
-    </View>
+  const renderHeader = (): React.ReactElement => (
+    <Layout
+      style={styles.header}
+      level='1'>
+      <Text
+        style={styles.titleLabel}
+        category='h4'>
+        {data.title}
+      </Text>
+      <Text
+        style={styles.descriptionLabel}
+        category='s1'>
+        {data.description}
+      </Text>
+      <ImageBackground
+        style={styles.image}
+        source={data.image}
+      />
+      <Text style={styles.contentLabel}>
+        {data.content}
+      </Text>
+      <View style={styles.authoringContainer}>
+        <Text
+          appearance='hint'
+          category='p2'>
+          {`By ${data.author.fullName}`}
+        </Text>
+        <Text
+          style={styles.dateLabel}
+          appearance='hint'
+          category='p2'>
+          {data.date}
+        </Text>
+      </View>
+      <Input
+        style={styles.commentInput}
+        label={renderCommentsLabel}
+        placeholder='Write your comment'
+        value={inputComment}
+        onChangeText={setInputComment}
+      />
+    </Layout>
   );
-  // } else {
-  //   return <></>;
-  // }
+
+  return (
+    <KeyboardAvoidingView
+      style={styles.container}
+      offset={keyboardOffset}>
+      <CommentList
+        style={styles.list}
+        data={data.comments}
+        ListHeaderComponent={renderHeader()}
+      />
+    </KeyboardAvoidingView>
+  );
 };
 
-export default SingleGroupScreen;
+const themedStyles = StyleService.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'background-basic-color-2',
+    paddingBottom: 8,
+  },
+  list: {
+    flex: 1,
+  },
+  header: {
+    marginBottom: 8,
+  },
+  image: {
+    height: 240,
+  },
+  titleLabel: {
+    marginHorizontal: 24,
+    marginVertical: 16,
+  },
+  descriptionLabel: {
+    margin: 24,
+  },
+  contentLabel: {
+    margin: 24,
+  },
+  authoringContainer: {
+    flexDirection: 'row',
+    marginHorizontal: 24,
+  },
+  dateLabel: {
+    marginHorizontal: 8,
+  },
+  commentInputLabel: {
+    fontSize: 16,
+    marginBottom: 8,
+    color: 'text-basic-color',
+  },
+  commentInput: {
+    marginHorizontal: 24,
+    marginTop: 24,
+    marginBottom: 20,
+  },
+});
