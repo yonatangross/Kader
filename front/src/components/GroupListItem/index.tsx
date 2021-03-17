@@ -2,31 +2,33 @@ import React from 'react';
 import { IGroup } from '../../types/IGroup';
 import { Button, Icon, ListItem, Text } from '@ui-kitten/components';
 import { useNavigation } from '@react-navigation/native';
-import navigation from '../../navigation';
+import { TouchableWithoutFeedback } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export interface GroupListItemProps {
-  item: IGroup;
-  index: number;
+  group: IGroup;
 }
 
 const GroupListItem = (props: GroupListItemProps) => {
+  let { group: group } = props;
 
   const navigation = useNavigation();
-  const onPress = () => {
-    navigation.navigate('Group');
-  };
-
-
-  let { item, index } = props;
 
   const renderItemAccessory = (props: any) => <Button size="tiny">Join Group</Button>;
 
   const renderItemIcon = (props: any) => <Icon {...props} name="person" />;
 
+  const onClick = () => {
+    console.log(`in on click`);
+    navigation.navigate('SingleGroup', {
+      id: group.id,
+    });
+  };
+
   return (
-    <>
-      <ListItem title={`${item.name} `} description={`${item.description}`} accessoryLeft={renderItemIcon} accessoryRight={renderItemAccessory}  onPress={onPress}/>
-    </>
+    <TouchableOpacity onPress={onClick}>
+      <ListItem title={`${group.name}`} description={`${group.description}`} accessoryLeft={renderItemIcon} accessoryRight={renderItemAccessory} />
+    </TouchableOpacity>
   );
 };
 

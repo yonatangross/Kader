@@ -3,8 +3,8 @@ export type RootStackParamList = {
   NotFound: undefined;
   Register: undefined;
   Login: undefined;
-
   SinglePost: undefined;
+  SingleGroup: undefined;
 };
 
 export type MainTabParamList = {
@@ -39,7 +39,7 @@ export type SinglePostProps = {
 };
 
 
-export type GroupProps = {
-  SinglePostScreen: undefined;
+export type SingleGroupProps = {
+  SingleGroupScreen: undefined;
 };
 

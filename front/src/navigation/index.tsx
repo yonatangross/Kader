@@ -11,7 +11,7 @@ import RegisterScreen from "../screens/RegisterScreen";
 import LoginScreen from "../screens/LoginScreen";
 
 import SinglePostScreen from "../screens/SinglePostScreen";
-import GroupScreen from "../screens/GroupScreen";
+import SingleGroupScreen from "../screens/SingleGroupScreen";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
 	return (
@@ -61,6 +61,8 @@ function RootNavigator() {
 
 
 			<Stack.Screen name="SinglePost" component={SinglePostScreen} />
+			<Stack.Screen name="SingleGroup" component={SingleGroupScreen} />
+
 
 
 			<Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: "Oops!" }} />

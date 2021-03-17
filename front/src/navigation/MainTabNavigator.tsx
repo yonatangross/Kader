@@ -11,7 +11,7 @@ import { MainTabParamList, HomeParamList, NotificationsParamList, GroupsParamLis
 import NotificationsScreen from '../screens/NotificationsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import GroupsScreen from '../screens/GroupsScreen';
-import GroupScreen from '../screens/GroupScreen';
+import SingleGroupScreen from '../screens/SingleGroupScreen';
 
 const MainTab = createMaterialTopTabNavigator<MainTabParamList>();
 
