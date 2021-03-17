@@ -1,28 +1,31 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+
   container: {
     marginHorizontal: 10,
     marginVertical: 5,
     flexDirection: 'row',
-    width: '95%',
+    width: "95%",
     padding: 5,
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 25,
-    backgroundColor: '#fff',
+    borderStyle: 'dashed',
+    backgroundColor: '#fff'
   },
-  commentNumber: {
-    color: 'blue',
+  ImageContainer: {
+    padding: 5,
+    alignItems: 'flex-start',
+    
+  
   },
   DetailsContainer: {
     justifyContent: 'space-evenly',
     marginLeft: 5,
-    marginRight: 5,
+    marginRight: 5
   },
-  list: {
-    width: '100%',
-  },
+
   PostTitle: {
     fontWeight: 'bold',
     fontSize: 15,
@@ -31,10 +34,12 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: 'grey',
   },
-
-  profileAvatar: {
-    marginHorizontal: 8,
-  },
+  imageDesign:{
+    width: 200,
+    height: 100,
+    borderRadius: 15,
+   
+  }
 });
 
 export default styles;

@@ -1,40 +1,64 @@
-import React from 'react';
-import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Image, TouchableWithoutFeedback, FlatList } from 'react-native';
 import { IPost } from '../../types/IPost';
 import styles from './style';
 import { useNavigation } from '@react-navigation/native';
-const testImage = require('../../assets/images/test.png');
 import StarRating from '../StarRating/index';
+import { useEffect } from 'react';
+import { Avatar, Divider } from '@ui-kitten/components';
+import { getPost } from '../../api/posts';
+import moment from 'moment';
+import PostCommentItem from '../PostCommentItem';
 
 export interface PostListItemProps {
   post: IPost;
 }
 
 const PostListItem = (props: PostListItemProps) => {
-  let { post: post } = props;
+  const [post, setPost] = useState<any>();
+  let { post: postFromProps } = props;
 
   const navigation = useNavigation();
 
+  useEffect(() => {
+    getPost(postFromProps.postId)
+      .then((response) => {
+        setPost(response.data.post);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
   const onClick = () => {
     navigation.navigate('SinglePost', {
-      id: post.id,
+      id: postFromProps.postId,
     });
   };
-
-  return (
-    <TouchableWithoutFeedback onPress={onClick}>
-      <View style={styles.container}>
-        <View style={styles.ImageContainer}>
-          <Image style={styles.imageDesign} source={testImage} />
+  if (post) {
+    return (
+      <TouchableWithoutFeedback onPress={onClick}>
+        <View style={styles.container}>
+          <Avatar style={styles.profileAvatar} size="large" source={require('../../layouts/social/profile/assets/image-profile-1.jpg')} />
+          <View style={styles.DetailsContainer}>
+            <Text style={styles.PostTitle}>{post.title}</Text>
+            <Text>{moment(post.created).format('DD/MM/YYYY hh:mm')}</Text>
+            <Text style={styles.PostedBy}>
+              Posted by: {post.creator.firstName} {post.creator.lastName}
+            </Text>
+            <StarRating numOfStars={post.creator.rating} numOfRatings={post.creator.numberOfRatings} />
+            <Text style={styles.PostTitle}>{post.group.name}</Text>
+            {post.comments.length > 0 ? <Text style={styles.commentNumber}>{post.comments.length} comments</Text> : <></>}
+            <Divider />
+            <FlatList
+              data={post.comments}
+              renderItem={({ item: comment }) => <PostCommentItem comment={comment} />}
+              keyExtractor={(item) => item.commentId}
+              showsVerticalScrollIndicator={false}
+            />
+          </View>
         </View>
-        <View style={styles.DetailsContainer}>
-          <Text style={styles.PostTitle}>Looking for ice cream</Text>
-          <Text style={styles.PostedBy}>Posted By: Diana Lanciano</Text>
-          <StarRating numOfStars={3} numOfRatings={4585} />
-        </View>
-      </View>
-    </TouchableWithoutFeedback>
-  );
+      </TouchableWithoutFeedback>
+    );
+  } else return <></>;
 };
 
 export default PostListItem;

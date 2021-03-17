@@ -10,14 +10,10 @@ export interface PostDetailsFormProps {
   dispatch: Function;
   setActiveSection: Function;
   setSubmitFlag: Function;
+  finalStage: boolean;
 }
 const AlertIcon = (props: any) => <Icon {...props} name="alert-circle-outline" />;
 const StarIcon = (props: any) => <Icon {...props} name="star" />;
-
-const useInputState = (initialValue = '') => {
-  const [value, setValue] = React.useState(initialValue);
-  return { value, onChangeText: setValue };
-};
 
 const PostDetailsForm = (props: PostDetailsFormProps) => {
   if (props.active) {
@@ -65,16 +61,25 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
           accessoryLeft={StarIcon}
           size="small"
           onPress={() => {
-            props.setActiveSection([false, false, false, true]);
-            //todo: depends on clicked from group or main screen.
-            // props.setSubmitFlag(true);
+            if (props.finalStage) {
+              props.setSubmitFlag(true);
+              props.setActiveSection([false, false, false, false]);
+            } else {
+              props.setActiveSection([false, false, false, true]);
+            }
           }}
         >
-          {(buttonProps: any) => (
-            <Text {...buttonProps} style={{ color: 'rgba(34, 83, 231,1)' }}>
-              Submit details
-            </Text>
-          )}
+          {(buttonProps: any) =>
+            props.finalStage ? (
+              <Text {...buttonProps} style={{ color: 'rgba(34, 83, 231,1)' }}>
+                Submit details
+              </Text>
+            ) : (
+              <Text {...buttonProps} style={{ color: 'rgba(34, 83, 231,1)' }}>
+                Submit post
+              </Text>
+            )
+          }
         </Button>
       </>
     );

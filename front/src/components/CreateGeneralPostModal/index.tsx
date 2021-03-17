@@ -11,7 +11,7 @@ import PostCreationProgressBar from '../PostCreationProgressBar';
 import PostDetailsForm from '../PostDetailsForm';
 import PostTypeSelector from '../PostTypeSelector';
 
-export interface CreatePostModalProps {
+export interface CreateGeneralPostModalProps {
   visible: boolean;
   onChange: Function;
 }
@@ -23,26 +23,23 @@ const createPostInitState = {
   groups: [],
 };
 
-const CreatePostModal = (props: CreatePostModalProps) => {
+const CreateGeneralPostModal = (props: CreateGeneralPostModalProps) => {
   const [state, dispatch] = useReducer(createPostReducer, createPostInitState, initCreatePost);
   const [activeSection, setActiveSection] = useState<boolean[]>([false, false, false, false]);
   const [submitFlag, setSubmitFlag] = useState<boolean>(false);
   const submitPost = () => {
-    state.groups.forEach((group) => {
-      addPost(
-        {
-          type: state.postType,
-          category: state.category,
-          creator: '1', //todo: add user
-          title: state.details.title,
-          description: state.details.description,
-          groupId: group,
-          comments: [],
-          location: '',
-          images: state.details.images,
-        },
-        group
-      );
+    state.groups.forEach((groupId) => {
+      addPost({
+        type: state.postType,
+        category: state.category,
+        creator: '0c3084e2-8799-48ff-8b55-e9a24cc7d026', //todo: userId
+        title: state.details.title,
+        description: state.details.description,
+        groupId: groupId,
+        comments: [],
+        location: '',
+        images: state.details.images,
+      });
     });
   };
 
@@ -71,17 +68,30 @@ const CreatePostModal = (props: CreatePostModalProps) => {
           // console.log('Modal has now been closed.');
         }}
       >
-
         <PostCreationProgressBar activeSection={activeSection} />
         <PostTypeSelector active={activeSection[0]} dispatch={dispatch} setActiveSection={setActiveSection} />
         <PostCategorySelector active={activeSection[1]} dispatch={dispatch} setActiveSection={setActiveSection} />
-        <PostDetailsForm active={activeSection[2]} state={state} dispatch={dispatch} setActiveSection={setActiveSection} setSubmitFlag={setSubmitFlag} />
-        <GroupsSelector active={activeSection[3]} state={state} dispatch={dispatch} setActiveSection={setActiveSection} setVisible={props.onChange} setSubmitFlag={setSubmitFlag} />
+        <PostDetailsForm
+          active={activeSection[2]}
+          state={state}
+          dispatch={dispatch}
+          setActiveSection={setActiveSection}
+          finalStage={false}
+          setSubmitFlag={setSubmitFlag}
+        />
+
+        <GroupsSelector
+          active={activeSection[3]}
+          state={state}
+          dispatch={dispatch}
+          setActiveSection={setActiveSection}
+          setVisible={props.onChange}
+          setSubmitFlag={setSubmitFlag}
+        />
         <View style={styles.bottom}>
           <CancelPostCreationButton active={props.visible} activeSections={activeSection} setActiveSection={setActiveSection} setActive={props.onChange} />
         </View>
       </Modal>
-
     </>
   );
 };
@@ -94,4 +104,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreatePostModal;
+export default CreateGeneralPostModal;

@@ -1,9 +1,9 @@
 import { IComment } from './IComment';
-import { PostType } from './PostType';
 import { IUser } from './IUser';
+import { PostType } from './PostType';
 
 export interface IPost {
-  id: string;
+  postId: string;
   type: PostType;
   category: string;
   title: string;
@@ -13,6 +13,6 @@ export interface IPost {
   images: string[];
   creator: IUser;
   groupId: string;
-  // createdAt: Date;
+  created: Date;
   // updatedAt: Date;
 }

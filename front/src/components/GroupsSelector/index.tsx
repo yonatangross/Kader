@@ -5,6 +5,7 @@ import { Button, List } from '@ui-kitten/components';
 import { GroupPrivacy } from '../../types/GroupPrivacy';
 import GroupListItemSelector from '../GroupListItemSelector';
 import { CreatePostStateType } from '../../types/CreatePostTypes';
+import { getGroups } from '../../api/groups';
 
 export interface GroupsSelectorProps {
   active: boolean;
@@ -16,20 +17,19 @@ export interface GroupsSelectorProps {
 }
 
 const GroupsSelector = (props: GroupsSelectorProps) => {
-  let arr: IGroup[] = [];
-  for (let index = 0; index < 5; index++) {
-    arr.push({
-      id: index.toString(),
-      name: 'Senior devs',
-      category: 'Sports',
-      description: 'searching for a football 30cm.\n brand new please!',
-      mainLocation: 'Ashkelon',
-      searchable: true,
-      groupPrivacy: GroupPrivacy.PUBLIC,
-      members: [],
-      posts: [],
-    });
-  }
+  
+  const [groups, setGroups] = useState<IGroup[]>();
+
+  useEffect(() => {
+    getGroups()
+      .then((response) => {
+        const groupsResult: IGroup[] = response.data;
+        setGroups(groupsResult);
+      })
+      .catch((error) => {
+        console.log(`error while fetching groups ${error}`);
+      });
+  }, []);
 
   const renderItem = ({ item: item, index }: { item: IGroup; index: number }) => {
     //todo: change index to item.id
@@ -38,7 +38,7 @@ const GroupsSelector = (props: GroupsSelectorProps) => {
   if (props.active) {
     return (
       <>
-        <List style={styles.list} data={arr} renderItem={renderItem} contentContainerStyle={{ paddingHorizontal: 8, paddingVertical: 4 }} />
+        <List style={styles.list} data={groups} renderItem={renderItem} contentContainerStyle={{ paddingHorizontal: 8, paddingVertical: 4 }} />
 
         <Button
           status="success"

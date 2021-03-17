@@ -20,13 +20,13 @@ const GroupListItemSelector = (props: GroupListItemSelectorProps) => {
       props.dispatch({
         type: 'Groups',
         payload: _.filter(props.state.groups, (groupId) => {
-          return groupId !== item.id;
+          return groupId !== item.groupId;
         }),
       });
     } else {
       props.dispatch({
         type: 'Groups',
-        payload: _.union(props.state.groups, [item.id]),
+        payload: _.union(props.state.groups, [item.groupId]),
       });
     }
   };
