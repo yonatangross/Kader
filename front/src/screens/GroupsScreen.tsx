@@ -30,7 +30,7 @@ const GroupsScreen = () => {
       <FlatList
         style={styles.list}
         data={arr}
-        renderItem={({ item }) => <GroupListItem group={item} />}
+        renderItem={({ item: group }) => <GroupListItem group={group} />}
         keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
       />

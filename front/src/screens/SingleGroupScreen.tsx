@@ -12,7 +12,9 @@ export interface SingleGroupScreenProps {
 
 const SingleGroupScreen = (props: SingleGroupScreenProps) => {
   const route = useRoute();
-  const [group, setGroup] = useState<IGroup>();
+  const [group, setGroup] = useState<IGroup>(props.group);
+
+  console.log(group);
 
   useEffect(() => {
     //@ts-ignore
@@ -29,20 +31,20 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
       }
     );
 
-  if (group) {
-    const groupMembersList: IUser[] = group.members;
-    return (
-      <View>
-        <Text>{group.name}</Text>
-        <Text>{group.description}</Text>
-        <Button title="Create post" onPress={() => handleCreate()} />
+  // if (group) {
+  // const groupMembersList: IUser[] = group.members;
+  return (
+    <View>
+      <Text>Group Title</Text>
+      <Text>Group Description</Text>
+      <Button title="Create post" onPress={() => handleCreate()} />
 
-        <FlatList data={groupMembersList} renderItem={({ item }) => <UserDetails userId={item.id} />} keyExtractor={() => group.id} />
-      </View>
-    );
-  } else {
-    return <></>;
-  }
+      {/* <FlatList data={groupMembersList} renderItem={({ item }) => <UserDetails userId={item.id} />} keyExtractor={() => group.id} /> */}
+    </View>
+  );
+  // } else {
+  //   return <></>;
+  // }
 };
 
 export default SingleGroupScreen;

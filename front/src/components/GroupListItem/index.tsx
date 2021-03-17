@@ -19,7 +19,7 @@ const GroupListItem = (props: GroupListItemProps) => {
   const renderItemIcon = (props: any) => <Icon {...props} name="person" />;
 
   const onClick = () => {
-    console.log(`in on click`);
+    console.log(`in on click ${group.id}`);
     navigation.navigate('SingleGroup', {
       id: group.id,
     });
