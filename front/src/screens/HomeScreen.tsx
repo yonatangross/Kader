@@ -22,6 +22,7 @@ const HomeScreen = () => {
       .then((response) => {
         const postsResult: IPost[] = response.data;
         setPosts(postsResult);
+        console.log(`posts length: ${postsResult.length}`);
       })
       .catch((error) => {
         console.log(`error while fetching posts ${error}`);
@@ -29,6 +30,10 @@ const HomeScreen = () => {
   }, []);
 
   const PlusIcon = () => <Icon name="plus-circle-outline" style={{ width: 32, height: 32 }} fill={'rgba(34, 83, 231)'} />;
+
+  const renderPostListItem = ({ item }: any) => {
+    return <PostListItem post={item} key={item.postId} />;
+  };
   return (
     <View style={styles.container}>
       <CreateGeneralPostModal visible={visibleCreatePost} onChange={setVisibleCreatePost} />
@@ -73,8 +78,10 @@ const HomeScreen = () => {
       <FlatList
         style={{ width: '100%' }}
         data={posts}
-        renderItem={({ item }) => <PostListItem post={item} key={item.postId} />}
+        renderItem={renderPostListItem}
         keyExtractor={(item) => item.postId}
+        initialNumToRender={6}
+        maxToRenderPerBatch={2}
         showsVerticalScrollIndicator={false}
       />
     </View>

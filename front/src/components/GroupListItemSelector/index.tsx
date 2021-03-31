@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { IGroup } from '../../types/IGroup';
-import { Button, CheckBox, Icon, ListItem, Text } from '@ui-kitten/components';
+import { CheckBox, Icon, ListItem } from '@ui-kitten/components';
 import { CreatePostStateType } from '../../types/CreatePostTypes';
 import * as _ from 'lodash';
 

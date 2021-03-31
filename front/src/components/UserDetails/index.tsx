@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text } from 'react-native';
 import { IUser } from '../../types/IUser';
 import StarRating from '../StarRating/index';
 import { getUser } from '../../api/users';

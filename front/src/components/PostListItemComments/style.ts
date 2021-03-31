@@ -35,10 +35,7 @@ const styles = StyleSheet.create({
   PostCreatorDetailsContainer: { flexDirection: 'column' },
   postHeader: { flexDirection: 'row' },
   postHeaderDetails: { flexDirection: 'column', flex: 1 },
-  postDate: {
-    fontSize: 12,
-    color: 'grey',
-  },
+  postDate: {},
   PostTitleAndGroup: { flexDirection: 'row', flexWrap: 'wrap' },
   profileAvatar: {
     marginHorizontal: 8,

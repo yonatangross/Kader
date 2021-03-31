@@ -2,11 +2,10 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
-import { getGroups, getGroupsForUser } from '../api/groups';
+import { getGroupsForUser } from '../api/groups';
 import GroupListItem from '../components/GroupListItem';
 import { View } from '../components/Themed';
-import { IGroup } from '../types/IGroup';
-import { Avatar, Button, Divider, Icon, Text } from '@ui-kitten/components';
+import { Button, Icon, Text } from '@ui-kitten/components';
 import CreateGroupPostModal from '../components/CreateGroupPostModal';
 
 export interface GroupsProps {}

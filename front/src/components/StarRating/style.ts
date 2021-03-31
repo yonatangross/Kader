@@ -1,14 +1,11 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-
-    flatListStar:{
-        width: 20,
-        height: 20
-    },
-    starSize:{
-       
-    }
+  flatListStar: {
+    width: 15,
+    height: 15,
+  },
+  starSize: {},
 });
 
 export default styles;

@@ -7,14 +7,16 @@ const partialStar = require('../../assets/images/partialStar.png');
 export interface RatingProps {
   numOfStars: number;
   numOfRatings: number;
+  displayRatings: boolean;
 }
 
+const maxStarsNumber = 5;
 const StarRating = (props: RatingProps) => {
   const numOfStars = props.numOfStars;
   const numOfRatings = props.numOfRatings;
   let stars = [];
 
-  for (var i = 1; i <= 5; i++) {
+  for (var i = 1; i <= maxStarsNumber; i++) {
     if (i <= numOfStars) {
       stars.push(<Image style={styles.flatListStar} source={FullStar} />);
     } else {
@@ -33,7 +35,7 @@ const StarRating = (props: RatingProps) => {
         horizontal
         style={styles.starSize}
       />
-      <Text>{numOfRatings} Ratings </Text>
+      {props.displayRatings === true ? <Text>{numOfRatings} Ratings </Text> : <></>}
     </View>
   );
 };
