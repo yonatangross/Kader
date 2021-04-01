@@ -38,7 +38,7 @@ function RootNavigator() {
 					fontWeight: "bold",
 				},
 			}}
-		>
+		> 
 			<Stack.Screen
 				name="Root"
 				component={MainTabNavigator}
@@ -58,7 +58,6 @@ function RootNavigator() {
 			/>
 			<Stack.Screen name="Register" component={RegisterScreen} />
 			<Stack.Screen name="Login" component={LoginScreen} />
-
 
 			<Stack.Screen name="SinglePost" component={SinglePostScreen} />
 			<Stack.Screen name="SingleGroup" component={SingleGroupScreen} />
