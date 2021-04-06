@@ -4,15 +4,17 @@ import { Button, Input, Text } from '@ui-kitten/components';
 import { ImageOverlay } from '../layouts/auth/login/extra/image-overlay.component';
 import { ArrowForwardIcon, FacebookIcon, GoogleIcon, TwitterIcon } from '../layouts/auth/login/extra/icons';
 import { KeyboardAvoidingView } from '../layouts/auth/login/extra/3rd-party';
+import { login } from '../api/auth';
 
 export interface LoginScreenProps {}
 
 export default function LoginScreen(navigation: any) {
-  const [email, setEmail] = React.useState<string>();
+  const [username, setUsername] = React.useState<string>();
   const [password, setPassword] = React.useState<string>();
 
   const onSignInButtonPress = (): void => {
-    navigation && navigation.goBack();
+    login({username,password});
+    // navigation && navigation.goBack();
   };
 
   const onSignUpButtonPress = (): void => {
@@ -31,7 +33,7 @@ export default function LoginScreen(navigation: any) {
           </Button>
         </View>
         <View style={styles.formContainer}>
-          <Input label="EMAIL" placeholder="Email" status="control" value={email} onChangeText={setEmail} />
+          <Input label="EMAIL" placeholder="Email" status="control" value={username} onChangeText={setUsername} />
           <Input
             style={styles.passwordInput}
             secureTextEntry={true}

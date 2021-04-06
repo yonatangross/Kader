@@ -1,4 +1,4 @@
-import { EvilIcons, Feather, FontAwesome, FontAwesome5, Ionicons } from '@expo/vector-icons';
+import { FontAwesome, FontAwesome5, Ionicons } from '@expo/vector-icons';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
@@ -7,11 +7,10 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import HomeScreen from '../screens/HomeScreen';
 
-import { MainTabParamList, HomeParamList, NotificationsParamList, GroupsParamList, ProfileParamList, RegisterParamList } from '../types/Tabs';
+import { MainTabParamList, HomeParamList, NotificationsParamList, GroupsParamList, ProfileParamList } from '../types/Tabs';
 import NotificationsScreen from '../screens/NotificationsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import GroupsScreen from '../screens/GroupsScreen';
-import SingleGroupScreen from '../screens/SingleGroupScreen';
 
 const MainTab = createMaterialTopTabNavigator<MainTabParamList>();
 
