@@ -1,7 +1,7 @@
 import { Button, Icon, List, Text } from '@ui-kitten/components';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { getCategories } from '../../api/posts';
+import { getCategories } from '../../services/posts';
 
 export interface PostCategorySelectorProps {
   active: boolean;

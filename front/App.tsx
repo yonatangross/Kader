@@ -1,12 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { createContext } from 'react';
+import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import useCachedResources from './src/hooks/useCachedResources';
 import useColorScheme from './src/hooks/useColorScheme';
-import Navigation from './src/navigation/Router';
+import Router from './src/navigation/Router';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
+import { AuthProvider } from './src/contexts/Auth';
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -18,12 +19,14 @@ export default function App() {
     return (
       <>
         <IconRegistry icons={EvaIconsPack} />
-        <ApplicationProvider {...eva} theme={eva.light}>
-          <SafeAreaProvider>
-            <Navigation colorScheme={colorScheme} />
-            <StatusBar />
-          </SafeAreaProvider>
-        </ApplicationProvider>
+        <AuthProvider>
+          <ApplicationProvider {...eva} theme={eva.light}>
+            <SafeAreaProvider>
+              <Router colorScheme={colorScheme} />
+              <StatusBar />
+            </SafeAreaProvider>
+          </ApplicationProvider>
+        </AuthProvider>
       </>
     );
   }

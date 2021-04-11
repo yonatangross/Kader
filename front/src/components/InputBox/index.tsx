@@ -2,7 +2,7 @@ import { Entypo, FontAwesome5, Fontisto, MaterialCommunityIcons, MaterialIcons }
 import React, { useState } from 'react';
 import { View, TextInput } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { addComment } from '../../api/comments';
+import { addComment } from '../../services/comments';
 import { IPost } from '../../types/IPost';
 import styles from './style';
 

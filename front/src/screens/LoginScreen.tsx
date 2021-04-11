@@ -2,20 +2,23 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, Input, Text } from '@ui-kitten/components';
 import { ImageOverlay } from '../layouts/auth/login/extra/image-overlay.component';
-import { ArrowForwardIcon, FacebookIcon, GoogleIcon, TwitterIcon } from '../layouts/auth/login/extra/icons';
+import { ArrowForwardIcon } from '../layouts/auth/login/extra/icons';
 import { KeyboardAvoidingView } from '../layouts/auth/login/extra/3rd-party';
-import { login } from '../api/auth';
+import { useState } from 'react';
+import { useAuth } from '../contexts/Auth';
+import { ActivityIndicator } from 'react-native';
 
 export interface LoginScreenProps {}
 
 export default function LoginScreen(navigation: any) {
+  const [loading, isLoading] = useState(false);
+  const auth = useAuth();
+  const signIn = async () => {
+    isLoading(true);
+    await auth.signIn('matan', 'Bolila1!');
+  };
   const [username, setUsername] = React.useState<string>();
   const [password, setPassword] = React.useState<string>();
-
-  const onSignInButtonPress = (): void => {
-    login({username,password});
-    // navigation && navigation.goBack();
-  };
 
   const onSignUpButtonPress = (): void => {
     navigation && navigation.navigate('SignUp1');
@@ -44,18 +47,17 @@ export default function LoginScreen(navigation: any) {
             onChangeText={setPassword}
           />
         </View>
-        <Button status="control" size="large" onPress={onSignInButtonPress}>
-          SIGN IN
-        </Button>
-        <View style={styles.socialAuthContainer}>
-          <Text style={styles.socialAuthHintText} status="control">
-            Sign with a social account
+        <View style={styles.submitContainer}>
+          <Text style={styles.submitHeader} status="control" category="h4">
+            Enter Kader
           </Text>
-          <View style={styles.socialAuthButtonsContainer}>
-            <Button appearance="ghost" size="giant" status="control" accessoryLeft={GoogleIcon} />
-            <Button appearance="ghost" size="giant" status="control" accessoryLeft={FacebookIcon} />
-            <Button appearance="ghost" size="giant" status="control" accessoryLeft={TwitterIcon} />
-          </View>
+          {loading ? (
+            <ActivityIndicator color={'#000'} animating={true} size="small" />
+          ) : (
+            <Button style={styles.submitButton} status="control" size="large" onPress={signIn}>
+              SUBMIT
+            </Button>
+          )}
         </View>
       </ImageOverlay>
     </KeyboardAvoidingView>
@@ -63,6 +65,11 @@ export default function LoginScreen(navigation: any) {
 }
 
 const styles = StyleSheet.create({
+  submitContainer: {
+    marginBottom: 140,
+  },
+  submitHeader: { alignSelf: 'center', marginBottom: 30 },
+  submitButton: {},
   container: {
     flex: 1,
     paddingVertical: 24,
@@ -93,13 +100,5 @@ const styles = StyleSheet.create({
   signUpButton: {
     flexDirection: 'row-reverse',
     paddingHorizontal: 0,
-  },
-  socialAuthButtonsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-  },
-  socialAuthHintText: {
-    alignSelf: 'center',
-    marginBottom: 16,
   },
 });

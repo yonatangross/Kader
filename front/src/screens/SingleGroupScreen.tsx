@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Button, FlatList } from 'react-native';
 import { Text } from '@ui-kitten/components';
 
-import { getGroup } from '../api/groups';
+import { getGroup } from '../services/groups';
 import PostListItem from '../components/PostListItem';
 import UserListItem from '../components/UserListItem';
 import { IGroup } from '../types/IGroup';

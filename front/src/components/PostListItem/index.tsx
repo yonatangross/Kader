@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import StarRating from '../StarRating/index';
 import { useEffect } from 'react';
 import { Avatar, Divider, Icon } from '@ui-kitten/components';
-import { getPost } from '../../api/posts';
+import { getPost } from '../../services/posts';
 import moment from 'moment';
 import PostCommentItem from '../PostCommentItem';
 import PostListItemComments from '../PostListItemComments';

@@ -5,7 +5,7 @@ import { Button, List } from '@ui-kitten/components';
 import { GroupPrivacy } from '../../types/GroupPrivacy';
 import GroupListItemSelector from '../GroupListItemSelector';
 import { CreatePostStateType } from '../../types/CreatePostTypes';
-import { getGroups } from '../../api/groups';
+import { getGroups } from '../../services/groups';
 
 export interface GroupsSelectorProps {
   active: boolean;

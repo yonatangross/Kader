@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { Text, StyleSheet, Modal, View } from 'react-native';
-import { addPost } from '../../api/posts';
+import { addPost } from '../../services/posts';
 import { createPostReducer, initCreatePost } from '../../reducers/createPostReducer';
 import { IPost } from '../../types/IPost';
 import { PostType } from '../../types/PostType';

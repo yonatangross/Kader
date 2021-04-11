@@ -2,17 +2,21 @@ import { Button, Icon, Text } from '@ui-kitten/components';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
-import CategoryButton from '../components/CategoryButton';
 import PostListItem from '../components/PostListItem';
 import { View } from '../components/Themed';
 import { IPost } from '../types/IPost';
 import CreateGeneralPostModal from '../components/CreateGeneralPostModal';
-import { getPosts } from '../api/posts';
+import { getPosts } from '../services/posts';
 import CreateGroupPostModal from '../components/CreateGroupPostModal';
+import { useAuth } from '../contexts/Auth';
 
 export interface HomeProps {}
 
 const HomeScreen = () => {
+  const auth = useAuth();
+  const signOut = () => {
+    auth.signOut();
+  };
   const [visibleCreatePost, setVisibleCreatePost] = useState<boolean>(false);
   const [visibleCreateGroup, setVisibleCreateGroup] = useState<boolean>(false);
 
@@ -38,6 +42,21 @@ const HomeScreen = () => {
     <View style={styles.container}>
       <CreateGeneralPostModal visible={visibleCreatePost} onChange={setVisibleCreatePost} />
       <CreateGroupPostModal visible={visibleCreateGroup} onChange={setVisibleCreateGroup} />
+      <Button
+        style={styles.groupCreationButton}
+        status="success"
+        accessoryRight={PlusIcon}
+        size="small"
+        onPress={() => {
+          signOut();
+        }}
+      >
+        {(buttonProps: any) => (
+          <Text {...buttonProps} style={{ color: 'rgba(34, 83, 231,1)' }}>
+            Sign Out
+          </Text>
+        )}
+      </Button>
 
       <View style={styles.buttonContainer}>
         {/* <CategoryButton buttonContent={'Create Group'} navigationString={'SinglePost'} /> */}

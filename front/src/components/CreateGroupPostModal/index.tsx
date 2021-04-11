@@ -1,7 +1,7 @@
 import { Text, Button, Icon, Input } from '@ui-kitten/components';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Modal, View } from 'react-native';
-import { addGroup } from '../../api/groups';
+import { addGroup } from '../../services/groups';
 import { GroupPrivacy } from '../../types/GroupPrivacy';
 
 export interface CreateGroupPostModalProps {
