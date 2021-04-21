@@ -21,12 +21,11 @@ export default function MainTabNavigator() {
     <MainTab.Navigator
       initialRouteName="Home"
       tabBarOptions={{
-        activeTintColor: Colors[colorScheme].background,
         style: {
-          backgroundColor: '#9a8194',
+          backgroundColor: '#f5f5f5',
         },
         indicatorStyle: {
-          backgroundColor: Colors[colorScheme].background,
+          backgroundColor: '#4975aa',
           height: 4,
         },
         labelStyle: {
@@ -39,7 +38,7 @@ export default function MainTabNavigator() {
         name="Home"
         component={HomeNavigator}
         options={{
-          tabBarIcon: ({ color }) => <FontAwesome5 name="home" color={color} size={22} />,
+          tabBarIcon: ({ color }) => <FontAwesome5 name="home" color={"#4975aa"}  size={22} />,
           tabBarLabel: () => null,
         }}
       />
@@ -47,7 +46,7 @@ export default function MainTabNavigator() {
         name="Groups"
         component={GroupsNavigator}
         options={{
-          tabBarIcon: ({ color }) => <FontAwesome name="group" color={color} size={22} />,
+          tabBarIcon: ({ color }) => <FontAwesome name="group" color={"#4975aa"}  size={22} />,
           tabBarLabel: () => null,
         }}
       />
@@ -55,7 +54,7 @@ export default function MainTabNavigator() {
         name="Profile"
         component={ProfileNavigator}
         options={{
-          tabBarIcon: ({ color }) => <Ionicons name="person" color={color} size={22} />,
+          tabBarIcon: ({ color }) => <Ionicons name="person" color={"#4975aa"} size={22} />,
           tabBarLabel: () => null,
         }}
       />
@@ -63,7 +62,7 @@ export default function MainTabNavigator() {
         name="Notifications"
         component={NotificationsNavigator}
         options={{
-          tabBarIcon: ({ color }) => <FontAwesome name="bell" color={color} size={22} />,
+          tabBarIcon: ({ color }) => <FontAwesome name="bell" color={"#4975aa"} size={22} />,
           tabBarLabel: () => null,
         }}
       />

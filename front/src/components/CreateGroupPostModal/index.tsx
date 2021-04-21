@@ -124,6 +124,9 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     marginRight: 40,
     marginLeft: 40,
+    backgroundColor: '#007aff',
+    borderWidth: 0.5,
+    borderColor: 'black',
   },
 });
 

@@ -26,7 +26,7 @@ export default function LoginScreen(navigation: any) {
 
   return (
     <KeyboardAvoidingView>
-      <ImageOverlay style={styles.container} source={require('../assets/images/image-background.jpg')}>
+      <ImageOverlay style={styles.container} source={require('../assets/images/bg2.jpg')}>
         <View style={styles.signInContainer}>
           <Text style={styles.signInLabel} status="control" category="h4">
             SIGN IN

@@ -64,6 +64,9 @@ const styles = StyleSheet.create({
     marginRight: 40,
     marginLeft: 40,
     padding: 10,
+    backgroundColor: '#007aff',
+    borderWidth: 0.5,
+    borderColor: 'black',
   },
 });
 

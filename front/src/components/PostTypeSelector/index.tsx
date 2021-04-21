@@ -8,7 +8,7 @@ export interface PostTypeSelectorProps {
   dispatch: Function;
   setActiveSection: Function;
 }
-const PlusIcon = () => <Icon name="plus-circle-outline" style={{ width: 32, height: 32 }} fill={'rgba(34, 83, 231)'} />;
+const PlusIcon = () => <Icon name="plus-circle-outline" style={{ width: 32, height: 32 }} fill={'#000000'} />;
 
 const PostTypeSelector = (props: PostTypeSelectorProps) => {
   if (props.active) {
@@ -26,7 +26,7 @@ const PostTypeSelector = (props: PostTypeSelectorProps) => {
           }}
         >
           {(buttonProps: any) => (
-            <Text {...buttonProps} style={{ color: 'rgba(34, 83, 231,1)' }}>
+            <Text {...buttonProps} style={{ color: '#000000' }}>
               Request Help
             </Text>
           )}
@@ -44,7 +44,7 @@ const PostTypeSelector = (props: PostTypeSelectorProps) => {
           }}
         >
           {(buttonProps: any) => (
-            <Text {...buttonProps} style={{ color: 'rgba(34, 83, 231,1)' }}>
+            <Text {...buttonProps} style={{ color: '#000000' }}>
               Offer Help
             </Text>
           )}
@@ -61,7 +61,7 @@ const PostTypeSelector = (props: PostTypeSelectorProps) => {
           }}
         >
           {(buttonProps: any) => (
-            <Text {...buttonProps} style={{ color: 'rgba(34, 83, 231,1)' }}>
+            <Text {...buttonProps} style={{ color: '#000000' }}>
               Handover an item
             </Text>
           )}
@@ -82,6 +82,10 @@ const styles = StyleSheet.create({
     marginRight: 40,
     marginLeft: 40,
     padding: 10,
+    backgroundColor:
+  '#007aff',
+    borderWidth: 0.5,
+    borderColor:'black',
   },
 });
 

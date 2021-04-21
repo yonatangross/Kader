@@ -16,8 +16,6 @@ const signIn = async (username: string, password: string): Promise<AxiosResponse
     let data = { username, password };
 
     const response: AxiosResponse<any> = await axios.post(`${baseUrl}/users/login`, data);
-    // console.log(`response.data: `);
-    // console.log(response.data);
 
     return response;
   } catch (error) {

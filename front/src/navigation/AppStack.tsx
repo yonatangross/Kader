@@ -16,7 +16,7 @@ export const AppStack = () => {
     <Stack.Navigator
       screenOptions={{
         headerStyle: {
-          backgroundColor: '#9a8194',
+          backgroundColor: '#f5f5f5',
           shadowOpacity: 0,
           elevation: 0,
         },
@@ -32,6 +32,7 @@ export const AppStack = () => {
         component={MainTabNavigator}
         options={{
           title: 'Kader',
+          headerTintColor: "#4975aa",
           headerRight: () => (
             <View
               style={{
@@ -45,10 +46,31 @@ export const AppStack = () => {
         }}
       />
 
-      <Stack.Screen name="SinglePost" component={SinglePostScreen} />
-      <Stack.Screen name="SingleGroup" component={SingleGroupScreen} />
+      <Stack.Screen
+        name="SinglePost"
+        component={SinglePostScreen}
+        options={{
+          headerTintColor: '#4975aa',
+          title:"",
+        }}
+      />
+      <Stack.Screen
+        name="SingleGroup"
+        component={SingleGroupScreen}
+        options={{
+          title: '',
+          headerTintColor: '#4975aa',
+        }}
+      />
+       <Stack.Screen
+        name="NotFound"
+        component={NotFoundScreen}
+        options={{
+          title: 'Oops!',
+          headerTintColor: '#4975aa',
+        }}
+      />
 
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>
   );
 };

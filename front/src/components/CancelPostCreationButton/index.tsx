@@ -23,7 +23,7 @@ const CancelPostCreationButton = (props: CancelPostCreationButtonProps) => {
           }}
         >
           {(buttonProps: any) => (
-            <Text {...buttonProps} style={{ color: 'rgba(34, 83, 231,1)' }}>
+            <Text {...buttonProps} style={{ color: '#000000' }}>
               Cancel post creation
             </Text>
           )}
@@ -44,6 +44,9 @@ const styles = StyleSheet.create({
     marginRight: 40,
     marginLeft: 40,
     padding: 10,
+    backgroundColor: '#007aff',
+    borderWidth: 0.5,
+    borderColor:'black'
   },
 });
 

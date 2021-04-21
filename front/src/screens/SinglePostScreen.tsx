@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { View, Image, StyleSheet, FlatList } from 'react-native';
 import { Avatar, Divider, Text } from '@ui-kitten/components';
 import { getPost } from '../services/posts';
-import StarRating from '../components/StarRating/index';
 const testImage = require('../assets/images/test.png');
 import moment from 'moment';
 

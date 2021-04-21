@@ -33,8 +33,7 @@ const HomeScreen = () => {
       });
   }, []);
 
-  const PlusIcon = () => <Icon name="plus-circle-outline" style={{ width: 32, height: 32 }} fill={'rgba(34, 83, 231)'} />;
-
+  const PlusIcon = () => <Icon name="plus-circle-outline" style={{ width: 32, height: 32 }} fill={'#4975aa'} />;
   const renderPostListItem = ({ item }: any) => {
     return <PostListItem post={item} key={item.postId} />;
   };
@@ -52,7 +51,7 @@ const HomeScreen = () => {
         }}
       >
         {(buttonProps: any) => (
-          <Text {...buttonProps} style={{ color: 'rgba(34, 83, 231,1)' }}>
+          <Text {...buttonProps} style={{ color: '#4975aa' ,fontWeight:'bold'  }}>
             Sign Out
           </Text>
         )}
@@ -73,7 +72,7 @@ const HomeScreen = () => {
           }}
         >
           {(buttonProps: any) => (
-            <Text {...buttonProps} style={{ color: 'rgba(34, 83, 231,1)' }}>
+            <Text {...buttonProps} style={{ color: '#4975aa',fontWeight:'bold'  }}>
               Create Post
             </Text>
           )}
@@ -88,7 +87,7 @@ const HomeScreen = () => {
           }}
         >
           {(buttonProps: any) => (
-            <Text {...buttonProps} style={{ color: 'rgba(34, 83, 231,1)' }}>
+            <Text {...buttonProps} style={{ color: '#4975aa' ,fontWeight:'bold' }}>
               Create Group
             </Text>
           )}
@@ -112,6 +111,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor:'white'
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -121,16 +121,16 @@ const styles = StyleSheet.create({
   postCreationButton: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
-    borderColor: 'white',
+    backgroundColor: 'transparent',
+    borderWidth: 0,
     textDecorationColor: 'blue',
     marginRight: 10,
   },
   groupCreationButton: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
-    borderColor: 'white',
+    backgroundColor: 'transparent',
+    borderWidth: 0,
     textDecorationColor: 'blue',
     marginLeft: 10,
   },

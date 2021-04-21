@@ -15,7 +15,7 @@ const PostCreationProgressBar = (props: PostCreationProgressBarProps) => {
   useEffect(() => {
     if (props.activeSection[0]) {
       setActive(true);
-      setProgressTitle('Choose post type');
+      setProgressTitle('Choose Post Type');
       setPercentage(0.25);
     } else if (props.activeSection[1]) {
       setActive(true);

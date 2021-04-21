@@ -34,10 +34,6 @@ const GroupsScreen = () => {
     return (
       <View style={styles.container}>
         <CreateGroupPostModal visible={visibleCreateGroup} onChange={setVisibleCreateGroup} />
-
-        <Text style={styles.text} category="h1">
-          Groups
-        </Text>
         <Button
           style={styles.button}
           status="success"
@@ -91,7 +87,7 @@ const styles = StyleSheet.create({
   },
   text: {
     margin: 2,
-    color: 'black',
+    color: '#4975aa',
   },
   myGroups: {
     textAlign: 'left',
