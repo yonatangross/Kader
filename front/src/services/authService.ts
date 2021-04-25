@@ -11,9 +11,9 @@ const getUser = async (userId: string): Promise<AxiosResponse<any>> => {
   }
 };
 
-const signIn = async (username: string, password: string): Promise<AxiosResponse<AuthData>> => {
+const signIn = async (email: string, password: string): Promise<AxiosResponse<AuthData>> => {
   try {
-    let data = { username, password };
+    let data = { username: email, password };
 
     const response: AxiosResponse<any> = await axios.post(`${baseUrl}/users/login`, data);
 

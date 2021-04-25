@@ -30,22 +30,12 @@ const AuthProvider: React.FC = ({ children }) => {
 
   async function loadStorageData(): Promise<void> {
     try {
-      // //Try get the data from Async Storage
-      // const authDataSerialized = await AsyncStorage.getItem('@AuthData');
-      // if (authDataSerialized) {
-      //   //If there are data, it's converted to an Object and the state is updated.
-      //   const _authData: AuthData = JSON.parse(authDataSerialized);
-      //   setAuthData(_authData);
-      // }
-
       SecureStore.getItemAsync('jwt_token').then((token: any) => {
         try {
-          console.log(`token: ${token}`);
-
-          const decodedToken: any = decode(token);
-          console.log(`decodedToken:`);
-          console.log(decodedToken);
-
+          // console.log(`token: ${token}`);
+          // const decodedToken: any = decode(token);
+          // console.log(`decodedToken:`);
+          // console.log(decodedToken);
           setAuthData({
             token,
           });
@@ -60,11 +50,11 @@ const AuthProvider: React.FC = ({ children }) => {
     }
   }
 
-  const signIn = async (username: string, password: string) => {
+  const signIn = async (email: string, password: string) => {
     //call the service passing credential (email and password).
     //In a real App this data will be provided by the user from some InputText components.
     await authService
-      .signIn(username, password)
+      .signIn(email, password)
       .then((response) => {
         // console.log(`signIn response:`);
         // console.log(response.data);

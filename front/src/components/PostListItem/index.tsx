@@ -25,7 +25,7 @@ const PostListItem = (props: PostListItemProps) => {
       .then((response) => {
         if (isMounted) {
           setPost(response.data.post);
-          console.log(`loaded post: ${props.post.postId}`);
+          // console.log(`loaded post: ${props.post.postId}`);
         }
       })
       .catch((error) => console.log(error));

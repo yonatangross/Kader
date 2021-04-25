@@ -1,11 +1,28 @@
 import axios, { AxiosResponse } from 'axios';
 import { PostApiDataType } from '../types/ApiDataTypes';
 import { IPost } from '../types/IPost';
-axios.defaults.headers.common['Authorization'] =
-  'Bearer ' +
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiWW9uaSIsImp0aSI6IjYyNTMwZjc5LTJkYTQtNGMwMC04MjQ2LTVlNThlZmYxOWU3YSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNjE2MDEwMzk5LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjU5OTIxIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo0MjAwIn0.doWJn7S111HnAZ1q8UrkLFFMK8ds7BLO9HPDUxOvoOk';
+import * as SecureStore from 'expo-secure-store';
 
 const baseUrl: string | undefined = 'http://kader.cs.colman.ac.il:5000/api';
+
+// Add a request interceptor
+axios.interceptors.request.use(
+  function (config) {
+    // Do something before request is sent
+    SecureStore.getItemAsync('jwt_token').then((token: any) => {
+      try {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+      } catch {
+        console.log(`yoin in catch`);
+      }
+    });
+    return config;
+  },
+  function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+  }
+);
 
 export const getPosts = async (): Promise<AxiosResponse<any>> => {
   try {
