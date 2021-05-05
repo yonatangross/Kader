@@ -1,110 +1,175 @@
-import React from 'react';
-import { ImageBackground, ListRenderItemInfo, StyleSheet, View } from 'react-native';
-import { Avatar, Button, Card, Layout, List, Text } from '@ui-kitten/components';
+import React, { useEffect, useState } from 'react';
+import { FlatList, ImageBackground, ListRenderItemInfo, StyleSheet, View, Image, SectionList } from 'react-native';
+import { Avatar, Button, Card, Layout, Text } from '@ui-kitten/components';
 import { ProfileSocial } from '../layouts/social/profile/extra/profile-social.component';
 import { HeartIcon } from '../layouts/social/profile/extra/icons';
 import { Post, Profile } from '../layouts/social/profile/extra/data';
+import { useAuth } from '../contexts/Auth';
+import { getUser } from '../services/users';
+import { IUser } from '../types/IUser';
+import StarRating from '../components/StarRating';
+import { TouchableOpacity } from 'react-native';
+import { IPost } from '../types/IPost';
+import { IGroup } from '../types/IGroup';
+import PostListItem from '../components/PostListItem';
+import GroupListItem from '../components/GroupListItem';
 
 const profile: Profile = Profile.jenniferGreen();
 
 const posts: Post[] = [Post.byJenniferGreen(), Post.byAlexaTenorio()];
 
+interface ISectionsData {
+  title: string;
+  data: any[];
+  key: string;
+  renderItem: any;
+}
+
 export default function ProfileScreen(navigation: any) {
-  const onFollowButtonPress = (): void => {
-    navigation && navigation.goBack();
+  const auth = useAuth();
+  const [user, setUser] = useState<IUser>();
+  const renderPostItem = ({ item }: any) => {
+    return <PostListItem post={item} />;
+  };
+  const renderGroupItem = ({ item }: any) => {
+    return <GroupListItem group={item} />;
   };
 
-  const renderItemHeader = (info: ListRenderItemInfo<Post>): React.ReactElement => <ImageBackground style={styles.postHeader} source={info.item.image} />;
+  let sectionsData: ISectionsData[] = [
+    { title: 'Posts', data: [], key: 'posts', renderItem: renderPostItem },
+    { title: 'Groups', data: [], key: 'groups', renderItem: renderGroupItem },
+    { title: 'Managed Groups', data: [], key: 'managedGroups', renderItem: renderGroupItem },
+  ];
 
-  const renderItem = (info: ListRenderItemInfo<Post>): React.ReactElement => (
-    <Card style={styles.post} header={() => renderItemHeader(info)}>
-      <View style={styles.postBody}>
-        <Avatar source={info.item.author.photo} />
-        <View style={styles.postAuthorContainer}>
-          <Text category="s2">{info.item.author.fullName}</Text>
-          <Text appearance="hint" category="c1">
-            {info.item.date}
+  useEffect(() => {
+    if (!!auth && !!auth.authData) {
+      getUser(auth.authData.userId)
+        .then((response) => {
+          console.log('user data: ' + response.data);
+
+          const userResult: IUser = response.data;
+          setUser(userResult);
+          // sectionsData[0].data = userResult.posts;
+          // sectionsData[1].data = userResult.memberInGroups;
+          // sectionsData[2].data = userResult.managerInGroups;
+          // console.log(sectionsData);
+        })
+        .catch((error) => {
+          console.log(`error while fetching user data ${error}`);
+        });
+    }
+  }, []);
+
+  const signOut = () => {
+    auth.signOut();
+  };
+
+  if (user) {
+    console.log(user);
+
+    return (
+      <View style={styles.container}>
+        <View style={styles.userBasicDetailsContainer}>
+          <Avatar size="large" source={profile.photo} style={styles.profileAvatar} />
+          <Text category="h4">{user?.firstName + ' ' + user?.lastName}</Text>
+          <Text appearance="hint" category="s1">
+            {user?.email}
           </Text>
+          <View style={styles.userDataContainer}>
+            <ProfileSocial style={styles.userDataItemContainer} hint="Posts" value={`${!user.posts ? 0 : user.posts.length}`} />
+            <ProfileSocial style={styles.userDataItemContainer} hint="Groups" value={`${!user.memberInGroups ? 0 : user.memberInGroups.length}`} />
+            <ProfileSocial style={styles.userDataItemContainer} hint="Managed Groups" value={`${!user.managerInGroups ? 0 : user.managerInGroups.length}`} />
+          </View>
+          {/* <StarRating numOfStars={user?.rating} numOfRatings={user?.numberOfRatings} displayRatings={false} /> */}
         </View>
-        <Button style={styles.iconButton} appearance="ghost" status="danger" accessoryLeft={HeartIcon}>
-          {`${info.item.likes.length}`}
-        </Button>
-      </View>
-    </Card>
-  );
-
-  const renderHeader = (): React.ReactElement => (
-    <Layout style={styles.header} level="1">
-      <Avatar style={styles.profileAvatar} size="large" source={profile.photo} />
-      <View style={styles.profileDetailsContainer}>
-        <Text category="h4">{profile.fullName}</Text>
-        <Text appearance="hint" category="s1">
-          {profile.location}
-        </Text>
-        <View style={styles.profileSocialsContainer}>
-          <ProfileSocial style={styles.profileSocialContainer} hint="Followers" value={`${profile.followers}`} />
-          <ProfileSocial style={styles.profileSocialContainer} hint="Following" value={`${profile.following}`} />
-          <ProfileSocial style={styles.profileSocialContainer} hint="Posts" value={`${profile.posts}`} />
+        <View style={styles.userListsContainer}>
+          <Text style={{ fontWeight: 'bold', marginBottom: 10, fontSize: 20, paddingHorizontal: 10 }}>Posts</Text>
+          <FlatList
+            data={user.posts}
+            renderItem={renderPostItem}
+            keyExtractor={(item) => item.postId}
+            showsVerticalScrollIndicator={false}
+            initialNumToRender={6}
+            maxToRenderPerBatch={2}
+          />
+          <Text style={{ fontWeight: 'bold', marginBottom: 10, fontSize: 20, paddingHorizontal: 10 }}>Groups</Text>
+          <FlatList
+            data={user.memberInGroups}
+            renderItem={renderGroupItem}
+            keyExtractor={(item) => item.groupId}
+            showsVerticalScrollIndicator={false}
+            initialNumToRender={6}
+            maxToRenderPerBatch={2}
+          />
+          <Text style={{ fontWeight: 'bold', marginBottom: 10, fontSize: 20, paddingHorizontal: 10 }}>Managed Groups</Text>
+          <FlatList
+            data={user.managerInGroups}
+            renderItem={renderGroupItem}
+            keyExtractor={(item) => item.groupId}
+            showsVerticalScrollIndicator={false}
+            initialNumToRender={6}
+            maxToRenderPerBatch={2}
+          />
         </View>
-        <Button style={styles.followButton} onPress={onFollowButtonPress}>
-          FOLLOW
-        </Button>
+        <TouchableOpacity activeOpacity={0.7} onPress={signOut} style={styles.logoutButton}>
+          <Image source={require('../assets/images/log-out.png')} style={styles.floatingButtonStyle} />
+        </TouchableOpacity>
       </View>
-    </Layout>
-  );
-
-  return <List style={styles.list} contentContainerStyle={styles.listContent} data={posts} renderItem={renderItem} ListHeaderComponent={renderHeader} />;
+    );
+  } else
+    return (
+      <View style={styles.container}>
+        <TouchableOpacity activeOpacity={0.7} onPress={signOut} style={styles.logoutButton}>
+          <Image source={require('../assets/images/log-out.png')} style={styles.floatingButtonStyle} />
+        </TouchableOpacity>
+      </View>
+    );
 }
 
 const styles = StyleSheet.create({
-  list: {
-    flex: 1,
+  container: { flex: 1, alignItems: 'flex-start', backgroundColor: 'white' },
+  userListsContainer: {
+    flex: 3,
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
   },
-  listContent: {
-    paddingHorizontal: 8,
-    paddingBottom: 8,
+  floatingButtonStyle: {
+    resizeMode: 'contain',
+    width: 32,
+    height: 32,
   },
-  header: {
-    flexDirection: 'row',
-    marginHorizontal: -16,
-    paddingHorizontal: 16,
-    paddingTop: 16,
-    marginBottom: 8,
+  logoutButton: {
+    backgroundColor: 'white',
+    position: 'absolute',
+    width: 50,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 30,
+    right: 15,
+    bottom: 30,
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    shadowOpacity: 0.8,
+    elevation: 6,
+    shadowRadius: 15,
+    shadowOffset: { width: 1, height: 13 },
+    borderColor: 'black',
+    borderWidth: 0.8,
   },
   profileAvatar: {
     marginHorizontal: 8,
   },
-  profileDetailsContainer: {
+  userBasicDetailsContainer: {
+    marginTop: 20,
     flex: 1,
-    marginHorizontal: 8,
+    alignItems: 'center',
   },
-  profileSocialsContainer: {
+  userDataContainer: {
     flexDirection: 'row',
-    marginTop: 24,
   },
-  profileSocialContainer: {
+  sectionsContainer: {},
+
+  userDataItemContainer: {
     flex: 1,
-  },
-  followButton: {
-    marginVertical: 16,
-  },
-  post: {
-    margin: 8,
-  },
-  postHeader: {
-    height: 220,
-  },
-  postBody: {
-    flexDirection: 'row',
-    marginHorizontal: -8,
-  },
-  postAuthorContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    marginHorizontal: 16,
-  },
-  iconButton: {
-    flexDirection: 'row-reverse',
-    paddingHorizontal: 0,
   },
 });

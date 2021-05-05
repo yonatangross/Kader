@@ -37,7 +37,7 @@ export const getPosts = async (): Promise<AxiosResponse<any>> => {
 
 export const getPost = async (postId: string): Promise<AxiosResponse<any>> => {
   try {
-    const response: AxiosResponse<any> = await axios.get(`${baseUrl}/posts/${postId}`);
+    const response: AxiosResponse<any> = await axios.get(`${baseUrl}/posts/${postId}`, { params: {} });
     return response;
   } catch (error) {
     throw new Error(`error while fetching post ${postId}, error: ${error}`);

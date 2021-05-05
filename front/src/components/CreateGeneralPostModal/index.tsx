@@ -65,7 +65,8 @@ const CreateGeneralPostModal = (props: CreateGeneralPostModalProps) => {
         transparent={false}
         visible={props.visible}
         onRequestClose={() => {
-          // console.log('Modal has now been closed.');
+          props.onChange(false);
+          console.log('Modal has now been closed.');
         }}
       >
         <PostCreationProgressBar activeSection={activeSection} />

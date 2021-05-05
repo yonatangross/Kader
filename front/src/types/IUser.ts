@@ -1,5 +1,6 @@
 import { IComment } from './IComment';
 import { IGroup } from './IGroup';
+import { IPost } from './IPost';
 
 export interface IUser {
   id: string;
@@ -9,8 +10,9 @@ export interface IUser {
   phoneNumber: string;
   rating: number;
   numberOfRatings: number;
-  groups: IGroup[];
-  posts: IComment[];
+  memberInGroups: IGroup[];
+  posts: IPost[];
   comments: IComment[];
+  managerInGroups:IGroup[];
   imageUri?: string;
 }

@@ -21,14 +21,18 @@ const PostListItem = (props: PostListItemProps) => {
 
   useEffect(() => {
     let isMounted = true;
-    getPost(props.post.postId)
-      .then((response) => {
-        if (isMounted) {
-          setPost(response.data.post);
-          // console.log(`loaded post: ${props.post.postId}`);
-        }
-      })
-      .catch((error) => console.log(error));
+    console.log(props.post);
+
+    if (!!props.post) {
+      getPost(props.post.postId)
+        .then((response) => {
+          if (isMounted) {
+            setPost(response.data.post);
+            // console.log(`loaded post: ${props.post.postId}`);
+          }
+        })
+        .catch((error) => console.log(error));
+    }
     return () => {
       isMounted = false;
     };

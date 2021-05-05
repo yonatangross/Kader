@@ -1,7 +1,7 @@
 import { Button, Icon, Text } from '@ui-kitten/components';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import PostListItem from '../components/PostListItem';
 import { View } from '../components/Themed';
 import { IPost } from '../types/IPost';
@@ -13,10 +13,6 @@ import { useAuth } from '../contexts/Auth';
 export interface HomeProps {}
 
 const HomeScreen = () => {
-  const auth = useAuth();
-  const signOut = () => {
-    auth.signOut();
-  };
   const [visibleCreatePost, setVisibleCreatePost] = useState<boolean>(false);
   const [visibleCreateGroup, setVisibleCreateGroup] = useState<boolean>(false);
 
@@ -33,7 +29,6 @@ const HomeScreen = () => {
       });
   }, []);
 
-  const PlusIcon = () => <Icon name="plus-circle-outline" style={{ width: 32, height: 32 }} fill={'#4975aa'} />;
   const renderPostListItem = ({ item }: any) => {
     return <PostListItem post={item} key={item.postId} />;
   };
@@ -41,58 +36,6 @@ const HomeScreen = () => {
     <View style={styles.container}>
       <CreateGeneralPostModal visible={visibleCreatePost} onChange={setVisibleCreatePost} />
       <CreateGroupPostModal visible={visibleCreateGroup} onChange={setVisibleCreateGroup} />
-      <Button
-        style={styles.groupCreationButton}
-        status="success"
-        accessoryRight={PlusIcon}
-        size="small"
-        onPress={() => {
-          signOut();
-        }}
-      >
-        {(buttonProps: any) => (
-          <Text {...buttonProps} style={{ color: '#4975aa' ,fontWeight:'bold'  }}>
-            Sign Out
-          </Text>
-        )}
-      </Button>
-
-      <View style={styles.buttonContainer}>
-        {/* <CategoryButton buttonContent={'Create Group'} navigationString={'SinglePost'} /> */}
-        {/* <CategoryButton buttonContent={'Register'} navigationString={'Register'} />
-        <CategoryButton buttonContent={'Login'} navigationString={'Login'} /> */}
-
-        <Button
-          style={styles.postCreationButton}
-          status="success"
-          accessoryRight={PlusIcon}
-          size="small"
-          onPress={() => {
-            setVisibleCreatePost(!visibleCreatePost);
-          }}
-        >
-          {(buttonProps: any) => (
-            <Text {...buttonProps} style={{ color: '#4975aa',fontWeight:'bold'  }}>
-              Create Post
-            </Text>
-          )}
-        </Button>
-        <Button
-          style={styles.groupCreationButton}
-          status="success"
-          accessoryRight={PlusIcon}
-          size="small"
-          onPress={() => {
-            setVisibleCreatePost(!visibleCreatePost);
-          }}
-        >
-          {(buttonProps: any) => (
-            <Text {...buttonProps} style={{ color: '#4975aa' ,fontWeight:'bold' }}>
-              Create Group
-            </Text>
-          )}
-        </Button>
-      </View>
       <FlatList
         style={{ width: '100%' }}
         data={posts}
@@ -102,37 +45,82 @@ const HomeScreen = () => {
         maxToRenderPerBatch={2}
         showsVerticalScrollIndicator={false}
       />
+
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={() => {
+          setVisibleCreateGroup(!visibleCreateGroup);
+        }}
+        style={styles.groupCreationButton}
+      >
+        <Image source={require('../assets/images/createGroupIcon2.png')} style={styles.floatingButtonStyle} />
+      </TouchableOpacity>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={() => {
+          setVisibleCreatePost(!visibleCreatePost);
+        }}
+        style={styles.postCreationButton}
+      >
+        <Image source={require('../assets/images/createPostIcon.png')} style={styles.floatingButtonStyle} />
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  postCreationButton: {
+    backgroundColor: 'white',
+    position: 'absolute',
+    width: 50,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 30,
+    right: 15,
+    bottom: 30,
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    shadowOpacity: 0.8,
+    elevation: 6,
+    shadowRadius: 15,
+    shadowOffset: { width: 1, height: 13 },
+    borderColor: 'black',
+    borderWidth: 0.8,
+  },
+  groupCreationButton: {
+    backgroundColor: 'white',
+    position: 'absolute',
+    width: 50,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 30,
+    right: 15,
+    bottom: 100,
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    shadowOpacity: 0.8,
+    elevation: 6,
+    shadowRadius: 15,
+    shadowOffset: { width: 1, height: 13 },
+    borderColor: 'black',
+    borderWidth: 0.8,
+  },
+  floatingButtonStyle: {
+    resizeMode: 'contain',
+    width: 32,
+    height: 32,
+    //backgroundColor:'black'
+  },
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor:'white'
+    backgroundColor: 'white',
   },
   buttonContainer: {
     flexDirection: 'row',
     margin: 10,
     backgroundColor: 'transparent',
-  },
-  postCreationButton: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'transparent',
-    borderWidth: 0,
-    textDecorationColor: 'blue',
-    marginRight: 10,
-  },
-  groupCreationButton: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'transparent',
-    borderWidth: 0,
-    textDecorationColor: 'blue',
-    marginLeft: 10,
   },
 });
 

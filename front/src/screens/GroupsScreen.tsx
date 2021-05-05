@@ -1,16 +1,14 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { getGroupsForUser } from '../services/groups';
 import GroupListItem from '../components/GroupListItem';
 import { View } from '../components/Themed';
-import { Button, Icon, Text } from '@ui-kitten/components';
 import CreateGroupPostModal from '../components/CreateGroupPostModal';
 
 export interface GroupsProps {}
 
-const PlusIcon = () => <Icon name="plus-circle-outline" style={{ width: 32, height: 32 }} fill={'rgba(34, 83, 231)'} />;
 
 const GroupsScreen = () => {
   const [visibleCreateGroup, setVisibleCreateGroup] = useState<boolean>(false);
@@ -34,24 +32,17 @@ const GroupsScreen = () => {
     return (
       <View style={styles.container}>
         <CreateGroupPostModal visible={visibleCreateGroup} onChange={setVisibleCreateGroup} />
-        <Button
-          style={styles.button}
-          status="success"
-          accessoryRight={PlusIcon}
-          size="small"
+        <TouchableOpacity
+          activeOpacity={0.7}
           onPress={() => {
             setVisibleCreateGroup(!visibleCreateGroup);
+            console.log('yoni');
+            
           }}
+          style={styles.groupCreationButton}
         >
-          {(buttonProps: any) => (
-            <Text {...buttonProps} style={{ color: 'rgba(34, 83, 231,1)' }}>
-              Create group
-            </Text>
-          )}
-        </Button>
-        {/* <Text>
-          <h3 style={styles.myGroups}>My groups</h3>
-        </Text> */}
+          <Image source={require('../assets/images/createGroupIcon2.png')} style={styles.floatingButtonStyle} />
+        </TouchableOpacity>
         <FlatList
           style={styles.list}
           data={groups}
@@ -65,6 +56,30 @@ const GroupsScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  floatingButtonStyle: {
+    resizeMode: 'contain',
+    width: 32,
+    height: 32,
+    //backgroundColor:'black'
+  },
+  groupCreationButton: {
+    backgroundColor: 'white',
+    position: 'absolute',
+    width: 50,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 30,
+    right: 15,
+    bottom: 30,
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    shadowOpacity: 0.8,
+    elevation: 6,
+    shadowRadius: 15,
+    shadowOffset: { width: 1, height: 13 },
+    borderColor: 'black',
+    borderWidth: 0.8,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',

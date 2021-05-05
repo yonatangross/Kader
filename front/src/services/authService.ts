@@ -27,7 +27,7 @@ const signIn = async (email: string, password: string): Promise<AxiosResponse<Au
 export type AuthData = {
   token: string;
   // expiration: Date;
-  // user: { username: string; role: string };
+  userId: string;
 };
 
 export const authService = {

@@ -36,11 +36,19 @@ const AuthProvider: React.FC = ({ children }) => {
           // const decodedToken: any = decode(token);
           // console.log(`decodedToken:`);
           // console.log(decodedToken);
-          setAuthData({
-            token,
+          //todo: tell aviv to pass in token the userId
+          SecureStore.getItemAsync('user_id').then((userId: any) => {
+            try {
+              setAuthData({
+                token,
+                userId,
+              });
+            } catch {
+              console.log(`error while reading userId`);
+            }
           });
         } catch {
-          console.log(`yoin in catch`);
+          console.log(`error while reading token`);
         }
       });
     } catch (error) {
@@ -61,6 +69,8 @@ const AuthProvider: React.FC = ({ children }) => {
 
         setAuthData(response.data);
         SecureStore.setItemAsync('jwt_token', response.data.token);
+        //todo: temporary move to inside token and retrieve after decoding.
+        SecureStore.setItemAsync('user_id', response.data.userId);
       })
       .catch((error) => {
         console.log(`error in signIn function, ${error}`);
@@ -77,6 +87,8 @@ const AuthProvider: React.FC = ({ children }) => {
       console.log(authData);
 
       SecureStore.setItemAsync('jwt_token', authData.token);
+      SecureStore.setItemAsync('user_id', authData.userId);
+
     }
 
     // AsyncStorage.setItem('@AuthData', JSON.stringify(authData));
@@ -93,6 +105,8 @@ const AuthProvider: React.FC = ({ children }) => {
     //to NOT be recovered in next session.
     // await AsyncStorage.removeItem('@AuthData');
     await SecureStore.deleteItemAsync('jwt_token');
+    await SecureStore.deleteItemAsync('user_id');
+    
   };
 
   return (

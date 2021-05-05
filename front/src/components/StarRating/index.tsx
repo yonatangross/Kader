@@ -18,14 +18,14 @@ const StarRating = (props: RatingProps) => {
 
   for (var i = 1; i <= maxStarsNumber; i++) {
     if (i <= numOfStars) {
-      stars.push(<Image style={styles.flatListStar} source={FullStar} />);
+      stars.push(<Image style={styles.singleStar} source={FullStar} />);
     } else {
-      stars.push(<Image style={styles.flatListStar} source={partialStar} />);
+      stars.push(<Image style={styles.singleStar} source={partialStar} />);
     }
   }
 
   return (
-    <View>
+    <View style={styles.ratingContainer}>
       <FlatList
         keyExtractor={(item, index) => index.toString()}
         data={stars}
@@ -33,7 +33,7 @@ const StarRating = (props: RatingProps) => {
           return item;
         }}
         horizontal
-        style={styles.starSize}
+        style={styles.list}
       />
       {props.displayRatings === true ? <Text>{numOfRatings} Ratings </Text> : <></>}
     </View>

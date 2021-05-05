@@ -29,6 +29,13 @@ const CreateGroupPostModal = (props: CreateGroupPostModalProps) => {
     });
   };
 
+  const handleBackButton = () => {
+    console.log('diana');
+    props.visible = false;
+
+    return true;
+  };
+
   useEffect(() => {
     if (submitFlag) {
       submitGroup();
@@ -43,7 +50,8 @@ const CreateGroupPostModal = (props: CreateGroupPostModalProps) => {
         transparent={false}
         visible={props.visible}
         onRequestClose={() => {
-          // console.log('Modal has now been closed.');
+          props.onChange(false);
+          console.log('Modal has now been closed.');
         }}
       >
         <View style={styles.header}>

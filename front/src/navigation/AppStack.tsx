@@ -16,7 +16,7 @@ export const AppStack = () => {
     <Stack.Navigator
       screenOptions={{
         headerStyle: {
-          backgroundColor: '#f5f5f5',
+          backgroundColor: 'white',
           shadowOpacity: 0,
           elevation: 0,
         },

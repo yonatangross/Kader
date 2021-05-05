@@ -11,8 +11,9 @@ import { MainTabParamList, HomeParamList, NotificationsParamList, GroupsParamLis
 import NotificationsScreen from '../screens/NotificationsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import GroupsScreen from '../screens/GroupsScreen';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
-const MainTab = createMaterialTopTabNavigator<MainTabParamList>();
+const MainTab = createMaterialBottomTabNavigator<MainTabParamList>();
 
 export default function MainTabNavigator() {
   const colorScheme = useColorScheme();
@@ -20,50 +21,44 @@ export default function MainTabNavigator() {
   return (
     <MainTab.Navigator
       initialRouteName="Home"
-      tabBarOptions={{
-        style: {
-          backgroundColor: 'white',
-        },
-        indicatorStyle: {
-          backgroundColor: '#4975aa',
-          height: 4,
-        },
-        labelStyle: {
-          fontWeight: 'bold',
-        },
-        showIcon: true,
+      activeColor="#4975aa"
+      barStyle={{
+        
+        borderTopColor:'black',
+        borderTopWidth:0.5,
+        backgroundColor: 'white',
+        // indicatorStyle: {
+        //   backgroundColor: '#4975aa',
+        //   height: 4,
+        // },
       }}
     >
       <MainTab.Screen
         name="Home"
         component={HomeNavigator}
         options={{
-          tabBarIcon: ({ color }) => <FontAwesome5 name="home" color={"#4975aa"}  size={22} />,
-          tabBarLabel: () => null,
+          tabBarIcon: ({ color }) => <FontAwesome5 name="home" color={'#4975aa'} size={22} />,
         }}
       />
       <MainTab.Screen
         name="Groups"
         component={GroupsNavigator}
         options={{
-          tabBarIcon: ({ color }) => <FontAwesome name="group" color={"#4975aa"}  size={22} />,
-          tabBarLabel: () => null,
+          tabBarIcon: ({ color }) => <FontAwesome name="group" color={'#4975aa'} size={22} />,
         }}
       />
       <MainTab.Screen
         name="Profile"
         component={ProfileNavigator}
         options={{
-          tabBarIcon: ({ color }) => <Ionicons name="person" color={"#4975aa"} size={22} />,
-          tabBarLabel: () => null,
+          tabBarIcon: ({ color }) => <Ionicons name="person" color={'#4975aa'} size={22} />,
         }}
       />
       <MainTab.Screen
         name="Notifications"
         component={NotificationsNavigator}
         options={{
-          tabBarIcon: ({ color }) => <FontAwesome name="bell" color={"#4975aa"} size={22} />,
-          tabBarLabel: () => null,
+          tabBarIcon: ({ color }) => <FontAwesome name="bell" color={'#4975aa'} size={22} />,
         }}
       />
     </MainTab.Navigator>
@@ -109,4 +104,3 @@ function NotificationsNavigator() {
     </NotificationsStack.Navigator>
   );
 }
-
