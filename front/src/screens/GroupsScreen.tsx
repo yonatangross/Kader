@@ -9,7 +9,6 @@ import CreateGroupPostModal from '../components/CreateGroupPostModal';
 
 export interface GroupsProps {}
 
-
 const GroupsScreen = () => {
   const [visibleCreateGroup, setVisibleCreateGroup] = useState<boolean>(false);
 
@@ -36,8 +35,7 @@ const GroupsScreen = () => {
           activeOpacity={0.7}
           onPress={() => {
             setVisibleCreateGroup(!visibleCreateGroup);
-            console.log('yoni');
-            
+            console.log('Pressed group creation');
           }}
           style={styles.groupCreationButton}
         >

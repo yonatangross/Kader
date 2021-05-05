@@ -13,7 +13,11 @@ const GroupListItem = (props: GroupListItemProps) => {
 
   const navigation = useNavigation();
 
-  const renderItemAccessory = (props: any) => <Button size="tiny">Go to Group</Button>;
+  const renderItemAccessory = (props: any) => (
+    <Button size="tiny">
+      Go to Group
+    </Button>
+  );
 
   const renderItemIcon = (props: any) => (
     <Avatar {...props} style={styles.profileAvatar} size="large" source={require('../../layouts/social/profile/assets/image-profile-1.jpg')} />
@@ -40,6 +44,9 @@ const GroupListItem = (props: GroupListItemProps) => {
 const styles = StyleSheet.create({
   profileAvatar: {
     marginHorizontal: 8,
+  },
+  goToGroupButton: {
+    color: 'black',
   },
 });
 
