@@ -1,5 +1,5 @@
 export enum GroupPrivacy {
-  PRIVATE = 'Private',
-  INVISIBLE = 'Invisible',
-  PUBLIC = 'Public',
+  INVISIBLE = 0,
+  PRIVATE = 1,
+  PUBLIC = 2,
 }
