@@ -21,6 +21,9 @@ const HomeScreen = () => {
     getPosts()
       .then((response) => {
         const postsResult: IPost[] = response.data;
+        console.log(`posts response:`);
+        console.log(response);
+
         setPosts(postsResult);
         console.log(`posts length: ${postsResult.length}`);
       })

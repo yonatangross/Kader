@@ -4,7 +4,7 @@ import { PostType } from './PostType';
 
 export interface IPost {
   postId: string;
-  type: PostType;
+  type: PostType; //todo: change enum 0 to relevant postType
   category: string;
   title: string;
   description: string;

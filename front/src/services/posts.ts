@@ -13,7 +13,7 @@ axios.interceptors.request.use(
       try {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
       } catch {
-        console.log(`yoin in catch`);
+        console.log(`error creating axios interceptor inside posts service.`);
       }
     });
     return config;

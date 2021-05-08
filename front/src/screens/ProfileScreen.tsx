@@ -80,8 +80,10 @@ export default function ProfileScreen(navigation: any) {
             <ProfileSocial style={styles.userDataItemContainer} hint="Groups" value={`${!user.memberInGroups ? 0 : user.memberInGroups.length}`} />
             <ProfileSocial style={styles.userDataItemContainer} hint="Managed Groups" value={`${!user.managerInGroups ? 0 : user.managerInGroups.length}`} />
           </View>
+
           {/* <StarRating numOfStars={user?.rating} numOfRatings={user?.numberOfRatings} displayRatings={false} /> */}
         </View>
+
         <View style={styles.userListsContainer}>
           <Text style={{ fontWeight: 'bold', marginBottom: 10, fontSize: 20, paddingHorizontal: 10 }}>Posts</Text>
           <FlatList

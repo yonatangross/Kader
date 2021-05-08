@@ -1,6 +1,8 @@
-import { Text, Button, Icon, Input } from '@ui-kitten/components';
+import { Picker } from '@react-native-picker/picker';
+import { Text, Button, Icon, Input, CheckBox, Select, SelectItem, IndexPath } from '@ui-kitten/components';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Modal, View } from 'react-native';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { addGroup } from '../../services/groups';
 import { GroupPrivacy } from '../../types/GroupPrivacy';
 
@@ -16,8 +18,9 @@ const CreateGroupPostModal = (props: CreateGroupPostModalProps) => {
   const [groupName, setGroupName] = useState<string>('');
   const [groupCategory, setGroupCategory] = useState<string>('');
   const [groupDescription, setGroupDescription] = useState<string>('');
-  const [groupPrivacyMethod, setGroupPrivacyMethod] = useState<GroupPrivacy>(GroupPrivacy.PUBLIC);
-
+  const [groupMainLocation, setGroupMainLocation] = useState<string>('');
+  const [searchable, setSearchable] = useState<boolean>(false);
+  const [groupPrivacyMethod, setGroupPrivacyMethod] = useState<any>(GroupPrivacy.Public);
   const [submitFlag, setSubmitFlag] = useState<boolean>(false);
 
   const submitGroup = () => {
@@ -25,12 +28,12 @@ const CreateGroupPostModal = (props: CreateGroupPostModalProps) => {
       name: groupName,
       category: groupCategory,
       description: groupDescription,
+      groupMainLocation: groupMainLocation,
       groupPrivacy: groupPrivacyMethod,
     });
   };
 
   const handleBackButton = () => {
-    console.log('diana');
     props.visible = false;
 
     return true;
@@ -89,6 +92,35 @@ const CreateGroupPostModal = (props: CreateGroupPostModalProps) => {
             setGroupDescription(description);
           }}
         />
+        <GooglePlacesAutocomplete
+          placeholder="Choose group primary location"
+          onPress={(data, details = null) => {
+            // 'details' is provided when fetchDetails = true
+            setGroupMainLocation(data.description);
+          }}
+          query={{
+            key: 'AIzaSyDtlSYdojyjmTTwvSYaIP3N50n-OzrWcUg',
+            language: 'en',
+            components: 'country:il',
+          }}
+          fetchDetails={true}
+        />
+
+        <CheckBox checked={searchable} onChange={(nextChecked) => setSearchable(nextChecked)}>
+          {`Searchable: ${searchable}`}
+        </CheckBox>
+
+        <Picker
+          selectedValue={groupPrivacyMethod}
+          onValueChange={(itemValue) => {
+            setGroupPrivacyMethod(itemValue);
+          }}
+        >
+          <Picker.Item label="Invisible" value={GroupPrivacy.Invisible} />
+          <Picker.Item label="Private" value={GroupPrivacy.Private} />
+          <Picker.Item label="Public" value={GroupPrivacy.Public} />
+        </Picker>
+
         <View style={styles.bottom}>
           <Button
             style={styles.button}
