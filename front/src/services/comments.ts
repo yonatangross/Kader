@@ -1,27 +1,8 @@
-import { authService } from './authService';
 import axios, { AxiosResponse } from 'axios';
 import { CommentApiDataType } from '../types/ApiDataTypes';
 import { IComment } from '../types/IComment';
-import * as SecureStore from 'expo-secure-store';
 
-// Add a request interceptor
-axios.interceptors.request.use(
-  function (config) {
-    // Do something before request is sent
-    SecureStore.getItemAsync('jwt_token').then((token: any) => {
-      try {
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-      } catch {
-        console.log(`yoin in catch`);
-      }
-    });
-    return config;
-  },
-  function (error) {
-    // Do something with request error
-    return Promise.reject(error);
-  }
-);
+
 
 const baseUrl: string | undefined = 'http://193.106.55.127:5000/api';
 

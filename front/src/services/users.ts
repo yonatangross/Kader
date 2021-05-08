@@ -4,22 +4,20 @@ import * as SecureStore from 'expo-secure-store';
 
 const baseUrl: string | undefined = 'http://kader.cs.colman.ac.il:5000/api';
 
-
-// Add a request interceptor
 axios.interceptors.request.use(
   function (config) {
-    // Do something before request is sent
     SecureStore.getItemAsync('jwt_token').then((token: any) => {
       try {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+        console.log(`added interceptor from users ${token}`);
+
       } catch {
-        console.log(`yoin in catch`);
+        console.log(`error creating axios interceptor inside users service.`);
       }
     });
     return config;
   },
   function (error) {
-    // Do something with request error
     return Promise.reject(error);
   }
 );
@@ -54,7 +52,8 @@ export const addUser = async (formData: IUser): Promise<AxiosResponse<any>> => {
       phoneNumber: formData.phoneNumber,
       rating: 0,
       numberOfRatings: 0,
-      groups: [],
+      memberInGroups: [],
+      managerInGroups: [],
       comments: [],
       posts: [],
       imageUri: undefined,

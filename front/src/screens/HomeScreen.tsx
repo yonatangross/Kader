@@ -8,7 +8,6 @@ import { IPost } from '../types/IPost';
 import CreateGeneralPostModal from '../components/CreateGeneralPostModal';
 import { getPosts } from '../services/posts';
 import CreateGroupPostModal from '../components/CreateGroupPostModal';
-import { useAuth } from '../contexts/Auth';
 
 export interface HomeProps {}
 
@@ -21,54 +20,58 @@ const HomeScreen = () => {
     getPosts()
       .then((response) => {
         const postsResult: IPost[] = response.data;
-        console.log(`posts response:`);
-        console.log(response);
 
         setPosts(postsResult);
-        console.log(`posts length: ${postsResult.length}`);
+        console.log(postsResult.length);
+
+        // console.log(posts);
+        // console.log(`posts length: ${postsResult.length}`);
       })
       .catch((error) => {
         console.log(`error while fetching posts ${error}`);
       });
-  }, []);
+  }, [setPosts]);
 
   const renderPostListItem = ({ item }: any) => {
     return <PostListItem post={item} key={item.postId} />;
+    // return <></>;
   };
-  return (
-    <View style={styles.container}>
-      <CreateGeneralPostModal visible={visibleCreatePost} onChange={setVisibleCreatePost} />
-      <CreateGroupPostModal visible={visibleCreateGroup} onChange={setVisibleCreateGroup} />
-      <FlatList
-        style={{ width: '100%' }}
-        data={posts}
-        renderItem={renderPostListItem}
-        keyExtractor={(item) => item.postId}
-        initialNumToRender={6}
-        maxToRenderPerBatch={2}
-        showsVerticalScrollIndicator={false}
-      />
+  if (!!posts) {
+    return (
+      <View style={styles.container}>
+        <CreateGeneralPostModal visible={visibleCreatePost} onChange={setVisibleCreatePost} />
+        <CreateGroupPostModal visible={visibleCreateGroup} onChange={setVisibleCreateGroup} />
+        <FlatList
+          style={{ width: '100%' }}
+          data={posts}
+          renderItem={renderPostListItem}
+          keyExtractor={(item) => item.postId}
+          initialNumToRender={6}
+          maxToRenderPerBatch={2}
+          showsVerticalScrollIndicator={false}
+        />
 
-      <TouchableOpacity
-        activeOpacity={0.7}
-        onPress={() => {
-          setVisibleCreateGroup(!visibleCreateGroup);
-        }}
-        style={styles.groupCreationButton}
-      >
-        <Image source={require('../assets/images/createGroupIcon2.png')} style={styles.floatingButtonStyle} />
-      </TouchableOpacity>
-      <TouchableOpacity
-        activeOpacity={0.7}
-        onPress={() => {
-          setVisibleCreatePost(!visibleCreatePost);
-        }}
-        style={styles.postCreationButton}
-      >
-        <Image source={require('../assets/images/createPostIcon.png')} style={styles.floatingButtonStyle} />
-      </TouchableOpacity>
-    </View>
-  );
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => {
+            setVisibleCreateGroup(!visibleCreateGroup);
+          }}
+          style={styles.groupCreationButton}
+        >
+          <Image source={require('../assets/images/createGroupIcon2.png')} style={styles.floatingButtonStyle} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => {
+            setVisibleCreatePost(!visibleCreatePost);
+          }}
+          style={styles.postCreationButton}
+        >
+          <Image source={require('../assets/images/createPostIcon.png')} style={styles.floatingButtonStyle} />
+        </TouchableOpacity>
+      </View>
+    );
+  } else return <></>;
 };
 
 const styles = StyleSheet.create({

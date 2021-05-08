@@ -1,28 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
 import { PostApiDataType } from '../types/ApiDataTypes';
 import { IPost } from '../types/IPost';
-import * as SecureStore from 'expo-secure-store';
 
 const baseUrl: string | undefined = 'http://kader.cs.colman.ac.il:5000/api';
 
-// Add a request interceptor
-axios.interceptors.request.use(
-  function (config) {
-    // Do something before request is sent
-    SecureStore.getItemAsync('jwt_token').then((token: any) => {
-      try {
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-      } catch {
-        console.log(`error creating axios interceptor inside posts service.`);
-      }
-    });
-    return config;
-  },
-  function (error) {
-    // Do something with request error
-    return Promise.reject(error);
-  }
-);
 
 export const getPosts = async (): Promise<AxiosResponse<any>> => {
   try {

@@ -45,7 +45,7 @@ export default function ProfileScreen(navigation: any) {
     if (!!auth && !!auth.authData) {
       getUser(auth.authData.userId)
         .then((response) => {
-          console.log('user data: ' + response.data);
+          // console.log('user data: ' + response.data);
 
           const userResult: IUser = response.data;
           setUser(userResult);
@@ -65,7 +65,6 @@ export default function ProfileScreen(navigation: any) {
   };
 
   if (user) {
-    console.log(user);
 
     return (
       <View style={styles.container}>
@@ -121,6 +120,8 @@ export default function ProfileScreen(navigation: any) {
   } else
     return (
       <View style={styles.container}>
+          <Text style={{ fontWeight: 'bold', marginBottom: 10, fontSize: 20, paddingHorizontal: 10 }}>{auth.authData?.firstName}</Text>
+
         <TouchableOpacity activeOpacity={0.7} onPress={signOut} style={styles.logoutButton}>
           <Image source={require('../assets/images/log-out.png')} style={styles.floatingButtonStyle} />
         </TouchableOpacity>

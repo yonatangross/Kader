@@ -15,7 +15,8 @@ const PostCommentItem = (props: PostCommentItemProps) => {
       <Avatar style={styles.profileAvatar} size="small" source={require('../../layouts/social/profile/assets/image-profile-1.jpg')} />
       <View style={styles.commentDetailsContainer}>
         <Text style={styles.commenterName}>
-          {comment.creator.firstName} {comment.creator.lastName}
+          {/* {comment.creator.firstName} {comment.creator.lastName} */}
+          firstName lastName
         </Text>
         <View style={styles.commentContentContainer}>
           <Text style={styles.commentContent}>{comment.content}</Text>

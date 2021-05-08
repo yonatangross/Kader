@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableWithoutFeedback, FlatList } from 'react-native';
+import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import { IPost } from '../../types/IPost';
 import styles from './style';
 import { useNavigation } from '@react-navigation/native';
 import StarRating from '../StarRating/index';
 import { useEffect } from 'react';
-import { Avatar, Divider, Icon } from '@ui-kitten/components';
-import { getPost } from '../../services/posts';
+import { Avatar, Icon } from '@ui-kitten/components';
 import moment from 'moment';
 import PostCommentItem from '../PostCommentItem';
 import PostListItemComments from '../PostListItemComments';
@@ -21,17 +20,13 @@ const PostListItem = (props: PostListItemProps) => {
 
   useEffect(() => {
     let isMounted = true;
-    console.log(props.post);
+    // console.log(`props.post`);
+    // console.log(props.post);
 
     if (!!props.post) {
-      getPost(props.post.postId)
-        .then((response) => {
-          if (isMounted) {
-            setPost(response.data.post);
-            // console.log(`loaded post: ${props.post.postId}`);
-          }
-        })
-        .catch((error) => console.log(error));
+      if (isMounted) {
+        setPost(props.post);
+      }
     }
     return () => {
       isMounted = false;
@@ -47,7 +42,7 @@ const PostListItem = (props: PostListItemProps) => {
       id: props.post.postId,
     });
   };
-  if (post) {
+  if (!!post && !!post.creator ) {
     return (
       <TouchableWithoutFeedback onPress={onClick}>
         <View style={styles.container}>
@@ -63,7 +58,7 @@ const PostListItem = (props: PostListItemProps) => {
               <View style={styles.PostTitleAndGroup}>
                 <Text style={styles.PostTitle}>{post.title}</Text>
                 <Icon style={styles.arrowIcon} name="arrow-right-outline" fill={'rgba(34, 83, 231)'} />
-                <Text style={styles.PostTitle}>{post.group.name}</Text>
+                <Text style={styles.PostTitle}>{post.groupName}</Text>
               </View>
               <Text style={styles.postDate}>{moment(post.created).fromNow()}</Text>
             </View>
@@ -75,7 +70,14 @@ const PostListItem = (props: PostListItemProps) => {
         </View>
       </TouchableWithoutFeedback>
     );
-  } else return <></>;
+  } else
+    return (
+      <TouchableWithoutFeedback onPress={onClick}>
+        <View style={styles.container}>
+          <Text>Error fetching post</Text>
+        </View>
+      </TouchableWithoutFeedback>
+    );
 };
 
 export default PostListItem;
