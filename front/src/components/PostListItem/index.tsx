@@ -33,10 +33,6 @@ const PostListItem = (props: PostListItemProps) => {
     };
   }, [props.post]);
 
-  const renderPostCommentItem = ({ item }: any) => {
-    return <PostCommentItem comment={item} />;
-  };
-
   const onClick = () => {
     navigation.navigate('SinglePost', {
       id: props.post.postId,

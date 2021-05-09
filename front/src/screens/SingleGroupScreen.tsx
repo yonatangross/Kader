@@ -7,6 +7,7 @@ import { getGroup } from '../services/groups';
 import PostListItem from '../components/PostListItem';
 import UserListItem from '../components/UserListItem';
 import { IGroup } from '../types/IGroup';
+import { getGroupPrivacyName } from '../types/GroupPrivacy';
 export interface SingleGroupScreenProps {}
 
 const SingleGroupScreen = (props: SingleGroupScreenProps) => {
@@ -18,7 +19,8 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
       const params: any = route.params;
       getGroup(params.id)
         .then((response) => {
-          const groupResponse: IGroup = response.data;
+          const groupResponse: IGroup = response.data.group;
+
           setGroup(groupResponse);
         })
         .catch((error) => {
@@ -37,7 +39,9 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
       }
     );
 
-  if (group) {
+  if (!!group) {
+    console.log(group.name);
+
     return (
       <View>
         <Text style={styles.text} category="h5">
@@ -47,8 +51,12 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
           {group.description}
         </Text>
         <Button title="Create post" onPress={() => handleCreate()} />
-        <Text>Group Privacy: {group.groupPrivacy.valueOf()}</Text>
-        <Text>{group.members.length} members</Text>
+        <Text style={styles.text} category="h6">
+          The Group is {getGroupPrivacyName(group.groupPrivacy)}
+        </Text>
+        <Text style={styles.text} category="h6">
+          {group.members.length} members
+        </Text>
         <FlatList
           data={group.members}
           renderItem={({ item: user }) => <UserListItem user={user} />}
@@ -71,8 +79,8 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
 
 const styles = StyleSheet.create({
   text: {
+    margin: 5,
     alignSelf: 'center',
-    margin: 2,
   },
 });
 

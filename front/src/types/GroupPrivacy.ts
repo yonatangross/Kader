@@ -7,3 +7,21 @@ export const GroupPrivacy = Object.freeze({
   Private: 1 as 1,
   Public: 2 as 2,
 });
+
+export const getGroupPrivacyName = (groupPrivacy: GroupPrivacy) => {
+  let result = '';
+  switch (groupPrivacy) {
+    case GroupPrivacy.Invisible:
+      result = 'Invisible';
+      break;
+    case GroupPrivacy.Private:
+      result = 'Private';
+      break;
+    case GroupPrivacy.Public:
+      result = 'Public';
+      break;
+    default:
+      break;
+  }
+  return result;
+};

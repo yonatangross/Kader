@@ -6,25 +6,28 @@ import { getGroupsForUser } from '../services/groups';
 import GroupListItem from '../components/GroupListItem';
 import { View } from '../components/Themed';
 import CreateGroupPostModal from '../components/CreateGroupPostModal';
+import { useAuth } from '../contexts/Auth';
 
 export interface GroupsProps {}
 
 const GroupsScreen = () => {
+  const auth = useAuth();
+
   const [visibleCreateGroup, setVisibleCreateGroup] = useState<boolean>(false);
 
   const [groups, setGroups] = useState<any[]>();
 
   useEffect(() => {
-    //todo: userId
-    getGroupsForUser('0c3084e2-8799-48ff-8b55-e9a24cc7d026')
-      .then((response) => {
-        const groupsResult: any[] = response.data.groupView;
+    if (auth.authData)
+      getGroupsForUser(auth.authData?.userId)
+        .then((response) => {
+          const groupsResult: any[] = response.data.groupView;
 
-        setGroups(groupsResult);
-      })
-      .catch((error) => {
-        console.log(`error while fetching groups ${error}`);
-      });
+          setGroups(groupsResult);
+        })
+        .catch((error) => {
+          console.log(`error while fetching groups ${error}`);
+        });
   }, []);
 
   if (groups) {
