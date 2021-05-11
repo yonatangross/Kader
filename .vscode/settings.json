@@ -6,5 +6,8 @@
         "Lanciano",
         "Octicons",
         "bolila"
-    ]
+    ],
+    "files.watcherExclude": {
+        "**/target": true
+    }
 }
