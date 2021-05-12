@@ -1,8 +1,9 @@
-import { Button, Icon, Input } from '@ui-kitten/components';
-import React from 'react';
-import { Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { Text, Button, Divider, Icon, Input } from '@ui-kitten/components';
+import React, { useEffect, useState } from 'react';
+import { KeyboardAvoidingView, StyleSheet } from 'react-native';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { CreatePostStateType } from '../../types/CreatePostTypes';
-import { PostType } from '../../types/PostType';
+import UploadImage from '../UploadImage';
 
 export interface PostDetailsFormProps {
   active: boolean;
@@ -12,19 +13,30 @@ export interface PostDetailsFormProps {
   setSubmitFlag: Function;
   finalStage: boolean;
 }
-const AlertIcon = (props: any) => <Icon {...props} name="alert-circle-outline" />;
 const StarIcon = (props: any) => <Icon {...props} name="star" />;
-
 const PostDetailsForm = (props: PostDetailsFormProps) => {
+  const [postImage, setPostImage] = useState<any>(null);
+
+  useEffect(() => {
+    props.dispatch({
+      type: 'Details',
+      payload: {
+        title: props.state.details.title,
+        description: props.state.details.description,
+        location: props.state.details.location,
+        image: postImage,
+      },
+    });
+  }, [postImage]);
   if (props.active) {
     return (
       <>
+        <Text style={styles.text} category="label">
+          Title
+        </Text>
         <Input
           value={props.state.details.title}
-          label="Post Title"
-          placeholder="Please fill the post title here."
-          caption="Should contain at least 8 symbols"
-          captionIcon={AlertIcon}
+          placeholder="Post Title"
           onChangeText={(title) => {
             props.dispatch({
               type: 'Details',
@@ -32,16 +44,19 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
                 title: title,
                 description: props.state.details.description,
                 location: props.state.details.location,
-                images: props.state.details.location,
+                image: props.state.details.image,
               },
             });
             console.log(props.state);
           }}
         />
+        <Text style={styles.text} category="label">
+          Description
+        </Text>
         <Input
           multiline={true}
           textStyle={{ minHeight: 64 }}
-          placeholder="Post Description."
+          placeholder="Post Description"
           value={props.state.details.description}
           onChangeText={(description) => {
             props.dispatch({
@@ -50,11 +65,54 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
                 title: props.state.details.title,
                 description: description,
                 location: props.state.details.location,
-                images: props.state.details.location,
+                image: props.state.details.image,
               },
             });
           }}
         />
+        <Text style={styles.text} category="label">
+          Post primary location
+        </Text>
+        <Divider />
+        <KeyboardAvoidingView behavior="padding" style={{ height: 300, flex: 1 }}>
+          <GooglePlacesAutocomplete
+            placeholder="Search"
+            onPress={(data, details = null) => {
+              // 'details' is provided when fetchDetails = true
+              // console.log(data.description, details);
+              props.dispatch({
+                type: 'Details',
+                payload: {
+                  title: props.state.details.title,
+                  description: props.state.details.description,
+                  location: data.description,
+                  images: props.state.details.image,
+                },
+              });
+            }}
+            query={{
+              key: 'AIzaSyDtlSYdojyjmTTwvSYaIP3N50n-OzrWcUg',
+              language: 'en',
+              components: 'country:il',
+            }}
+            currentLocation={true}
+            currentLocationLabel="Current location"
+            fetchDetails={true}
+            styles={{
+              textInput: {
+                color: '#5d5d5d',
+              },
+              container: {
+                zIndex: 1,
+                overflow: 'visible',
+                height: 50,
+              },
+            }}
+          />
+        </KeyboardAvoidingView>
+        <Divider />
+
+        <UploadImage postImage={postImage} setPostImage={setPostImage} />
         <Button
           style={styles.button}
           status="success"
@@ -90,6 +148,7 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
 
 const styles = StyleSheet.create({
   button: {
+    display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 100,
@@ -98,6 +157,7 @@ const styles = StyleSheet.create({
     marginLeft: 40,
     padding: 10,
   },
+  text: { margin: 5 },
 });
 
 export default PostDetailsForm;

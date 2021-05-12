@@ -17,7 +17,6 @@ export interface GroupsSelectorProps {
 }
 
 const GroupsSelector = (props: GroupsSelectorProps) => {
-  
   const [groups, setGroups] = useState<IGroup[]>();
 
   useEffect(() => {
@@ -29,6 +28,8 @@ const GroupsSelector = (props: GroupsSelectorProps) => {
       .catch((error) => {
         console.log(`error while fetching groups ${error}`);
       });
+    console.log('props.state.details');
+    console.log(props.state.details);
   }, []);
 
   const renderItem = ({ item: item, index }: { item: IGroup; index: number }) => {

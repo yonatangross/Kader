@@ -12,6 +12,7 @@ import CreateGroupPostModal from '../components/CreateGroupPostModal';
 export interface HomeProps {}
 
 const HomeScreen = () => {
+  
   const [visibleCreatePost, setVisibleCreatePost] = useState<boolean>(false);
   const [visibleCreateGroup, setVisibleCreateGroup] = useState<boolean>(false);
 

@@ -10,6 +10,7 @@ import PostCategorySelector from '../PostCategorySelector';
 import PostCreationProgressBar from '../PostCreationProgressBar';
 import PostDetailsForm from '../PostDetailsForm';
 import PostTypeSelector from '../PostTypeSelector';
+import { useAuth } from '../../contexts/Auth';
 
 export interface CreateGeneralPostModalProps {
   visible: boolean;
@@ -17,28 +18,30 @@ export interface CreateGeneralPostModalProps {
 }
 
 const createPostInitState = {
-  postType: PostType.REQUEST,
+  postType: PostType.Request,
   category: '',
-  details: { title: '', description: '', location: '', images: [] },
+  details: { title: '', description: '', location: '', image: undefined },
   groups: [],
 };
 
 const CreateGeneralPostModal = (props: CreateGeneralPostModalProps) => {
+  const auth = useAuth();
   const [state, dispatch] = useReducer(createPostReducer, createPostInitState, initCreatePost);
   const [activeSection, setActiveSection] = useState<boolean[]>([false, false, false, false]);
   const [submitFlag, setSubmitFlag] = useState<boolean>(false);
   const submitPost = () => {
     state.groups.forEach((groupId) => {
+      console.log('before adding post');
+      console.log(state.details);
       addPost({
         type: state.postType,
         category: state.category,
-        creator: '0c3084e2-8799-48ff-8b55-e9a24cc7d026', //todo: userId
+        creator: auth.authData?.userId,
         title: state.details.title,
         description: state.details.description,
         groupId: groupId,
-        comments: [],
-        location: '',
-        images: state.details.images,
+        location: state.details.location,
+        image: state.details.image,
       });
     });
   };

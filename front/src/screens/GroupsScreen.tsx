@@ -7,17 +7,27 @@ import GroupListItem from '../components/GroupListItem';
 import { View } from '../components/Themed';
 import CreateGroupPostModal from '../components/CreateGroupPostModal';
 import { useAuth } from '../contexts/Auth';
+import { Text } from '@ui-kitten/components';
+import { Autocomplete, AutocompleteItem, Icon } from '@ui-kitten/components';
 
 export interface GroupsProps {}
+
+
+const filter = (item: any, query: string) => item.title.toLowerCase().includes(query.toLowerCase());
+
+const StarIcon = (props: any) => <Icon {...props} name="star" />;
 
 const GroupsScreen = () => {
   const auth = useAuth();
 
   const [visibleCreateGroup, setVisibleCreateGroup] = useState<boolean>(false);
 
-  const [groups, setGroups] = useState<any[]>();
+  const [userGroups, setUserGroups] = useState<any[]>();
 
-  useEffect(() => {
+  const [query, setQuery] = React.useState<string>('');
+  const [groups, setGroups] = React.useState<any[]>();
+
+  const updateData = () => {
     if (auth.authData)
       getGroupsForUser(auth.authData?.userId)
         .then((response) => {
@@ -28,9 +38,36 @@ const GroupsScreen = () => {
         .catch((error) => {
           console.log(`error while fetching groups ${error}`);
         });
-  }, []);
+  };
 
-  if (groups) {
+  const onSelect = (index: number) => {
+    if (groups) setQuery(groups[index].name);
+  };
+
+  const onChangeText = (nextQuery: string) => {
+    setQuery(nextQuery);
+  };
+
+  const applyFilter = (options: any) => {
+    return options.filter((item: { name: string }) => item.name.toLowerCase().includes(query.toLowerCase()));
+  };
+  const renderOption = (item: any, index: number) => <AutocompleteItem key={index} title={item.name} accessoryLeft={StarIcon} />;
+
+  useEffect(() => {
+    if (auth.authData)
+      getGroupsForUser(auth.authData?.userId)
+        .then((response) => {
+          const groupsResult: any[] = response.data.groupView;
+
+          setUserGroups(groupsResult);
+        })
+        .catch((error) => {
+          console.log(`error while fetching groups ${error}`);
+        });
+    updateData();
+  }, [query]);
+
+  if (userGroups) {
     return (
       <View style={styles.container}>
         <CreateGroupPostModal visible={visibleCreateGroup} onChange={setVisibleCreateGroup} />
@@ -44,9 +81,18 @@ const GroupsScreen = () => {
         >
           <Image source={require('../assets/images/createGroupIcon2.png')} style={styles.floatingButtonStyle} />
         </TouchableOpacity>
+        <Text style={styles.text} category="h1">
+          Groups
+        </Text>
+        <Autocomplete style={{ width: '100%' }} placeholder="Search Groups here!" value={query} onChangeText={onChangeText} onSelect={onSelect}>
+          {!!groups ? groups.map(renderOption) : <></>}
+        </Autocomplete>
+        <Text style={styles.text} category="h6">
+          My Groups
+        </Text>
         <FlatList
           style={styles.list}
-          data={groups}
+          data={userGroups}
           renderItem={({ item: group }) => <GroupListItem group={group} />}
           keyExtractor={(item) => item.groupId}
           showsVerticalScrollIndicator={false}
@@ -103,7 +149,8 @@ const styles = StyleSheet.create({
   },
   text: {
     margin: 2,
-    color: '#4975aa',
+    color: 'black',
+    alignSelf: 'center',
   },
   myGroups: {
     textAlign: 'left',

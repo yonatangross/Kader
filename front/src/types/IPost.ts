@@ -4,13 +4,13 @@ import { PostType } from './PostType';
 
 export interface IPost {
   postId: string;
-  type: PostType; //todo: change enum 0 to relevant postType
+  type: PostType; 
   category: string;
   title: string;
   description: string;
   comments: IComment[];
   location: string;
-  images: string[];
+  image: any;
   creator: IUser;
   groupId: string;
   created: Date;

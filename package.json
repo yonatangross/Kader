@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "awesome-debounce-promise": "^2.1.0"
+  }
+}
