@@ -1,53 +1,29 @@
 import React from 'react';
-import { Avatar, Button, ListItem } from '@ui-kitten/components';
+import { AutocompleteItem, Icon } from '@ui-kitten/components';
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export interface GroupListSearchItemProps {
-  group: any;
+  item: any;
+  index: number;
+  key: number;
 }
+const StarIcon = (props: any) => <Icon {...props} name="star" />;
 
 const GroupListSearchItem = (props: GroupListSearchItemProps) => {
-  let { group: group } = props;
-
   const navigation = useNavigation();
 
-  const renderItemAccessory = (props: any) => (
-    <Button size="tiny">
-      Go to Group
-    </Button>
-  );
-
-  const renderItemIcon = (props: any) => (
-    <Avatar {...props} style={styles.profileAvatar} size="large" source={require('../../layouts/social/profile/assets/image-profile-1.jpg')} />
-  );
-
   const onClick = () => {
-    navigation.navigate('SingleGroup', {
-      id: group.groupId,
+    navigation.navigate('SingleGroupDetailsScreen', {
+      id: props.item.groupId,
     });
   };
 
   return (
     <TouchableOpacity onPress={onClick}>
-      <ListItem
-        title={`${group.name} - ${group.category}`}
-        description={`${group.membersCount} members, ${group.postsCount} posts,`}
-        accessoryLeft={renderItemIcon}
-        accessoryRight={renderItemAccessory}
-      />
+      <AutocompleteItem key={props.key} title={props.item.name} accessoryLeft={StarIcon} />;
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  profileAvatar: {
-    marginHorizontal: 8,
-  },
-  goToGroupButton: {
-    color: 'black',
-  },
-});
 
 export default GroupListSearchItem;

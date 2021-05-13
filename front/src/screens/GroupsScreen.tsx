@@ -9,9 +9,9 @@ import CreateGroupPostModal from '../components/CreateGroupPostModal';
 import { useAuth } from '../contexts/Auth';
 import { Text } from '@ui-kitten/components';
 import { Autocomplete, AutocompleteItem, Icon } from '@ui-kitten/components';
+import { useNavigation } from '@react-navigation/native';
 
 export interface GroupsProps {}
-
 
 const filter = (item: any, query: string) => item.title.toLowerCase().includes(query.toLowerCase());
 
@@ -19,6 +19,7 @@ const StarIcon = (props: any) => <Icon {...props} name="star" />;
 
 const GroupsScreen = () => {
   const auth = useAuth();
+  const navigation = useNavigation();
 
   const [visibleCreateGroup, setVisibleCreateGroup] = useState<boolean>(false);
 
@@ -41,7 +42,10 @@ const GroupsScreen = () => {
   };
 
   const onSelect = (index: number) => {
-    if (groups) setQuery(groups[index].name);
+    if (groups)
+      navigation.navigate('SingleGroupDetails', {
+        id: groups[index].groupId,
+      });
   };
 
   const onChangeText = (nextQuery: string) => {

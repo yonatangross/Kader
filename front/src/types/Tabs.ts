@@ -5,6 +5,7 @@ export type RootStackParamList = {
   Login: undefined;
   SinglePost: undefined;
   SingleGroup: undefined;
+  SingleGroupDetails:undefined
 };
 
 export type MainTabParamList = {
@@ -41,5 +42,9 @@ export type SinglePostProps = {
 
 export type SingleGroupProps = {
   SingleGroupScreen: undefined;
+};
+
+export type SingleGroupDetailsProps = {
+  SingleGroupDetailsScreen: undefined;
 };
 

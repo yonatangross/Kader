@@ -6,6 +6,7 @@ import Colors from '../constants/Colors';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import SinglePostScreen from '../screens/SinglePostScreen';
 import SingleGroupScreen from '../screens/SingleGroupScreen';
+import SingleGroupDetailsScreen from '../screens/SingleGroupDetailsScreen';
 import { RootStackParamList } from '../types/Tabs';
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -56,6 +57,14 @@ export const AppStack = () => {
       <Stack.Screen
         name="SingleGroup"
         component={SingleGroupScreen}
+        options={{
+          title: '',
+          headerTintColor: '#4975aa',
+        }}
+      />
+      <Stack.Screen
+        name="SingleGroupDetails"
+        component={SingleGroupDetailsScreen}
         options={{
           title: '',
           headerTintColor: '#4975aa',
