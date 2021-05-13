@@ -30,26 +30,34 @@ const AuthProvider: React.FC = ({ children }) => {
 
   async function loadStorageData(): Promise<void> {
     try {
-      SecureStore.getItemAsync('jwt_token').then((token: any) => {
+      SecureStore.getItemAsync('jwt_token').then(async (token: any) => {
         try {
           const decodedToken: any = decode(token);
-          try {
-            setAuthData({
-              token: token,
-              userId: decodedToken.userid,
-              email: decodedToken.email,
-              firstName: decodedToken.firstname,
-              lastName: decodedToken.lastname,
-            });
-          } catch (error) {
-            console.log(`error while setting auth data ${error}`);
+          let exp = new Date(decodedToken.exp * 1000);
+          console.log(exp);
+
+          if (exp > new Date()) {
+            try {
+              setAuthData({
+                token: token,
+                userId: decodedToken.userid,
+                email: decodedToken.email,
+                firstName: decodedToken.firstname,
+                lastName: decodedToken.lastname,
+              });
+            } catch (error) {
+              console.log(`error while setting auth data ${error}`);
+            }
+          } else {
+            console.log(`token ${token} expired`);
+            signOut();
           }
         } catch (error) {
-          console.log(`error while reading token ${error}`);
+          console.log(`error while reading token: ${error}`);
         }
       });
     } catch (error) {
-      console.log(`error while fetching jwt_token ${error}`);
+      console.log(`error while fetching jwt_token: ${error}`);
     } finally {
       //loading finished
       setLoading(false);
@@ -95,13 +103,10 @@ const AuthProvider: React.FC = ({ children }) => {
   const signOut = async () => {
     //Remove data from context, so the App can be notified
     //and send the user to the AuthStack
-    console.log(`authData:`);
+    console.log(`Removing authData:`);
     console.log(authData);
     setAuthData(undefined);
 
-    //Remove the data from Async Storage
-    //to NOT be recovered in next session.
-    // await AsyncStorage.removeItem('@AuthData');
     await SecureStore.deleteItemAsync('jwt_token');
   };
 

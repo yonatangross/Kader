@@ -9,7 +9,7 @@ axios.interceptors.request.use(
     SecureStore.getItemAsync('jwt_token').then((token: any) => {
       try {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-        console.log(`added interceptor from users ${token}`);
+        console.log(`added interceptor ${token}`);
 
       } catch {
         console.log(`error creating axios interceptor inside users service.`);
