@@ -1,13 +1,12 @@
-import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { View } from 'react-native';
-
-import NotFoundScreen from '../screens/NotFoundScreen';
-import { RootStackParamList } from '../types/Tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import MainTabNavigator from './MainTabNavigator';
 import Colors from '../constants/Colors';
+import NotFoundScreen from '../screens/NotFoundScreen';
 import SinglePostScreen from '../screens/SinglePostScreen';
 import SingleGroupScreen from '../screens/SingleGroupScreen';
+import { RootStackParamList } from '../types/Tabs';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -32,7 +31,7 @@ export const AppStack = () => {
         component={MainTabNavigator}
         options={{
           title: 'Kader',
-          headerTintColor: "#4975aa",
+          headerTintColor: '#4975aa',
           headerRight: () => (
             <View
               style={{
@@ -51,7 +50,7 @@ export const AppStack = () => {
         component={SinglePostScreen}
         options={{
           headerTintColor: '#4975aa',
-          title:"",
+          title: '',
         }}
       />
       <Stack.Screen
@@ -62,7 +61,7 @@ export const AppStack = () => {
           headerTintColor: '#4975aa',
         }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
         options={{
@@ -70,7 +69,6 @@ export const AppStack = () => {
           headerTintColor: '#4975aa',
         }}
       />
-
     </Stack.Navigator>
   );
 };

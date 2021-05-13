@@ -3,7 +3,7 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 import { AuthData, authService } from '../services/authService';
 import * as SecureStore from 'expo-secure-store';
 import decode from 'jwt-decode';
-
+import kaderApi from '../services/axios';
 type AuthContextData = {
   authData?: AuthData;
   loading: boolean;
@@ -29,14 +29,16 @@ const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   async function loadStorageData(): Promise<void> {
+    console.log('in authContext loadStorageData');
+
     try {
       SecureStore.getItemAsync('jwt_token').then(async (token: any) => {
         try {
           const decodedToken: any = decode(token);
-          let exp = new Date(decodedToken.exp * 1000);
-          console.log(exp);
+          let tokenExpDate = new Date(decodedToken.exp * 1000);
 
-          if (exp > new Date()) {
+          if (tokenExpDate > new Date()) {
+            console.log('got valid token, setting AuthData');
             try {
               setAuthData({
                 token: token,
@@ -45,6 +47,7 @@ const AuthProvider: React.FC = ({ children }) => {
                 firstName: decodedToken.firstname,
                 lastName: decodedToken.lastname,
               });
+              console.log('Finished adding authData');
             } catch (error) {
               console.log(`error while setting auth data ${error}`);
             }
@@ -60,6 +63,8 @@ const AuthProvider: React.FC = ({ children }) => {
       console.log(`error while fetching jwt_token: ${error}`);
     } finally {
       //loading finished
+      console.log('finished loadStorageData');
+
       setLoading(false);
     }
   }
@@ -67,6 +72,8 @@ const AuthProvider: React.FC = ({ children }) => {
   const signIn = async (email: string, password: string) => {
     //call the service passing credential (email and password).
     //In a real App this data will be provided by the user from some InputText components.
+    console.log('in authcontext signin');
+
     await authService
       .signIn(email, password)
       .then((response) => {
@@ -91,9 +98,7 @@ const AuthProvider: React.FC = ({ children }) => {
     //to be recovered in the next user session.
 
     if (!!authData) {
-      console.log(`in authData saving`);
-      console.log(authData);
-
+      console.log(`authData isn't null, saving token`);
       SecureStore.setItemAsync('jwt_token', authData.token);
     }
 
@@ -103,8 +108,7 @@ const AuthProvider: React.FC = ({ children }) => {
   const signOut = async () => {
     //Remove data from context, so the App can be notified
     //and send the user to the AuthStack
-    console.log(`Removing authData:`);
-    console.log(authData);
+    console.log(`Singing out, Removing authData`);
     setAuthData(undefined);
 
     await SecureStore.deleteItemAsync('jwt_token');

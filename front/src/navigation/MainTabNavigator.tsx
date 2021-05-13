@@ -33,12 +33,13 @@ export default function MainTabNavigator() {
         },
         showIcon: true,
       }}
+      lazy={true}
     >
       <MainTab.Screen
         name="Home"
         component={HomeNavigator}
         options={{
-          tabBarIcon: ({ color }) => <FontAwesome5 name="home" color={"#4975aa"}  size={22} />,
+          tabBarIcon: ({ color }) => <FontAwesome5 name="home" color={'#4975aa'} size={22} />,
           tabBarLabel: () => null,
         }}
       />
@@ -46,7 +47,7 @@ export default function MainTabNavigator() {
         name="Groups"
         component={GroupsNavigator}
         options={{
-          tabBarIcon: ({ color }) => <FontAwesome name="group" color={"#4975aa"}  size={22} />,
+          tabBarIcon: ({ color }) => <FontAwesome name="group" color={'#4975aa'} size={22} />,
           tabBarLabel: () => null,
         }}
       />
@@ -54,7 +55,7 @@ export default function MainTabNavigator() {
         name="Profile"
         component={ProfileNavigator}
         options={{
-          tabBarIcon: ({ color }) => <Ionicons name="person" color={"#4975aa"} size={22} />,
+          tabBarIcon: ({ color }) => <Ionicons name="person" color={'#4975aa'} size={22} />,
           tabBarLabel: () => null,
         }}
       />
@@ -62,7 +63,7 @@ export default function MainTabNavigator() {
         name="Notifications"
         component={NotificationsNavigator}
         options={{
-          tabBarIcon: ({ color }) => <FontAwesome name="bell" color={"#4975aa"} size={22} />,
+          tabBarIcon: ({ color }) => <FontAwesome name="bell" color={'#4975aa'} size={22} />,
           tabBarLabel: () => null,
         }}
       />
@@ -109,4 +110,3 @@ function NotificationsNavigator() {
     </NotificationsStack.Navigator>
   );
 }
-

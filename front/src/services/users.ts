@@ -1,30 +1,10 @@
-import axios, { AxiosResponse } from 'axios';
+import kaderApi from './axios';
+import { AxiosResponse } from 'axios';
 import { IUser } from '../types/IUser';
-import * as SecureStore from 'expo-secure-store';
-
-const baseUrl: string | undefined = 'http://kader.cs.colman.ac.il:5000/api';
-
-axios.interceptors.request.use(
-  function (config) {
-    SecureStore.getItemAsync('jwt_token').then((token: any) => {
-      try {
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-        console.log(`added interceptor ${token}`);
-
-      } catch {
-        console.log(`error creating axios interceptor inside users service.`);
-      }
-    });
-    return config;
-  },
-  function (error) {
-    return Promise.reject(error);
-  }
-);
 
 export const getUsers = async (): Promise<AxiosResponse<any>> => {
   try {
-    const response: AxiosResponse<any> = await axios.get(`${baseUrl}/users`, {
+    const response: AxiosResponse<any> = await kaderApi.get(`/users`, {
       params: {},
     });
     return response;
@@ -35,7 +15,7 @@ export const getUsers = async (): Promise<AxiosResponse<any>> => {
 
 export const getUser = async (userId: string): Promise<AxiosResponse<any>> => {
   try {
-    const requestedUser: AxiosResponse<any> = await axios.get(`${baseUrl}/users/${userId}`);
+    const requestedUser: AxiosResponse<any> = await kaderApi.get(`/users/${userId}`);
     return requestedUser;
   } catch (error) {
     throw new Error(error);
@@ -44,7 +24,6 @@ export const getUser = async (userId: string): Promise<AxiosResponse<any>> => {
 
 export const addUser = async (formData: IUser): Promise<AxiosResponse<any>> => {
   try {
-    //console.log(formData);
     const user: Omit<IUser, 'id'> = {
       firstName: formData.firstName,
       lastName: formData.lastName,
@@ -58,9 +37,8 @@ export const addUser = async (formData: IUser): Promise<AxiosResponse<any>> => {
       posts: [],
       imageUri: undefined,
     };
-    //console.log(`user: ${Object.keys(user)}\n ${Object.values(user)}`);
 
-    const saveUser: AxiosResponse<any> = await axios.post(`${baseUrl}/users/${user}`, user);
+    const saveUser: AxiosResponse<any> = await kaderApi.post(`/users/${user}`, user);
     return saveUser;
   } catch (error) {
     throw new Error(error);
@@ -69,7 +47,7 @@ export const addUser = async (formData: IUser): Promise<AxiosResponse<any>> => {
 
 export const updateUser = async (user: IUser): Promise<AxiosResponse<any>> => {
   try {
-    const updatedUser: AxiosResponse<any> = await axios.put(`${baseUrl}/users/${user.id}`, user);
+    const updatedUser: AxiosResponse<any> = await kaderApi.put(`/users/${user.id}`, user);
     return updatedUser;
   } catch (error) {
     throw new Error(error);
@@ -78,7 +56,7 @@ export const updateUser = async (user: IUser): Promise<AxiosResponse<any>> => {
 
 export const deleteUser = async (id: string): Promise<AxiosResponse<any>> => {
   try {
-    const deletedUser: AxiosResponse<any> = await axios.delete(`${baseUrl}/users/${id}`);
+    const deletedUser: AxiosResponse<any> = await kaderApi.delete(`/users/${id}`);
     return deletedUser;
   } catch (error) {
     throw new Error(error);

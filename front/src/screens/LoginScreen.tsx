@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, Input, Text } from '@ui-kitten/components';
 import { ImageOverlay } from '../layouts/auth/login/extra/image-overlay.component';
@@ -13,6 +13,8 @@ export interface LoginScreenProps {}
 export default function LoginScreen(navigation: any) {
   const [loading, isLoading] = useState(false);
   const auth = useAuth();
+  const passwordFieldRef = useRef<Input>(null);
+
   const signIn = async () => {
     isLoading(true);
     if (!!email && !!password) await auth.signIn(email, password);
@@ -36,7 +38,21 @@ export default function LoginScreen(navigation: any) {
           </Button>
         </View>
         <View style={styles.formContainer}>
-          <Input label="EMAIL" placeholder="Email" status="control" value={email} onChangeText={setEmail} />
+          <Input
+            // onKeyPress={(e) => {
+            //   console.log('yoni');
+            //   if (e.nativeEvent.key === 'Enter') {
+            //     console.log('yoni2');
+            //     e.preventDefault();
+            //     if (!!passwordFieldRef && !!passwordFieldRef.current) passwordFieldRef.current.focus();
+            //   }
+            // }}
+            label="EMAIL"
+            placeholder="Email"
+            status="control"
+            value={email}
+            onChangeText={setEmail}
+          />
           <Input
             style={styles.passwordInput}
             secureTextEntry={true}
@@ -45,6 +61,7 @@ export default function LoginScreen(navigation: any) {
             status="control"
             value={password}
             onChangeText={setPassword}
+            ref={passwordFieldRef}
           />
         </View>
         <View style={styles.submitContainer}>

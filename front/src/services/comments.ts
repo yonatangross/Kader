@@ -1,14 +1,12 @@
-import axios, { AxiosResponse } from 'axios';
+import kaderApi from './axios';
+import { AxiosResponse } from 'axios';
 import { CommentApiDataType } from '../types/ApiDataTypes';
 import { IComment } from '../types/IComment';
 
 
-
-const baseUrl: string | undefined = 'http://193.106.55.127:5000/api';
-
 export const getComments = async (): Promise<AxiosResponse<any>> => {
   try {
-    const response: AxiosResponse<any> = await axios.get(`${baseUrl}/comments`, {
+    const response: AxiosResponse<any> = await kaderApi.get(`/comments`, {
       params: {},
     });
     return response;
@@ -19,7 +17,7 @@ export const getComments = async (): Promise<AxiosResponse<any>> => {
 
 export const getComment = async (commentId: string): Promise<AxiosResponse<any>> => {
   try {
-    const requestedComment: AxiosResponse<any> = await axios.get(`${baseUrl}/comments/${commentId}`);
+    const requestedComment: AxiosResponse<any> = await kaderApi.get(`/comments/${commentId}`);
     return requestedComment;
   } catch (error) {
     throw new Error(error);
@@ -37,7 +35,7 @@ export const addComment = async (formData: any): Promise<AxiosResponse<any>> => 
       postId: formData.post.postId,
     };
 
-    const saveComment: AxiosResponse<any> = await axios.post(`${baseUrl}/comments/`, comment);
+    const saveComment: AxiosResponse<any> = await kaderApi.post(`/comments/`, comment);
     return saveComment;
   } catch (error) {
     throw new Error(error);
@@ -46,7 +44,7 @@ export const addComment = async (formData: any): Promise<AxiosResponse<any>> => 
 
 export const updateComment = async (comment: IComment): Promise<AxiosResponse<any>> => {
   try {
-    const updatedComment: AxiosResponse<any> = await axios.put(`${baseUrl}/comments/${comment.commentId}`, comment);
+    const updatedComment: AxiosResponse<any> = await kaderApi.put(`/comments/${comment.commentId}`, comment);
     return updatedComment;
   } catch (error) {
     throw new Error(error);
@@ -55,7 +53,7 @@ export const updateComment = async (comment: IComment): Promise<AxiosResponse<an
 
 export const deleteComment = async (id: string): Promise<AxiosResponse<CommentApiDataType>> => {
   try {
-    const deletedComment: AxiosResponse<CommentApiDataType> = await axios.delete(`${baseUrl}/comments/${id}`);
+    const deletedComment: AxiosResponse<CommentApiDataType> = await kaderApi.delete(`/comments/${id}`);
     return deletedComment;
   } catch (error) {
     throw new Error(error);

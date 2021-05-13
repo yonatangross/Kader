@@ -12,12 +12,13 @@ import CreateGroupPostModal from '../components/CreateGroupPostModal';
 export interface HomeProps {}
 
 const HomeScreen = () => {
-  
   const [visibleCreatePost, setVisibleCreatePost] = useState<boolean>(false);
   const [visibleCreateGroup, setVisibleCreateGroup] = useState<boolean>(false);
 
   const [posts, setPosts] = useState<IPost[]>();
   useEffect(() => {
+    console.log(`entered homepage useeffect`);
+
     getPosts()
       .then((response) => {
         const postsResult: IPost[] = response.data;

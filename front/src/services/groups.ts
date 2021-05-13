@@ -1,13 +1,12 @@
-import axios, { AxiosResponse } from 'axios';
+import kaderApi from './axios';
+import { AxiosResponse } from 'axios';
 import { GroupApiDataType } from '../types/ApiDataTypes';
 import { IGroup } from '../types/IGroup';
-
-const baseUrl: string | undefined = 'http://193.106.55.127:5000/api';
 
 
 export const getGroups = async (): Promise<AxiosResponse<any>> => {
   try {
-    const response: AxiosResponse<any> = await axios.get(`${baseUrl}/groups`, {
+    const response: AxiosResponse<any> = await kaderApi.get(`/groups`, {
       params: {},
     });
     return response;
@@ -18,7 +17,7 @@ export const getGroups = async (): Promise<AxiosResponse<any>> => {
 
 export const getGroupsForUser = async (userId: string): Promise<AxiosResponse<any>> => {
   try {
-    const requestedGroup: AxiosResponse<any> = await axios.get(`${baseUrl}/groups/users/${userId}`);
+    const requestedGroup: AxiosResponse<any> = await kaderApi.get(`/groups/users/${userId}`);
     return requestedGroup;
   } catch (error) {
     throw new Error(error);
@@ -29,7 +28,7 @@ export const getGroup = async (groupId: string): Promise<AxiosResponse<any>> => 
   try {
     console.log(groupId);
 
-    const requestedGroup: AxiosResponse<any> = await axios.get(`${baseUrl}/groups/${groupId}`);
+    const requestedGroup: AxiosResponse<any> = await kaderApi.get(`/groups/${groupId}`);
     return requestedGroup;
   } catch (error) {
     throw new Error(error);
@@ -48,7 +47,7 @@ export const addGroup = async (formData: any): Promise<AxiosResponse<any>> => {
       posts: [],
     };
 
-    const saveGroup: AxiosResponse<any> = await axios.post(`${baseUrl}/groups`, group);
+    const saveGroup: AxiosResponse<any> = await kaderApi.post(`/groups`, group);
     return saveGroup;
   } catch (error) {
     throw new Error(error);
@@ -57,7 +56,7 @@ export const addGroup = async (formData: any): Promise<AxiosResponse<any>> => {
 
 export const updateGroup = async (group: IGroup): Promise<AxiosResponse<any>> => {
   try {
-    const updatedGroup: AxiosResponse<GroupApiDataType> = await axios.put(`${baseUrl}/groups/${group.groupId}`, group);
+    const updatedGroup: AxiosResponse<GroupApiDataType> = await kaderApi.put(`/groups/${group.groupId}`, group);
     return updatedGroup;
   } catch (error) {
     throw new Error(error);
@@ -66,7 +65,7 @@ export const updateGroup = async (group: IGroup): Promise<AxiosResponse<any>> =>
 
 export const deleteGroup = async (id: string): Promise<AxiosResponse<any>> => {
   try {
-    const deletedGroup: AxiosResponse<any> = await axios.delete(`${baseUrl}/groups/${id}`);
+    const deletedGroup: AxiosResponse<any> = await kaderApi.delete(`/groups/${id}`);
     return deletedGroup;
   } catch (error) {
     throw new Error(error);
