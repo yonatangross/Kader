@@ -15,19 +15,18 @@ export interface GroupMembersViewGroupDetailsProps {
 
 const GroupMembersViewGroupDetails = (props: GroupMembersViewGroupDetailsProps) => {
 
-    const renderGroupMemberItem = (user : any) => {
+    const renderGroupMemberItem = (user: any) => {
         return <MemberItem profileImg={user.imageUri} />
-     }
+    }
 
     return (
-        <View>
-            <FlatList
-                data={props.users}
-                renderItem={renderGroupMemberItem}
-                keyExtractor={(user) => user.id}
-            />
+        <FlatList
+            horizontal={true}
+            data={props.users}
+            renderItem={renderGroupMemberItem}
+            keyExtractor={(user) => user.id}
+        />
 
-        </View>
     );
 
 
