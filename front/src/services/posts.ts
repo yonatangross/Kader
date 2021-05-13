@@ -5,13 +5,11 @@ import { IPost } from '../types/IPost';
 
 export const getPosts = async (): Promise<AxiosResponse<any>> => {
   try {
-    console.log('requesting posts');
-
+    // console.log('requesting posts');
     const response: AxiosResponse<any> = await kaderApi.get(`/posts`, {
       params: {},
     });
-    console.log('finished requesting posts');
-
+    // console.log('finished requesting posts');
     return response;
   } catch (error) {
     throw new Error(error);

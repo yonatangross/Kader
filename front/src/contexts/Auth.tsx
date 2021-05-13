@@ -29,7 +29,7 @@ const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   async function loadStorageData(): Promise<void> {
-    console.log('in authContext loadStorageData');
+    // console.log('in authContext loadStorageData');
 
     try {
       SecureStore.getItemAsync('jwt_token').then(async (token: any) => {
@@ -38,7 +38,7 @@ const AuthProvider: React.FC = ({ children }) => {
           let tokenExpDate = new Date(decodedToken.exp * 1000);
 
           if (tokenExpDate > new Date()) {
-            console.log('got valid token, setting AuthData');
+            // console.log('got valid token, setting AuthData');
             try {
               setAuthData({
                 token: token,
@@ -47,7 +47,7 @@ const AuthProvider: React.FC = ({ children }) => {
                 firstName: decodedToken.firstname,
                 lastName: decodedToken.lastname,
               });
-              console.log('Finished adding authData');
+              // console.log('Finished adding authData');
             } catch (error) {
               console.log(`error while setting auth data ${error}`);
             }
@@ -63,7 +63,7 @@ const AuthProvider: React.FC = ({ children }) => {
       console.log(`error while fetching jwt_token: ${error}`);
     } finally {
       //loading finished
-      console.log('finished loadStorageData');
+      // console.log('finished loadStorageData');
 
       setLoading(false);
     }
@@ -72,8 +72,7 @@ const AuthProvider: React.FC = ({ children }) => {
   const signIn = async (email: string, password: string) => {
     //call the service passing credential (email and password).
     //In a real App this data will be provided by the user from some InputText components.
-    console.log('in authcontext signin');
-
+    // console.log('in authcontext signin');
     await authService
       .signIn(email, password)
       .then((response) => {

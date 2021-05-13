@@ -5,14 +5,13 @@ const kaderApi = axios.create({ baseURL: 'http://kader.cs.colman.ac.il:5000/api'
 
 kaderApi.interceptors.request.use(
   async function (config) {
-    console.log('entered interceptor');
-
+    // console.log('entered interceptor');
     const token = await SecureStore.getItemAsync('jwt_token');
     if (token !== null) {
       config.headers = {
         Authorization: `Bearer ${token}`,
       };
-      console.log(`added valid token`);
+    //   console.log(`added valid token`);
     } else console.log('TOKEN IS NULL');
     return config;
   },

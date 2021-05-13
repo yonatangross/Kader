@@ -17,16 +17,12 @@ const HomeScreen = () => {
 
   const [posts, setPosts] = useState<IPost[]>();
   useEffect(() => {
-    console.log(`entered homepage useeffect`);
+    // console.log(`entered homepage useEffect`);
 
     getPosts()
       .then((response) => {
         const postsResult: IPost[] = response.data;
-
         setPosts(postsResult);
-        console.log(postsResult.length);
-
-        // console.log(posts);
         // console.log(`posts length: ${postsResult.length}`);
       })
       .catch((error) => {
