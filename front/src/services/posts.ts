@@ -18,7 +18,7 @@ export const getPosts = async (): Promise<AxiosResponse<any>> => {
 
 export const getPost = async (postId: string): Promise<AxiosResponse<any>> => {
   try {
-    const response: AxiosResponse<any> = await kaderApi.get(`/posts/${postId}`, { params: {} });
+    const response: AxiosResponse<any> = await kaderApi.get(`/posts/post/${postId}`, { params: {} });
     return response;
   } catch (error) {
     throw new Error(`error while fetching post ${postId}, error: ${error}`);

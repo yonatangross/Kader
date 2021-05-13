@@ -9,23 +9,31 @@ import { Avatar, Icon } from '@ui-kitten/components';
 import moment from 'moment';
 import PostCommentItem from '../PostCommentItem';
 import PostListItemComments from '../PostListItemComments';
+import { getPost } from '../../services/posts';
 
 export interface PostListItemProps {
   post: IPost;
 }
 
 const PostListItem = (props: PostListItemProps) => {
+  const { post: receivedPost } = props;
   const [post, setPost] = useState<any>();
   const navigation = useNavigation();
 
   useEffect(() => {
     let isMounted = true;
-    // console.log(`props.post`);
-    // console.log(props.post);
-
-    if (!!props.post) {
+    if (!!receivedPost) {
       if (isMounted) {
-        setPost(props.post);
+        setPost(receivedPost);
+      }
+      if (!!receivedPost.comments && !!receivedPost.creator) {
+        getPost(receivedPost.postId)
+          .then((response) => {
+            setPost(response.data.post);
+          })
+          .catch((error) => {
+            console.log(`error occurred during fetching post ${receivedPost.postId}, ${error}`);
+          });
       }
     }
     return () => {
@@ -38,7 +46,7 @@ const PostListItem = (props: PostListItemProps) => {
       id: props.post.postId,
     });
   };
-  if (!!post && !!post.creator ) {
+  if (!!post) {
     return (
       <TouchableWithoutFeedback onPress={onClick}>
         <View style={styles.container}>

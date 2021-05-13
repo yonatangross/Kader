@@ -4,9 +4,10 @@ import { StyleSheet } from 'react-native';
 import { getCategories } from '../../services/posts';
 
 export interface PostCategorySelectorProps {
-  active: boolean;
+  active: number;
   dispatch: Function;
   setActiveSection: Function;
+  numberOfSections: number;
 }
 const PlusIcon = () => <Icon name="plus-circle-outline" style={{ width: 32, height: 32 }} fill={'rgba(34, 83, 231)'} />;
 
@@ -15,7 +16,7 @@ const PostCategorySelector = (props: PostCategorySelectorProps) => {
 
   useEffect(() => {
     fetchCategories();
-  }, []);
+  }, [props.active]);
 
   const fetchCategories = (): void => {
     getCategories()
@@ -31,7 +32,7 @@ const PostCategorySelector = (props: PostCategorySelectorProps) => {
       size="small"
       onPress={() => {
         props.dispatch({ type: 'Category', payload: item });
-        props.setActiveSection([false, false, true, false]);
+        props.setActiveSection(2);
 
         console.log(props.dispatch);
       }}
@@ -44,7 +45,7 @@ const PostCategorySelector = (props: PostCategorySelectorProps) => {
     </Button>
   );
 
-  if (props.active) {
+  if (props.active === 1) {
     return (
       <>
         <List data={categories} renderItem={renderItem} />

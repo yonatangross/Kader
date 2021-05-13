@@ -1,6 +1,6 @@
 import { useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Button, FlatList } from 'react-native';
+import { View, StyleSheet, Button, FlatList, TouchableOpacity, Image, StatusBar } from 'react-native';
 import { Text } from '@ui-kitten/components';
 
 import { getGroup } from '../services/groups';
@@ -8,10 +8,14 @@ import PostListItem from '../components/PostListItem';
 import UserListItem from '../components/UserListItem';
 import { IGroup } from '../types/IGroup';
 import { getGroupPrivacyName } from '../types/GroupPrivacy';
+import CreateGroupPostModal from '../components/CreateGroupPostModal';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Divider } from 'react-native-paper';
 export interface SingleGroupScreenProps {}
 
 const SingleGroupScreen = (props: SingleGroupScreenProps) => {
   const route = useRoute();
+  const [visibleCreatePost, setVisibleCreatePost] = useState<boolean>(false);
   const [group, setGroup] = useState<IGroup>();
 
   useEffect(() => {
@@ -20,7 +24,6 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
       getGroup(params.id)
         .then((response) => {
           const groupResponse: IGroup = response.data.group;
-
           setGroup(groupResponse);
         })
         .catch((error) => {
@@ -31,45 +34,48 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
     }
   }, []);
 
-  const handleCreate = () =>
-    void (
-      {
-        //will create new post via modal --> yoni
-        // will join the new post to the existing list of posts in group
-      }
-    );
-
   if (!!group) {
-    console.log(group.name);
-
     return (
-      <View>
+      <View style={styles.container}>
+        <CreateGroupPostModal visible={visibleCreatePost} setVisible={setVisibleCreatePost} groupId={group.groupId} />
         <Text style={styles.text} category="h5">
           {group.name}
         </Text>
         <Text style={styles.text} category="h6">
           {group.description}
         </Text>
-        <Button title="Create post" onPress={() => handleCreate()} />
-        <Text style={styles.text} category="h6">
-          The Group is {getGroupPrivacyName(group.groupPrivacy)}
+        <Text style={styles.text} category="c1">
+          Group Privacy: {getGroupPrivacyName(group.groupPrivacy)}
         </Text>
-        <Text style={styles.text} category="h6">
+        <Text style={styles.text} category="c2">
           {group.members.length} members
         </Text>
-        <FlatList
-          data={group.members}
-          renderItem={({ item: user }) => <UserListItem user={user} />}
-          keyExtractor={(item) => item.id}
-          showsVerticalScrollIndicator={false}
-          horizontal
-        />
-        <FlatList
-          data={group.posts}
-          renderItem={({ item: post }) => <PostListItem post={post} />}
-          keyExtractor={(item) => item.postId}
-          showsVerticalScrollIndicator={false}
-        />
+        <SafeAreaView style={styles.membersContainer}>
+          <FlatList
+            data={group.members}
+            renderItem={({ item: user }) => <UserListItem user={user} />}
+            keyExtractor={(item) => item.id}
+            showsVerticalScrollIndicator={false}
+            horizontal
+          />
+        </SafeAreaView>
+        <SafeAreaView style={styles.postsContainer}>
+          <FlatList
+            data={group.posts}
+            renderItem={({ item: post }) => <PostListItem post={post} />}
+            keyExtractor={(item) => item.postId}
+            showsVerticalScrollIndicator={true}
+          />
+        </SafeAreaView>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => {
+            setVisibleCreatePost(!visibleCreatePost);
+          }}
+          style={styles.postCreationButton}
+        >
+          <Image source={require('../assets/images/createPostIcon.png')} style={styles.floatingButtonStyle} />
+        </TouchableOpacity>
       </View>
     );
   } else {
@@ -78,9 +84,36 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
 };
 
 const styles = StyleSheet.create({
+  container: { flex: 1 },
+  membersContainer: { flex: 1, marginVertical: -40 },
+  postsContainer: { flex: 5, marginTop: -40 },
   text: {
     margin: 5,
     alignSelf: 'center',
+  },
+  postCreationButton: {
+    backgroundColor: 'white',
+    position: 'absolute',
+    width: 50,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 30,
+    right: 15,
+    bottom: 30,
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    shadowOpacity: 0.8,
+    elevation: 6,
+    shadowRadius: 15,
+    shadowOffset: { width: 1, height: 13 },
+    borderColor: 'black',
+    borderWidth: 0.8,
+  },
+  floatingButtonStyle: {
+    resizeMode: 'contain',
+    width: 32,
+    height: 32,
+    //backgroundColor:'black'
   },
 });
 

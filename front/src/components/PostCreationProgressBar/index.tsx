@@ -1,10 +1,10 @@
-import { Button, Input } from '@ui-kitten/components';
 import React, { useEffect, useState } from 'react';
 import { Text, StyleSheet } from 'react-native';
 import * as Progress from 'react-native-progress';
 
 export interface PostCreationProgressBarProps {
-  activeSection: boolean[];
+  activeSection: number;
+  numberOfSections:number;
 }
 
 const PostCreationProgressBar = (props: PostCreationProgressBarProps) => {
@@ -13,23 +13,23 @@ const PostCreationProgressBar = (props: PostCreationProgressBarProps) => {
   const [percentage, setPercentage] = useState<number>(0);
 
   useEffect(() => {
-    if (props.activeSection[0]) {
+    let sectionPercentage = 1 / props.numberOfSections;
+    if (props.activeSection===0) {
       setActive(true);
       setProgressTitle('Choose Post Type');
-      setPercentage(0.25);
-    } else if (props.activeSection[1]) {
+      setPercentage(0);
+    } else if (props.activeSection===1) {
       setActive(true);
       setProgressTitle('Choose category');
-
-      setPercentage(0.5);
-    } else if (props.activeSection[2]) {
+      setPercentage(1 * sectionPercentage);
+    } else if (props.activeSection===2) {
       setActive(true);
       setProgressTitle('Fill post details');
-      setPercentage(0.75);
-    } else if (props.activeSection[3]) {
+      setPercentage(2 * sectionPercentage);
+    } else if (props.activeSection===3) {
       setActive(true);
       setProgressTitle('Choose groups to publish in');
-      setPercentage(1);
+      setPercentage(3 * sectionPercentage);
     } else {
       setActive(false);
     }

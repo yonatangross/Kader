@@ -6,12 +6,13 @@ import { CreatePostStateType } from '../../types/CreatePostTypes';
 import UploadImage from '../UploadImage';
 
 export interface PostDetailsFormProps {
-  active: boolean;
+  active: number;
   state: CreatePostStateType;
   dispatch: Function;
   setActiveSection: Function;
   setSubmitFlag: Function;
   finalStage: boolean;
+  numberOfSections: number;
 }
 const StarIcon = (props: any) => <Icon {...props} name="star" />;
 const PostDetailsForm = (props: PostDetailsFormProps) => {
@@ -27,8 +28,8 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
         image: postImage,
       },
     });
-  }, [postImage]);
-  if (props.active) {
+  }, [postImage, props.active]);
+  if (props.active === 2) {
     return (
       <>
         <Text style={styles.text} category="label">
@@ -121,9 +122,9 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
           onPress={() => {
             if (props.finalStage) {
               props.setSubmitFlag(true);
-              props.setActiveSection([false, false, false, false]);
+              props.setActiveSection(-1);
             } else {
-              props.setActiveSection([false, false, false, true]);
+              props.setActiveSection(3);
             }
           }}
         >

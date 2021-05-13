@@ -7,7 +7,7 @@ import { View } from '../components/Themed';
 import { IPost } from '../types/IPost';
 import CreateGeneralPostModal from '../components/CreateGeneralPostModal';
 import { getPosts } from '../services/posts';
-import CreateGroupPostModal from '../components/CreateGroupPostModal';
+import CreateGroupModal from '../components/CreateGroupModal';
 
 export interface HomeProps {}
 
@@ -37,8 +37,8 @@ const HomeScreen = () => {
   if (!!posts) {
     return (
       <View style={styles.container}>
-        <CreateGeneralPostModal visible={visibleCreatePost} onChange={setVisibleCreatePost} />
-        <CreateGroupPostModal visible={visibleCreateGroup} onChange={setVisibleCreateGroup} />
+        <CreateGeneralPostModal visible={visibleCreatePost} setVisible={setVisibleCreatePost} />
+        <CreateGroupModal visible={visibleCreateGroup} setVisible={setVisibleCreateGroup} />
         <FlatList
           style={{ width: '100%' }}
           data={posts}

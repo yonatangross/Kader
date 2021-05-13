@@ -5,38 +5,45 @@ import { Button, List } from '@ui-kitten/components';
 import { GroupPrivacy } from '../../types/GroupPrivacy';
 import GroupListItemSelector from '../GroupListItemSelector';
 import { CreatePostStateType } from '../../types/CreatePostTypes';
-import { getGroups } from '../../services/groups';
+import { getGroups, getGroupsForUser } from '../../services/groups';
+import { useAuth } from '../../contexts/Auth';
 
 export interface GroupsSelectorProps {
-  active: boolean;
+  active: number;
   state: CreatePostStateType;
   dispatch: Function;
   setActiveSection: Function;
   setVisible: Function;
   setSubmitFlag: Function;
+  numberOfSections: number;
 }
 
 const GroupsSelector = (props: GroupsSelectorProps) => {
+  const auth = useAuth();
+
   const [groups, setGroups] = useState<IGroup[]>();
 
   useEffect(() => {
-    getGroups()
-      .then((response) => {
-        const groupsResult: IGroup[] = response.data;
-        setGroups(groupsResult);
-      })
-      .catch((error) => {
-        console.log(`error while fetching groups ${error}`);
-      });
-    console.log('props.state.details');
-    console.log(props.state.details);
-  }, []);
+    if (!!auth && auth.authData)
+      getGroupsForUser(auth.authData?.userId)
+        .then((response) => {
+          const groupsResult: any[] = response.data.groupView;
+
+          console.log(groupsResult);
+          console.log(props.active);
+
+          setGroups(groupsResult);
+        })
+        .catch((error) => {
+          console.log(`error while fetching groups ${error}`);
+        });
+  }, [setGroups, props.active]);
 
   const renderItem = ({ item: item, index }: { item: IGroup; index: number }) => {
     //todo: change index to item.id
     return <GroupListItemSelector item={item} index={index} state={props.state} dispatch={props.dispatch} />;
   };
-  if (props.active) {
+  if (props.active === 3) {
     return (
       <>
         <List style={styles.list} data={groups} renderItem={renderItem} contentContainerStyle={{ paddingHorizontal: 8, paddingVertical: 4 }} />
@@ -45,10 +52,9 @@ const GroupsSelector = (props: GroupsSelectorProps) => {
           status="success"
           size="small"
           onPress={() => {
-            props.setActiveSection([false, false, false, false]);
+            props.setActiveSection(-1);
             props.setVisible(false);
             props.setSubmitFlag(true);
-            console.log(props.state);
           }}
         >
           {(buttonProps: any) => (

@@ -1,10 +1,8 @@
 import React, { useEffect, useReducer, useState } from 'react';
-import { Text, StyleSheet, Modal, View } from 'react-native';
+import { StyleSheet, Modal, View } from 'react-native';
 import { addPost } from '../../services/posts';
 import { createPostReducer, initCreatePost } from '../../reducers/createPostReducer';
-import { IPost } from '../../types/IPost';
 import { PostType } from '../../types/PostType';
-import CancelPostCreationButton from '../CancelPostCreationButton';
 import GroupsSelector from '../GroupsSelector';
 import PostCategorySelector from '../PostCategorySelector';
 import PostCreationProgressBar from '../PostCreationProgressBar';
@@ -14,7 +12,7 @@ import { useAuth } from '../../contexts/Auth';
 
 export interface CreateGeneralPostModalProps {
   visible: boolean;
-  onChange: Function;
+  setVisible: Function;
 }
 
 const createPostInitState = {
@@ -27,7 +25,8 @@ const createPostInitState = {
 const CreateGeneralPostModal = (props: CreateGeneralPostModalProps) => {
   const auth = useAuth();
   const [state, dispatch] = useReducer(createPostReducer, createPostInitState, initCreatePost);
-  const [activeSection, setActiveSection] = useState<boolean[]>([false, false, false, false]);
+  const [activeSection, setActiveSection] = useState<number>(0);
+  const numberOfSections = 4;
   const [submitFlag, setSubmitFlag] = useState<boolean>(false);
   const submitPost = () => {
     state.groups.forEach((groupId) => {
@@ -49,15 +48,16 @@ const CreateGeneralPostModal = (props: CreateGeneralPostModalProps) => {
   useEffect(() => {
     if (props.visible) {
       //modal opened after was closed
-      setActiveSection([true, false, false, false]);
+      setActiveSection(0);
       dispatch({ type: 'Reset' });
     } else {
       // modal closed after was open.
-      setActiveSection([false, false, false, false]);
+      setActiveSection(-1);
     }
     if (submitFlag) {
       submitPost();
       setSubmitFlag(false);
+      props.setVisible(false);
     }
   }, [props.visible, submitFlag]);
 
@@ -68,44 +68,35 @@ const CreateGeneralPostModal = (props: CreateGeneralPostModalProps) => {
         transparent={false}
         visible={props.visible}
         onRequestClose={() => {
-          props.onChange(false);
+          props.setVisible(false);
           console.log('Modal has now been closed.');
         }}
       >
-        <PostCreationProgressBar activeSection={activeSection} />
-        <PostTypeSelector active={activeSection[0]} dispatch={dispatch} setActiveSection={setActiveSection} />
-        <PostCategorySelector active={activeSection[1]} dispatch={dispatch} setActiveSection={setActiveSection} />
+        <PostCreationProgressBar activeSection={activeSection} numberOfSections={numberOfSections} />
+        <PostTypeSelector active={activeSection} dispatch={dispatch} setActiveSection={setActiveSection} numberOfSections={numberOfSections} />
+        <PostCategorySelector active={activeSection} dispatch={dispatch} setActiveSection={setActiveSection} numberOfSections={numberOfSections} />
         <PostDetailsForm
-          active={activeSection[2]}
+          active={activeSection}
           state={state}
           dispatch={dispatch}
           setActiveSection={setActiveSection}
           finalStage={false}
           setSubmitFlag={setSubmitFlag}
+          numberOfSections={numberOfSections}
         />
 
         <GroupsSelector
-          active={activeSection[3]}
+          active={activeSection}
           state={state}
           dispatch={dispatch}
           setActiveSection={setActiveSection}
-          setVisible={props.onChange}
+          setVisible={props.setVisible}
           setSubmitFlag={setSubmitFlag}
+          numberOfSections={numberOfSections}
         />
-        <View style={styles.bottom}>
-          <CancelPostCreationButton active={props.visible} activeSections={activeSection} setActiveSection={setActiveSection} setActive={props.onChange} />
-        </View>
       </Modal>
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  bottom: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    marginBottom: 36,
-  },
-});
 
 export default CreateGeneralPostModal;

@@ -3,7 +3,6 @@ import { AxiosResponse } from 'axios';
 import { GroupApiDataType } from '../types/ApiDataTypes';
 import { IGroup } from '../types/IGroup';
 
-
 export const getGroups = async (): Promise<AxiosResponse<any>> => {
   try {
     const response: AxiosResponse<any> = await kaderApi.get(`/groups`, {
@@ -26,8 +25,6 @@ export const getGroupsForUser = async (userId: string): Promise<AxiosResponse<an
 
 export const getGroup = async (groupId: string): Promise<AxiosResponse<any>> => {
   try {
-    console.log(groupId);
-
     const requestedGroup: AxiosResponse<any> = await kaderApi.get(`/groups/${groupId}`);
     return requestedGroup;
   } catch (error) {
@@ -67,6 +64,24 @@ export const deleteGroup = async (id: string): Promise<AxiosResponse<any>> => {
   try {
     const deletedGroup: AxiosResponse<any> = await kaderApi.delete(`/groups/${id}`);
     return deletedGroup;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export const joinGroup = async (id: string): Promise<AxiosResponse<any>> => {
+  try {
+    const response: AxiosResponse<any> = await kaderApi.put(`/groups/join/${id}`);
+    return response;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export const leaveGroup = async (id: string): Promise<AxiosResponse<any>> => {
+  try {
+    const response: AxiosResponse<any> = await kaderApi.put(`/groups/leave/${id}`);
+    return response;
   } catch (error) {
     throw new Error(error);
   }

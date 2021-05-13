@@ -1,17 +1,19 @@
-import React, { useEffect, useReducer, useState } from 'react';
-import { Text, StyleSheet, View, Button } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Image, StyleSheet, View, FlatList } from 'react-native';
 import { GroupPrivacy } from '../types/GroupPrivacy';
 import { IGroup } from '../types/IGroup';
-import GroupDescriptionBox from '../components/GroupDescriptionBox';
-import GroupMembersViewGroupDetails from '../components/GroupMembersViewGroupDetails';
-import { useRoute } from '@react-navigation/native';
-import { getGroup } from '../services/groups';
-import MemberItem from '../components/MemberItem';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { getGroup, joinGroup } from '../services/groups';
+import { Text, Button } from '@ui-kitten/components';
+import { getGroupPrivacyName } from '../types/GroupPrivacy';
+import { Item } from 'react-native-paper/lib/typescript/components/List/List';
 
 export interface SingleGroupDetailsPageProps {}
 
 const SingleGroupDetailsScreen = (props: SingleGroupDetailsPageProps) => {
   const route = useRoute();
+  const navigation = useNavigation();
+
   const [group, setGroup] = useState<IGroup>();
 
   useEffect(() => {
@@ -30,31 +32,62 @@ const SingleGroupDetailsScreen = (props: SingleGroupDetailsPageProps) => {
     }
   }, []);
 
-  function askToJoinPrivateGroup() {
-    //join private group logic
-  }
-  function joinPublicGroupNow() {
-    //join public group logic
-  }
+  const askToJoinPrivateGroup = () => {
+    //todo: ask Aviv to implement logic
+  };
+  const joinPublicGroupNow = () => {
+    if (group)
+      joinGroup(group.groupId)
+        .then((response) => {
+          console.log('joined group successfully, response:');
+          console.log(response);
+
+          navigation.navigate('SingleGroup', {
+            id: group.groupId,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  };
 
   if (group) {
     return (
       <View>
-        <View>
-          <Text>{group.name}</Text>
-          <View>
-            <Text>{group.groupPrivacy}</Text>
-          </View>
-          <Text>{group.members.length}</Text>
-          <GroupMembersViewGroupDetails users={group.members} />
+        <Text style={styles.text} category="h5">
+          {group.name}
+        </Text>
+        <Text style={styles.text} category="h6">
+          {group.description}
+        </Text>
+        <Text style={styles.text} category="h6">
+          The Group is {getGroupPrivacyName(group.groupPrivacy)}
+        </Text>
+        <Text style={styles.text} category="h6">
+          {group.members.length} members
+        </Text>
+        <FlatList
+          data={group.members}
+          renderItem={({ item }) => {
+            if (!!item.imageUri) {
+              return <Image source={require('../assets/images/imagePlaceholder.png')} style={styles.memberImage} />;
+            } else return <Image source={require('../assets/images/imagePlaceholder.png')} style={styles.memberImage} />;
+          }}
+          keyExtractor={(item) => item.id}
+          showsVerticalScrollIndicator={false}
+          horizontal
+        />
+        <View style={styles.buttonContainer}>
+          {group.groupPrivacy === GroupPrivacy.Private ? (
+            <Button onPress={askToJoinPrivateGroup} size="large" appearance="outline" status="success">
+              Ask to Join Group
+            </Button>
+          ) : (
+            <Button onPress={joinPublicGroupNow} size="large" appearance="outline" status="success">
+              Join Group
+            </Button>
+          )}
         </View>
-        <GroupMembersViewGroupDetails users={group.members} />
-        <GroupDescriptionBox description={group.description} />
-        {group.groupPrivacy === GroupPrivacy.Private ? (
-          <Button onPress={askToJoinPrivateGroup} title="Ask to join Group" color="#841584" accessibilityLabel="" />
-        ) : (
-          <Button onPress={joinPublicGroupNow} title="Join Group" color="#841584" accessibilityLabel="" />
-        )}
       </View>
     );
   } else {
@@ -62,6 +95,23 @@ const SingleGroupDetailsScreen = (props: SingleGroupDetailsPageProps) => {
   }
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  text: {
+    margin: 5,
+    alignSelf: 'center',
+  },
+  memberImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 15,
+  },
+  buttonContainer: {
+    flexWrap: 'wrap',
+    alignSelf: 'center',
+  },
+  button: {
+    margin: 2,
+  },
+});
 
 export default SingleGroupDetailsScreen;

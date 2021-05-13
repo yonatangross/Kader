@@ -1,17 +1,19 @@
 import { Button, Icon } from '@ui-kitten/components';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Text, StyleSheet } from 'react-native';
 import { PostType } from '../../types/PostType';
 
 export interface PostTypeSelectorProps {
-  active: boolean;
+  active: number;
   dispatch: Function;
   setActiveSection: Function;
+  numberOfSections: number;
 }
 const PlusIcon = () => <Icon name="plus-circle-outline" style={{ width: 32, height: 32 }} fill={'#000000'} />;
 
 const PostTypeSelector = (props: PostTypeSelectorProps) => {
-  if (props.active) {
+  useEffect(() => {}, [props.active]);
+  if (props.active === 0) {
     return (
       <>
         <Button
@@ -20,9 +22,8 @@ const PostTypeSelector = (props: PostTypeSelectorProps) => {
           accessoryRight={PlusIcon}
           size="small"
           onPress={() => {
-            props.dispatch({ type: 'PostType', payload: PostType.REQUEST });
-            props.setActiveSection([false, true, false, false]);
-            props.active = false;
+            props.dispatch({ type: 'PostType', payload: PostType.Request });
+            props.setActiveSection(1);
           }}
         >
           {(buttonProps: any) => (
@@ -38,9 +39,8 @@ const PostTypeSelector = (props: PostTypeSelectorProps) => {
           accessoryRight={PlusIcon}
           size="small"
           onPress={() => {
-            props.dispatch({ type: 'PostType', payload: PostType.OFFER });
-            props.setActiveSection([false, true, false, false]);
-            props.active = false;
+            props.dispatch({ type: 'PostType', payload: PostType.Offer });
+            props.setActiveSection(1);
           }}
         >
           {(buttonProps: any) => (
@@ -55,9 +55,8 @@ const PostTypeSelector = (props: PostTypeSelectorProps) => {
           accessoryRight={PlusIcon}
           size="small"
           onPress={() => {
-            props.dispatch({ type: 'PostType', payload: PostType.HANDOVER });
-            props.setActiveSection([false, true, false, false]);
-            props.active = false;
+            props.dispatch({ type: 'PostType', payload: PostType.Handover });
+            props.setActiveSection(1);
           }}
         >
           {(buttonProps: any) => (
@@ -82,10 +81,9 @@ const styles = StyleSheet.create({
     marginRight: 40,
     marginLeft: 40,
     padding: 10,
-    backgroundColor:
-  '#007aff',
+    backgroundColor: '#007aff',
     borderWidth: 0.5,
-    borderColor:'black',
+    borderColor: 'black',
   },
 });
 

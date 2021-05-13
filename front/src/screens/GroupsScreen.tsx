@@ -5,11 +5,14 @@ import { FlatList, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { getGroupsForUser } from '../services/groups';
 import GroupListItem from '../components/GroupListItem';
 import { View } from '../components/Themed';
-import CreateGroupPostModal from '../components/CreateGroupPostModal';
+import CreateGroupModal from '../components/CreateGroupModal';
 import { useAuth } from '../contexts/Auth';
 import { Text } from '@ui-kitten/components';
 import { Autocomplete, AutocompleteItem, Icon } from '@ui-kitten/components';
 import { useNavigation } from '@react-navigation/native';
+import { IGroup } from '../types/IGroup';
+import { GroupPrivacy } from '../types/GroupPrivacy';
+import { IUser } from '../types/IUser';
 
 export interface GroupsProps {}
 
@@ -42,10 +45,45 @@ const GroupsScreen = () => {
   };
 
   const onSelect = (index: number) => {
-    if (groups)
-      navigation.navigate('SingleGroupDetails', {
-        id: groups[index].groupId,
-      });
+    if (groups) {
+      let group = groups[index] as IGroup;
+      switch (group.groupPrivacy) {
+        case GroupPrivacy.Invisible:
+          navigation.navigate('SingleGroup', {
+            id: groups[index].groupId,
+          });
+          break;
+        case GroupPrivacy.Private:
+        case GroupPrivacy.Public: {
+          if (!!auth && !!auth.authData) {
+            let isMember = getMembershipStatus(group.members, auth.authData?.userId);
+            if (isMember) {
+              console.log('singleGroup');
+              navigation.navigate('SingleGroup', {
+                id: groups[index].groupId,
+              });
+            } else {
+              console.log('SingleGroupDetails');
+              navigation.navigate('SingleGroupDetails', {
+                id: groups[index].groupId,
+              });
+            }
+          }
+          break;
+        }
+        default:
+          break;
+      }
+    }
+  };
+
+  const getMembershipStatus = (members: IUser[], userId: string) => {
+    members.forEach((member) => {
+      if (member.id === userId) {
+        return true;
+      }
+    });
+    return false;
   };
 
   const onChangeText = (nextQuery: string) => {
@@ -74,7 +112,7 @@ const GroupsScreen = () => {
   if (userGroups) {
     return (
       <View style={styles.container}>
-        <CreateGroupPostModal visible={visibleCreateGroup} onChange={setVisibleCreateGroup} />
+        <CreateGroupModal visible={visibleCreateGroup} setVisible={setVisibleCreateGroup} />
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => {
@@ -88,9 +126,17 @@ const GroupsScreen = () => {
         <Text style={styles.text} category="h1">
           Groups
         </Text>
-        <Autocomplete style={{ width: '100%' }} placeholder="Search Groups here!" value={query} onChangeText={onChangeText} onSelect={onSelect}>
-          {!!groups ? groups.map(renderOption) : <></>}
-        </Autocomplete>
+        <View style={{ display: 'flex', flexDirection: 'row' }}>
+          <Autocomplete
+            style={{ width: '100%', alignSelf: 'flex-start' }}
+            placeholder="Search Groups here!"
+            value={query}
+            onChangeText={onChangeText}
+            onSelect={onSelect}
+          >
+            {!!groups ? groups.map(renderOption) : <></>}
+          </Autocomplete>
+        </View>
         <Text style={styles.text} category="h6">
           My Groups
         </Text>
@@ -122,7 +168,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 30,
     right: 15,
-    bottom: 30,
+    top: 30,
     shadowColor: 'rgba(0, 0, 0, 0.1)',
     shadowOpacity: 0.8,
     elevation: 6,
