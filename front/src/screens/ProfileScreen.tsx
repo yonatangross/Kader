@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, ImageBackground, ListRenderItemInfo, StyleSheet, View, Image, SectionList } from 'react-native';
+import { FlatList, ImageBackground, ListRenderItemInfo, StyleSheet, View, Image, SectionList, SafeAreaView } from 'react-native';
 import { Avatar, Button, Card, Layout, Text } from '@ui-kitten/components';
 import { ProfileSocial } from '../layouts/social/profile/extra/profile-social.component';
 import { HeartIcon } from '../layouts/social/profile/extra/icons';
@@ -16,8 +16,6 @@ import GroupListItem from '../components/GroupListItem';
 
 const profile: Profile = Profile.jenniferGreen();
 
-const posts: Post[] = [Post.byJenniferGreen(), Post.byAlexaTenorio()];
-
 interface ISectionsData {
   title: string;
   data: any[];
@@ -32,14 +30,10 @@ export default function ProfileScreen(navigation: any) {
     return <PostListItem post={item} />;
   };
   const renderGroupItem = ({ item }: any) => {
+    console.log(item);
+
     return <GroupListItem group={item} />;
   };
-
-  let sectionsData: ISectionsData[] = [
-    { title: 'Posts', data: [], key: 'posts', renderItem: renderPostItem },
-    { title: 'Groups', data: [], key: 'groups', renderItem: renderGroupItem },
-    { title: 'Managed Groups', data: [], key: 'managedGroups', renderItem: renderGroupItem },
-  ];
 
   useEffect(() => {
     if (!!auth && !!auth.authData) {
@@ -49,10 +43,6 @@ export default function ProfileScreen(navigation: any) {
 
           const userResult: IUser = response.data;
           setUser(userResult);
-          // sectionsData[0].data = userResult.posts;
-          // sectionsData[1].data = userResult.memberInGroups;
-          // sectionsData[2].data = userResult.managerInGroups;
-          // console.log(sectionsData);
         })
         .catch((error) => {
           console.log(`error while fetching user data ${error}`);
@@ -65,7 +55,6 @@ export default function ProfileScreen(navigation: any) {
   };
 
   if (user) {
-
     return (
       <View style={styles.container}>
         <View style={styles.userBasicDetailsContainer}>
@@ -85,32 +74,38 @@ export default function ProfileScreen(navigation: any) {
 
         <View style={styles.userListsContainer}>
           <Text style={{ fontWeight: 'bold', marginBottom: 10, fontSize: 20, paddingHorizontal: 10 }}>Posts</Text>
-          <FlatList
-            data={user.posts}
-            renderItem={renderPostItem}
-            keyExtractor={(item) => item.postId}
-            showsVerticalScrollIndicator={false}
-            initialNumToRender={6}
-            maxToRenderPerBatch={2}
-          />
+          <SafeAreaView style={styles.postsContainer}>
+            <FlatList
+              data={user.posts}
+              renderItem={renderPostItem}
+              keyExtractor={(item) => item.postId}
+              showsVerticalScrollIndicator={true}
+              initialNumToRender={6}
+              maxToRenderPerBatch={2}
+            />
+          </SafeAreaView>
           <Text style={{ fontWeight: 'bold', marginBottom: 10, fontSize: 20, paddingHorizontal: 10 }}>Groups</Text>
-          <FlatList
-            data={user.memberInGroups}
-            renderItem={renderGroupItem}
-            keyExtractor={(item) => item.groupId}
-            showsVerticalScrollIndicator={false}
-            initialNumToRender={6}
-            maxToRenderPerBatch={2}
-          />
+          <SafeAreaView style={styles.groupsContainer}>
+            <FlatList
+              data={user.memberInGroups}
+              renderItem={renderGroupItem}
+              keyExtractor={(item) => item.groupId}
+              showsVerticalScrollIndicator={true}
+              initialNumToRender={6}
+              maxToRenderPerBatch={2}
+            />
+          </SafeAreaView>
           <Text style={{ fontWeight: 'bold', marginBottom: 10, fontSize: 20, paddingHorizontal: 10 }}>Managed Groups</Text>
-          <FlatList
-            data={user.managerInGroups}
-            renderItem={renderGroupItem}
-            keyExtractor={(item) => item.groupId}
-            showsVerticalScrollIndicator={false}
-            initialNumToRender={6}
-            maxToRenderPerBatch={2}
-          />
+          <SafeAreaView style={styles.ManagedGroupsContainer}>
+            <FlatList
+              data={user.managerInGroups}
+              renderItem={renderGroupItem}
+              keyExtractor={(item) => item.groupId}
+              showsVerticalScrollIndicator={true}
+              initialNumToRender={6}
+              maxToRenderPerBatch={2}
+            />
+          </SafeAreaView>
         </View>
         <TouchableOpacity activeOpacity={0.7} onPress={signOut} style={styles.logoutButton}>
           <Image source={require('../assets/images/log-out.png')} style={styles.floatingButtonStyle} />
@@ -120,7 +115,7 @@ export default function ProfileScreen(navigation: any) {
   } else
     return (
       <View style={styles.container}>
-          <Text style={{ fontWeight: 'bold', marginBottom: 10, fontSize: 20, paddingHorizontal: 10 }}>{auth.authData?.firstName}</Text>
+        <Text style={{ fontWeight: 'bold', marginBottom: 10, fontSize: 20, paddingHorizontal: 10 }}>{auth.authData?.firstName}</Text>
 
         <TouchableOpacity activeOpacity={0.7} onPress={signOut} style={styles.logoutButton}>
           <Image source={require('../assets/images/log-out.png')} style={styles.floatingButtonStyle} />
@@ -131,6 +126,10 @@ export default function ProfileScreen(navigation: any) {
 
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: 'flex-start', backgroundColor: 'white' },
+  membersContainer: { flex: 1, marginVertical: -40 },
+  postsContainer: { flex: 5, marginTop: -40 },
+  groupsContainer: { flex: 5, marginTop: -40 },
+  ManagedGroupsContainer: { flex: 5, marginTop: -40 },
   userListsContainer: {
     flex: 3,
     alignItems: 'flex-start',

@@ -21,7 +21,7 @@ const UploadImage = (props: UploadImageProps) => {
         quality: 1,
       });
       if (!data.cancelled) {
-        props.setPostImage({ localUri: data.uri });
+        props.setPostImage(data);
       }
     } else {
       Alert.alert('you need to give up permission to work');
@@ -38,10 +38,7 @@ const UploadImage = (props: UploadImageProps) => {
       });
       if (!data.cancelled) {
         console.log('uploaded photo:');
-
-        console.log(data);
-
-        props.setPostImage({ localUri: data.uri });
+        props.setPostImage(data);
       }
     } else {
       Alert.alert('you need to give up permission to work');
@@ -50,9 +47,7 @@ const UploadImage = (props: UploadImageProps) => {
 
   return (
     <View style={styles.container}>
-      {!!props.postImage ? (
-        <Image source={{ uri: props.postImage.localUri }} style={{ width: 200, height: 200, resizeMode: 'contain', display: 'flex' }} />
-      ) : null}
+      {!!props.postImage ? <Image source={{ uri: props.postImage.uri }} style={{ width: 200, height: 200, resizeMode: 'contain', display: 'flex' }} /> : null}
       <TouchableOpacity
         activeOpacity={0.7}
         onPress={() => {

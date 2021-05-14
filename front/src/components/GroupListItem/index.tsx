@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Avatar, Button, ListItem } from '@ui-kitten/components';
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet } from 'react-native';
@@ -13,11 +13,11 @@ const GroupListItem = (props: GroupListItemProps) => {
 
   const navigation = useNavigation();
 
-  const renderItemAccessory = (props: any) => (
-    <Button size="tiny">
-      Go to Group
-    </Button>
-  );
+  useEffect(() => {
+    console.log(group);
+  }, []);
+
+  const renderItemAccessory = (props: any) => <Button size="tiny">Go to Group</Button>;
 
   const renderItemIcon = (props: any) => (
     <Avatar {...props} style={styles.profileAvatar} size="large" source={require('../../layouts/social/profile/assets/image-profile-1.jpg')} />
@@ -33,7 +33,7 @@ const GroupListItem = (props: GroupListItemProps) => {
     <TouchableOpacity onPress={onClick}>
       <ListItem
         title={`${group.name} - ${group.category}`}
-        description={`${group.membersCount} members, ${group.postsCount} posts,`}
+        description={group.description}
         accessoryLeft={renderItemIcon}
         accessoryRight={renderItemAccessory}
       />

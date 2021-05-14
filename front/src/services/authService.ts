@@ -11,12 +11,9 @@ const getUser = async (userId: string): Promise<AxiosResponse<any>> => {
 };
 
 const signIn = async (email: string, password: string): Promise<AxiosResponse<AuthData>> => {
-  // console.log('in authService SignIn');
   try {
     let data = { username: email, password };
-
     const response: AxiosResponse<any> = await kaderApi.post(`/users/login`, data);
-
     return response;
   } catch (error) {
     console.log(`error in signIn authService, ${error}`);

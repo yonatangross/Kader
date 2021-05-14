@@ -39,7 +39,7 @@ const PostListItem = (props: PostListItemProps) => {
     return () => {
       isMounted = false;
     };
-  }, [props.post]);
+  }, [props.post, post]);
 
   const onClick = () => {
     navigation.navigate('SinglePost', {

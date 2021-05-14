@@ -31,7 +31,6 @@ const CreateGeneralPostModal = (props: CreateGeneralPostModalProps) => {
   const submitPost = () => {
     state.groups.forEach((groupId) => {
       console.log('before adding post');
-      console.log(state.details);
       addPost({
         type: state.postType,
         category: state.category,

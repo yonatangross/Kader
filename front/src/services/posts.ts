@@ -1,7 +1,9 @@
-import kaderApi from './axios';
-import { AxiosResponse } from 'axios';
+import kaderApi, { kaderPhotoUploadApi } from './axios';
+import axios, { AxiosResponse } from 'axios';
 import { PostApiDataType } from '../types/ApiDataTypes';
 import { IPost } from '../types/IPost';
+import { ImagePickerResult } from 'expo-image-picker';
+import { Platform } from 'react-native';
 
 export const getPosts = async (): Promise<AxiosResponse<any>> => {
   try {
@@ -27,10 +29,40 @@ export const getPost = async (postId: string): Promise<AxiosResponse<any>> => {
 
 export const addPost = async (postData: any): Promise<AxiosResponse<any>> => {
   try {
-    console.log(`postData`);
-    console.log(postData);
-    const response: AxiosResponse<PostApiDataType> = await kaderApi.post(`/posts/post/${postData.groupId}`, { postData: postData });
-    //todo: send image with postid after response is succesful and returns postId
+    // console.log(`postData`);
+    // console.log(postData);
+    const response: AxiosResponse<any> = await kaderApi.post(`/posts/post/${postData.groupId}`, { postData: postData });
+
+    console.log('postId:');
+
+    console.log(response.data.postId);
+
+    let postImage = postData.image as ImagePickerResult;
+
+    //use formdata
+    var formData = new FormData();
+
+    //append created photo{} to formdata
+    formData.append('postId', response.data.postId);
+    formData.append('post_image', {
+      // @ts-ignore
+      uri: Platform.OS === 'android' ? postImage.uri : postImage.uri.replace('file://', ''),
+      type: 'image/jpeg',
+      name: `${response.data.postId}.jpg`,
+    });
+    //use axios to POST
+    kaderPhotoUploadApi({
+      method: 'POST',
+      url: `/posts/post/${response.data.postId}/image`,
+      data: formData,
+    })
+      .then((response) => {
+        console.log('image uploaded, response:');
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log('error while uploading photo, error:');
+      });
     return response;
   } catch (error) {
     throw new Error(error);
