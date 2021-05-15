@@ -18,6 +18,7 @@ import ProfilePostListItem from '../components/ProfilePostListItem';
 import { getPostsForUser } from '../services/posts';
 import { getGroupsForUser } from '../services/groups';
 import _ from 'lodash';
+import ProfileGroupListItem from '../components/ProfileGroupListItem';
 
 const profile: Profile = Profile.jenniferGreen();
 
@@ -39,7 +40,7 @@ export default function ProfileScreen() {
     return <ProfilePostListItem key={item.postId} post={item} />;
   };
   const renderGroupItem = ({ item }: any) => {
-    return <GroupListItem key={item.groupId} group={item} />;
+    return <ProfileGroupListItem key={item.groupId} group={item} />;
   };
 
   useEffect(() => {
@@ -74,7 +75,7 @@ export default function ProfileScreen() {
           console.log(`error while fetching user data ${error}`);
         });
     }
-  }, []);
+  }, [setUser, setUserPosts, setUserGroups, setUserManagedGroups]);
 
   const signOut = () => {
     auth.signOut();
@@ -149,14 +150,12 @@ export default function ProfileScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'flex-start', backgroundColor: 'white' },
+  container: { flex: 1, backgroundColor: 'white' },
   postsContainer: { flex: 2 },
   groupsContainer: { flex: 2 },
   ManagedGroupsContainer: { flex: 2 },
   userListsContainer: {
     flex: 3,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
   },
   floatingButtonStyle: {
     resizeMode: 'contain',

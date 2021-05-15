@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@eva-design/eva": "^2.0.0",
+    "@expo-google-fonts/inter": "^0.1.0",
     "@expo/vector-icons": "^12.0.0",
     "@react-native-community/geolocation": "^2.0.2",
     "@react-native-picker/picker": "1.9.2",
@@ -20,6 +21,7 @@
     "@ui-kitten/eva-icons": "^5.0.0",
     "axios": "^0.21.1",
     "expo": "~40.0.0",
+    "expo-font": "~8.4.0",
     "expo-image-picker": "~9.2.0",
     "expo-secure-store": "~9.3.0",
     "expo-splash-screen": "~0.8.1",

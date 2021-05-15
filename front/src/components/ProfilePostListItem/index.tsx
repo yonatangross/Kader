@@ -42,31 +42,17 @@ const ProfilePostListItem = (props: ProfilePostListItemProps) => {
     return (
       <TouchableWithoutFeedback onPress={onClick}>
         <View style={styles.container}>
-          <View style={styles.postHeader}>
-            <View style={styles.PostCreatorDetailsContainer}>
-              <Avatar style={styles.profileAvatar} size="large" source={require('../../layouts/social/profile/assets/image-profile-1.jpg')} />
-              <Text style={styles.PostedBy}>
-                {post.creator.firstName} {post.creator.lastName}
-              </Text>
-              <StarRating numOfStars={post.creator.rating} numOfRatings={post.creator.numberOfRatings} displayRatings={false} />
+            <View style={styles.PostTitleAndGroup}>
+              <Text style={styles.PostTitle}>{post.title}</Text>
+              <Icon style={styles.arrowIcon} name="arrow-right-outline" fill={'rgba(34, 83, 231)'} />
+              <Text style={styles.PostTitle}>{post.groupName}</Text>
             </View>
-            <View style={styles.postHeaderDetails}>
-              <View style={styles.PostTitleAndGroup}>
-                <Text style={styles.PostTitle}>{post.title}</Text>
-                <Icon style={styles.arrowIcon} name="arrow-right-outline" fill={'rgba(34, 83, 231)'} />
-                <Text style={styles.PostTitle}>{post.groupName}</Text>
-              </View>
-              <Text style={styles.postDate}>{moment(post.created).fromNow()}</Text>
-            </View>
-          </View>
-          <View style={styles.postDetailsContainer}>
-            <Text>{post.description}</Text>
-            <Text>{post.commentsCount}</Text>
-          </View>
+            <Text style={styles.postDate}>{moment(post.created).fromNow()}</Text>
+          <Text>{post.commentsCount} comments</Text>
         </View>
       </TouchableWithoutFeedback>
     );
-  } else return <View>{loading ? <p>loading...</p> : <p>Fetched!!</p>}</View>;
+  } else return <View>{loading ? <Text>loading...</Text> : <Text>Fetched!!</Text>}</View>;
 };
 
 export default ProfilePostListItem;

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
@@ -23,21 +23,23 @@ const ProfileGroupListItem = (props: ProfileGroupListItemProps) => {
       id: group.groupId,
     });
   };
-
-  return (
-    <TouchableWithoutFeedback onPress={onClick}>
-      <View style={styles.container}>
-        <Text style={styles.PostedBy}>
-          {group.name} {getGroupPrivacyName(group.groupPrivacy)}
-        </Text>
-        <Text>{group.postsCount}</Text>
-        <Text>{group.membersCount}</Text>
-        <Text style={styles.postDate}>{moment(group.created).fromNow()}</Text>
-        //todo: add manager icon
-        <Text>isManager</Text>
-      </View>
-    </TouchableWithoutFeedback>
-  );
+  if (!!group) {
+    return (
+      <TouchableWithoutFeedback onPress={onClick}>
+        <View style={styles.container}>
+          <Text style={styles.PostedBy}>
+            {group.name} {getGroupPrivacyName(group.groupPrivacy)}
+          </Text>
+          <Text>{group.postsCount}</Text>
+          <Text>{group.membersCount}</Text>
+          <Text style={styles.postDate}>{moment(group.created).fromNow()}</Text>
+          <Text>isManager</Text>
+        </View>
+      </TouchableWithoutFeedback>
+    );
+  } else {
+    return <></>;
+  }
 };
 
 export default ProfileGroupListItem;

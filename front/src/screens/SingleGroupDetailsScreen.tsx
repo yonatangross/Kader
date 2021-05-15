@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Image, StyleSheet, View, FlatList } from 'react-native';
+import { Image, StyleSheet, View, FlatList, SafeAreaView } from 'react-native';
 import { GroupPrivacy } from '../types/GroupPrivacy';
 import { IGroup } from '../types/IGroup';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { getGroup, joinGroup } from '../services/groups';
 import { Text, Button } from '@ui-kitten/components';
 import { getGroupPrivacyName } from '../types/GroupPrivacy';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export interface SingleGroupDetailsPageProps {}
 
@@ -31,9 +32,10 @@ const SingleGroupDetailsScreen = (props: SingleGroupDetailsPageProps) => {
     }
   }, []);
 
+  const renderGroupMembers = () => {};
+
   const askToJoinPrivateGroup = () => {
     //todo: ask Aviv to implement logic
-    
   };
   const joinPublicGroupNow = () => {
     if (group)
@@ -66,17 +68,20 @@ const SingleGroupDetailsScreen = (props: SingleGroupDetailsPageProps) => {
         <Text style={styles.text} category="h6">
           {group.members.length} members
         </Text>
-        <FlatList
-          data={group.members}
-          renderItem={({ item }) => {
-            if (!!item.imageUri) {
-              return <Image source={require('../assets/images/imagePlaceholder.png')} style={styles.memberImage} />;
-            } else return <Image source={require('../assets/images/imagePlaceholder.png')} style={styles.memberImage} />;
-          }}
-          keyExtractor={(item) => item.id}
-          showsVerticalScrollIndicator={false}
-          horizontal
-        />
+        <SafeAreaView style={styles.membersContainer}>
+          <FlatList
+            data={group.members}
+            renderItem={({ item }) => {
+              if (!!item.imageUri) {
+                return <Image source={require('../assets/images/imagePlaceholder.png')} style={styles.memberImage} />;
+              } else return <Image source={require('../assets/images/imagePlaceholder.png')} style={styles.memberImage} />;
+            }}
+            keyExtractor={(item) => item.id}
+            showsVerticalScrollIndicator={false}
+            horizontal
+          />
+        </SafeAreaView>
+
         <View style={styles.buttonContainer}>
           {group.groupPrivacy === GroupPrivacy.Private ? (
             <Button onPress={askToJoinPrivateGroup} size="large" appearance="outline" status="success">
@@ -100,6 +105,8 @@ const styles = StyleSheet.create({
     margin: 5,
     alignSelf: 'center',
   },
+  membersContainer: { flex: 1, marginVertical: -40 },
+
   memberImage: {
     width: 40,
     height: 40,

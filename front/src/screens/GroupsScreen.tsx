@@ -36,7 +36,7 @@ const GroupsScreen = () => {
     if (auth.authData)
       getGroupsForUser(auth.authData?.userId)
         .then((response) => {
-          const groupsResult: any[] = response.data.groupView;
+          const groupsResult: any[] = response.data;
 
           setGroups(groupsResult);
         })
@@ -50,7 +50,7 @@ const GroupsScreen = () => {
       let group = groups[index] as IGroup;
       switch (group.groupPrivacy) {
         case GroupPrivacy.Invisible:
-          navigation.navigate('SingleGroup', {
+          navigation.navigate('SingleGroupDetails', {
             id: groups[index].groupId,
           });
           break;
@@ -114,7 +114,7 @@ const GroupsScreen = () => {
     return () => {
       isMounted = false;
     };
-  }, [query]);
+  }, [query, setUserGroups, setGroups]);
 
   if (userGroups) {
     return (

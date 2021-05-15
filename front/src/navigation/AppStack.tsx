@@ -44,6 +44,7 @@ export const AppStack = () => {
               }}
             ></View>
           ),
+          cardStyle: { backgroundColor: '#dedcdf' },
         }}
       />
 
@@ -53,6 +54,7 @@ export const AppStack = () => {
         options={{
           headerTintColor: '#4975aa',
           title: '',
+          cardStyle: { backgroundColor: '#dedcdf' },
         }}
       />
       <Stack.Screen
@@ -61,6 +63,7 @@ export const AppStack = () => {
         options={{
           title: '',
           headerTintColor: '#4975aa',
+          cardStyle: { backgroundColor: '#dedcdf' },
         }}
       />
       <Stack.Screen
@@ -69,6 +72,7 @@ export const AppStack = () => {
         options={{
           title: '',
           headerTintColor: '#4975aa',
+          cardStyle: { backgroundColor: '#dedcdf' },
         }}
       />
       <Stack.Screen
@@ -77,6 +81,7 @@ export const AppStack = () => {
         options={{
           title: '',
           headerTintColor: '#4975aa',
+          cardStyle: { backgroundColor: '#dedcdf' },
         }}
       />
       <Stack.Screen
@@ -85,6 +90,7 @@ export const AppStack = () => {
         options={{
           title: 'Oops!',
           headerTintColor: '#4975aa',
+          cardStyle: { backgroundColor: '#dedcdf' },
         }}
       />
     </Stack.Navigator>

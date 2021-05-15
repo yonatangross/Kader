@@ -86,14 +86,15 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
                 payload: {
                   title: props.state.details.title,
                   description: props.state.details.description,
-                  location: data.description,
+                  location: details?.formatted_address,
                   images: props.state.details.image,
                 },
               });
+              console.log(details);
             }}
             query={{
               key: 'AIzaSyDtlSYdojyjmTTwvSYaIP3N50n-OzrWcUg',
-              language: 'en',
+              language: 'iw',
               components: 'country:il',
             }}
             currentLocation={true}
