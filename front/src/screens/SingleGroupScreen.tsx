@@ -1,6 +1,7 @@
 import { useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Button, FlatList, TouchableOpacity, Image, StatusBar } from 'react-native';
+import _ from 'lodash';
 import { Text } from '@ui-kitten/components';
 
 import { getGroup } from '../services/groups';
@@ -10,15 +11,18 @@ import { IGroup } from '../types/IGroup';
 import { getGroupPrivacyName } from '../types/GroupPrivacy';
 import CreateGroupPostModal from '../components/CreateGroupPostModal';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Divider } from 'react-native-paper';
-import ManageTools from '../components/ManageTools';
+import GroupManagementPanel from '../components/GroupManagementPanel';
+import { useAuth } from '../contexts/Auth';
+
 export interface SingleGroupScreenProps {}
 
 const SingleGroupScreen = (props: SingleGroupScreenProps) => {
   const route = useRoute();
+  const auth = useAuth();
   const [loading, setLoading] = useState<boolean>(true);
   const [visibleCreatePost, setVisibleCreatePost] = useState<boolean>(false);
   const [group, setGroup] = useState<IGroup>();
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
   useEffect(() => {
     let mounted = true;
@@ -29,6 +33,11 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
         .then((response) => {
           if (mounted) {
             const groupResponse: IGroup = response.data.group;
+            setIsAdmin(
+              _.some(groupResponse.managers, (user) => {
+                if (user.id === auth.authData?.userId) return true;
+              })
+            );
             setGroup(groupResponse);
             setLoading(false);
           }
@@ -54,7 +63,7 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
         <Text style={styles.text} category="h6">
           {group.description}
         </Text>
-        <ManageTools/>
+        <GroupManagementPanel isAdmin={isAdmin} />
         <Text style={styles.text} category="c1">
           Group Privacy: {getGroupPrivacyName(group.groupPrivacy)}
         </Text>

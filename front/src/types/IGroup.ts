@@ -10,5 +10,6 @@ export interface IGroup {
   mainLocation: string;
   groupPrivacy: GroupPrivacy;
   members: IUser[];
+  managers: IUser[];
   posts: IPost[];
 }

@@ -91,16 +91,6 @@ export default function UserProfileScreen(navigation: any) {
             />
           </SafeAreaView>
           <Text style={{ fontWeight: 'bold', marginBottom: 10, fontSize: 20, paddingHorizontal: 10 }}>Managed Groups</Text>
-          <SafeAreaView style={styles.ManagedGroupsContainer}>
-            <FlatList
-              data={user.managerInGroups}
-              renderItem={renderGroupItem}
-              keyExtractor={(item) => item.groupId}
-              showsVerticalScrollIndicator={true}
-              initialNumToRender={6}
-              maxToRenderPerBatch={2}
-            />
-          </SafeAreaView>
         </View>
       </View>
     );
@@ -116,7 +106,6 @@ const styles = StyleSheet.create({
   container: { flex: 1, alignItems: 'flex-start', backgroundColor: 'white' },
   postsContainer: { flex: 2 },
   groupsContainer: { flex: 2 },
-  ManagedGroupsContainer: { flex: 2 },
   userListsContainer: {
     flex: 3,
     alignItems: 'flex-start',
