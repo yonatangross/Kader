@@ -11,6 +11,7 @@ import { getGroupPrivacyName } from '../types/GroupPrivacy';
 import CreateGroupPostModal from '../components/CreateGroupPostModal';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Divider } from 'react-native-paper';
+import ManageTools from '../components/ManageTools';
 export interface SingleGroupScreenProps {}
 
 const SingleGroupScreen = (props: SingleGroupScreenProps) => {
@@ -44,6 +45,7 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
         <Text style={styles.text} category="h6">
           {group.description}
         </Text>
+        <ManageTools/>
         <Text style={styles.text} category="c1">
           Group Privacy: {getGroupPrivacyName(group.groupPrivacy)}
         </Text>
