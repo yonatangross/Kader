@@ -7,14 +7,12 @@ import StarRating from '../StarRating/index';
 import { useEffect } from 'react';
 import { Avatar, Icon } from '@ui-kitten/components';
 import moment from 'moment';
-import PostListItemComments from '../PostListItemComments';
-import { getPost } from '../../services/posts';
 
-export interface PostListItemProps {
+export interface ProfilePostListItemProps {
   post: IPost;
 }
 
-const PostListItem = (props: PostListItemProps) => {
+const ProfilePostListItem = (props: ProfilePostListItemProps) => {
   const { post: receivedPost } = props;
   const [post, setPost] = useState<any>();
   const navigation = useNavigation();
@@ -43,8 +41,10 @@ const PostListItem = (props: PostListItemProps) => {
           <View style={styles.postHeader}>
             <View style={styles.PostCreatorDetailsContainer}>
               <Avatar style={styles.profileAvatar} size="large" source={require('../../layouts/social/profile/assets/image-profile-1.jpg')} />
-              <Text style={styles.PostedBy}>{/* {post.creator.firstName} {post.creator.lastName} */}</Text>
-              {/* <StarRating numOfStars={post.creator.rating} numOfRatings={post.creator.numberOfRatings} displayRatings={false} /> */}
+              <Text style={styles.PostedBy}>
+                {post.creator.firstName} {post.creator.lastName}
+              </Text>
+              <StarRating numOfStars={post.creator.rating} numOfRatings={post.creator.numberOfRatings} displayRatings={false} />
             </View>
             <View style={styles.postHeaderDetails}>
               <View style={styles.PostTitleAndGroup}>
@@ -57,7 +57,7 @@ const PostListItem = (props: PostListItemProps) => {
           </View>
           <View style={styles.postDetailsContainer}>
             <Text>{post.description}</Text>
-            <PostListItemComments comments={post.comments} />
+            <Text>{post.commentsCount}</Text>
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -72,4 +72,4 @@ const PostListItem = (props: PostListItemProps) => {
     );
 };
 
-export default PostListItem;
+export default ProfilePostListItem;

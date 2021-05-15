@@ -27,9 +27,9 @@ kaderPhotoUploadApi.interceptors.request.use(
     const token = await SecureStore.getItemAsync('jwt_token');
     if (token !== null) {
       config.headers = {
+        'content-type': 'multipart/form-data',
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',
-        'content-type': 'multipart/form-data',
       };
       //   console.log(`added valid token`);
     } else console.log('TOKEN IS NULL');
@@ -48,23 +48,21 @@ kaderApi.interceptors.response.use(
     const originalRequest = error.config;
     const serverCallUrl = new URL(originalRequest.url);
     const status = error.response.status;
-    console.log('response returned with error:');
+    console.log('response returned with error kaderApi:');
 
     if ((status === 401 || status === 403) && !originalRequest._retry) {
-      console.log(error);
-      console.log(originalRequest);
-      console.log(serverCallUrl);
-      const token = await SecureStore.getItemAsync('jwt_token');
-
-      originalRequest._retry = true;
-      originalRequest.headers.authorization = `Bearer ${token}`;
-      return kaderApi(originalRequest);
+      // console.log(error);
+      // console.log(originalRequest);
+      // console.log(serverCallUrl);
+      // const token = await SecureStore.getItemAsync('jwt_token');
+      // originalRequest._retry = true;
+      // originalRequest.headers.authorization = `Bearer ${token}`;
+      // return kaderApi(originalRequest);
     }
 
     return Promise.reject(error);
   }
 );
-
 
 kaderPhotoUploadApi.interceptors.response.use(
   async (response) => {
@@ -74,17 +72,17 @@ kaderPhotoUploadApi.interceptors.response.use(
     const originalRequest = error.config;
     const serverCallUrl = new URL(originalRequest.url);
     const status = error.response.status;
-    console.log('response returned with error:');
+    console.log('response returned with error kaderUploadPhotoApi:');
 
     if ((status === 401 || status === 403) && !originalRequest._retry) {
       console.log(error);
       console.log(originalRequest);
       console.log(serverCallUrl);
-      const token = await SecureStore.getItemAsync('jwt_token');
+      // const token = await SecureStore.getItemAsync('jwt_token');
 
-      originalRequest._retry = true;
-      originalRequest.headers.authorization = `Bearer ${token}`;
-      return kaderApi(originalRequest);
+      // originalRequest._retry = true;
+      // originalRequest.headers.authorization = `Bearer ${token}`;
+      // return kaderApi(originalRequest);
     }
 
     return Promise.reject(error);

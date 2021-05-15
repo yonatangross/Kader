@@ -29,8 +29,8 @@ const GroupsSelector = (props: GroupsSelectorProps) => {
         .then((response) => {
           const groupsResult: any[] = response.data.groupView;
 
-          console.log(groupsResult);
-          console.log(props.active);
+          // console.log(groupsResult);
+          // console.log(props.active);
 
           setGroups(groupsResult);
         })

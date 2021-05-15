@@ -13,8 +13,9 @@ import { IPost } from '../types/IPost';
 import { IGroup } from '../types/IGroup';
 import PostListItem from '../components/PostListItem';
 import GroupListItem from '../components/GroupListItem';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import ProfilePostListItem from '../components/ProfilePostListItem';
+import ProfileGroupListItem from '../components/ProfileGroupListItem';
 
 const profile: Profile = Profile.jenniferGreen();
 
@@ -25,34 +26,31 @@ interface ISectionsData {
   renderItem: any;
 }
 
-export default function ProfileScreen() {
-  const auth = useAuth();
+export default function UserProfileScreen(navigation: any) {
+  const route = useRoute();
+
   const [user, setUser] = useState<IUser>();
   const renderPostItem = ({ item }: any) => {
     return <ProfilePostListItem post={item} />;
   };
   const renderGroupItem = ({ item }: any) => {
-    return <GroupListItem group={item} />;
+    return <ProfileGroupListItem group={item} />;
   };
-
   useEffect(() => {
-    if (!!auth && !!auth.authData) {
-      getUser(auth.authData.userId)
+    if (route.params) {
+      const params: any = route.params;
+      getUser(params.id)
         .then((response) => {
-          const userResult: IUser = response.data;
-          setUser(userResult);
+          const userResponse: IUser = response.data;
+          setUser(userResponse);
         })
         .catch((error) => {
-          console.log(`error while fetching user data ${error}`);
+          console.log(`error while fetching user ${params.id} data ${error}`);
         });
     }
   }, []);
 
-  const signOut = () => {
-    auth.signOut();
-  };
-
-  if (!!user) {
+  if (user) {
     return (
       <View style={styles.container}>
         <View style={styles.userBasicDetailsContainer}>
@@ -64,7 +62,6 @@ export default function ProfileScreen() {
           <View style={styles.userDataContainer}>
             <ProfileSocial style={styles.userDataItemContainer} hint="Posts" value={`${!user.posts ? 0 : user.posts.length}`} />
             <ProfileSocial style={styles.userDataItemContainer} hint="Groups" value={`${!user.memberInGroups ? 0 : user.memberInGroups.length}`} />
-            <ProfileSocial style={styles.userDataItemContainer} hint="Managed Groups" value={`${!user.managerInGroups ? 0 : user.managerInGroups.length}`} />
           </View>
 
           {/* <StarRating numOfStars={user?.rating} numOfRatings={user?.numberOfRatings} displayRatings={false} /> */}
@@ -105,19 +102,12 @@ export default function ProfileScreen() {
             />
           </SafeAreaView>
         </View>
-        <TouchableOpacity activeOpacity={0.7} onPress={signOut} style={styles.logoutButton}>
-          <Image source={require('../assets/images/log-out.png')} style={styles.floatingButtonStyle} />
-        </TouchableOpacity>
       </View>
     );
   } else
     return (
       <View style={styles.container}>
-        <Text style={{ fontWeight: 'bold', marginBottom: 10, fontSize: 20, paddingHorizontal: 10 }}>{auth.authData?.firstName}</Text>
-
-        <TouchableOpacity activeOpacity={0.7} onPress={signOut} style={styles.logoutButton}>
-          <Image source={require('../assets/images/log-out.png')} style={styles.floatingButtonStyle} />
-        </TouchableOpacity>
+        <Text>Loading User data...</Text>
       </View>
     );
 }
@@ -132,29 +122,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
   },
-  floatingButtonStyle: {
-    resizeMode: 'contain',
-    width: 32,
-    height: 32,
-  },
-  logoutButton: {
-    backgroundColor: 'white',
-    position: 'absolute',
-    width: 50,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 30,
-    right: 15,
-    bottom: 30,
-    shadowColor: 'rgba(0, 0, 0, 0.1)',
-    shadowOpacity: 0.8,
-    elevation: 6,
-    shadowRadius: 15,
-    shadowOffset: { width: 1, height: 13 },
-    borderColor: 'black',
-    borderWidth: 0.8,
-  },
+
   profileAvatar: {
     marginHorizontal: 8,
   },

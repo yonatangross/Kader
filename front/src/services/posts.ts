@@ -62,6 +62,7 @@ export const addPost = async (postData: any): Promise<AxiosResponse<any>> => {
       })
       .catch((error) => {
         console.log('error while uploading photo, error:');
+        console.log(error);
       });
     return response;
   } catch (error) {

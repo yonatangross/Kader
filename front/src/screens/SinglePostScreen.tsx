@@ -14,20 +14,28 @@ export interface SinglePostScreenProps {}
 
 const SinglePostScreen = (props: SinglePostScreenProps) => {
   const route = useRoute();
+  const [loading, setLoading] = useState<boolean>(true);
   const [post, setPost] = useState<IPost>();
 
   useEffect(() => {
+    let mounted = true;
     if (route.params) {
       const params: any = route.params;
       getPost(params.id)
         .then((response) => {
-          const postResponse: IPost = response.data.post;
-          setPost(postResponse);
+          if (mounted) {
+            const postResponse: IPost = response.data.post;
+            setPost(postResponse);
+            setLoading(false);
+          }
         })
         .catch((error) => {
           console.log(error);
         });
     }
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   if (post) {

@@ -31,7 +31,7 @@ const CreateGroupPostModal = (props: CreateGroupPostModalProps) => {
   const [submitFlag, setSubmitFlag] = useState<boolean>(false);
   const submitPost = () => {
     console.log('before adding post');
-    console.log(state.details);
+    // console.log(state.details);
     addPost({
       type: state.postType,
       category: state.category,

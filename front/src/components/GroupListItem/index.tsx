@@ -14,7 +14,7 @@ const GroupListItem = (props: GroupListItemProps) => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    console.log(group);
+    // console.log(group);
   }, []);
 
   const renderItemAccessory = (props: any) => <Button size="tiny">Go to Group</Button>;

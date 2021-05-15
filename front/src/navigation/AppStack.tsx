@@ -8,6 +8,7 @@ import SinglePostScreen from '../screens/SinglePostScreen';
 import SingleGroupScreen from '../screens/SingleGroupScreen';
 import SingleGroupDetailsScreen from '../screens/SingleGroupDetailsScreen';
 import { RootStackParamList } from '../types/Tabs';
+import UserProfileScreen from '../screens/UserProfileScreen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -65,6 +66,14 @@ export const AppStack = () => {
       <Stack.Screen
         name="SingleGroupDetails"
         component={SingleGroupDetailsScreen}
+        options={{
+          title: '',
+          headerTintColor: '#4975aa',
+        }}
+      />
+      <Stack.Screen
+        name="UserProfile"
+        component={UserProfileScreen}
         options={{
           title: '',
           headerTintColor: '#4975aa',

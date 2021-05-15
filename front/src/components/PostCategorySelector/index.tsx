@@ -19,9 +19,10 @@ const PostCategorySelector = (props: PostCategorySelectorProps) => {
   }, [props.active]);
 
   const fetchCategories = (): void => {
-    getCategories()
-      .then(({ data: { categories } }: string[] | any) => setCategories(categories))
-      .catch((err: Error) => console.log(`err on getCategories: ${err}`));
+    //todo: fix after adding in backend
+    // getCategories()
+    //   .then(({ data: { categories } }: string[] | any) => setCategories(categories))
+    //   .catch((err: Error) => console.log(`err on getCategories: ${err}`));
   };
 
   const renderItem = ({ item, index }: { item: string; index: number }) => (
@@ -34,7 +35,7 @@ const PostCategorySelector = (props: PostCategorySelectorProps) => {
         props.dispatch({ type: 'Category', payload: item });
         props.setActiveSection(2);
 
-        console.log(props.dispatch);
+        // console.log(props.dispatch);
       }}
     >
       {(buttonProps: any) => (

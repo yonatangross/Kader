@@ -15,23 +15,32 @@ export interface SingleGroupScreenProps {}
 
 const SingleGroupScreen = (props: SingleGroupScreenProps) => {
   const route = useRoute();
+  const [loading, setLoading] = useState<boolean>(true);
   const [visibleCreatePost, setVisibleCreatePost] = useState<boolean>(false);
   const [group, setGroup] = useState<IGroup>();
 
   useEffect(() => {
+    let mounted = true;
+
     if (route.params) {
       const params: any = route.params;
       getGroup(params.id)
         .then((response) => {
-          const groupResponse: IGroup = response.data.group;
-          setGroup(groupResponse);
+          if (mounted) {
+            const groupResponse: IGroup = response.data.group;
+            setGroup(groupResponse);
+            setLoading(false);
+          }
         })
         .catch((error) => {
-          console.log(error);
+          console.log(`error fetching group ${params.id}, error: ${error}`);
         });
     } else {
       console.log(`error fetching route.params`);
     }
+    () => {
+      mounted = false;
+    };
   }, []);
 
   if (!!group) {
