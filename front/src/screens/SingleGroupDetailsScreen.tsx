@@ -6,7 +6,6 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { getGroup, joinGroup } from '../services/groups';
 import { Text, Button } from '@ui-kitten/components';
 import { getGroupPrivacyName } from '../types/GroupPrivacy';
-import { Item } from 'react-native-paper/lib/typescript/components/List/List';
 
 export interface SingleGroupDetailsPageProps {}
 
@@ -34,6 +33,7 @@ const SingleGroupDetailsScreen = (props: SingleGroupDetailsPageProps) => {
 
   const askToJoinPrivateGroup = () => {
     //todo: ask Aviv to implement logic
+    
   };
   const joinPublicGroupNow = () => {
     if (group)
