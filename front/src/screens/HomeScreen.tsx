@@ -6,7 +6,7 @@ import PostListItem from '../components/PostListItem';
 import { View } from '../components/Themed';
 import { IPost } from '../types/IPost';
 import CreateGeneralPostModal from '../components/CreateGeneralPostModal';
-import { getPosts } from '../services/posts';
+import { getPostsForUser } from '../services/posts';
 import CreateGroupModal from '../components/CreateGroupModal';
 
 export interface HomeProps {}
@@ -14,25 +14,29 @@ export interface HomeProps {}
 const HomeScreen = () => {
   const [visibleCreatePost, setVisibleCreatePost] = useState<boolean>(false);
   const [visibleCreateGroup, setVisibleCreateGroup] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const [posts, setPosts] = useState<IPost[]>();
   useEffect(() => {
-    // console.log(`entered homepage useEffect`);
-
-    getPosts()
+    let isMounted = true;
+    getPostsForUser()
       .then((response) => {
-        const postsResult: IPost[] = response.data;
-        setPosts(postsResult);
-        // console.log(`posts length: ${postsResult.length}`);
+        if (isMounted) {
+          const postsResult: IPost[] = response.data;
+          setPosts(postsResult);
+          setLoading(false);
+        }
       })
       .catch((error) => {
         console.log(`error while fetching posts ${error}`);
       });
+    () => {
+      isMounted = false;
+    };
   }, [setPosts]);
 
   const renderPostListItem = ({ item }: any) => {
     return <PostListItem post={item} key={item.postId} />;
-    // return <></>;
   };
   if (!!posts) {
     return (
@@ -69,7 +73,7 @@ const HomeScreen = () => {
         </TouchableOpacity>
       </View>
     );
-  } else return <></>;
+  } else return <View>{loading ? <Text>loading...</Text> : <Text>Fetched!!</Text>}</View>;
 };
 
 const styles = StyleSheet.create({

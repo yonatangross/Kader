@@ -15,6 +15,9 @@ import PostListItem from '../components/PostListItem';
 import GroupListItem from '../components/GroupListItem';
 import { useRoute } from '@react-navigation/native';
 import ProfilePostListItem from '../components/ProfilePostListItem';
+import { getPostsForUser } from '../services/posts';
+import { getGroupsForUser } from '../services/groups';
+import _ from 'lodash';
 
 const profile: Profile = Profile.jenniferGreen();
 
@@ -28,11 +31,15 @@ interface ISectionsData {
 export default function ProfileScreen() {
   const auth = useAuth();
   const [user, setUser] = useState<IUser>();
+  const [userPosts, setUserPosts] = useState<IPost[]>();
+  const [userGroups, setUserGroups] = useState<IGroup[]>();
+  const [userManagedGroups, setUserManagedGroups] = useState<IGroup[]>();
+
   const renderPostItem = ({ item }: any) => {
-    return <ProfilePostListItem post={item} />;
+    return <ProfilePostListItem key={item.postId} post={item} />;
   };
   const renderGroupItem = ({ item }: any) => {
-    return <GroupListItem group={item} />;
+    return <GroupListItem key={item.groupId} group={item} />;
   };
 
   useEffect(() => {
@@ -41,6 +48,27 @@ export default function ProfileScreen() {
         .then((response) => {
           const userResult: IUser = response.data;
           setUser(userResult);
+          getPostsForUser()
+            .then((response) => {
+              const userPostsResult: IPost[] = response.data;
+              setUserPosts(userPostsResult);
+            })
+            .catch((error) => console.log(`error while fetching ${auth.authData?.userId} posts, ${error}`));
+          getGroupsForUser()
+            .then((response) => {
+              const userGroupsResult: IGroup[] = [];
+              const userManagedGroupsResult: IGroup[] = [];
+              _.each(response.data, (group) => {
+                if (group.isManager) {
+                  userGroupsResult.push(group);
+                } else {
+                  userManagedGroupsResult.push(group);
+                }
+              });
+              setUserGroups(userGroupsResult);
+              setUserManagedGroups(userManagedGroupsResult);
+            })
+            .catch((error) => console.log(`error while fetching ${auth.authData?.userId} groups, ${error}`));
         })
         .catch((error) => {
           console.log(`error while fetching user data ${error}`);
@@ -62,9 +90,9 @@ export default function ProfileScreen() {
             {user?.email}
           </Text>
           <View style={styles.userDataContainer}>
-            <ProfileSocial style={styles.userDataItemContainer} hint="Posts" value={`${!user.posts ? 0 : user.posts.length}`} />
-            <ProfileSocial style={styles.userDataItemContainer} hint="Groups" value={`${!user.memberInGroups ? 0 : user.memberInGroups.length}`} />
-            <ProfileSocial style={styles.userDataItemContainer} hint="Managed Groups" value={`${!user.managerInGroups ? 0 : user.managerInGroups.length}`} />
+            <ProfileSocial style={styles.userDataItemContainer} hint="Posts" value={`${!userPosts?.length ? 0 : userPosts.length}`} />
+            <ProfileSocial style={styles.userDataItemContainer} hint="Groups" value={`${!userGroups?.length ? 0 : userGroups.length}`} />
+            <ProfileSocial style={styles.userDataItemContainer} hint="Managed Groups" value={`${!userManagedGroups ? 0 : userManagedGroups.length}`} />
           </View>
 
           {/* <StarRating numOfStars={user?.rating} numOfRatings={user?.numberOfRatings} displayRatings={false} /> */}
@@ -74,7 +102,7 @@ export default function ProfileScreen() {
           <Text style={{ fontWeight: 'bold', marginBottom: 10, fontSize: 20, paddingHorizontal: 10 }}>Posts</Text>
           <SafeAreaView style={styles.postsContainer}>
             <FlatList
-              data={user.posts}
+              data={userPosts}
               renderItem={renderPostItem}
               keyExtractor={(item) => item.postId}
               showsVerticalScrollIndicator={true}
@@ -85,7 +113,7 @@ export default function ProfileScreen() {
           <Text style={{ fontWeight: 'bold', marginBottom: 10, fontSize: 20, paddingHorizontal: 10 }}>Groups</Text>
           <SafeAreaView style={styles.groupsContainer}>
             <FlatList
-              data={user.memberInGroups}
+              data={userGroups}
               renderItem={renderGroupItem}
               keyExtractor={(item) => item.groupId}
               showsVerticalScrollIndicator={true}
@@ -96,7 +124,7 @@ export default function ProfileScreen() {
           <Text style={{ fontWeight: 'bold', marginBottom: 10, fontSize: 20, paddingHorizontal: 10 }}>Managed Groups</Text>
           <SafeAreaView style={styles.ManagedGroupsContainer}>
             <FlatList
-              data={user.managerInGroups}
+              data={userManagedGroups}
               renderItem={renderGroupItem}
               keyExtractor={(item) => item.groupId}
               showsVerticalScrollIndicator={true}
@@ -113,8 +141,6 @@ export default function ProfileScreen() {
   } else
     return (
       <View style={styles.container}>
-        <Text style={{ fontWeight: 'bold', marginBottom: 10, fontSize: 20, paddingHorizontal: 10 }}>{auth.authData?.firstName}</Text>
-
         <TouchableOpacity activeOpacity={0.7} onPress={signOut} style={styles.logoutButton}>
           <Image source={require('../assets/images/log-out.png')} style={styles.floatingButtonStyle} />
         </TouchableOpacity>

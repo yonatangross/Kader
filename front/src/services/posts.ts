@@ -5,11 +5,11 @@ import { IPost } from '../types/IPost';
 import { ImagePickerResult } from 'expo-image-picker';
 import { Platform } from 'react-native';
 
-export const getPosts = async (): Promise<AxiosResponse<any>> => {
+export const getPostsForUser = async (userId?: string): Promise<AxiosResponse<any>> => {
   try {
     // console.log('requesting posts');
     const response: AxiosResponse<any> = await kaderApi.get(`/posts`, {
-      params: {},
+      params: { userId },
     });
     // console.log('finished requesting posts');
     return response;
@@ -39,10 +39,10 @@ export const addPost = async (postData: any): Promise<AxiosResponse<any>> => {
 
     let postImage = postData.image as ImagePickerResult;
 
-    //use formdata
+    //use formData
     var formData = new FormData();
 
-    //append created photo{} to formdata
+    //append created photo{} to formData
     formData.append('postId', response.data.postId);
     formData.append('post_image', {
       // @ts-ignore

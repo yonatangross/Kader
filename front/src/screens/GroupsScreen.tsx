@@ -25,6 +25,7 @@ const GroupsScreen = () => {
   const navigation = useNavigation();
 
   const [visibleCreateGroup, setVisibleCreateGroup] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const [userGroups, setUserGroups] = useState<any[]>();
 
@@ -96,17 +97,23 @@ const GroupsScreen = () => {
   const renderOption = (item: any, index: number) => <AutocompleteItem key={index} title={item.name} accessoryLeft={StarIcon} />;
 
   useEffect(() => {
+    let isMounted = true;
     if (auth.authData)
       getGroupsForUser(auth.authData?.userId)
         .then((response) => {
-          const groupsResult: any[] = response.data.groupView;
-
-          setUserGroups(groupsResult);
+          if (isMounted) {
+            const groupsResult: any[] = response.data;
+            setUserGroups(groupsResult);
+            setLoading(false);
+          }
         })
         .catch((error) => {
           console.log(`error while fetching groups ${error}`);
         });
     updateData();
+    return () => {
+      isMounted = false;
+    };
   }, [query]);
 
   if (userGroups) {
@@ -143,13 +150,13 @@ const GroupsScreen = () => {
         <FlatList
           style={styles.list}
           data={userGroups}
-          renderItem={({ item: group }) => <GroupListItem group={group} />}
+          renderItem={({ item: group }) => <GroupListItem key={group.groupId} group={group} />}
           keyExtractor={(item) => item.groupId}
           showsVerticalScrollIndicator={false}
         />
       </View>
     );
-  } else return <></>;
+  } else return <View>{loading ? <Text>loading...</Text> : <Text>Fetched!!</Text>}</View>;
 };
 
 const styles = StyleSheet.create({

@@ -98,9 +98,7 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
         </TouchableOpacity>
       </View>
     );
-  } else {
-    return <></>;
-  }
+  } else return <View>{loading ? <p>loading...</p> : <p>Fetched!!</p>}</View>;
 };
 
 const styles = StyleSheet.create({

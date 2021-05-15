@@ -9,6 +9,7 @@ import { useAuth } from '../../contexts/Auth';
 
 export interface UserListItemProps {
   user: IUser;
+
 }
 
 const UserListItem = (props: UserListItemProps) => {
@@ -30,7 +31,7 @@ const UserListItem = (props: UserListItemProps) => {
   return (
     <TouchableWithoutFeedback onPress={onClick}>
       <View style={styles.ImageContainer}>
-        <Avatar style={styles.profileAvatar} size="large" source={require('../../layouts/social/profile/assets/image-profile-1.jpg')} />
+        <Avatar style={styles.profileAvatar} size="large" source={require('../../assets/images/imagePlaceholder.png')} />
       </View>
     </TouchableWithoutFeedback>
   );

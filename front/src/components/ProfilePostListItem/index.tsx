@@ -10,11 +10,14 @@ import moment from 'moment';
 
 export interface ProfilePostListItemProps {
   post: IPost;
+  key: string;
 }
 
 const ProfilePostListItem = (props: ProfilePostListItemProps) => {
   const { post: receivedPost } = props;
   const [post, setPost] = useState<any>();
+  const [loading, setLoading] = useState<boolean>(true);
+
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -22,6 +25,7 @@ const ProfilePostListItem = (props: ProfilePostListItemProps) => {
     if (!!receivedPost) {
       if (isMounted) {
         setPost(receivedPost);
+        setLoading(false);
       }
     }
     return () => {
@@ -62,14 +66,7 @@ const ProfilePostListItem = (props: ProfilePostListItemProps) => {
         </View>
       </TouchableWithoutFeedback>
     );
-  } else
-    return (
-      <TouchableWithoutFeedback onPress={onClick}>
-        <View style={styles.container}>
-          <Text>Error fetching post</Text>
-        </View>
-      </TouchableWithoutFeedback>
-    );
+  } else return <View>{loading ? <p>loading...</p> : <p>Fetched!!</p>}</View>;
 };
 
 export default ProfilePostListItem;

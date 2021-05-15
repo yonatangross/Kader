@@ -6,6 +6,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export interface GroupListItemProps {
   group: any;
+  key: string;
 }
 
 const GroupListItem = (props: GroupListItemProps) => {
@@ -15,7 +16,7 @@ const GroupListItem = (props: GroupListItemProps) => {
 
   useEffect(() => {
     // console.log(group);
-  }, []);
+  }, [props.group]);
 
   const renderItemAccessory = (props: any) => <Button size="tiny">Go to Group</Button>;
 

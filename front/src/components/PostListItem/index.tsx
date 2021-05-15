@@ -66,7 +66,7 @@ const PostListItem = (props: PostListItemProps) => {
     return (
       <TouchableWithoutFeedback onPress={onClick}>
         <View style={styles.container}>
-          <Text>Error fetching post</Text>
+          <Text>Loading post...</Text>
         </View>
       </TouchableWithoutFeedback>
     );
