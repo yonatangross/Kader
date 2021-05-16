@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   icon: { marginHorizontal: 5 },
   buttonContainer: {
     marginLeft: 5,
-    backgroundColor: Colors.light.tint,
+    backgroundColor: 'white',
     borderRadius: 25,
     width: 50,
     height: 50,

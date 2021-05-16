@@ -1,4 +1,4 @@
-import { Entypo, FontAwesome5, Fontisto, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { Entypo, FontAwesome, FontAwesome5, Fontisto, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { View, TextInput } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -33,7 +33,7 @@ const InputBox = (props: InputBoxProps) => {
       </View>
       <TouchableOpacity onPress={onPress}>
         <View style={styles.buttonContainer}>
-          <MaterialIcons name="send" size={28} color="white" />
+          <Ionicons name="send" size={28} color="black" />
         </View>
       </TouchableOpacity>
     </View>
