@@ -5,7 +5,9 @@
         "Kader",
         "Lanciano",
         "Octicons",
-        "bolila"
+        "bolila",
+        "doubleright",
+        "wght"
     ],
     "files.watcherExclude": {
         "**/target": true

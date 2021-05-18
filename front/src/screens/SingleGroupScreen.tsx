@@ -32,12 +32,14 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
       getGroup(params.id)
         .then((response) => {
           if (mounted) {
-            const groupResponse: IGroup = response.data.group;
+            const groupResponse: IGroup = response.data;
             setIsAdmin(
               _.some(groupResponse.managers, (user) => {
                 if (user.id === auth.authData?.userId) return true;
               })
             );
+            console.log(isAdmin);
+
             setGroup(groupResponse);
             setLoading(false);
           }
@@ -51,7 +53,15 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
     () => {
       mounted = false;
     };
-  }, []);
+  }, [setGroup]);
+
+  const renderMemberListItem = ({ item }: any) => {
+    return <UserListItem user={item} key={item.id} />;
+  };
+
+  const renderPostListItem = ({ item }: any) => {
+    return <PostListItem post={item} key={item.postId} />;
+  };
 
   if (!!group) {
     return (
@@ -67,25 +77,15 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
         <Text style={styles.text} category="c1">
           Group Privacy: {getGroupPrivacyName(group.groupPrivacy)}
         </Text>
-        <Text style={styles.text} category="c2">
-          {group.members.length} members
-        </Text>
-        <SafeAreaView style={styles.membersContainer}>
-          <FlatList
-            data={group.members}
-            renderItem={({ item: user }) => <UserListItem user={user} />}
-            keyExtractor={(item) => item.id}
-            showsVerticalScrollIndicator={false}
-            horizontal
-          />
-        </SafeAreaView>
+
+        <View style={styles.membersContainer}>
+          <View style={styles.membersHeaderContainer}>
+            <Text style={styles.text}>{group.members.length} members</Text>
+          </View>
+          <FlatList contentContainerStyle={{flex:1,justifyContent:'space-around'}} data={group.members} renderItem={renderMemberListItem} keyExtractor={(item) => item.id} showsVerticalScrollIndicator={false} horizontal />
+        </View>
         <SafeAreaView style={styles.postsContainer}>
-          <FlatList
-            data={group.posts}
-            renderItem={({ item: post }) => <PostListItem post={post} />}
-            keyExtractor={(item) => item.postId}
-            showsVerticalScrollIndicator={true}
-          />
+          <FlatList data={group.posts} renderItem={renderPostListItem} keyExtractor={(item) => item.postId} showsVerticalScrollIndicator={true} />
         </SafeAreaView>
         <TouchableOpacity
           activeOpacity={0.7}
@@ -103,7 +103,8 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  membersContainer: { flex: 1, marginVertical: -40 },
+  membersHeaderContainer: { alignItems: 'center' },
+  membersContainer: { flex: 1 },
   postsContainer: { flex: 5, marginTop: -40 },
   text: {
     margin: 5,

@@ -4,7 +4,7 @@ import * as Progress from 'react-native-progress';
 
 export interface PostCreationProgressBarProps {
   activeSection: number;
-  numberOfSections:number;
+  numberOfSections: number;
 }
 
 const PostCreationProgressBar = (props: PostCreationProgressBarProps) => {
@@ -14,19 +14,19 @@ const PostCreationProgressBar = (props: PostCreationProgressBarProps) => {
 
   useEffect(() => {
     let sectionPercentage = 1 / props.numberOfSections;
-    if (props.activeSection===0) {
+    if (props.activeSection === 0) {
       setActive(true);
       setProgressTitle('Choose Post Type');
       setPercentage(0);
-    } else if (props.activeSection===1) {
+    } else if (props.activeSection === 1) {
       setActive(true);
       setProgressTitle('Choose category');
       setPercentage(1 * sectionPercentage);
-    } else if (props.activeSection===2) {
+    } else if (props.activeSection === 2) {
       setActive(true);
       setProgressTitle('Fill post details');
       setPercentage(2 * sectionPercentage);
-    } else if (props.activeSection===3) {
+    } else if (props.activeSection === 3) {
       setActive(true);
       setProgressTitle('Choose groups to publish in');
       setPercentage(3 * sectionPercentage);
@@ -39,7 +39,7 @@ const PostCreationProgressBar = (props: PostCreationProgressBarProps) => {
     return (
       <>
         <Text style={styles.progressStatus}>{progressTitle}</Text>
-        <Progress.Bar progress={percentage} width={250} style={styles.progressBar} />
+        <Progress.Bar progress={percentage} width={280} height={8} borderWidth={1.5} style={styles.progressBar} />
       </>
     );
   } else {
@@ -51,6 +51,8 @@ const styles = StyleSheet.create({
   progressBar: { display: 'flex', justifyContent: 'center', alignSelf: 'center', marginTop: 20 },
   progressStatus: {
     marginTop: 20,
+    fontWeight: 'bold',
+    fontSize: 20,
     display: 'flex',
     justifyContent: 'center',
     alignSelf: 'center',

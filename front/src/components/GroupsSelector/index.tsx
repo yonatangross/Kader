@@ -28,10 +28,6 @@ const GroupsSelector = (props: GroupsSelectorProps) => {
       getGroupsForUser(auth.authData?.userId)
         .then((response) => {
           const groupsResult: any[] = response.data.groupView;
-
-          // console.log(groupsResult);
-          // console.log(props.active);
-
           setGroups(groupsResult);
         })
         .catch((error) => {
@@ -40,7 +36,6 @@ const GroupsSelector = (props: GroupsSelectorProps) => {
   }, [setGroups, props.active]);
 
   const renderItem = ({ item: item, index }: { item: IGroup; index: number }) => {
-    //todo: change index to item.id
     return <GroupListItemSelector item={item} index={index} state={props.state} dispatch={props.dispatch} />;
   };
   if (props.active === 3) {

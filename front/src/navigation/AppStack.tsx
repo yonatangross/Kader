@@ -51,38 +51,39 @@ export const AppStack = () => {
       <Stack.Screen
         name="SinglePost"
         component={SinglePostScreen}
-        options={{
+        options={({ route }) => ({
           headerTintColor: '#4975aa',
-          title: '',
+          paddingLeft: 100,
+          title: route.params.title,
           cardStyle: { backgroundColor: '#dedcdf' },
-        }}
+        })}
       />
       <Stack.Screen
         name="SingleGroup"
         component={SingleGroupScreen}
-        options={{
-          title: '',
+        options={({ route }) => ({
+          title: route.params.name,
           headerTintColor: '#4975aa',
           cardStyle: { backgroundColor: '#dedcdf' },
-        }}
+        })}
       />
       <Stack.Screen
         name="SingleGroupDetails"
         component={SingleGroupDetailsScreen}
-        options={{
-          title: '',
+        options={({ route }) => ({
+          title: route.params.name,
           headerTintColor: '#4975aa',
           cardStyle: { backgroundColor: '#dedcdf' },
-        }}
+        })}
       />
       <Stack.Screen
         name="UserProfile"
         component={UserProfileScreen}
-        options={{
-          title: '',
+        options={({ route }) => ({
+          title: route.params.name,
           headerTintColor: '#4975aa',
           cardStyle: { backgroundColor: '#dedcdf' },
-        }}
+        })}
       />
       <Stack.Screen
         name="NotFound"

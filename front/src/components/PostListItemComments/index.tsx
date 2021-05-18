@@ -10,16 +10,16 @@ export interface PostListItemCommentsProps {
 
 const PostListItemComments = (props: PostListItemCommentsProps) => {
   const renderPostCommentItem = ({ item }: any) => {
-    return <PostCommentItem comment={item} />;
+    return <PostCommentItem key={item.commentId} comment={item} />;
   };
 
   if (props.comments.length) {
     return (
-      <>
-        {<Text style={styles.commentNumber}>{props.comments.length} comments</Text>}
+      <View>
+        <Text style={styles.commentNumber}>{props.comments.length} comments</Text>
         <Divider />
-        <FlatList data={props.comments} renderItem={renderPostCommentItem} keyExtractor={(item) => item.commentId} showsVerticalScrollIndicator={false} />
-      </>
+        <FlatList data={props.comments} maxToRenderPerBatch={2} renderItem={renderPostCommentItem} keyExtractor={(item) => item.commentId} showsVerticalScrollIndicator={false} />
+      </View>
     );
   } else return <></>;
 };

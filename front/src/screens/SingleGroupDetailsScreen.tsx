@@ -21,18 +21,16 @@ const SingleGroupDetailsScreen = (props: SingleGroupDetailsPageProps) => {
       const params: any = route.params;
       getGroup(params.id)
         .then((response) => {
-          const groupResponse: IGroup = response.data.group;
+          const groupResponse: IGroup = response.data;
           setGroup(groupResponse);
         })
         .catch((error) => {
-          console.log(error);
+          console.log(`error fetching group details`);
         });
     } else {
       console.log(`error fetching route.params`);
     }
   }, []);
-
-  const renderGroupMembers = () => {};
 
   const askToJoinPrivateGroup = () => {
     //todo: ask Aviv to implement logic

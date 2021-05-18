@@ -6,17 +6,22 @@ const kaderPhotoUploadApi = axios.create({ baseURL: 'http://kader.cs.colman.ac.i
 
 kaderApi.interceptors.request.use(
   async function (config) {
-    // console.log('entered interceptor');
     const token = await SecureStore.getItemAsync('jwt_token');
     if (token !== null) {
       config.headers = {
         Authorization: `Bearer ${token}`,
       };
-      //   console.log(`added valid token`);
     } else console.log('TOKEN IS NULL');
     return config;
   },
-  function (error) {
+  async function (error) {
+    const originalRequest = error.config;
+    const serverCallUrl = new URL(originalRequest.url);
+    const status = error.response.status;
+    console.log('request returned with error from kaderApi:');
+    console.log(status);
+    console.log(originalRequest);
+    console.log(serverCallUrl);
     return Promise.reject(error);
   }
 );
@@ -31,11 +36,11 @@ kaderPhotoUploadApi.interceptors.request.use(
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',
       };
-      //   console.log(`added valid token`);
     } else console.log('TOKEN IS NULL');
     return config;
   },
-  function (error) {
+  async function (error) {
+    console.log('request returned with error from kaderUploadPhotoApi:');
     return Promise.reject(error);
   }
 );
@@ -47,18 +52,8 @@ kaderApi.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     const serverCallUrl = new URL(originalRequest.url);
-    const status = error.response.status;
-    console.log('response returned with error kaderApi:');
-
-    if ((status === 401 || status === 403) && !originalRequest._retry) {
-      // console.log(error);
-      // console.log(originalRequest);
-      // console.log(serverCallUrl);
-      // const token = await SecureStore.getItemAsync('jwt_token');
-      // originalRequest._retry = true;
-      // originalRequest.headers.authorization = `Bearer ${token}`;
-      // return kaderApi(originalRequest);
-    }
+    console.log('response returned with error from kaderApi:');
+    console.log(error);
 
     return Promise.reject(error);
   }
@@ -71,20 +66,10 @@ kaderPhotoUploadApi.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     const serverCallUrl = new URL(originalRequest.url);
-    const status = error.response.status;
-    console.log('response returned with error kaderUploadPhotoApi:');
-
-    if ((status === 401 || status === 403) && !originalRequest._retry) {
-      console.log(error);
-      console.log(originalRequest);
-      console.log(serverCallUrl);
-      // const token = await SecureStore.getItemAsync('jwt_token');
-
-      // originalRequest._retry = true;
-      // originalRequest.headers.authorization = `Bearer ${token}`;
-      // return kaderApi(originalRequest);
-    }
-
+    console.log('response returned with error from kaderUploadPhotoApi:');
+    console.log(status);
+    console.log(originalRequest);
+    console.log(serverCallUrl);
     return Promise.reject(error);
   }
 );

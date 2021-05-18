@@ -33,7 +33,7 @@ const HomeScreen = () => {
     () => {
       isMounted = false;
     };
-  }, [setPosts]);
+  }, [setPosts,setLoading]);
 
   const renderPostListItem = ({ item }: any) => {
     return <PostListItem post={item} key={item.postId} />;

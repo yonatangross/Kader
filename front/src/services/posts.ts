@@ -29,12 +29,15 @@ export const getPost = async (postId: string): Promise<AxiosResponse<any>> => {
 
 export const addPost = async (postData: any): Promise<AxiosResponse<any>> => {
   try {
-    // console.log(`postData`);
-    // console.log(postData);
-    const response: AxiosResponse<any> = await kaderApi.post(`/posts/post/${postData.groupId}`, { postData: postData });
+    console.log(`postData`);
+    console.log(postData);
+    let initialRequest = postData;
+    delete initialRequest.image;
+    delete initialRequest.groupId;
+    console.log(initialRequest);
 
+    const response: AxiosResponse<any> = await kaderApi.post(`/posts/post/${postData.groupId}`, { postData: initialRequest });
     console.log('postId:');
-
     console.log(response.data.postId);
 
     let postImage = postData.image as ImagePickerResult;
@@ -66,7 +69,7 @@ export const addPost = async (postData: any): Promise<AxiosResponse<any>> => {
       });
     return response;
   } catch (error) {
-    throw new Error(error);
+    throw new Error(`error while sending post ${postData}, error: ${error}`);
   }
 };
 

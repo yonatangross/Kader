@@ -15,6 +15,15 @@ export interface PostDetailsFormProps {
   numberOfSections: number;
 }
 const StarIcon = (props: any) => <Icon {...props} name="star" />;
+
+const formatAddress = (addressDetails: any) => {
+  if (!!addressDetails) {
+    let addDetails = addressDetails.address_components.slice(0, 3);
+    let finalAddress = addDetails[1].long_name.concat(' ', addDetails[0].long_name.concat(', ', addDetails[2].long_name));
+    return finalAddress;
+  }
+};
+
 const PostDetailsForm = (props: PostDetailsFormProps) => {
   const [postImage, setPostImage] = useState<any>(null);
 
@@ -28,7 +37,7 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
         image: postImage,
       },
     });
-  }, [postImage, props.active]);
+  }, [postImage, props.setActiveSection]);
   if (props.active === 2) {
     return (
       <>
@@ -48,7 +57,6 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
                 image: props.state.details.image,
               },
             });
-            console.log(props.state);
           }}
         />
         <Text style={styles.text} category="label">
@@ -86,11 +94,10 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
                 payload: {
                   title: props.state.details.title,
                   description: props.state.details.description,
-                  location: details?.formatted_address,
+                  location: formatAddress(details),
                   images: props.state.details.image,
                 },
               });
-              console.log(details);
             }}
             query={{
               key: 'AIzaSyDtlSYdojyjmTTwvSYaIP3N50n-OzrWcUg',
@@ -122,8 +129,8 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
           size="small"
           onPress={() => {
             if (props.finalStage) {
-              props.setSubmitFlag(true);
               props.setActiveSection(-1);
+              props.setSubmitFlag(true);
             } else {
               props.setActiveSection(3);
             }

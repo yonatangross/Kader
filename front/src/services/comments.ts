@@ -3,7 +3,6 @@ import { AxiosResponse } from 'axios';
 import { CommentApiDataType } from '../types/ApiDataTypes';
 import { IComment } from '../types/IComment';
 
-
 export const getComments = async (): Promise<AxiosResponse<any>> => {
   try {
     const response: AxiosResponse<any> = await kaderApi.get(`/comments`, {
@@ -24,19 +23,10 @@ export const getComment = async (commentId: string): Promise<AxiosResponse<any>>
   }
 };
 
-export const addComment = async (formData: any): Promise<AxiosResponse<any>> => {
+export const addComment = async (content: string, postId: string): Promise<AxiosResponse<any>> => {
   try {
-    const comment = {
-      content: formData.content,
-      created: new Date(),
-      //todo: userId
-      creator: '0c3084e2-8799-48ff-8b55-e9a24cc7d026',
-      post: formData.post,
-      postId: formData.post.postId,
-    };
-
-    const saveComment: AxiosResponse<any> = await kaderApi.post(`/comments/`, comment);
-    return saveComment;
+    const response: AxiosResponse<any> = await kaderApi.post(`/comments/${postId}`, { content });
+    return response;
   } catch (error) {
     throw new Error(error);
   }

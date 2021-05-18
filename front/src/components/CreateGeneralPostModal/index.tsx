@@ -23,22 +23,20 @@ const createPostInitState = {
 };
 
 const CreateGeneralPostModal = (props: CreateGeneralPostModalProps) => {
-  const auth = useAuth();
   const [state, dispatch] = useReducer(createPostReducer, createPostInitState, initCreatePost);
   const [activeSection, setActiveSection] = useState<number>(0);
-  const numberOfSections = 4;
   const [submitFlag, setSubmitFlag] = useState<boolean>(false);
-  const submitPost = () => {
+  const numberOfSections = 4;
+
+  const submitPost = async () => {
     state.groups.forEach((groupId) => {
-      console.log('before adding post');
       addPost({
         type: state.postType,
         category: state.category,
-        creator: auth.authData?.userId,
         title: state.details.title,
         description: state.details.description,
         groupId: groupId,
-        location: state.details.location,
+        address: state.details.location,
         image: state.details.image,
       });
     });
@@ -55,10 +53,9 @@ const CreateGeneralPostModal = (props: CreateGeneralPostModalProps) => {
     }
     if (submitFlag) {
       submitPost();
-      setSubmitFlag(false);
       props.setVisible(false);
     }
-  }, [props.visible, submitFlag]);
+  }, [props.visible, setSubmitFlag, setActiveSection]);
 
   return (
     <>

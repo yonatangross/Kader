@@ -9,7 +9,7 @@ import { useAuth } from '../../contexts/Auth';
 
 export interface UserListItemProps {
   user: IUser;
-
+  key: string;
 }
 
 const UserListItem = (props: UserListItemProps) => {
@@ -23,7 +23,7 @@ const UserListItem = (props: UserListItemProps) => {
       if (user.id === auth.authData.userId) {
         navigation.navigate('Profile');
       } else {
-        navigation.navigate('UserProfile', { id: user.id });
+        navigation.navigate('UserProfile', { id: user.id, name: user.firstName + ' ' + user.lastName });
       }
     }
   };

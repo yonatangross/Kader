@@ -16,13 +16,12 @@ const PostCategorySelector = (props: PostCategorySelectorProps) => {
 
   useEffect(() => {
     fetchCategories();
-  }, [props.active]);
+  }, [props.setActiveSection]);
 
   const fetchCategories = (): void => {
-    //todo: fix after adding in backend
-    // getCategories()
-    //   .then(({ data: { categories } }: string[] | any) => setCategories(categories))
-    //   .catch((err: Error) => console.log(`err on getCategories: ${err}`));
+    getCategories()
+      .then(({ data: { categories } }: string[] | any) => setCategories(categories))
+      .catch((err: Error) => console.log(`err on getCategories: ${err}`));
   };
 
   const renderItem = ({ item, index }: { item: string; index: number }) => (
@@ -34,12 +33,10 @@ const PostCategorySelector = (props: PostCategorySelectorProps) => {
       onPress={() => {
         props.dispatch({ type: 'Category', payload: item });
         props.setActiveSection(2);
-
-        // console.log(props.dispatch);
       }}
     >
       {(buttonProps: any) => (
-        <Text {...buttonProps} style={{ color: 'rgba(34, 83, 231,1)' }}>
+        <Text {...buttonProps} style={styles.buttonText}>
           {item}-{index}
         </Text>
       )}
@@ -62,13 +59,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 100,
-    margin: 10,
+    margin: 30,
     marginRight: 40,
     marginLeft: 40,
+    height: 150,
     padding: 10,
-    backgroundColor: '#007aff',
     borderWidth: 0.5,
     borderColor: 'black',
+  },
+  buttonText: {
+    color: '#000000',
+    fontWeight: 'bold',
+    fontSize: 36,
   },
 });
 

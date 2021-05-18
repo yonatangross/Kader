@@ -1,5 +1,5 @@
-import { Entypo, FontAwesome, FontAwesome5, Fontisto, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
-import React, { useState } from 'react';
+import { Ionicons } from '@expo/vector-icons';
+import React, { useEffect, useState } from 'react';
 import { View, TextInput } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { addComment } from '../../services/comments';
@@ -8,30 +8,34 @@ import styles from './style';
 
 export interface InputBoxProps {
   post: IPost;
+  setPostUpdated: Function;
 }
 
 const InputBox = (props: InputBoxProps) => {
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState<string>('');
 
-  const onSendPress = () => {
-    console.warn(`Sending ${message}`);
-    // send the message to the backend
-    setMessage('');
-    addComment({ content: message, post: props.post });
-  };
-
-  const onPress = () => {
-    if (!message) {
-    } else onSendPress();
+  const onPressHandler = () => {
+    if (!!message) {
+      console.warn(`Sending ${message}`);
+      addComment(message, props.post.postId)
+        .then((response) => {
+          const postResponse: any = response;
+          console.warn(`added comment: ${message}`);
+          props.setPostUpdated(true);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      setMessage('');
+    }
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.mainContainer}>
-        {/* <FontAwesome5 name="laugh-beam" size={24} color="grey" /> */}
-        <TextInput placeholder={'Type a comment'} style={styles.textInput} multiline numberOfLines={2} value={message} onChangeText={setMessage} />
+        <TextInput placeholder={'Add a comment'} style={styles.textInput} multiline numberOfLines={2} value={message} onChangeText={setMessage} />
       </View>
-      <TouchableOpacity onPress={onPress}>
+      <TouchableOpacity onPress={onPressHandler}>
         <View style={styles.buttonContainer}>
           <Ionicons name="send" size={28} color="black" />
         </View>

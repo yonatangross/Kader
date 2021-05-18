@@ -16,7 +16,7 @@ export const getGroups = async (): Promise<AxiosResponse<any>> => {
 
 export const getGroupsForUser = async (userId?: string, isManager?: false): Promise<AxiosResponse<any>> => {
   try {
-    const requestedGroup: AxiosResponse<any> = await kaderApi.get(`/groups/users`, { params: userId});
+    const requestedGroup: AxiosResponse<any> = await kaderApi.get(`/groups/users`, { params: userId });
     return requestedGroup;
   } catch (error) {
     throw new Error(error);
@@ -81,6 +81,15 @@ export const joinGroup = async (id: string): Promise<AxiosResponse<any>> => {
 export const leaveGroup = async (id: string): Promise<AxiosResponse<any>> => {
   try {
     const response: AxiosResponse<any> = await kaderApi.put(`/groups/leave/${id}`);
+    return response;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export const searchGroups = async (text?: string, category?: string, radius?: number, address?: string): Promise<AxiosResponse<any>> => {
+  try {
+    const response: AxiosResponse<any> = await kaderApi.get(`/groups/search`, { params: { text, category, radius, address } });
     return response;
   } catch (error) {
     throw new Error(error);

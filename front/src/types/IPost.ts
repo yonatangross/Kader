@@ -4,7 +4,7 @@ import { PostType } from './PostType';
 
 export interface IPost {
   postId: string;
-  type: PostType; 
+  type: PostType;
   category: string;
   title: string;
   description: string;
@@ -13,6 +13,7 @@ export interface IPost {
   image: any;
   creator: IUser;
   groupId: string;
+  groupName: string;
   created: Date;
   // updatedAt: Date;
 }
