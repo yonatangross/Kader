@@ -39,7 +39,7 @@ const PostCreationProgressBar = (props: PostCreationProgressBarProps) => {
     return (
       <>
         <Text style={styles.progressStatus}>{progressTitle}</Text>
-        <Progress.Bar progress={percentage} width={280} height={8} borderWidth={1.5} style={styles.progressBar} />
+        <Progress.Bar progress={percentage} width={280} height={8} borderWidth={1}  style={styles.progressBar} />
       </>
     );
   } else {
@@ -48,14 +48,15 @@ const PostCreationProgressBar = (props: PostCreationProgressBarProps) => {
 };
 
 const styles = StyleSheet.create({
-  progressBar: { display: 'flex', justifyContent: 'center', alignSelf: 'center', marginTop: 20 },
+  progressBar: { display: 'flex', justifyContent: 'center', alignSelf: 'center', marginTop: 20,borderColor:'#394d51' },
   progressStatus: {
     marginTop: 20,
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 30,
     display: 'flex',
     justifyContent: 'center',
     alignSelf: 'center',
+    color:'#394d51'
   },
 });
 

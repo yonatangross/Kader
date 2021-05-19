@@ -1,7 +1,5 @@
-import { AntDesign } from '@expo/vector-icons';
-import { Button, Divider, Icon } from '@ui-kitten/components';
 import React, { useEffect } from 'react';
-import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, View, TouchableOpacity, Image } from 'react-native';
 import { PostType } from '../../types/PostType';
 
 export interface PostTypeSelectorProps {
@@ -24,7 +22,8 @@ const PostTypeSelector = (props: PostTypeSelectorProps) => {
             }}
             style={styles.buttonContainer}
           >
-            <AntDesign name={'doubleright'} color={'#96bfe5'} size={26} style={styles.postTypeIcon} />
+            <Image source={require('../../assets/images/help.png')} style={styles.floatingButtonStyle} />
+
             <Text style={styles.buttonText}>Request Help</Text>
           </TouchableOpacity>
         </View>
@@ -43,7 +42,8 @@ const PostTypeSelector = (props: PostTypeSelectorProps) => {
             }}
             style={styles.buttonContainer}
           >
-            <AntDesign name={'doubleright'} color={'#96bfe5'} size={26} style={styles.postTypeIcon} />
+            <Image source={require('../../assets/images/lifebuoy.png')} style={styles.floatingButtonStyle} />
+
             <Text style={styles.buttonText}>Offer Help</Text>
           </TouchableOpacity>
         </View>
@@ -62,9 +62,9 @@ const PostTypeSelector = (props: PostTypeSelectorProps) => {
             }}
             style={styles.buttonContainer}
           >
-            <AntDesign name={'doubleright'} color={'#96bfe5'} size={26} style={styles.postTypeIcon} />
+            <Image source={require('../../assets/images/gift.png')} style={styles.floatingButtonStyle} />
 
-            <Text style={styles.buttonText}>Handover an item</Text>
+            <Text style={styles.buttonText}>Hand an item</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -75,6 +75,12 @@ const PostTypeSelector = (props: PostTypeSelectorProps) => {
 };
 
 const styles = StyleSheet.create({
+  floatingButtonStyle: {
+    width: 80,
+    height: 80,
+    marginRight: 20,
+  },
+
   postTypeIcon: {
     marginHorizontal: 30,
     borderRadius: 30,
@@ -83,15 +89,14 @@ const styles = StyleSheet.create({
   },
   linkContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     alignSelf: 'center',
     width: '80%',
     borderRadius: 20,
     height: 200,
-    backgroundColor: '#ffffff',
   },
-  buttonContainer: { flexDirection: 'row', justifyContent: 'center', alignContent: 'center', alignItems: 'center', width: '100%' },
+  buttonContainer: { justifyContent: 'center', alignContent: 'center', alignItems: 'center', width: '100%' },
   postTypesContainer: { justifyContent: 'space-around', height: '90%' },
   button: {
     justifyContent: 'center',
@@ -106,8 +111,9 @@ const styles = StyleSheet.create({
     borderColor: 'black',
   },
   buttonText: {
+    marginTop: 30,
     color: '#394d51',
-    fontSize: 22,
+    fontSize: 26,
     fontWeight: 'bold',
   },
 });
