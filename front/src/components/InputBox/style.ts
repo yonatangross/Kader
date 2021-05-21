@@ -1,15 +1,14 @@
-import { StyleSheet } from "react-native";
-import Colors from "../../constants/Colors";
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  container: { flexDirection: "row", margin: 10,paddingBottom:0, alignItems: "flex-end"},
+  container: { flexDirection: 'row', margin: 10, paddingBottom: 0, alignItems: 'center', backgroundColor: 'white',borderRadius:30 },
   mainContainer: {
-    flexDirection: "row",
-    backgroundColor: "white",
+    flexDirection: 'row',
+    backgroundColor: 'white',
     padding: 10,
     borderRadius: 25,
     flex: 1,
-    alignItems: "flex-end",
+    alignItems: 'flex-end',
     maxHeight: 50,
   },
   textInput: {
@@ -18,13 +17,13 @@ const styles = StyleSheet.create({
   },
   icon: { marginHorizontal: 5 },
   buttonContainer: {
-    marginLeft: 5,
-    backgroundColor: 'white',
+    marginRight: 5,
+    backgroundColor: '#2f3e75',
     borderRadius: 25,
-    width: 50,
-    height: 50,
-    justifyContent: "center",
-    alignItems: "center",
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

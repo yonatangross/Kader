@@ -1,47 +1,114 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+  //Containers
   container: {
-    marginHorizontal: 10,
-    marginVertical: 5,
+    marginVertical: 10,
     flexDirection: 'column',
-    width: '95%',
-    padding: 5,
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 25,
+    paddingBottom: 10,
+    width: '100%',
     backgroundColor: '#fff',
   },
-  commentNumber: {
-    color: 'blue',
-  },
+  headerContainer: { flexDirection: 'row', justifyContent: 'space-between' ,alignItems:'center'},
+  dataContainer: { flexDirection: 'row' },
+
   postDetailsContainer: {
-    justifyContent: 'space-evenly',
-    marginLeft: 5,
-    marginTop: 5,
+    flexDirection: 'row',
+    margin: 10,
   },
-  list: {
-    width: '100%',
+  titleAndDescriptionContainer: { flexDirection: 'column', alignItems: 'flex-start' },
+  creatorDetailsContainer: { flexDirection: 'row' },
+  creatorImageAndRatingContainer: { flexDirection: 'column',marginVertical:15},
+  creatorCenterContainer: { flexDirection: 'column', justifyContent: 'center', alignSelf:'center' },
+  commentNumber: {
+    marginRight: 10,
+    alignSelf: 'flex-end',
+    color: '#4f76ad',
   },
-  PostTitle: {
+  imageContainer: {
+    margin:15,
+    shadowOffset: { width: 15, height: 15 },
+    shadowColor: 'black',
+    shadowOpacity: 0.8,
+    elevation: 10,
+    borderRadius: 15,
+    overflow: 'hidden',
+    backgroundColor: '#0000',
+  },
+
+  postImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 15,
+    resizeMode: 'contain',
+  },
+  profileImageContainer:{
+    margin: 15,
+    marginLeft:45,
+    shadowOffset: { width: 1, height: 1 },
+    shadowColor: 'black',
+    shadowOpacity: 0.8,
+    elevation: 10,
+    borderRadius: 100,
+    overflow: 'hidden',
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 40,
+    width: 40,
+  },
+  profileImage: {
+    margin: 15,
+    height: 50,
+    width: 50,
+    resizeMode: 'contain',
+    borderRadius: 100,
+  },
+ 
+  titleText: {
     fontWeight: 'bold',
-    fontSize: 15,
+    fontSize: 16,
+    overflow: 'hidden',
   },
+  descriptionText: {
+    fontSize: 12,
+    overflow: 'hidden',
+    maxWidth:200
+  },
+  groupNameTitle: { color: 'grey', fontSize: 13 },
   PostedBy: {
-    fontSize: 12,
+    alignSelf: 'flex-start',
+    fontSize: 16,
     fontWeight: 'bold',
-    color: 'grey',
+    color: '#202020',
   },
-  PostCreatorDetailsContainer: { flexDirection: 'column' },
-  postHeader: { flexDirection: 'row' },
-  postHeaderDetails: { flexDirection: 'column', flex: 1 },
+  postTypeAndGroupNameText: { color: '#696969', fontSize: 14,maxWidth:200 },
   postDate: {
-    fontSize: 12,
-    color: 'grey',
+    alignSelf: 'flex-end',
+    fontSize: 10,
+    color: 'black',
   },
-  PostTitleAndGroup: { flexDirection: 'row', flexWrap: 'wrap' },
-  profileAvatar: {
-    marginHorizontal: 8,
+  categoryContainer: {
+    margin: 15,
+    marginRight:20,
+    shadowOffset: { width: 1, height: 1 },
+    shadowColor: 'black',
+    shadowOpacity: 0.8,
+    elevation: 10,
+    borderRadius: 15,
+    overflow: 'hidden',
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 40,
+    width: 40,
+    
+  },
+  categoryIcon: {
+    marginVertical: 15,
+    height: 40,
+    width: 40,
+    resizeMode: 'contain',
   },
   arrowIcon: { height: 24, width: 24 },
 });

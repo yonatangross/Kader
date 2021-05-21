@@ -27,7 +27,7 @@ const GroupsSelector = (props: GroupsSelectorProps) => {
     if (!!auth && auth.authData)
       getGroupsForUser(auth.authData?.userId)
         .then((response) => {
-          const groupsResult: any[] = response.data.groupView;
+          const groupsResult: any[] = response.data;
           setGroups(groupsResult);
         })
         .catch((error) => {
@@ -42,7 +42,6 @@ const GroupsSelector = (props: GroupsSelectorProps) => {
     return (
       <>
         <List style={styles.list} data={groups} renderItem={renderItem} contentContainerStyle={{ paddingHorizontal: 8, paddingVertical: 4 }} />
-
         <Button
           status="success"
           size="small"

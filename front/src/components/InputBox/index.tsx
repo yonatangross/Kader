@@ -3,11 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { View, TextInput } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { addComment } from '../../services/comments';
-import { IPost } from '../../types/IPost';
 import styles from './style';
 
 export interface InputBoxProps {
-  post: IPost;
+  postId: string;
   setPostUpdated: Function;
 }
 
@@ -17,7 +16,7 @@ const InputBox = (props: InputBoxProps) => {
   const onPressHandler = () => {
     if (!!message) {
       console.warn(`Sending ${message}`);
-      addComment(message, props.post.postId)
+      addComment(message, props.postId)
         .then((response) => {
           const postResponse: any = response;
           console.warn(`added comment: ${message}`);
@@ -37,7 +36,7 @@ const InputBox = (props: InputBoxProps) => {
       </View>
       <TouchableOpacity onPress={onPressHandler}>
         <View style={styles.buttonContainer}>
-          <Ionicons name="send" size={28} color="black" />
+          <Ionicons name="send" size={22} color="white" />
         </View>
       </TouchableOpacity>
     </View>

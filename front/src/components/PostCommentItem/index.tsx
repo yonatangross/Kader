@@ -11,19 +11,21 @@ export interface PostCommentItemProps {
 const PostCommentItem = (props: PostCommentItemProps) => {
   let { comment } = props;
 
-  return (
-    <View style={styles.commentContainer}>
-      <Avatar style={styles.profileAvatar} size="small" source={require('../../layouts/social/profile/assets/image-profile-1.jpg')} />
-      <View style={styles.commentDetailsContainer}>
-        <Text style={styles.commenterName}>
-          {comment.creator.firstName} {comment.creator.lastName}
-        </Text>
-        <Text style={styles.commentContent}>{comment.content}</Text>
-        <Text style={styles.commentDate}>{moment(comment.created).fromNow()}</Text>
-        <Divider style={styles.commentDivider} />
+  if (!!comment && !!comment.creator) {
+    return (
+      <View style={styles.commentContainer}>
+        <Avatar style={styles.profileAvatar} size="small" source={require('../../layouts/social/profile/assets/image-profile-1.jpg')} />
+        <View style={styles.commentDetailsContainer}>
+          <Text style={styles.commenterName}>
+            {comment.creator.firstName} {comment.creator.lastName}
+          </Text>
+          <Text style={styles.commentContent}>{comment.content}</Text>
+          <Text style={styles.commentDate}>{moment(comment.created).fromNow()}</Text>
+          <Divider style={styles.commentDivider} />
+        </View>
       </View>
-    </View>
-  );
+    );
+  } else return <></>;
 };
 
 const styles = StyleSheet.create({

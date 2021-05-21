@@ -1,6 +1,6 @@
-import { Button, Icon, List, Text } from '@ui-kitten/components';
+import { Button, Icon, Text } from '@ui-kitten/components';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import { getCategories } from '../../services/posts';
 
 export interface PostCategorySelectorProps {
@@ -12,7 +12,17 @@ export interface PostCategorySelectorProps {
 const PlusIcon = () => <Icon name="plus-circle-outline" style={{ width: 32, height: 32 }} fill={'rgba(34, 83, 231)'} />;
 
 const PostCategorySelector = (props: PostCategorySelectorProps) => {
-  const [categories, setCategories] = useState<string[]>(['sports', 'religion', 'music']);
+  const [categories, setCategories] = useState<string[]>([
+    'Boxing',
+    'Cooking',
+    'Sports',
+    'Religion',
+    'Music',
+    'Shopping',
+    'Gardening',
+    'Programming',
+    'Kitchen',
+  ]);
 
   useEffect(() => {
     fetchCategories();
@@ -25,29 +35,42 @@ const PostCategorySelector = (props: PostCategorySelectorProps) => {
   };
 
   const renderItem = ({ item, index }: { item: string; index: number }) => (
-    <Button
-      style={styles.button}
-      status="success"
-      accessoryLeft={PlusIcon}
-      size="small"
-      onPress={() => {
-        props.dispatch({ type: 'Category', payload: item });
-        props.setActiveSection(2);
+    <View
+      style={{
+        flex: 1,
+        flexDirection: 'column',
+        marginHorizontal: -20,
       }}
     >
-      {(buttonProps: any) => (
-        <Text {...buttonProps} style={styles.buttonText}>
-          {item}-{index}
-        </Text>
-      )}
-    </Button>
+      <Button
+        style={styles.button}
+        size="small"
+        onPress={() => {
+          props.dispatch({ type: 'Category', payload: item });
+          props.setActiveSection(2);
+        }}
+      >
+        {(buttonProps: any) => (
+          <Text {...buttonProps} style={styles.buttonText}>
+            {item}
+          </Text>
+        )}
+      </Button>
+    </View>
   );
 
   if (props.active === 1) {
     return (
-      <>
-        <List data={categories} renderItem={renderItem} />
-      </>
+      <View style={styles.listContainer}>
+        <FlatList
+          contentContainerStyle={{ flex: 1, justifyContent: 'space-around' }}
+          data={categories}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.toString()}
+          showsVerticalScrollIndicator={false}
+          numColumns={3}
+        />
+      </View>
     );
   } else {
     return null;
@@ -55,22 +78,25 @@ const PostCategorySelector = (props: PostCategorySelectorProps) => {
 };
 
 const styles = StyleSheet.create({
+  listContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignContent:'center',
+    backgroundColor: 'white',
+  },
   button: {
+    backgroundColor:'#4875aa',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 100,
-    margin: 30,
-    marginRight: 40,
-    marginLeft: 40,
-    height: 150,
-    padding: 10,
-    borderWidth: 0.5,
-    borderColor: 'black',
+    marginHorizontal: 30,
+    height: 120,
+    width: 120,
   },
   buttonText: {
     color: '#000000',
     fontWeight: 'bold',
-    fontSize: 36,
+    fontSize: 12,
   },
 });
 

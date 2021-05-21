@@ -1,8 +1,7 @@
+import { FontAwesome } from '@expo/vector-icons';
 import React from 'react';
-import { View, Text, Image, FlatList } from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 import styles from './style';
-const FullStar = require('../../assets/images/fullRatedStar.png');
-const partialStar = require('../../assets/images/partialStar.png');
 
 export interface RatingProps {
   numOfStars: number;
@@ -14,13 +13,13 @@ const maxStarsNumber = 5;
 const StarRating = (props: RatingProps) => {
   const numOfStars = props.numOfStars;
   const numOfRatings = props.numOfRatings;
-  let stars = [];
+  let starsArray = [];
 
   for (var i = 1; i <= maxStarsNumber; i++) {
     if (i <= numOfStars) {
-      stars.push(<Image style={styles.singleStar} source={FullStar} />);
+      starsArray.push(<FontAwesome name={'star'} size={18} style={styles.singleStar} />);
     } else {
-      stars.push(<Image style={styles.singleStar} source={partialStar} />);
+      starsArray.push(<FontAwesome name={'star-o'} size={18} style={styles.singleStar} />);
     }
   }
 
@@ -28,12 +27,11 @@ const StarRating = (props: RatingProps) => {
     <View style={styles.ratingContainer}>
       <FlatList
         keyExtractor={(item, index) => index.toString()}
-        data={stars}
+        data={starsArray}
         renderItem={({ item }) => {
           return item;
         }}
         horizontal
-        style={styles.list}
       />
       {props.displayRatings === true ? <Text>{numOfRatings} Ratings </Text> : <></>}
     </View>

@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableWithoutFeedback } from 'react-native';
-import { IPost } from '../../types/IPost';
+import React from 'react';
+import { View, Text, TouchableWithoutFeedback, Image, ImageStyle } from 'react-native';
 import styles from './style';
 import { useNavigation } from '@react-navigation/native';
-import StarRating from '../StarRating/index';
 import { useEffect } from 'react';
-import { Avatar, Icon } from '@ui-kitten/components';
+import { Divider } from '@ui-kitten/components';
 import moment from 'moment';
 import PostListItemComments from '../PostListItemComments';
+import { getPostTypeName } from '../../types/PostType';
 
 export interface PostListItemProps {
-  post: IPost;
+  post: any;
   key: string;
+  showComments: boolean;
 }
 
 const PostListItem = (props: PostListItemProps) => {
@@ -31,6 +31,7 @@ const PostListItem = (props: PostListItemProps) => {
 
   const onClick = () => {
     navigation.navigate('SinglePost', {
+      post: props.post,
       id: props.post.postId,
       title: props.post.title,
     });
@@ -39,27 +40,49 @@ const PostListItem = (props: PostListItemProps) => {
     return (
       <TouchableWithoutFeedback onPress={onClick}>
         <View style={styles.container}>
-          <View style={styles.postHeader}>
-            <View style={styles.PostCreatorDetailsContainer}>
-              <Avatar style={styles.profileAvatar} size="large" source={require('../../layouts/social/profile/assets/image-profile-1.jpg')} />
+          <View style={styles.headerContainer}>
+            <View style={styles.creatorImageAndRatingContainer}>
+              <View style={styles.profileImageContainer}>
+                <Image source={require('../../assets/images/imagePlaceholder.png')} style={styles.profileImage as ImageStyle} />
+              </View>
+              {/* <StarRating numOfStars={post.creator.rating} numOfRatings={post.creator.numberOfRatings} displayRatings={false} /> */}
+            </View>
+            <View style={styles.creatorCenterContainer}>
               <Text style={styles.PostedBy}>
                 {post.creator.firstName} {post.creator.lastName}
               </Text>
-              <StarRating numOfStars={post.creator.rating} numOfRatings={post.creator.numberOfRatings} displayRatings={false} />
-            </View>
-            <View style={styles.postHeaderDetails}>
-              <View style={styles.PostTitleAndGroup}>
-                <Text style={styles.PostTitle}>{post.title}</Text>
-                <Icon style={styles.arrowIcon} name="arrow-right-outline" fill={'rgba(34, 83, 231)'} />
-                <Text style={styles.PostTitle}>{post.groupName}</Text>
-              </View>
+              <Text style={styles.postTypeAndGroupNameText}>
+                {getPostTypeName(post.type)} at {post.groupName}
+              </Text>
               <Text style={styles.postDate}>{moment(post.created).toNow()}</Text>
             </View>
+            <View style={styles.categoryContainer}>
+              {post.category.imageUri !== undefined ? (
+                <Image source={{ uri: post.category.imageUri }} style={styles.categoryIcon as ImageStyle} />
+              ) : (
+                <Image source={require('../../assets/images/categoryIcon.png')} style={styles.categoryIcon as ImageStyle} />
+              )}
+            </View>
           </View>
+          <Divider style={{ marginHorizontal: 20 }} />
           <View style={styles.postDetailsContainer}>
-            <Text>{post.description}</Text>
-            <PostListItemComments comments={post.comments} />
+            <View style={styles.imageContainer}>
+              {post.image !== undefined ? (
+                <Image source={{ uri: post.image }} style={styles.postImage as ImageStyle} />
+              ) : (
+                <Image source={require('../../assets/images/itemPlaceholder.png')} style={styles.postImage as ImageStyle} />
+              )}
+            </View>
+            <View style={styles.titleAndDescriptionContainer}>
+              <Text style={styles.titleText}>{post.title}</Text>
+              <Text style={styles.descriptionText}>{post.description}</Text>
+            </View>
           </View>
+          {props.showComments === true ? (
+            <PostListItemComments comments={post.comments} />
+          ) : (
+            <Text style={styles.commentNumber}>{post.commentsCount} comments</Text>
+          )}
         </View>
       </TouchableWithoutFeedback>
     );

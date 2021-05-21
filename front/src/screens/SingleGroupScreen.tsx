@@ -60,7 +60,7 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
   };
 
   const renderPostListItem = ({ item }: any) => {
-    return <PostListItem post={item} key={item.postId} />;
+    return <PostListItem post={item} key={item.postId} showComments={true} />;
   };
 
   if (!!group) {
@@ -82,7 +82,14 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
           <View style={styles.membersHeaderContainer}>
             <Text style={styles.text}>{group.members.length} members</Text>
           </View>
-          <FlatList contentContainerStyle={{flex:1,justifyContent:'space-around'}} data={group.members} renderItem={renderMemberListItem} keyExtractor={(item) => item.id} showsVerticalScrollIndicator={false} horizontal />
+          <FlatList
+            contentContainerStyle={{ flex: 1, justifyContent: 'space-around' }}
+            data={group.members}
+            renderItem={renderMemberListItem}
+            keyExtractor={(item) => item.id}
+            showsVerticalScrollIndicator={false}
+            horizontal
+          />
         </View>
         <SafeAreaView style={styles.postsContainer}>
           <FlatList data={group.posts} renderItem={renderPostListItem} keyExtractor={(item) => item.postId} showsVerticalScrollIndicator={true} />

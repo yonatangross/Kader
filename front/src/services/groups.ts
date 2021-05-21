@@ -14,7 +14,7 @@ export const getGroups = async (): Promise<AxiosResponse<any>> => {
   }
 };
 
-export const getGroupsForUser = async (userId?: string, isManager?: false): Promise<AxiosResponse<any>> => {
+export const getGroupsForUser = async (userId?: string): Promise<AxiosResponse<any>> => {
   try {
     const requestedGroup: AxiosResponse<any> = await kaderApi.get(`/groups/users`, { params: userId });
     return requestedGroup;

@@ -13,7 +13,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   commentNumber: {
-    color: 'blue',
+    color: '#9ea5be',
+    alignSelf: 'flex-end',
+    marginHorizontal: 10,
   },
   postDetailsContainer: {
     justifyContent: 'space-evenly',

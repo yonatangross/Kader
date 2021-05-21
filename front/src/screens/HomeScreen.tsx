@@ -15,8 +15,8 @@ const HomeScreen = () => {
   const [visibleCreatePost, setVisibleCreatePost] = useState<boolean>(false);
   const [visibleCreateGroup, setVisibleCreateGroup] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
-
   const [posts, setPosts] = useState<IPost[]>();
+
   useEffect(() => {
     let isMounted = true;
     getPostsForUser()
@@ -33,18 +33,38 @@ const HomeScreen = () => {
     () => {
       isMounted = false;
     };
-  }, [setPosts,setLoading]);
+  }, [setPosts, setLoading, setVisibleCreateGroup, setVisibleCreatePost]);
 
   const renderPostListItem = ({ item }: any) => {
-    return <PostListItem post={item} key={item.postId} />;
+    return <PostListItem post={item} key={item.postId} showComments={true} />;
   };
   if (!!posts) {
     return (
       <View style={styles.container}>
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => {
+              setVisibleCreatePost(!visibleCreatePost);
+            }}
+            style={styles.buttonContainer}
+          >
+            <Text style={styles.postCreationText}>Create Post</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => {
+              setVisibleCreateGroup(!visibleCreateGroup);
+            }}
+            style={styles.buttonContainer}
+          >
+            <Text style={styles.postCreationText}>Create Group</Text>
+          </TouchableOpacity>
+        </View>
         <CreateGeneralPostModal visible={visibleCreatePost} setVisible={setVisibleCreatePost} />
         <CreateGroupModal visible={visibleCreateGroup} setVisible={setVisibleCreateGroup} />
         <FlatList
-          style={{ width: '100%' }}
+          style={{ width: '100%', marginVertical: 0 }}
           data={posts}
           renderItem={renderPostListItem}
           keyExtractor={(item) => item.postId}
@@ -52,83 +72,51 @@ const HomeScreen = () => {
           maxToRenderPerBatch={2}
           showsVerticalScrollIndicator={false}
         />
-
-        <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={() => {
-            setVisibleCreateGroup(!visibleCreateGroup);
-          }}
-          style={styles.groupCreationButton}
-        >
-          <Image source={require('../assets/images/createGroupIcon2.png')} style={styles.floatingButtonStyle} />
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={() => {
-            setVisibleCreatePost(!visibleCreatePost);
-          }}
-          style={styles.postCreationButton}
-        >
-          <Image source={require('../assets/images/createPostIcon.png')} style={styles.floatingButtonStyle} />
-        </TouchableOpacity>
       </View>
     );
   } else return <View>{loading ? <Text>loading...</Text> : <Text>Fetched!!</Text>}</View>;
 };
 
 const styles = StyleSheet.create({
-  postCreationButton: {
-    backgroundColor: 'white',
-    position: 'absolute',
-    width: 50,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 30,
-    right: 15,
-    bottom: 30,
-    shadowColor: 'rgba(0, 0, 0, 0.1)',
-    shadowOpacity: 0.8,
-    elevation: 6,
-    shadowRadius: 15,
-    shadowOffset: { width: 1, height: 13 },
-    borderColor: 'black',
-    borderWidth: 0.8,
+  container: {
+    flex: 1,
+    marginBottom: 10,
+    flexDirection: 'column',
+    backgroundColor: 'transparent',
   },
-  groupCreationButton: {
-    backgroundColor: 'white',
-    position: 'absolute',
-    width: 50,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 30,
-    right: 15,
-    bottom: 100,
-    shadowColor: 'rgba(0, 0, 0, 0.1)',
-    shadowOpacity: 0.8,
-    elevation: 6,
-    shadowRadius: 15,
-    shadowOffset: { width: 1, height: 13 },
-    borderColor: 'black',
-    borderWidth: 0.8,
+  postCreationText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'white',
   },
   floatingButtonStyle: {
     resizeMode: 'contain',
     width: 32,
     height: 32,
-    //backgroundColor:'black'
   },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+
+  buttonsContainer: {
+    marginVertical: 0,
+    marginBottom: 10,
+    marginTop: -10,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    width: '100%',
     backgroundColor: 'white',
   },
   buttonContainer: {
-    flexDirection: 'row',
     margin: 10,
-    backgroundColor: 'transparent',
+    backgroundColor: '#4975aa',
+    borderRadius: 30,
+    alignItems: 'center',
+    width: 120,
+    height: 40,
+    justifyContent: 'center',
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    shadowOpacity: 0.8,
+    elevation: 6,
+    shadowRadius: 15,
+    shadowOffset: { width: 1, height: 13 },
   },
 });
 

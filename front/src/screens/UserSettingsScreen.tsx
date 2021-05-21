@@ -1,20 +1,19 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { FlatList, StyleSheet, Text } from 'react-native';
-import { getGroupsForUser } from '../services/groups';
-import GroupListItem from '../components/GroupListItem';
+import { StyleSheet, Text } from 'react-native';
 import { View } from '../components/Themed';
 import { useAuth } from '../contexts/Auth';
 import { useFonts } from 'expo-font';
+import { getUser } from '../services/users';
 
-export interface UserGroupsScreenProps {}
+export interface UserSettingsScreenProps {}
 
-const UserGroupsScreen = () => {
+const UserSettingsScreen = () => {
   const auth = useAuth();
 
   const [loading, setLoading] = useState<boolean>(true);
-  const [userGroups, setUserGroups] = useState<any[]>();
+  const [user, setUser] = useState<any>();
 
   let [fontsLoaded] = useFonts({
     Roboto: require('../assets/fonts/Roboto/Roboto-Light.ttf'),
@@ -23,36 +22,27 @@ const UserGroupsScreen = () => {
   useEffect(() => {
     let isMounted = true;
     if (!!auth.authData)
-      getGroupsForUser(auth.authData?.userId)
+      getUser(auth.authData?.userId)
         .then((response) => {
           if (isMounted) {
-            const groupsResult: any[] = response.data;
-            console.log(groupsResult);
-
-            setUserGroups(groupsResult);
+            const userResult: any[] = response.data;
+            setUser(userResult);
             setLoading(false);
           }
         })
         .catch((error) => {
-          console.log(`error while fetching groups ${error}`);
+          console.log(`error while fetching posts ${error}`);
         });
 
     return () => {
       isMounted = false;
     };
-  }, [fontsLoaded, setUserGroups]);
+  }, [fontsLoaded, setUser]);
 
-  if (!!userGroups && !!fontsLoaded) {
+  if (!!user && !!fontsLoaded) {
     return (
       <View style={styles.container}>
-        <Text style={styles.myGroupsTitle}>My Groups</Text>
-        <FlatList
-          style={styles.list}
-          data={userGroups}
-          renderItem={({ item }) => <GroupListItem key={item.groupId} group={item} />}
-          keyExtractor={(item) => item.groupId}
-          showsVerticalScrollIndicator={false}
-        />
+        <Text style={styles.userTitle}>{user.firstName + ' ' + user.lastName}</Text>
       </View>
     );
   } else return <View>{loading ? <Text>loading...</Text> : <Text>Fetched!!</Text>}</View>;
@@ -67,7 +57,7 @@ const styles = StyleSheet.create({
   list: {
     width: '100%',
   },
-  myGroupsTitle: {
+  userTitle: {
     fontFamily: 'Roboto',
     fontWeight: 'bold',
     fontSize: 24,
@@ -77,4 +67,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserGroupsScreen;
+export default UserSettingsScreen;

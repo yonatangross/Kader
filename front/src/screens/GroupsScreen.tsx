@@ -109,17 +109,17 @@ const GroupsScreen = () => {
     return (
       <View style={styles.container}>
         <CreateGroupModal visible={visibleCreateGroup} setVisible={setVisibleCreateGroup} />
-        <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={() => {
-            setVisibleCreateGroup(!visibleCreateGroup);
-            console.log('Pressed group creation');
-          }}
-          style={styles.groupCreationButton}
-        >
-          <Image source={require('../assets/images/createGroupIcon2.png')} style={styles.floatingButtonStyle} />
-        </TouchableOpacity>
-        <Text style={styles.groupsTitle}>Groups</Text>
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => {
+              setVisibleCreateGroup(!visibleCreateGroup);
+            }}
+            style={styles.buttonContainer}
+          >
+            <Text style={styles.postCreationText}>Create Group</Text>
+          </TouchableOpacity>
+        </View>
         <View style={styles.autocompleteContainer}>
           <Autocomplete
             autoCapitalize="none"
@@ -152,7 +152,9 @@ const GroupsScreen = () => {
           style={styles.list}
           data={userGroups}
           renderItem={({ item }) => <GroupListItem key={item.groupId} group={item} />}
+          keyExtractor={(item) => item.groupId}
           showsVerticalScrollIndicator={false}
+          scrollEnabled={true}
         />
       </View>
     );
@@ -161,8 +163,36 @@ const GroupsScreen = () => {
 
 const styles = StyleSheet.create({
   autocompleteContainer: {
-    backgroundColor: '#ffffff',
-    margin: 50,
+    marginBottom: 50,
+    marginHorizontal: 30,
+  },
+  buttonsContainer: {
+    marginVertical: 0,
+    marginBottom: 10,
+    marginTop: -10,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    width: '100%',
+    backgroundColor: 'white',
+  },
+  buttonContainer: {
+    margin: 10,
+    backgroundColor: '#4975aa',
+    borderRadius: 30,
+    alignItems: 'center',
+    width: 120,
+    height: 40,
+    justifyContent: 'center',
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    shadowOpacity: 0.8,
+    elevation: 6,
+    shadowRadius: 15,
+    shadowOffset: { width: 1, height: 13 },
+  },
+  postCreationText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'white',
   },
   itemText: {
     fontSize: 15,
@@ -194,8 +224,9 @@ const styles = StyleSheet.create({
     borderWidth: 0.8,
   },
   container: {
+    flexDirection: 'column',
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: 'white',
   },
   list: {
     width: '100%',
@@ -211,10 +242,11 @@ const styles = StyleSheet.create({
   },
   myGroupsTitle: {
     fontFamily: 'Roboto',
-    fontWeight: '300',
-    fontSize: 32,
+    fontWeight: 'bold',
+    fontSize: 24,
     color: 'black',
-    alignSelf: 'center',
+    marginHorizontal: 20,
+    alignSelf: 'flex-start',
   },
   myGroups: {},
 });

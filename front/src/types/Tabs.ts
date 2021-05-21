@@ -7,6 +7,11 @@ export type RootStackParamList = {
   SingleGroup: undefined;
   SingleGroupDetails: undefined;
   UserProfile: undefined;
+  UserPosts: undefined;
+  UserGroups: undefined;
+  UserSettings: undefined;
+  ClosePost: undefined;
+  EditPost: undefined;
 };
 
 export type MainTabParamList = {
@@ -51,3 +56,9 @@ export type SingleGroupDetailsProps = {
 export type UserProfileProps = {
   UserProfileScreen: undefined;
 };
+
+export type UserPostsProps = { UserPostsScreen: undefined };
+export type UserGroupsProps = { UserGroupsScreen: undefined };
+export type UserSettingsProps = { UserSettingsScreen: undefined };
+export type ClosePostProps = { ClosePostScreen: undefined };
+export type EditPostProps = { EditPostScreen: undefined };

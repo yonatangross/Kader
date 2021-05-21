@@ -26,8 +26,12 @@ const GroupListItem = (props: GroupListItemProps) => {
 
   return (
     <View style={styles.GroupListItemContainer}>
-      <View style={styles.groupCategoryContainer}>
-        <Image source={require('../../assets/images/categoryIcon.png')} style={{ height: 40, width: 40 }} />
+      <View style={styles.groupCategoryImageContainer}>
+        {!!group.category && !!group.category.imageUri ? (
+          <Image source={require('../../assets/images/categoryIcon.png')} style={{ height: 40, width: 40 }} />
+        ) : (
+          <Image source={require('../../assets/images/categoryIcon.png')} style={{ height: 40, width: 40 }} />
+        )}
       </View>
       <View style={styles.dataContainer}>
         <View style={styles.upperContainer}>
@@ -52,16 +56,19 @@ const GroupListItem = (props: GroupListItemProps) => {
 const styles = StyleSheet.create({
   GroupListItemContainer: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     backgroundColor: 'white',
     alignSelf: 'center',
     marginVertical: 10,
+    marginHorizontal: 10,
+    paddingHorizontal: 20,
+    width: '100%',
     alignItems: 'center',
-    width: '95%',
-    borderBottomColor:'#f8f7fa',
+    borderBottomColor: '#f8f7fa',
     borderBottomWidth: 1,
   },
-  groupCategoryContainer: { flexDirection: 'column', marginHorizontal:20 },
-  dataContainer: { flexDirection: 'column', width: '68%', alignItems: 'center', backgroundColor: 'white' },
+  groupCategoryImageContainer: { flexDirection: 'column', justifyContent: 'center', alignContent: 'center' },
+  dataContainer: { flexDirection: 'column', alignItems: 'center', backgroundColor: 'white' },
   upperContainer: { flexDirection: 'row', alignItems: 'flex-start', width: '100%' },
   middleContainer: { flexDirection: 'row', width: '100%' },
   lowerContainer: { flexDirection: 'row', width: '100%' },

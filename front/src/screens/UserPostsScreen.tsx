@@ -2,19 +2,19 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { FlatList, StyleSheet, Text } from 'react-native';
-import { getGroupsForUser } from '../services/groups';
-import GroupListItem from '../components/GroupListItem';
 import { View } from '../components/Themed';
 import { useAuth } from '../contexts/Auth';
 import { useFonts } from 'expo-font';
+import { getPostsForUser } from '../services/posts';
+import PostListItem from '../components/PostListItem';
 
-export interface UserGroupsScreenProps {}
+export interface UserPostsScreenProps {}
 
-const UserGroupsScreen = () => {
+const UserPostsScreen = () => {
   const auth = useAuth();
 
   const [loading, setLoading] = useState<boolean>(true);
-  const [userGroups, setUserGroups] = useState<any[]>();
+  const [userPosts, setUserPosts] = useState<any[]>();
 
   let [fontsLoaded] = useFonts({
     Roboto: require('../assets/fonts/Roboto/Roboto-Light.ttf'),
@@ -23,34 +23,32 @@ const UserGroupsScreen = () => {
   useEffect(() => {
     let isMounted = true;
     if (!!auth.authData)
-      getGroupsForUser(auth.authData?.userId)
+      getPostsForUser(auth.authData?.userId)
         .then((response) => {
           if (isMounted) {
-            const groupsResult: any[] = response.data;
-            console.log(groupsResult);
-
-            setUserGroups(groupsResult);
+            const postsResult: any[] = response.data;
+            setUserPosts(postsResult);
             setLoading(false);
           }
         })
         .catch((error) => {
-          console.log(`error while fetching groups ${error}`);
+          console.log(`error while fetching posts ${error}`);
         });
 
     return () => {
       isMounted = false;
     };
-  }, [fontsLoaded, setUserGroups]);
+  }, [fontsLoaded, setUserPosts]);
 
-  if (!!userGroups && !!fontsLoaded) {
+  if (!!userPosts && !!fontsLoaded) {
     return (
       <View style={styles.container}>
-        <Text style={styles.myGroupsTitle}>My Groups</Text>
+        <Text style={styles.myPostsTitle}>My Posts</Text>
         <FlatList
           style={styles.list}
-          data={userGroups}
-          renderItem={({ item }) => <GroupListItem key={item.groupId} group={item} />}
-          keyExtractor={(item) => item.groupId}
+          data={userPosts}
+          renderItem={({ item }) => <PostListItem key={item.groupId} post={item} showComments={false} />}
+          keyExtractor={(item) => item.postId}
           showsVerticalScrollIndicator={false}
         />
       </View>
@@ -67,7 +65,7 @@ const styles = StyleSheet.create({
   list: {
     width: '100%',
   },
-  myGroupsTitle: {
+  myPostsTitle: {
     fontFamily: 'Roboto',
     fontWeight: 'bold',
     fontSize: 24,
@@ -77,4 +75,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserGroupsScreen;
+export default UserPostsScreen;
