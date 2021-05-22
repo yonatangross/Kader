@@ -6,13 +6,13 @@ import PostCommentItem from '../PostCommentItem';
 import { IComment } from '../../types/IComment';
 
 export interface CommentsProps {
-  data: IComment[];
+  comments: IComment[];
   postId: string;
   setPostUpdated: Function;
 }
 
 const Comments = (props: CommentsProps) => {
-  const { data, postId, setPostUpdated } = props;
+  const { comments, postId, setPostUpdated } = props;
   let [fontsLoaded] = useFonts({
     Rubik: require('../../assets/fonts/Rubik/Rubik-VariableFont_wght.ttf'),
   });
@@ -20,20 +20,21 @@ const Comments = (props: CommentsProps) => {
   useEffect(() => {
     let mounted = true;
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+
     return () => {
       mounted = false;
     };
   }, [fontsLoaded, props.setPostUpdated]);
 
   const renderCommentListItem = (item: any) => {
-    return <PostCommentItem key={item.commentId} comment={item} />;
+    return <PostCommentItem comment={item.item} />;
   };
   if (fontsLoaded) {
     return (
       <KeyboardAvoidingView enabled style={styles.viewContainer} behavior={Platform.OS === 'ios' ? 'padding' : 'position'}>
         <FlatList
           style={styles.commentsList}
-          data={data}
+          data={comments}
           ListHeaderComponent={<Text style={styles.commentsNumber}>Comments</Text>}
           ListHeaderComponentStyle={{ marginBottom: 5, marginTop: 10, width: '100%' }}
           ListFooterComponent={<InputBox postId={postId} setPostUpdated={setPostUpdated} />}
@@ -43,7 +44,12 @@ const Comments = (props: CommentsProps) => {
         />
       </KeyboardAvoidingView>
     );
-  } else return <><Text>Error loading {postId} comments...</Text></>;
+  } else
+    return (
+      <>
+        <Text>Error loading {postId} comments...</Text>
+      </>
+    );
 };
 
 const styles = StyleSheet.create({
@@ -61,7 +67,7 @@ const styles = StyleSheet.create({
   },
   viewContainer: {
     flex: 1,
-    width:'100%',
+    width: '100%',
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
   },

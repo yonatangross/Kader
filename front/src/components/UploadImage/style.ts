@@ -1,12 +1,12 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+  buttonsContainer: { flexDirection: 'row', width: '100%', justifyContent: 'space-around', backgroundColor: 'white' },
   container: {
-    flex: 1,
-    alignItems: 'flex-end',
-    justifyContent: 'space-around',
-    paddingHorizontal:3,
-    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    flexDirection: 'column',
   },
   uploadFromCameraButton: {
     backgroundColor: 'white',
@@ -42,7 +42,22 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     width: 32,
     height: 32,
-    //backgroundColor:'black'
+  },
+  postImageContainer: {
+    margin: 15,
+    shadowOffset: { width: 15, height: 15 },
+    shadowColor: 'black',
+    shadowOpacity: 0.8,
+    elevation: 10,
+    borderRadius: 15,
+    overflow: 'hidden',
+    backgroundColor: '#0000',
+  },
+  postImage: {
+    width: 200,
+    height: 150,
+    borderRadius: 15,
+    resizeMode: 'contain',
   },
 });
 

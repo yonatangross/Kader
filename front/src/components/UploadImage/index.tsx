@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Image, Alert, TouchableOpacity, FlatList } from 'react-native';
+import { Button, Image, Alert, TouchableOpacity, FlatList, ImageStyle } from 'react-native';
 import { View } from '../Themed';
 
 import * as ImagePicker from 'expo-image-picker';
@@ -47,25 +47,31 @@ const UploadImage = (props: UploadImageProps) => {
 
   return (
     <View style={styles.container}>
-      {!!props.postImage ? <Image source={{ uri: props.postImage.uri }} style={{ width: 200, height: 200, resizeMode: 'contain', display: 'flex' }} /> : null}
-      <TouchableOpacity
-        activeOpacity={0.7}
-        onPress={() => {
-          pickFromCamera();
-        }}
-        style={styles.uploadFromCameraButton}
-      >
-        <Image source={require('../../assets/images/camera.png')} style={styles.floatingButtonStyle} />
-      </TouchableOpacity>
-      <TouchableOpacity
-        activeOpacity={0.7}
-        onPress={() => {
-          pickFromGallery();
-        }}
-        style={styles.uploadFromGalleryButton}
-      >
-        <Image source={require('../../assets/images/gallery.png')} style={styles.floatingButtonStyle} />
-      </TouchableOpacity>
+      {!!props.postImage ? (
+        <View style={styles.postImageContainer}>
+          <Image source={{ uri: props.postImage.uri }} style={styles.postImage as ImageStyle} />
+        </View>
+      ) : null}
+      <View style={styles.buttonsContainer}>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => {
+            pickFromCamera();
+          }}
+          style={styles.uploadFromCameraButton}
+        >
+          <Image source={require('../../assets/images/camera.png')} style={styles.floatingButtonStyle} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => {
+            pickFromGallery();
+          }}
+          style={styles.uploadFromGalleryButton}
+        >
+          <Image source={require('../../assets/images/gallery.png')} style={styles.floatingButtonStyle} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

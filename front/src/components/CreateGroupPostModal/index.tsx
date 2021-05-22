@@ -3,11 +3,9 @@ import { StyleSheet, Modal, View } from 'react-native';
 import { addPost } from '../../services/posts';
 import { createPostReducer, initCreatePost } from '../../reducers/createPostReducer';
 import { PostType } from '../../types/PostType';
-import PostCategorySelector from '../PostCategorySelector';
 import PostCreationProgressBar from '../PostCreationProgressBar';
 import PostDetailsForm from '../PostDetailsForm';
 import PostTypeSelector from '../PostTypeSelector';
-import { useAuth } from '../../contexts/Auth';
 
 export interface CreateGroupPostModalProps {
   visible: boolean;
@@ -17,7 +15,6 @@ export interface CreateGroupPostModalProps {
 
 const createPostInitState = {
   postType: PostType.Request,
-  category: '',
   details: { title: '', description: '', location: '', image: undefined },
   groups: [],
 };
@@ -26,7 +23,7 @@ const CreateGroupPostModal = (props: CreateGroupPostModalProps) => {
   const [state, dispatch] = useReducer(createPostReducer, createPostInitState, initCreatePost);
   const [activeSection, setActiveSection] = useState<number>(0);
   const [submitFlag, setSubmitFlag] = useState<boolean>(false);
-  const numberOfSections = 3;
+  const numberOfSections = 2;
 
   useEffect(() => {
     if (props.visible) {
@@ -48,7 +45,6 @@ const CreateGroupPostModal = (props: CreateGroupPostModalProps) => {
   const submitPost = async () => {
     addPost({
       type: state.postType,
-      category: state.category,
       title: state.details.title,
       description: state.details.description,
       groupId: props.groupId,
@@ -70,7 +66,6 @@ const CreateGroupPostModal = (props: CreateGroupPostModalProps) => {
       >
         <PostCreationProgressBar activeSection={activeSection} numberOfSections={numberOfSections} />
         <PostTypeSelector active={activeSection} dispatch={dispatch} setActiveSection={setActiveSection} numberOfSections={numberOfSections} />
-        <PostCategorySelector active={activeSection} dispatch={dispatch} setActiveSection={setActiveSection} numberOfSections={numberOfSections} />
         <PostDetailsForm
           active={activeSection}
           state={state}

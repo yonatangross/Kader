@@ -57,7 +57,7 @@ const PostListItem = (props: PostListItemProps) => {
               <Text style={styles.postDate}>{moment(post.created).toNow()}</Text>
             </View>
             <View style={styles.categoryContainer}>
-              {post.category.imageUri !== undefined ? (
+              {!!post.category && !!post.category.imageUri ? (
                 <Image source={{ uri: post.category.imageUri }} style={styles.categoryIcon as ImageStyle} />
               ) : (
                 <Image source={require('../../assets/images/categoryIcon.png')} style={styles.categoryIcon as ImageStyle} />

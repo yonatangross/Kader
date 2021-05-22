@@ -1,5 +1,5 @@
 export interface ICategory {
-  categoryId:string;
+  id:string;
   name: string;
   imageUri: string;
 }

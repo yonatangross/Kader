@@ -1,7 +1,7 @@
-import { Text, Button, Divider, Icon, Input } from '@ui-kitten/components';
 import React, { useEffect, useState } from 'react';
-import { KeyboardAvoidingView, StyleSheet } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { CreatePostStateType } from '../../types/CreatePostTypes';
 import UploadImage from '../UploadImage';
 
@@ -14,7 +14,6 @@ export interface PostDetailsFormProps {
   finalStage: boolean;
   numberOfSections: number;
 }
-const StarIcon = (props: any) => <Icon {...props} name="star" />;
 
 const formatAddress = (addressDetails: any) => {
   if (!!addressDetails) {
@@ -38,15 +37,15 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
       },
     });
   }, [postImage, props.setActiveSection]);
-  if (props.active === 2) {
+  if (props.active === 1) {
     return (
-      <>
-        <Text style={styles.text} category="label">
-          Title
-        </Text>
-        <Input
+      <View style={styles.postDetailsContainer}>
+        <Text style={styles.labelText}>Title</Text>
+        <TextInput
+          placeholder={'Post Title'}
+          style={styles.textInput}
+          numberOfLines={1}
           value={props.state.details.title}
-          placeholder="Post Title"
           onChangeText={(title) => {
             props.dispatch({
               type: 'Details',
@@ -59,13 +58,12 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
             });
           }}
         />
-        <Text style={styles.text} category="label">
-          Description
-        </Text>
-        <Input
-          multiline={true}
-          textStyle={{ minHeight: 64 }}
-          placeholder="Post Description"
+
+        <Text style={styles.labelText}>Description</Text>
+        <TextInput
+          placeholder={'Post Description'}
+          style={styles.textInput}
+          numberOfLines={2}
           value={props.state.details.description}
           onChangeText={(description) => {
             props.dispatch({
@@ -79,11 +77,9 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
             });
           }}
         />
-        <Text style={styles.text} category="label">
-          Post primary location
-        </Text>
-        <Divider />
-        <KeyboardAvoidingView behavior="padding" style={{ height: 300, flex: 1 }}>
+
+        <Text style={styles.labelText}>Post primary location</Text>
+        <SafeAreaView style={{ height: '15%', backgroundColor: 'white', zIndex: 1 }}>
           <GooglePlacesAutocomplete
             placeholder="Search"
             onPress={(data, details = null) => {
@@ -100,55 +96,64 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
               });
             }}
             query={{
+              //todo: move to backend
               key: 'AIzaSyDtlSYdojyjmTTwvSYaIP3N50n-OzrWcUg',
               language: 'iw',
               components: 'country:il',
             }}
-            currentLocation={true}
-            currentLocationLabel="Current location"
+            listViewDisplayed={'auto'}
+            renderDescription={(row) => row.description}
             fetchDetails={true}
             styles={{
-              textInput: {
-                color: '#5d5d5d',
-              },
               container: {
+                flex: 1,
+                flexDirection: 'column',
+              },
+              listView: {
+                position: 'absolute',
+                top: 60,
+                backgroundColor: 'white',
+                borderRadius: 15,
+                flex: 1,
+                margin: 20,
+                padding: 10,
+                elevation: 3,
                 zIndex: 1,
-                overflow: 'visible',
-                height: 50,
+              },
+              textInput: {
+                fontSize: 16,
+                backgroundColor: '#f1f0f0',
+                borderRadius: 15,
+                margin: 20,
+                padding: 10,
+              },
+              description: {
+                // color: '#ac879a',
+                fontWeight: '300',
+              },
+              predefinedPlacesDescription: {
+                color: '#1faadb',
               },
             }}
           />
-        </KeyboardAvoidingView>
-        <Divider />
-
+        </SafeAreaView>
+        <Text style={styles.labelText}>Post Image</Text>
         <UploadImage postImage={postImage} setPostImage={setPostImage} />
-        <Button
-          style={styles.button}
-          status="success"
-          accessoryLeft={StarIcon}
-          size="small"
+        <TouchableOpacity
+          activeOpacity={0.7}
           onPress={() => {
             if (props.finalStage) {
               props.setActiveSection(-1);
               props.setSubmitFlag(true);
             } else {
-              props.setActiveSection(3);
+              props.setActiveSection(2);
             }
           }}
+          style={styles.finishButton}
         >
-          {(buttonProps: any) =>
-            props.finalStage ? (
-              <Text {...buttonProps} style={{ color: 'rgba(34, 83, 231,1)' }}>
-                Submit details
-              </Text>
-            ) : (
-              <Text {...buttonProps} style={{ color: 'rgba(34, 83, 231,1)' }}>
-                Submit post
-              </Text>
-            )
-          }
-        </Button>
-      </>
+          {!props.finalStage ? <Text style={styles.finishButtonText}>Continue</Text> : <Text style={styles.finishButtonText}>Submit post</Text>}
+        </TouchableOpacity>
+      </View>
     );
   } else {
     return null;
@@ -156,17 +161,25 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
 };
 
 const styles = StyleSheet.create({
-  button: {
-    display: 'flex',
+  postDetailsContainer: { flexDirection: 'column', width: '100%' },
+  labelText: { fontSize: 12, paddingLeft: 10, paddingTop: 10 },
+  finishButton: {
+    backgroundColor: '#047cfb',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 100,
+    borderWidth: 0.8,
+    borderColor: '#394d51',
     margin: 10,
+    marginTop: 30,
     marginRight: 40,
     marginLeft: 40,
     padding: 10,
   },
+  finishButtonText: { fontSize: 20, fontWeight: 'bold' },
+  
   text: { margin: 5 },
+  textInput: { fontSize: 16, backgroundColor: '#f1f0f0', borderRadius: 15, margin: 20, padding: 10 },
 });
 
 export default PostDetailsForm;

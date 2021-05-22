@@ -21,7 +21,6 @@ const PostCommentItem = (props: PostCommentItemProps) => {
           </Text>
           <Text style={styles.commentContent}>{comment.content}</Text>
           <Text style={styles.commentDate}>{moment(comment.created).fromNow()}</Text>
-          <Divider style={styles.commentDivider} />
         </View>
       </View>
     );
@@ -29,7 +28,7 @@ const PostCommentItem = (props: PostCommentItemProps) => {
 };
 
 const styles = StyleSheet.create({
-  commentContainer: { flexDirection: 'row', justifyContent: 'flex-start', margin: 5 },
+  commentContainer: { flexDirection: 'row', justifyContent: 'flex-start', padding:10,margin: 5, backgroundColor: 'white', borderRadius: 30, borderTopLeftRadius: 0 },
   commentDetailsContainer: { flexDirection: 'column', marginLeft: 4, flexShrink: 1, width: '95%' },
   commentContentContainer: { flexDirection: 'row' },
   commentContent: { flexShrink: 1 },
@@ -44,9 +43,8 @@ const styles = StyleSheet.create({
   },
   profileAvatar: {
     marginHorizontal: 2,
-    paddingRight: 2,
+    padding: 10,
   },
-  commentDivider: { marginTop: 5 },
 });
 
 export default PostCommentItem;

@@ -18,6 +18,7 @@ import { useAuth } from '../contexts/Auth';
 import { ScrollView } from 'react-native-gesture-handler';
 import Posts from '../data/Posts';
 import Comments from '../components/Comments';
+import SinglePostItem from '../components/SinglePostItem';
 
 export interface SinglePostScreenProps {}
 
@@ -46,8 +47,7 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
             setPost(postResponse);
             if (post?.creator.id === auth.authData?.userId) {
               setIsPostOwner(true);
-              console.log('yes');
-            } 
+            }
           }
         })
         .catch((error) => {
@@ -85,56 +85,25 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
         <View style={styles.container}>
           {isPostOwner && (
             <View style={styles.buttonsContainer}>
-              <TouchableOpacity activeOpacity={0.7} onPress={onPressSettingsButton} style={styles.postCreationButton}>
+              <TouchableOpacity activeOpacity={0.7} onPress={onPressSettingsButton} style={styles.settingsButton}>
                 <Image source={require('../assets/images/settingsIcon.png')} style={styles.floatingButtonStyle} />
               </TouchableOpacity>
-              {showSettingsSection && (
-                <>
-                  <TouchableOpacity activeOpacity={0.7} onPress={onPressEditButton} style={styles.postCreationButton}>
-                    <Text style={styles.postCreationText}>Edit Post</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity activeOpacity={0.7} onPress={onPressCloseButton} style={styles.postCreationButton}>
-                    <Text style={styles.postCreationText}>Close Post</Text>
-                  </TouchableOpacity>
-                </>
-              )}
             </View>
           )}
 
-          <View style={styles.postContainer}>
-            <View style={styles.postDataContainer}>
-              <View style={styles.postImageContainer}>
-                {post.image !== undefined ? (
-                  <Image source={{ uri: post.image }} style={styles.postImage as ImageStyle} />
-                ) : (
-                  <Image source={require('../assets/images/itemPlaceholder.png')} style={styles.postImage as ImageStyle} />
-                )}
-              </View>
+          {showSettingsSection && (
+            <View style={styles.settingsButtonsContainer}>
+              <TouchableOpacity activeOpacity={0.7} onPress={onPressEditButton} style={styles.settingButton}>
+                <Text style={styles.closePostButtonText}>Edit Post</Text>
+              </TouchableOpacity>
+              <TouchableOpacity activeOpacity={0.7} onPress={onPressCloseButton} style={styles.settingButton}>
+                <Text style={styles.buttonText}>Close Post</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+          <SinglePostItem post={post} />
 
-              <View style={styles.middleDataContainer}>
-                <Text style={styles.titleText}>{post.title}</Text>
-                <View style={styles.extraDataContainer}>
-                  <Rating fractions={1} ratingColor="#f3a953" imageSize={20} startingValue={post.creator.rating} ratingCount={5} readonly />
-                  <Text style={styles.ratingText}> stars</Text>
-                </View>
-              </View>
-            </View>
-            <View style={styles.lowerDataContainer}>
-              <View style={styles.postDateContainer}>
-                <FontAwesome5 name="clock" color={'#4975aa'} size={20} />
-                <Text style={styles.postDate}>{moment(post.created).fromNow()}</Text>
-              </View>
-              <View style={styles.locationContainer}>
-                <MaterialCommunityIcons name="map-marker-outline" color={'#4975aa'} size={20} />
-                <Text style={styles.locationText}>{post.address}</Text>
-              </View>
-            </View>
-            <View style={styles.descriptionContainer}>
-              <Text style={styles.descriptionHeader}>Description</Text>
-              <Text style={styles.description}>{post.description}</Text>
-            </View>
-          </View>
-          <Comments data={post.comments} postId={post.postId} setPostUpdated={setPostUpdated} />
+          <Comments comments={post.comments} postId={post.postId} setPostUpdated={setPostUpdated} />
         </View>
       </KeyboardAvoidingView>
     );
@@ -142,21 +111,45 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
 };
 
 const styles = StyleSheet.create({
-  postCreationText: {
+  settingsButtonsContainer: { flexDirection: 'row', backgroundColor: 'white', width: '100%' },
+  settingButton: {
+    margin: 10,
+    marginVertical: 15,
+    backgroundColor: '#f2a853',
+    borderRadius: 30,
+    alignItems: 'center',
+    width: 120,
+    height: 40,
+    justifyContent: 'center',
+    alignSelf: 'center',
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    shadowOpacity: 0.8,
+    elevation: 6,
+    shadowRadius: 15,
+    shadowOffset: { width: 1, height: 13 },
+  },
+  buttonText: {
     fontSize: 16,
     fontWeight: 'bold',
     color: 'white',
   },
-  postCreationButton: {
+  editPostButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  closePostButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  settingsButton: {
     backgroundColor: 'white',
-    position: 'absolute',
     width: 50,
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 30,
-    right: 15,
-    bottom: 30,
     shadowColor: 'rgba(0, 0, 0, 0.1)',
     shadowOpacity: 0.8,
     elevation: 6,
@@ -169,24 +162,8 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     width: 32,
     height: 32,
-    //backgroundColor:'black'
   },
-  buttonsContainer: { flexDirection: 'row', justifyContent: 'center' },
-  descriptionContainer: {
-    flexDirection: 'column',
-    backgroundColor: '#fefefe',
-    paddingTop: 0,
-    marginHorizontal: 10,
-    marginVertical: 10,
-    width: '95%',
-    paddingHorizontal: 15,
-  },
-  ratingBar: { justifyContent: 'center', alignContent: 'center' },
-  descriptionHeader: { alignSelf: 'flex-start', justifyContent: 'center', fontWeight: 'bold', fontSize: 20 },
-  description: { fontFamily: 'Rubik', alignSelf: 'flex-start', marginVertical: 20, padding: 0, fontSize: 14, color: 'grey' },
-  ratingText: { color: '#f3a953', fontSize: 18, fontWeight: 'bold', alignSelf: 'center', justifyContent: 'center' },
-  postDateContainer: { flexDirection: 'column', alignItems: 'center' },
-  locationContainer: { flexDirection: 'column', alignItems: 'center' },
+  buttonsContainer: { flexDirection: 'row', justifyContent: 'center', backgroundColor: 'white', width: '100%' },
   viewContainer: {
     flex: 1,
     borderBottomLeftRadius: 30,
@@ -202,118 +179,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     alignItems: 'center',
-  },
-  middleDataContainer: { flexDirection: 'column', justifyContent: 'center', alignSelf: 'flex-start', marginTop: 20 },
-  extraDataContainer: { flexDirection: 'row', justifyContent: 'center', alignContent: 'center' },
-  headerContainer: {
-    flexDirection: 'row',
-    backgroundColor: '#fefefe',
-    width: '100%',
-  },
-  postDataContainer: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginBottom: 20,
-    paddingBottom: 20,
-    width: '100%',
-    backgroundColor: '#fefefe',
-  },
-  userImageAndRatingContainer: { flexDirection: 'column', backgroundColor: '#fefefe' },
-  avatar: {
-    margin: 8,
-    borderRadius: 15,
-    width: 50,
-    height: 50,
-    alignSelf: 'center',
-  },
-  creatorContainer: { flexDirection: 'column', width: '95%' },
-  upperCreatorContainer: {
-    flexDirection: 'row',
-  },
-  lowerDataContainer: {
-    flexDirection: 'row',
-    backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    width: '100%',
-    margin: 10,
-  },
-  postDate: { paddingHorizontal: 0 },
-  locationText: { paddingHorizontal: 0, marginTop: -2 },
-  postImageContainer: {
-    margin: 15,
-    shadowOffset: { width: 15, height: 15 },
-    shadowColor: 'black',
-    shadowOpacity: 0.8,
-    elevation: 10,
-    borderRadius: 15,
-    overflow: 'hidden',
-    backgroundColor: '#0000',
-  },
-  postImage: {
-    width: 200,
-    height: 200,
-    borderRadius: 15,
-    resizeMode: 'contain',
-  },
-  creatorTitle: { fontWeight: 'bold', alignSelf: 'flex-start', marginTop: 10, marginRight: 5, fontSize: 16 },
-  postTypeTitle: { fontWeight: '100', alignSelf: 'flex-start', marginTop: 10, fontSize: 16 },
-  categoryContainer: { flexDirection: 'row' },
-  categoryText: { fontWeight: 'bold', fontSize: 16 },
-  commentsNumber: { alignSelf: 'flex-start', justifyContent: 'center', marginLeft: 5, fontWeight: 'bold', fontSize: 20 },
-  profileAvatar: {
-    width: 15,
-    height: 15,
-    marginHorizontal: 2,
-    paddingRight: 2,
-  },
-  ImageContainer: {
-    margin: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 15,
-    backgroundColor: '#fefefe',
-  },
-  imageDesign: {
-    width: 100,
-    height: 100,
-    borderRadius: 15,
-  },
-  commentsHeader: { alignSelf: 'center', justifyContent: 'center', fontSize: 24, margin: 10 },
-  titleText: { fontWeight: '700', fontSize: 24 },
-
-  postTabsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-  },
-  postData: {
-    backgroundColor: '#fefefe',
-    padding: 15,
-    alignItems: 'center',
-    borderRadius: 30,
-    width: '95%',
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  text: {
-    margin: 2,
-    alignSelf: 'center',
-  },
-  rating: {},
-  commentsContainer: { width: '100%', backgroundColor: 'transparent', flexDirection: 'column' },
-  commentsList: {
-    paddingTop: 0,
-    marginVertical: 10,
-    width: '100%',
-    paddingHorizontal: 15,
-  },
-  inputBoxContainer: {
-    alignItems: 'center',
-    paddingHorizontal: 15,
-    backgroundColor: 'transparent',
   },
 });
 

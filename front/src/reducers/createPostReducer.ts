@@ -4,12 +4,10 @@ import { CreatePostActionsTypes, CreatePostStateType } from '../types/CreatePost
 export const initCreatePost = () => {
   const initPost: {
     postType: PostType;
-    category: string;
     details: { title: string; description: string; location: string; image: any };
     groups: string[];
   } = {
     postType: PostType.Request,
-    category: '',
     details: { title: '', description: '', location: '', image: undefined },
     groups: [],
   };
@@ -20,8 +18,6 @@ export const createPostReducer = (state: CreatePostStateType, action: CreatePost
   switch (action.type) {
     case 'PostType':
       return { ...state, postType: action.payload };
-    case 'Category':
-      return { ...state, category: action.payload };
     case 'Details':
       return { ...state, details: action.payload };
     case 'Groups':

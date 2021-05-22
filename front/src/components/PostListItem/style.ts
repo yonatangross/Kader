@@ -9,24 +9,25 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#fff',
   },
-  headerContainer: { flexDirection: 'row', justifyContent: 'space-between' ,alignItems:'center'},
-  dataContainer: { flexDirection: 'row' },
+  headerContainer: { flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', width: '100%' },
+  dataContainer: { flexDirection: 'row', width: '100%' },
 
   postDetailsContainer: {
+    width: '100%',
     flexDirection: 'row',
     margin: 10,
   },
   titleAndDescriptionContainer: { flexDirection: 'column', alignItems: 'flex-start' },
   creatorDetailsContainer: { flexDirection: 'row' },
-  creatorImageAndRatingContainer: { flexDirection: 'column',marginVertical:15},
-  creatorCenterContainer: { flexDirection: 'column', justifyContent: 'center', alignSelf:'center' },
+  creatorImageAndRatingContainer: { flexDirection: 'column', marginVertical: 15 },
+  creatorCenterContainer: { flexDirection: 'column', justifyContent: 'center', alignSelf: 'center' },
   commentNumber: {
     marginRight: 10,
     alignSelf: 'flex-end',
     color: '#4f76ad',
   },
   imageContainer: {
-    margin:15,
+    margin: 15,
     shadowOffset: { width: 15, height: 15 },
     shadowColor: 'black',
     shadowOpacity: 0.8,
@@ -42,9 +43,9 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     resizeMode: 'contain',
   },
-  profileImageContainer:{
+  profileImageContainer: {
     margin: 15,
-    marginLeft:45,
+    marginLeft: 45,
     shadowOffset: { width: 1, height: 1 },
     shadowColor: 'black',
     shadowOpacity: 0.8,
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     borderRadius: 100,
   },
- 
+
   titleText: {
     fontWeight: 'bold',
     fontSize: 16,
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
   descriptionText: {
     fontSize: 12,
     overflow: 'hidden',
-    maxWidth:200
+    maxWidth: 200,
   },
   groupNameTitle: { color: 'grey', fontSize: 13 },
   PostedBy: {
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#202020',
   },
-  postTypeAndGroupNameText: { color: '#696969', fontSize: 14,maxWidth:200 },
+  postTypeAndGroupNameText: { color: '#696969', fontSize: 14, maxWidth: 200 },
   postDate: {
     alignSelf: 'flex-end',
     fontSize: 10,
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
   },
   categoryContainer: {
     margin: 15,
-    marginRight:20,
+    marginRight: 20,
     shadowOffset: { width: 1, height: 1 },
     shadowColor: 'black',
     shadowOpacity: 0.8,
@@ -102,7 +103,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 40,
     width: 40,
-    
   },
   categoryIcon: {
     marginVertical: 15,

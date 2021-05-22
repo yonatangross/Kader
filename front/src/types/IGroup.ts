@@ -13,5 +13,8 @@ export interface IGroup {
   members: IUser[];
   managers: IUser[];
   posts: IPost[];
+  membersCount: number;
+  managersCount: number;
+  postsCount: number;
   isManager: boolean;
 }

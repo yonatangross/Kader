@@ -45,7 +45,7 @@ const GroupListItem = (props: GroupListItemProps) => {
         </View>
       </View>
       <View style={styles.linkContainer}>
-        <TouchableOpacity onPress={onClick}>
+        <TouchableOpacity onPress={onClick} style={styles.buttonContainer}>
           <AntDesign name="doubleright" color={'#96bfe5'} size={18} />
         </TouchableOpacity>
       </View>
@@ -56,7 +56,7 @@ const GroupListItem = (props: GroupListItemProps) => {
 const styles = StyleSheet.create({
   GroupListItemContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     backgroundColor: 'white',
     alignSelf: 'center',
     marginVertical: 10,
@@ -67,19 +67,20 @@ const styles = StyleSheet.create({
     borderBottomColor: '#f8f7fa',
     borderBottomWidth: 1,
   },
-  groupCategoryImageContainer: { flexDirection: 'column', justifyContent: 'center', alignContent: 'center' },
-  dataContainer: { flexDirection: 'column', alignItems: 'center', backgroundColor: 'white' },
+  groupCategoryImageContainer: { flexDirection: 'column', justifyContent: 'center', alignContent: 'center', marginRight: 20 },
+  dataContainer: { flexDirection: 'column', alignItems: 'center', backgroundColor: 'white', width: '70%' },
   upperContainer: { flexDirection: 'row', alignItems: 'flex-start', width: '100%' },
   middleContainer: { flexDirection: 'row', width: '100%' },
   lowerContainer: { flexDirection: 'row', width: '100%' },
-  linkContainer: {
-    flexDirection: 'column',
+  linkContainer: { flexDirection: 'column', alignItems: 'center' },
+  buttonContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     width: 40,
     height: 40,
     borderRadius: 20,
     backgroundColor: '#f0eff5',
+    marginLeft: 20,
   },
   profileAvatar: {
     marginHorizontal: 8,

@@ -20,16 +20,12 @@ const PostCreationProgressBar = (props: PostCreationProgressBarProps) => {
       setPercentage(0);
     } else if (props.activeSection === 1) {
       setActive(true);
-      setProgressTitle('Choose category');
+      setProgressTitle('Fill post details');
       setPercentage(1 * sectionPercentage);
     } else if (props.activeSection === 2) {
       setActive(true);
-      setProgressTitle('Fill post details');
-      setPercentage(2 * sectionPercentage);
-    } else if (props.activeSection === 3) {
-      setActive(true);
       setProgressTitle('Choose groups to publish in');
-      setPercentage(3 * sectionPercentage);
+      setPercentage(2 * sectionPercentage);
     } else {
       setActive(false);
     }

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { IGroup } from '../../types/IGroup';
-import { Button, List } from '@ui-kitten/components';
-import { GroupPrivacy } from '../../types/GroupPrivacy';
+import { List } from '@ui-kitten/components';
 import GroupListItemSelector from '../GroupListItemSelector';
 import { CreatePostStateType } from '../../types/CreatePostTypes';
-import { getGroups, getGroupsForUser } from '../../services/groups';
+import { getGroupsForUser } from '../../services/groups';
 import { useAuth } from '../../contexts/Auth';
 
 export interface GroupsSelectorProps {
@@ -27,7 +26,7 @@ const GroupsSelector = (props: GroupsSelectorProps) => {
     if (!!auth && auth.authData)
       getGroupsForUser(auth.authData?.userId)
         .then((response) => {
-          const groupsResult: any[] = response.data;
+          const groupsResult: IGroup[] = response.data;
           setGroups(groupsResult);
         })
         .catch((error) => {
@@ -38,31 +37,37 @@ const GroupsSelector = (props: GroupsSelectorProps) => {
   const renderItem = ({ item: item, index }: { item: IGroup; index: number }) => {
     return <GroupListItemSelector item={item} index={index} state={props.state} dispatch={props.dispatch} />;
   };
-  if (props.active === 3) {
+  if (props.active === 2) {
     return (
-      <>
-        <List style={styles.list} data={groups} renderItem={renderItem} contentContainerStyle={{ paddingHorizontal: 8, paddingVertical: 4 }} />
-        <Button
-          status="success"
-          size="small"
+      <View style={styles.container}>
+        <FlatList
+          style={{ width: '100%', height: '78%', paddingTop: 20, marginTop: 10 }}
+          data={groups}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.groupId}
+          initialNumToRender={6}
+          maxToRenderPerBatch={2}
+          showsVerticalScrollIndicator={true}
+          scrollEnabled={true}
+        />
+        <TouchableOpacity
+          activeOpacity={0.7}
           onPress={() => {
             props.setActiveSection(-1);
             props.setVisible(false);
             props.setSubmitFlag(true);
           }}
+          style={styles.finishButton}
         >
-          {(buttonProps: any) => (
-            <Text {...buttonProps} style={{ color: 'rgba(34, 83, 231,1)' }}>
-              Submit Post
-            </Text>
-          )}
-        </Button>
-      </>
+          <Text style={styles.finishButtonText}>Publish post</Text>
+        </TouchableOpacity>
+      </View>
     );
   } else return null;
 };
 
 const styles = StyleSheet.create({
+  container: { flexDirection: 'column' },
   title: {
     marginTop: 10,
     fontSize: 20,
@@ -71,6 +76,19 @@ const styles = StyleSheet.create({
   list: {
     width: '100%',
   },
+  finishButton: {
+    backgroundColor: '#047cfb',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 100,
+    borderWidth: 0.8,
+    borderColor: '#394d51',
+    margin: 10,
+    marginRight: 40,
+    marginLeft: 40,
+    padding: 10,
+  },
+  finishButtonText: { fontSize: 20, fontWeight: 'bold', color: 'white' },
 });
 
 export default GroupsSelector;

@@ -86,14 +86,18 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
             contentContainerStyle={{ flex: 1, justifyContent: 'space-around' }}
             data={group.members}
             renderItem={renderMemberListItem}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item, index) => item.id + index.toString()}
             showsVerticalScrollIndicator={false}
             horizontal
           />
         </View>
-        <SafeAreaView style={styles.postsContainer}>
-          <FlatList data={group.posts} renderItem={renderPostListItem} keyExtractor={(item) => item.postId} showsVerticalScrollIndicator={true} />
-        </SafeAreaView>
+        <FlatList
+          style={styles.postsContainer}
+          data={group.posts}
+          renderItem={renderPostListItem}
+          keyExtractor={(item) => item.postId}
+          showsVerticalScrollIndicator={true}
+        />
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => {
@@ -109,10 +113,10 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
+  container: { flexDirection: 'column', width: '100%' },
   membersHeaderContainer: { alignItems: 'center' },
-  membersContainer: { flex: 1 },
-  postsContainer: { flex: 5, marginTop: -40 },
+  membersContainer: { flexDirection: 'column', marginBottom: 10 },
+  postsContainer: { flexDirection: 'column', width: '100%' },
   text: {
     margin: 5,
     alignSelf: 'center',

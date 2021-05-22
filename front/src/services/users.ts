@@ -62,3 +62,11 @@ export const deleteUser = async (id: string): Promise<AxiosResponse<any>> => {
     throw new Error(error);
   }
 };
+export const addRating = async (userId: string, rating: number): Promise<AxiosResponse<any>> => {
+  try {
+    const ratedUserResponse: AxiosResponse<any> = await kaderApi.post(`/users/${userId}`, rating);
+    return ratedUserResponse;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
