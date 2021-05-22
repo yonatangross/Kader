@@ -12,7 +12,9 @@ import { IGroup } from '../types/IGroup';
 import { GroupPrivacy } from '../types/GroupPrivacy';
 import { IUser } from '../types/IUser';
 import Autocomplete from 'react-native-autocomplete-input';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useFonts } from 'expo-font';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export interface GroupsProps {}
 
@@ -22,7 +24,7 @@ const GroupsScreen = () => {
 
   const [visibleCreateGroup, setVisibleCreateGroup] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
-  const [userGroups, setUserGroups] = useState<any[]>();
+  const [userGroups, setUserGroups] = useState<IGroup[]>();
   const [searchedGroups, setSearchedGroups] = React.useState<any[]>([]);
   const [searchQuery, setSearchQuery] = React.useState<string>('');
 
@@ -30,11 +32,11 @@ const GroupsScreen = () => {
     Roboto: require('../assets/fonts/Roboto/Roboto-Light.ttf'),
   });
 
-  const updateData = () => {
+  const searchGroupsByParameter = () => {
     if (auth.authData)
       searchGroups(searchQuery, undefined, undefined, undefined)
         .then((response) => {
-          const groupsResult: any[] = response.data;
+          const groupsResult: IGroup[] = response.data;
           setSearchedGroups(groupsResult);
         })
         .catch((error) => {
@@ -98,12 +100,12 @@ const GroupsScreen = () => {
         .catch((error) => {
           console.log(`error while fetching groups ${error}`);
         });
-    updateData();
+    searchGroupsByParameter();
 
     return () => {
       isMounted = false;
     };
-  }, [fontsLoaded, searchQuery, setUserGroups, setSearchedGroups]);
+  }, [fontsLoaded, searchQuery, setUserGroups, searchedGroups]);
 
   if (!!userGroups && !!fontsLoaded) {
     return (
@@ -120,31 +122,33 @@ const GroupsScreen = () => {
             <Text style={styles.postCreationText}>Create Group</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.autocompleteContainer}>
+        <View style={{ flexDirection: 'row', width: '100%', marginHorizontal: 20, justifyContent: 'center', alignSelf: 'center', backgroundColor: 'white' }}>
           <Autocomplete
             autoCapitalize="none"
             autoCorrect={false}
+            containerStyle={styles.autocompleteContainer}
             // Data to show in suggestion
             data={searchedGroups}
             // Default value if you want to set something in input
-            defaultValue={JSON.stringify(searchQuery) === '{}' ? '' : searchQuery}
+            defaultValue={searchQuery}
             // Onchange of the text changing the state of the query
             // Which will trigger the findFilm method
             // To show the suggestions
-            value={searchQuery}
-            onChangeText={setSearchQuery}
+            onChangeText={(text) => setSearchQuery(text)}
             placeholder="Search groups here..."
-            renderItem={({ item }) => (
-              // For the suggestion view
-              <TouchableOpacity
-                onPress={() => {
-                  onSelect(item);
-                  setSearchedGroups([]);
-                }}
-              >
-                <Text style={styles.itemText}>{item.name}</Text>
-              </TouchableOpacity>
-            )}
+            flatListProps={{
+              keyExtractor: (item) => item.groupId,
+              renderItem: ({ item }) => (
+                <TouchableOpacity
+                  style={{ width: '100%', marginHorizontal: 20, alignContent: 'center', justifyContent: 'center' }}
+                  onPress={() => {
+                    onSelect(item);
+                  }}
+                >
+                  <Text style={styles.itemText}>{item.name}</Text>
+                </TouchableOpacity>
+              ),
+            }}
           />
         </View>
         <Text style={styles.myGroupsTitle}>My Groups</Text>
@@ -163,8 +167,10 @@ const GroupsScreen = () => {
 
 const styles = StyleSheet.create({
   autocompleteContainer: {
-    marginBottom: 50,
-    marginHorizontal: 30,
+    marginHorizontal: 20,
+  },
+  autocompleteView: {
+    margin: 30,
   },
   buttonsContainer: {
     marginVertical: 0,

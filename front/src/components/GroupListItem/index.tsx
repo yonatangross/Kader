@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, View, Image, Text } from 'react-native';
+import { StyleSheet, View, Image, Text, ImageStyle } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { AntDesign } from '@expo/vector-icons';
+import { imageBaseUrl } from '../../services/axios';
 
 export interface GroupListItemProps {
   group: any;
@@ -26,11 +27,11 @@ const GroupListItem = (props: GroupListItemProps) => {
 
   return (
     <View style={styles.GroupListItemContainer}>
-      <View style={styles.groupCategoryImageContainer}>
+      <View style={styles.categoryContainer}>
         {!!group.category && !!group.category.imageUri ? (
-          <Image source={require('../../assets/images/categoryIcon.png')} style={{ height: 40, width: 40 }} />
+          <Image source={{ uri: imageBaseUrl + group.category.imageUri }} style={styles.categoryIcon as ImageStyle} />
         ) : (
-          <Image source={require('../../assets/images/categoryIcon.png')} style={{ height: 40, width: 40 }} />
+          <Image source={require('../../assets/images/categoryIcon.png')} style={styles.categoryIcon as ImageStyle} />
         )}
       </View>
       <View style={styles.dataContainer}>
@@ -54,6 +55,27 @@ const GroupListItem = (props: GroupListItemProps) => {
 };
 
 const styles = StyleSheet.create({
+  categoryContainer: {
+    margin: 15,
+    marginRight: 20,
+    shadowOffset: { width: 1, height: 1 },
+    shadowColor: 'black',
+    shadowOpacity: 0.8,
+    elevation: 10,
+    borderRadius: 15,
+    overflow: 'hidden',
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 40,
+    width: 40,
+  },
+  categoryIcon: {
+    marginVertical: 15,
+    height: 40,
+    width: 40,
+    resizeMode: 'contain',
+  },
   GroupListItemContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-start',

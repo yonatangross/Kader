@@ -1,18 +1,16 @@
 import { useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Button, FlatList, TouchableOpacity, Image, StatusBar } from 'react-native';
+import { View, StyleSheet, FlatList, TouchableOpacity, Image, Text } from 'react-native';
 import _ from 'lodash';
-import { Text } from '@ui-kitten/components';
-
 import { getGroup } from '../services/groups';
 import PostListItem from '../components/PostListItem';
 import UserListItem from '../components/UserListItem';
 import { IGroup } from '../types/IGroup';
 import { getGroupPrivacyName } from '../types/GroupPrivacy';
 import CreateGroupPostModal from '../components/CreateGroupPostModal';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import GroupManagementPanel from '../components/GroupManagementPanel';
 import { useAuth } from '../contexts/Auth';
+import { useFonts } from 'expo-font';
 
 export interface SingleGroupScreenProps {}
 
@@ -23,7 +21,9 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
   const [visibleCreatePost, setVisibleCreatePost] = useState<boolean>(false);
   const [group, setGroup] = useState<IGroup>();
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
-
+  let [fontsLoaded] = useFonts({
+    Pattaya: require('../assets/fonts/Pattaya/Pattaya-Regular.ttf'),
+  });
   useEffect(() => {
     let mounted = true;
 
@@ -38,8 +38,6 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
                 if (user.id === auth.authData?.userId) return true;
               })
             );
-            console.log(isAdmin);
-
             setGroup(groupResponse);
             setLoading(false);
           }
@@ -53,7 +51,7 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
     () => {
       mounted = false;
     };
-  }, [setGroup]);
+  }, [fontsLoaded, setGroup]);
 
   const renderMemberListItem = ({ item }: any) => {
     return <UserListItem user={item} key={item.id} />;
@@ -63,33 +61,29 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
     return <PostListItem post={item} key={item.postId} showComments={true} />;
   };
 
-  if (!!group) {
+  if (!!group && fontsLoaded) {
     return (
       <View style={styles.container}>
         <CreateGroupPostModal visible={visibleCreatePost} setVisible={setVisibleCreatePost} groupId={group.groupId} />
-        <Text style={styles.text} category="h5">
-          {group.name}
-        </Text>
-        <Text style={styles.text} category="h6">
-          {group.description}
-        </Text>
-        <GroupManagementPanel isAdmin={isAdmin} />
-        <Text style={styles.text} category="c1">
-          Group Privacy: {getGroupPrivacyName(group.groupPrivacy)}
-        </Text>
+        <View style={styles.groupDataContainer}>
+          <GroupManagementPanel group={group} isAdmin={isAdmin} />
+          <Text style={styles.nameText}>{group.name}</Text>
+          <Text style={styles.descriptionText}>{group.description}</Text>
+          <Text style={styles.groupPrivacyText}>Group Privacy: {getGroupPrivacyName(group.groupPrivacy)}</Text>
 
-        <View style={styles.membersContainer}>
-          <View style={styles.membersHeaderContainer}>
-            <Text style={styles.text}>{group.members.length} members</Text>
+          <View style={styles.membersContainer}>
+            <View style={styles.membersHeaderContainer}>
+              <Text style={styles.membersLengthText}>{group.members.length} members</Text>
+            </View>
+            <FlatList
+              contentContainerStyle={{ flex: 1, justifyContent: 'space-around' }}
+              data={group.members}
+              renderItem={renderMemberListItem}
+              keyExtractor={(item, index) => item.id + index.toString()}
+              showsVerticalScrollIndicator={false}
+              horizontal
+            />
           </View>
-          <FlatList
-            contentContainerStyle={{ flex: 1, justifyContent: 'space-around' }}
-            data={group.members}
-            renderItem={renderMemberListItem}
-            keyExtractor={(item, index) => item.id + index.toString()}
-            showsVerticalScrollIndicator={false}
-            horizontal
-          />
         </View>
         <FlatList
           style={styles.postsContainer}
@@ -113,14 +107,20 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
 };
 
 const styles = StyleSheet.create({
+  groupDataContainer: { flexDirection: 'column', backgroundColor: 'white', width: '100%' },
   container: { flexDirection: 'column', width: '100%' },
   membersHeaderContainer: { alignItems: 'center' },
   membersContainer: { flexDirection: 'column', marginBottom: 10 },
   postsContainer: { flexDirection: 'column', width: '100%' },
-  text: {
-    margin: 5,
+  nameText: {
     alignSelf: 'center',
+    fontSize: 42,
+    fontFamily: 'Pattaya',
+    color: '#f2a854',
   },
+  groupPrivacyText: { alignSelf: 'center', fontSize: 20 },
+  descriptionText: { alignSelf: 'center', fontSize: 16 },
+  membersLengthText: { alignSelf: 'center', fontSize: 20 },
   postCreationButton: {
     backgroundColor: 'white',
     position: 'absolute',

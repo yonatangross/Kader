@@ -7,6 +7,8 @@ import { Divider } from '@ui-kitten/components';
 import moment from 'moment';
 import PostListItemComments from '../PostListItemComments';
 import { getPostTypeName } from '../../types/PostType';
+import { imageBaseUrl } from '../../services/axios';
+import StarRating from '../StarRating';
 
 export interface PostListItemProps {
   post: any;
@@ -43,7 +45,11 @@ const PostListItem = (props: PostListItemProps) => {
           <View style={styles.headerContainer}>
             <View style={styles.creatorImageAndRatingContainer}>
               <View style={styles.profileImageContainer}>
-                <Image source={require('../../assets/images/imagePlaceholder.png')} style={styles.profileImage as ImageStyle} />
+                {!!post.creator && !!post.creator.imageUri ? (
+                  <Image source={{ uri: imageBaseUrl + post.creator.imageUri }} style={styles.profileImage as ImageStyle} />
+                ) : (
+                  <Image source={require('../../assets/images/imagePlaceholder.png')} style={styles.profileImage as ImageStyle} />
+                )}
               </View>
               {/* <StarRating numOfStars={post.creator.rating} numOfRatings={post.creator.numberOfRatings} displayRatings={false} /> */}
             </View>
@@ -58,7 +64,7 @@ const PostListItem = (props: PostListItemProps) => {
             </View>
             <View style={styles.categoryContainer}>
               {!!post.category && !!post.category.imageUri ? (
-                <Image source={{ uri: post.category.imageUri }} style={styles.categoryIcon as ImageStyle} />
+                <Image source={{ uri: imageBaseUrl + post.category.imageUri }} style={styles.categoryIcon as ImageStyle} />
               ) : (
                 <Image source={require('../../assets/images/categoryIcon.png')} style={styles.categoryIcon as ImageStyle} />
               )}

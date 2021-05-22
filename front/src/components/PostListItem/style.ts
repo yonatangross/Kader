@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#fff',
   },
-  headerContainer: { flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', width: '100%' },
+  headerContainer: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%' },
   dataContainer: { flexDirection: 'row', width: '100%' },
 
   postDetailsContainer: {

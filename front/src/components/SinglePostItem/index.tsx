@@ -35,23 +35,16 @@ const SinglePostItem = (props: SinglePostItemProps) => {
               <Image source={require('../../assets/images/itemPlaceholder.png')} style={styles.postImage as ImageStyle} />
             )}
           </View>
-
           <View style={styles.middleDataContainer}>
             <Text style={styles.titleText}>{post.title}</Text>
-            <View style={styles.extraDataContainer}>
-              <Rating fractions={1} ratingColor="#f3a953" imageSize={20} startingValue={post.creator.rating} ratingCount={5} readonly />
-              <Text style={styles.ratingText}> stars</Text>
+            <View style={styles.postDateContainer}>
+              <FontAwesome5 name="clock" color={'#4975aa'} size={20} />
+              <Text style={styles.postDate}>{moment(post.created).fromNow()}</Text>
             </View>
-          </View>
-        </View>
-        <View style={styles.lowerDataContainer}>
-          <View style={styles.postDateContainer}>
-            <FontAwesome5 name="clock" color={'#4975aa'} size={20} />
-            <Text style={styles.postDate}>{moment(post.created).fromNow()}</Text>
-          </View>
-          <View style={styles.locationContainer}>
-            <MaterialCommunityIcons name="map-marker-outline" color={'#4975aa'} size={20} />
-            <Text style={styles.locationText}>{post.address}</Text>
+            <View style={styles.locationContainer}>
+              <MaterialCommunityIcons name="map-marker-outline" color={'#4975aa'} size={20} />
+              <Text style={styles.locationText}>{post.address}</Text>
+            </View>
           </View>
         </View>
         <View style={styles.descriptionContainer}>
@@ -107,8 +100,8 @@ const styles = StyleSheet.create({
   descriptionHeader: { alignSelf: 'flex-start', justifyContent: 'center', fontWeight: 'bold', fontSize: 20 },
   description: { fontFamily: 'Rubik', alignSelf: 'flex-start', marginVertical: 20, padding: 0, fontSize: 14, color: 'grey' },
   ratingText: { color: '#f3a953', fontSize: 18, fontWeight: 'bold', alignSelf: 'center', justifyContent: 'center' },
-  postDateContainer: { flexDirection: 'column', alignItems: 'center' },
-  locationContainer: { flexDirection: 'column', alignItems: 'center' },
+  postDateContainer: { flexDirection: 'column', alignItems: 'center', marginVertical: 20 },
+  locationContainer: { flexDirection: 'column', alignItems: 'center', marginVertical: 20 },
   viewContainer: {
     flex: 1,
     borderBottomLeftRadius: 30,
@@ -124,7 +117,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   middleDataContainer: { flexDirection: 'column', justifyContent: 'center', alignSelf: 'flex-start', marginTop: 20 },
-  extraDataContainer: { flexDirection: 'row', justifyContent: 'center', alignContent: 'center' },
+  extraDataContainer: { flexDirection: 'column', justifyContent: 'center', alignContent: 'center' },
   headerContainer: {
     flexDirection: 'row',
     backgroundColor: '#fefefe',
@@ -133,8 +126,6 @@ const styles = StyleSheet.create({
   postDataContainer: {
     alignItems: 'center',
     flexDirection: 'row',
-    marginBottom: 20,
-    paddingBottom: 20,
     width: '100%',
     backgroundColor: '#fefefe',
   },

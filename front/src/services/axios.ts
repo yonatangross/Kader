@@ -1,8 +1,10 @@
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
+export const baseUrl = 'http://kader.cs.colman.ac.il:5000/api';
+export const imageBaseUrl = 'http://kader.cs.colman.ac.il';
 
-const kaderApi = axios.create({ baseURL: 'http://kader.cs.colman.ac.il:5000/api' });
-const kaderPhotoUploadApi = axios.create({ baseURL: 'http://kader.cs.colman.ac.il:5000/api' });
+const kaderApi = axios.create({ baseURL: baseUrl });
+const kaderPhotoUploadApi = axios.create({ baseURL: baseUrl });
 
 kaderApi.interceptors.request.use(
   async function (config) {

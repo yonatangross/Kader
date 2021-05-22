@@ -41,7 +41,6 @@ const SingleGroupDetailsScreen = (props: SingleGroupDetailsPageProps) => {
         .then((response) => {
           console.log('joined group successfully, response:');
           console.log(response);
-
           navigation.navigate('SingleGroup', {
             id: group.groupId,
           });

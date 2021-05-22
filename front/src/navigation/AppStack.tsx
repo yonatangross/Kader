@@ -68,7 +68,7 @@ export const AppStack = () => {
         name="SingleGroup"
         component={SingleGroupScreen}
         options={({ route }) => ({
-          title: route.params.name,
+          title: '',
           headerTintColor: Colors.light.tint,
           cardStyle: { backgroundColor: '#dedcdf' },
         })}

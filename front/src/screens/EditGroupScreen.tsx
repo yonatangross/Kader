@@ -12,9 +12,9 @@ import { updatePost } from '../services/posts';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import UploadImage from '../components/UploadImage';
 
-export interface EditPostScreenProps {}
+export interface EditGroupScreenProps {}
 
-const EditPostScreen = (props: EditPostScreenProps) => {
+const EditGroupScreen = (props: EditGroupScreenProps) => {
   const route = useRoute();
   const navigation = useNavigation();
   const [loading, setLoading] = useState<boolean>(true);
@@ -360,4 +360,4 @@ const styles = StyleSheet.create({
   EditPostText: { fontSize: 32, fontWeight: 'bold', backgroundColor: 'white', textAlign: 'center', width: '100%', padding: 10 },
 });
 
-export default EditPostScreen;
+export default EditGroupScreen;
