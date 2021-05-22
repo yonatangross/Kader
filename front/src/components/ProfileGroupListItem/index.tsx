@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import moment from 'moment';
+import moment from '../../services/moment';
 import styles from './style';
 import { getGroupPrivacyName } from '../../types/GroupPrivacy';
 export interface ProfileGroupListItemProps {

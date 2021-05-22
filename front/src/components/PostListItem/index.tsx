@@ -4,11 +4,10 @@ import styles from './style';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect } from 'react';
 import { Divider } from '@ui-kitten/components';
-import moment from 'moment';
+import moment from '../../services/moment';
 import PostListItemComments from '../PostListItemComments';
 import { getPostTypeName } from '../../types/PostType';
 import { imageBaseUrl } from '../../services/axios';
-import StarRating from '../StarRating';
 
 export interface PostListItemProps {
   post: any;
@@ -60,7 +59,7 @@ const PostListItem = (props: PostListItemProps) => {
               <Text style={styles.postTypeAndGroupNameText}>
                 {getPostTypeName(post.type)} at {post.groupName}
               </Text>
-              <Text style={styles.postDate}>{moment(post.created).toNow()}</Text>
+              <Text style={styles.postDate}>{moment(post.created).fromNow()}</Text>
             </View>
             <View style={styles.categoryContainer}>
               {!!post.category && !!post.category.imageUri ? (

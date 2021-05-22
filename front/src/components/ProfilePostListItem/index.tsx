@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import StarRating from '../StarRating/index';
 import { useEffect } from 'react';
 import { Avatar, Icon } from '@ui-kitten/components';
-import moment from 'moment';
+import moment from '../../services/moment';
 
 export interface ProfilePostListItemProps {
   post: IPost;
@@ -42,12 +42,12 @@ const ProfilePostListItem = (props: ProfilePostListItemProps) => {
     return (
       <TouchableWithoutFeedback onPress={onClick}>
         <View style={styles.container}>
-            <View style={styles.PostTitleAndGroup}>
-              <Text style={styles.PostTitle}>{post.title}</Text>
-              <Icon style={styles.arrowIcon} name="arrow-right-outline" fill={'rgba(34, 83, 231)'} />
-              <Text style={styles.PostTitle}>{post.groupName}</Text>
-            </View>
-            <Text style={styles.postDate}>{moment(post.created).fromNow()}</Text>
+          <View style={styles.PostTitleAndGroup}>
+            <Text style={styles.PostTitle}>{post.title}</Text>
+            <Icon style={styles.arrowIcon} name="arrow-right-outline" fill={'rgba(34, 83, 231)'} />
+            <Text style={styles.PostTitle}>{post.groupName}</Text>
+          </View>
+          <Text style={styles.postDate}>{moment(post.created).fromNow()}</Text>
           <Text>{post.commentsCount} comments</Text>
         </View>
       </TouchableWithoutFeedback>

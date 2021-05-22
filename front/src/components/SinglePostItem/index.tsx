@@ -6,8 +6,8 @@ import { Text } from '@ui-kitten/components';
 
 import { IPost } from '../../types/IPost';
 import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
-import moment from 'moment';
 import { Rating } from 'react-native-ratings';
+import moment from '../../services/moment';
 
 export interface SinglePostItemProps {
   post: IPost;

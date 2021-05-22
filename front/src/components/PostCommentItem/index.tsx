@@ -1,5 +1,5 @@
 import { Avatar } from '@ui-kitten/components';
-import moment from 'moment';
+import moment from '../../services/moment';
 import React from 'react';
 import { StyleSheet, View, Text, Image, ImageStyle } from 'react-native';
 import { imageBaseUrl } from '../../services/axios';

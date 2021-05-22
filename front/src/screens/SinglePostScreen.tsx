@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Image, StyleSheet, FlatList, Text, Platform, ImageStyle, TouchableOpacity, SafeAreaView } from 'react-native';
 import { getPost } from '../services/posts';
 const testImage = require('../assets/images/test.png');
-import moment from 'moment';
+import moment from '../services/moment';
 import { useFonts } from 'expo-font';
 import { IPost } from '../types/IPost';
 import PostCommentItem from '../components/PostCommentItem';
@@ -43,6 +43,8 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
       getPost(params.id)
         .then((response) => {
           if (mounted) {
+            console.log(post?.postId);
+
             const postResponse: IPost = response.data.post;
             setPost(postResponse);
             if (post?.creator.id === auth.authData?.userId) {

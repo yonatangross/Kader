@@ -105,7 +105,7 @@ const GroupsScreen = () => {
     return () => {
       isMounted = false;
     };
-  }, [fontsLoaded, searchQuery, setUserGroups, searchedGroups]);
+  }, [fontsLoaded, searchQuery, setUserGroups, setSearchedGroups]);
 
   if (!!userGroups && !!fontsLoaded) {
     return (

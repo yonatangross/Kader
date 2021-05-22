@@ -94,8 +94,8 @@ const CreateGroupModal = (props: CreateGroupModalProps) => {
             setGroupCategory(itemValue);
           }}
         >
-          {categories.map((item) => {
-            return <Picker.Item label={item.name} value={item.id} />;
+          {categories.map((item, index) => {
+            return <Picker.Item label={item.name} value={item.id} key={index} />;
           })}
         </Picker>
 

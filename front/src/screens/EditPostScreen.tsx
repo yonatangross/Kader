@@ -7,7 +7,7 @@ import { IPost } from '../types/IPost';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Rating } from 'react-native-elements';
 import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
-import moment from 'moment';
+import moment from '../services/moment';
 import { updatePost } from '../services/posts';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import UploadImage from '../components/UploadImage';

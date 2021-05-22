@@ -42,7 +42,7 @@ const GroupListItem = (props: GroupListItemProps) => {
           <Text style={styles.dataText}>{group.name}</Text>
         </View>
         <View style={styles.lowerContainer}>
-          <Text>members</Text>
+          <Text>{group.membersCount} members</Text>
         </View>
       </View>
       <View style={styles.linkContainer}>
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   groupCategoryImageContainer: { flexDirection: 'column', justifyContent: 'center', alignContent: 'center', marginRight: 20 },
-  dataContainer: { flexDirection: 'column', alignItems: 'center', backgroundColor: 'white', width: '70%' },
+  dataContainer: { flexDirection: 'column', alignItems: 'center', backgroundColor: 'white', width: '65%' },
   upperContainer: { flexDirection: 'row', alignItems: 'flex-start', width: '100%' },
   middleContainer: { flexDirection: 'row', width: '100%' },
   lowerContainer: { flexDirection: 'row', width: '100%' },
