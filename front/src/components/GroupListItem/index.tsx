@@ -26,35 +26,51 @@ const GroupListItem = (props: GroupListItemProps) => {
   };
 
   return (
-    <View style={styles.GroupListItemContainer}>
-      <View style={styles.categoryContainer}>
-        {!!group.category && !!group.category.imageUri ? (
-          <Image source={{ uri: imageBaseUrl + group.category.imageUri }} style={styles.categoryIcon as ImageStyle} />
-        ) : (
-          <Image source={require('../../assets/images/categoryIcon.png')} style={styles.categoryIcon as ImageStyle} />
-        )}
-      </View>
-      <View style={styles.dataContainer}>
-        <View style={styles.upperContainer}>
-          <Text style={styles.upperText}>{group.membersCount} members already posting in</Text>
+    <TouchableOpacity onPress={onClick}>
+      <View style={styles.GroupListItemContainer}>
+        <View style={styles.categoryContainer}>
+          {!!group.category && !!group.category.imageUri ? (
+            <Image source={{ uri: imageBaseUrl + group.category.imageUri }} style={styles.categoryIcon as ImageStyle} />
+          ) : (
+            <Image source={require('../../assets/images/categoryIcon.png')} style={styles.categoryIcon as ImageStyle} />
+          )}
         </View>
-        <View style={styles.middleContainer}>
-          <Text style={styles.dataText}>{group.name}</Text>
+        <View style={styles.dataContainer}>
+          <View style={styles.upperContainer}>
+            <Text style={styles.upperText}>{group.membersCount} members already posting in</Text>
+          </View>
+          <View style={styles.middleContainer}>
+            <Text style={styles.dataText}>{group.name}</Text>
+          </View>
+          <View style={styles.lowerContainer}>
+            <Text>{group.membersCount} members</Text>
+          </View>
         </View>
-        <View style={styles.lowerContainer}>
-          <Text>{group.membersCount} members</Text>
+        <View style={styles.goToContainer}>
+          <Image source={require('../../assets/images/right-arrow2.png')} style={styles.goToIcon as ImageStyle} />
         </View>
       </View>
-      <View style={styles.linkContainer}>
-        <TouchableOpacity onPress={onClick} style={styles.buttonContainer}>
-          <AntDesign name="doubleright" color={'#96bfe5'} size={18} />
-        </TouchableOpacity>
-      </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
+  goToContainer: {
+    marginHorizontal: 30,
+    marginLeft: 0,
+    borderRadius: 15,
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 35,
+    width: 35,
+  },
+  goToIcon: {
+    marginVertical: 15,
+    height: 35,
+    width: 35,
+    resizeMode: 'contain',
+  },
   categoryContainer: {
     margin: 15,
     marginRight: 20,

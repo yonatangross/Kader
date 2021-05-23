@@ -18,7 +18,7 @@ const SinglePostItem = (props: SinglePostItemProps) => {
   const { post } = props;
   useEffect(() => {
     let mounted = true;
-
+    setLoading(false);
     () => {
       mounted = false;
     };

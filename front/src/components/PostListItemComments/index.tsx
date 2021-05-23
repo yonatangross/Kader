@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, FlatList } from 'react-native';
 import styles from './style';
 import { Divider } from '@ui-kitten/components';
-import PostCommentItem from '../PostCommentItem';
+import PostCommentItemHolder from '../PostCommentItemHolder';
 
 export interface PostListItemCommentsProps {
   comments: any;
@@ -10,7 +10,7 @@ export interface PostListItemCommentsProps {
 
 const PostListItemComments = (props: PostListItemCommentsProps) => {
   const renderPostCommentItem = ({ item }: any) => {
-    return <PostCommentItem key={item.commentId} comment={item} />;
+    return <PostCommentItemHolder key={item.commentId} comment={item} dividerFlag={true} />;
   };
 
   if (props.comments.length) {

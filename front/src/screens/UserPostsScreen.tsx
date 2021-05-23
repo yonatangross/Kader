@@ -43,7 +43,9 @@ const UserPostsScreen = () => {
   if (!!userPosts && !!fontsLoaded) {
     return (
       <View style={styles.container}>
-        <Text style={styles.myPostsTitle}>My Posts</Text>
+        <View style={styles.titleContainer}>
+          <Text style={styles.myPostsTitle}>My Posts</Text>
+        </View>
         <FlatList
           style={styles.list}
           data={userPosts}
@@ -60,17 +62,20 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#dedcdf',
   },
   list: {
     width: '100%',
+    marginTop:0
   },
+  titleContainer:{backgroundColor:'white'},
   myPostsTitle: {
     fontFamily: 'Roboto',
     fontWeight: 'bold',
     fontSize: 24,
     color: 'black',
     marginHorizontal: 20,
+    marginVertical:0,
     alignSelf: 'flex-start',
   },
 });

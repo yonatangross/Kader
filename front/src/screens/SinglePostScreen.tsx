@@ -6,7 +6,7 @@ const testImage = require('../assets/images/test.png');
 import moment from '../services/moment';
 import { useFonts } from 'expo-font';
 import { IPost } from '../types/IPost';
-import PostCommentItem from '../components/PostCommentItem';
+import PostCommentItemHolder from '../components/PostCommentItemHolder';
 import InputBox from '../components/InputBox';
 import { FontAwesome, FontAwesome5, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { getPostTypeName } from '../types/PostType';
@@ -17,7 +17,7 @@ import { authService } from '../services/authService';
 import { useAuth } from '../contexts/Auth';
 import { ScrollView } from 'react-native-gesture-handler';
 import Posts from '../data/Posts';
-import Comments from '../components/Comments';
+import SinglePostComments from '../components/SinglePostComments';
 import SinglePostItem from '../components/SinglePostItem';
 
 export interface SinglePostScreenProps {}
@@ -43,11 +43,9 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
       getPost(params.id)
         .then((response) => {
           if (mounted) {
-            console.log(post?.postId);
-
             const postResponse: IPost = response.data.post;
             setPost(postResponse);
-            if (post?.creator.id === auth.authData?.userId) {
+            if (postResponse?.creator.id === auth.authData?.userId) {
               setIsPostOwner(true);
             }
           }
@@ -60,7 +58,7 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
       mounted = false;
       setPostUpdated(false);
     };
-  }, [fontsLoaded, setPost, setPostUpdated, showSettingsSection]);
+  }, [fontsLoaded, setPost, postUpdated, showSettingsSection,isPostOwner]);
 
   const onPressSettingsButton = () => {
     if (showSettingsSection) {
@@ -105,7 +103,7 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
           )}
           <SinglePostItem post={post} />
 
-          <Comments comments={post.comments} postId={post.postId} setPostUpdated={setPostUpdated} />
+          <SinglePostComments comments={post.comments} postId={post.postId} postUpdated={postUpdated} setPostUpdated={setPostUpdated} />
         </View>
       </KeyboardAvoidingView>
     );

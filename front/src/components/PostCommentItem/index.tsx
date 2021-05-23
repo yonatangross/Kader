@@ -1,6 +1,5 @@
-import { Avatar } from '@ui-kitten/components';
 import moment from '../../services/moment';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View, Text, Image, ImageStyle } from 'react-native';
 import { imageBaseUrl } from '../../services/axios';
 import { IComment } from '../../types/IComment';
@@ -10,6 +9,14 @@ export interface PostCommentItemProps {
 }
 
 const PostCommentItem = (props: PostCommentItemProps) => {
+  useEffect(() => {
+    let mounted = true;
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   let { comment } = props;
 
   if (!!comment && !!comment.creator) {
@@ -19,7 +26,7 @@ const PostCommentItem = (props: PostCommentItemProps) => {
           {!!comment.creator && !!comment.creator.imageUri ? (
             <Image source={{ uri: imageBaseUrl + comment.creator.imageUri }} style={styles.profileImage as ImageStyle} />
           ) : (
-            <Image source={require('../../assets/images/imagePlaceholder.png')} style={styles.profileImage as ImageStyle} />
+            <Image source={require('../../assets/images/celebrity.png')} style={styles.profileImage as ImageStyle} />
           )}
         </View>
         <View style={styles.commentDetailsContainer}>
@@ -27,7 +34,10 @@ const PostCommentItem = (props: PostCommentItemProps) => {
             {comment.creator.firstName} {comment.creator.lastName}
           </Text>
           <Text style={styles.commentContent}>{comment.content}</Text>
-          <Text style={styles.commentDate}>{moment(comment.created).fromNow()}</Text>
+
+          <View style={styles.commentDataContainer}>
+            <Text style={styles.commentDate}>{moment(comment.created).fromNow()}</Text>
+          </View>
         </View>
       </View>
     );
@@ -35,16 +45,16 @@ const PostCommentItem = (props: PostCommentItemProps) => {
 };
 
 const styles = StyleSheet.create({
+  commentDataContainer: { flexDirection: 'row', width: '100%', justifyContent: 'space-between', marginBottom: 3 },
   commentContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    padding: 10,
-    margin: 5,
-    backgroundColor: 'white',
+    paddingHorizontal: 10,
     borderRadius: 30,
-    borderTopLeftRadius: 0,
+    backgroundColor: 'white',
+    marginVertical: 10,
   },
-  commentDetailsContainer: { flexDirection: 'column', marginLeft: 4, flexShrink: 1, width: '95%' },
+  commentDetailsContainer: { flexDirection: 'column', marginTop: 10, flexShrink: 1, width: '95%' },
   commentContentContainer: { flexDirection: 'row' },
   commentContent: { flexShrink: 1 },
   commenterName: {
@@ -56,17 +66,14 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: 'grey',
   },
-  profileAvatar: {
-    marginHorizontal: 2,
-    padding: 10,
+  editText: {
+    alignSelf: 'flex-end',
+    fontSize: 12,
+    color: 'blue',
   },
   profileImageContainer: {
-    margin: 15,
-    marginLeft: 45,
-    shadowOffset: { width: 1, height: 1 },
-    shadowColor: 'black',
-    shadowOpacity: 0.8,
-    elevation: 10,
+    marginHorizontal: 15,
+    marginVertical: 18,
     borderRadius: 100,
     overflow: 'hidden',
     backgroundColor: 'transparent',
@@ -74,6 +81,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 40,
     width: 40,
+    borderWidth: 1,
+    borderColor: 'black',
   },
   profileImage: {
     margin: 15,

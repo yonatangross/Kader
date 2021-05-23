@@ -21,10 +21,6 @@ const PostListItem = (props: PostListItemProps) => {
 
   useEffect(() => {
     let isMounted = true;
-    if (!!post) {
-      if (isMounted) {
-      }
-    }
     return () => {
       isMounted = false;
     };
@@ -47,7 +43,7 @@ const PostListItem = (props: PostListItemProps) => {
                 {!!post.creator && !!post.creator.imageUri ? (
                   <Image source={{ uri: imageBaseUrl + post.creator.imageUri }} style={styles.profileImage as ImageStyle} />
                 ) : (
-                  <Image source={require('../../assets/images/imagePlaceholder.png')} style={styles.profileImage as ImageStyle} />
+                  <Image source={require('../../assets/images/celebrity.png')} style={styles.profileImage as ImageStyle} />
                 )}
               </View>
               {/* <StarRating numOfStars={post.creator.rating} numOfRatings={post.creator.numberOfRatings} displayRatings={false} /> */}
@@ -56,10 +52,8 @@ const PostListItem = (props: PostListItemProps) => {
               <Text style={styles.PostedBy}>
                 {post.creator.firstName} {post.creator.lastName}
               </Text>
-              <Text style={styles.postTypeAndGroupNameText}>
-                {getPostTypeName(post.type)} at {post.groupName}
-              </Text>
-              <Text style={styles.postDate}>{moment(post.created).fromNow()}</Text>
+              <Text style={styles.postTypeAndGroupNameText}>{getPostTypeName(post.type)} at</Text>
+              <Text style={styles.groupText}>{post.groupName}</Text>
             </View>
             <View style={styles.categoryContainer}>
               {!!post.category && !!post.category.imageUri ? (
@@ -71,7 +65,7 @@ const PostListItem = (props: PostListItemProps) => {
           </View>
           <Divider style={{ marginHorizontal: 20 }} />
           <View style={styles.postDetailsContainer}>
-            <View style={styles.imageContainer}>
+            <View style={styles.postImageContainer}>
               {post.image !== undefined ? (
                 <Image source={{ uri: post.image }} style={styles.postImage as ImageStyle} />
               ) : (
@@ -81,6 +75,7 @@ const PostListItem = (props: PostListItemProps) => {
             <View style={styles.titleAndDescriptionContainer}>
               <Text style={styles.titleText}>{post.title}</Text>
               <Text style={styles.descriptionText}>{post.description}</Text>
+              <Text style={styles.postDate}>{moment(post.created).fromNow()}</Text>
             </View>
           </View>
           {props.showComments === true ? (

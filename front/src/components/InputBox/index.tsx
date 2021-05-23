@@ -15,17 +15,14 @@ const InputBox = (props: InputBoxProps) => {
 
   const onPressHandler = () => {
     if (!!message) {
-      console.warn(`Sending ${message}`);
       addComment(message, props.postId)
         .then((response) => {
           const postResponse: any = response;
-          console.warn(`added comment: ${message}`);
           props.setPostUpdated(true);
         })
         .catch((error) => {
           console.log(error);
         });
-      setMessage('');
     }
   };
 

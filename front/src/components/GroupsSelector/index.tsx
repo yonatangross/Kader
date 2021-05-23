@@ -34,7 +34,7 @@ const GroupsSelector = (props: GroupsSelectorProps) => {
         });
   }, [setGroups, props.active]);
 
-  const renderItem = ({ item: item, index }: { item: IGroup; index: number }) => {
+  const renderGroupListItemSelector = ({ item: item, index }: { item: IGroup; index: number }) => {
     return <GroupListItemSelector item={item} index={index} state={props.state} dispatch={props.dispatch} />;
   };
   if (props.active === 2) {
@@ -43,7 +43,7 @@ const GroupsSelector = (props: GroupsSelectorProps) => {
         <FlatList
           style={{ width: '100%', height: '78%', paddingTop: 20, marginTop: 10 }}
           data={groups}
-          renderItem={renderItem}
+          renderItem={renderGroupListItemSelector}
           keyExtractor={(item) => item.groupId}
           initialNumToRender={6}
           maxToRenderPerBatch={2}

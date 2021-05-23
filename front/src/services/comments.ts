@@ -16,7 +16,7 @@ export const getComments = async (): Promise<AxiosResponse<any>> => {
 
 export const getComment = async (commentId: string): Promise<AxiosResponse<any>> => {
   try {
-    const requestedComment: AxiosResponse<any> = await kaderApi.get(`/comments/${commentId}`);
+    const requestedComment: AxiosResponse<any> = await kaderApi.get(`/comments/comment/${commentId}`);
     return requestedComment;
   } catch (error) {
     throw new Error(error);
@@ -32,7 +32,7 @@ export const addComment = async (content: string, postId: string): Promise<Axios
   }
 };
 
-export const updateComment = async (comment: IComment): Promise<AxiosResponse<any>> => {
+export const updateComment = async (comment: any): Promise<AxiosResponse<any>> => {
   try {
     const updatedComment: AxiosResponse<any> = await kaderApi.put(`/comments/${comment.commentId}`, comment);
     return updatedComment;

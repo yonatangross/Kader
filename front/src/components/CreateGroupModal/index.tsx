@@ -79,17 +79,9 @@ const CreateGroupModal = (props: CreateGroupModalProps) => {
         />
 
         <Text style={styles.labelText}>Group Category</Text>
-        <TextInput
-          placeholder={'Group Category'}
-          style={styles.textInput}
-          numberOfLines={1}
-          value={groupCategory}
-          onChangeText={(groupCategory) => {
-            setGroupCategory(groupCategory);
-          }}
-        />
+
         <Picker
-          selectedValue={groupPrivacyMethod}
+          selectedValue={groupCategory}
           onValueChange={(itemValue) => {
             setGroupCategory(itemValue);
           }}

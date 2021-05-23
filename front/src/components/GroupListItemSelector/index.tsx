@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Image, Text } from 'react-native';
+import { StyleSheet, View, Image, Text, ImageStyle } from 'react-native';
 import { IGroup } from '../../types/IGroup';
 import { CreatePostStateType } from '../../types/CreatePostTypes';
 import * as _ from 'lodash';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import { imageBaseUrl } from '../../services/axios';
 export interface GroupListItemSelectorProps {
   item: IGroup;
   index: number;
@@ -34,13 +35,13 @@ const GroupListItemSelector = (props: GroupListItemSelectorProps) => {
 
   return (
     <View style={styles.GroupListItemContainer}>
-      <View style={styles.groupCategoryImageContainer}>
-        {!!item.category && !!item.category.imageUri ? (
-          <Image source={require('../../assets/images/categoryIcon.png')} style={{ height: 40, width: 40 }} />
-        ) : (
-          <Image source={require('../../assets/images/categoryIcon.png')} style={{ height: 40, width: 40 }} />
-        )}
-      </View>
+      <View style={styles.categoryContainer}>
+          {!!item.category && !!item.category.imageUri ? (
+            <Image source={{ uri: imageBaseUrl + item.category.imageUri }} style={styles.categoryIcon as ImageStyle} />
+          ) : (
+            <Image source={require('../../assets/images/categoryIcon.png')} style={styles.categoryIcon as ImageStyle} />
+          )}
+        </View>
       <View style={styles.dataContainer}>
         <View style={styles.upperContainer}>
           <Text style={styles.upperText}>{item.membersCount} members already posting in</Text>
@@ -85,6 +86,7 @@ const styles = StyleSheet.create({
   categoryContainer: {
     margin: 15,
     marginRight: 20,
+    marginLeft:5,
     shadowOffset: { width: 1, height: 1 },
     shadowColor: 'black',
     shadowOpacity: 0.8,

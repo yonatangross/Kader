@@ -3,9 +3,8 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   //Containers
   container: {
-    marginVertical: 10,
+    marginBottom: 10,
     flexDirection: 'column',
-    paddingBottom: 10,
     width: '100%',
     backgroundColor: '#fff',
   },
@@ -17,16 +16,55 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     margin: 10,
   },
-  titleAndDescriptionContainer: { flexDirection: 'column', alignItems: 'flex-start' },
+  titleAndDescriptionContainer: { flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'space-around', width: '60%' },
   creatorDetailsContainer: { flexDirection: 'row' },
-  creatorImageAndRatingContainer: { flexDirection: 'column', marginVertical: 15 },
-  creatorCenterContainer: { flexDirection: 'column', justifyContent: 'center', alignSelf: 'center' },
+  creatorImageAndRatingContainer: { flexDirection: 'column', marginRight: 20 },
+  creatorCenterContainer: { flexDirection: 'column', justifyContent: 'center', alignSelf: 'center', marginVertical: 15, width: '50%' },
   commentNumber: {
     marginRight: 10,
     alignSelf: 'flex-end',
     color: '#4f76ad',
   },
-  imageContainer: {
+
+  profileImageContainer: {
+    margin: 15,
+    marginLeft: 30,
+    borderRadius: 100,
+    overflow: 'hidden',
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 50,
+    width: 50,
+    borderColor: 'black',
+    borderWidth: 2,
+  },
+  profileImage: {
+    marginVertical: 15,
+    height: 45,
+    width: 45,
+    resizeMode: 'contain',
+  },
+  categoryContainer: {
+    margin: 15,
+    marginRight: 30,
+    borderRadius: 100,
+    overflow: 'hidden',
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 50,
+    width: 50,
+    borderColor: 'black',
+    borderWidth: 2,
+  },
+  categoryIcon: {
+    marginVertical: 15,
+    height: 45,
+    width: 45,
+    resizeMode: 'contain',
+  },
+  postImageContainer: {
     margin: 15,
     shadowOffset: { width: 15, height: 15 },
     shadowColor: 'black',
@@ -36,34 +74,11 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     backgroundColor: '#0000',
   },
-
   postImage: {
     width: 80,
     height: 80,
     borderRadius: 15,
     resizeMode: 'contain',
-  },
-  profileImageContainer: {
-    margin: 15,
-    marginLeft: 45,
-    shadowOffset: { width: 1, height: 1 },
-    shadowColor: 'black',
-    shadowOpacity: 0.8,
-    elevation: 10,
-    borderRadius: 100,
-    overflow: 'hidden',
-    backgroundColor: 'transparent',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 40,
-    width: 40,
-  },
-  profileImage: {
-    margin: 15,
-    height: 50,
-    width: 50,
-    resizeMode: 'contain',
-    borderRadius: 100,
   },
 
   titleText: {
@@ -89,28 +104,9 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: 'black',
   },
-  categoryContainer: {
-    margin: 15,
-    marginRight: 20,
-    shadowOffset: { width: 1, height: 1 },
-    shadowColor: 'black',
-    shadowOpacity: 0.8,
-    elevation: 10,
-    borderRadius: 15,
-    overflow: 'hidden',
-    backgroundColor: 'transparent',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 40,
-    width: 40,
-  },
-  categoryIcon: {
-    marginVertical: 15,
-    height: 40,
-    width: 40,
-    resizeMode: 'contain',
-  },
+
   arrowIcon: { height: 24, width: 24 },
+  groupText: { fontSize: 14, fontWeight: 'bold', color: 'black' },
 });
 
 export default styles;

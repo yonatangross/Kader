@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Image, ImageStyle } from 'react-native';
-import { Text } from '@ui-kitten/components';
+import { StyleSheet, View, Image, ImageStyle, Text } from 'react-native';
 import { ProfileSocial } from '../layouts/social/profile/extra/profile-social.component';
 import { useAuth } from '../contexts/Auth';
 import { getUser } from '../services/users';
@@ -12,7 +11,7 @@ import { getPostsForUser } from '../services/posts';
 import { getGroupsForUser } from '../services/groups';
 import _ from 'lodash';
 import { useNavigation } from '@react-navigation/core';
-import { AntDesign, FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { useFonts } from 'expo-font';
 
 export default function ProfileScreen() {
   const auth = useAuth();
@@ -21,7 +20,10 @@ export default function ProfileScreen() {
   const [userPosts, setUserPosts] = useState<IPost[]>();
   const [userGroups, setUserGroups] = useState<IGroup[]>();
   const [userManagedGroups, setUserManagedGroups] = useState<IGroup[]>();
-
+  let [fontsLoaded] = useFonts({
+    Pattaya: require('../assets/fonts/Pattaya/Pattaya-Regular.ttf'),
+    Fredoka_One: require('../assets/fonts/Fredoka_One/FredokaOne-Regular.ttf'),
+  });
   useEffect(() => {
     if (!!auth && !!auth.authData) {
       getUser(auth.authData.userId)
@@ -54,7 +56,7 @@ export default function ProfileScreen() {
           console.log(`error while fetching user data ${error}`);
         });
     }
-  }, [setUser, setUserPosts, setUserGroups, setUserManagedGroups]);
+  }, [setUser, setUserPosts, setUserGroups, setUserManagedGroups, fontsLoaded]);
 
   const signOut = () => {
     auth.signOut();
@@ -81,7 +83,7 @@ export default function ProfileScreen() {
       });
   };
 
-  if (!!user) {
+  if (!!user && fontsLoaded) {
     return (
       <View style={styles.container}>
         <View style={styles.userBasicDetailsContainer}>
@@ -89,18 +91,15 @@ export default function ProfileScreen() {
             {!!user.imageUri ? (
               <Image source={{ uri: user.imageUri }} style={styles.profileImage as ImageStyle} />
             ) : (
-              <Image source={require('../assets/images/imagePlaceholder.png')} style={styles.profileImage as ImageStyle} />
+              <Image source={require('../assets/images/celebrity.png')} style={styles.profileImage as ImageStyle} />
             )}
           </View>
           <Text style={styles.fullNameText}>{user?.firstName + ' ' + user?.lastName}</Text>
           <TouchableOpacity activeOpacity={0.7} onPress={signOut} style={styles.logoutButton}>
-            <Image source={require('../assets/images/log-out.png')} style={styles.floatingButtonStyle} />
+            <Image source={require('../assets/images/logout2.png')} style={styles.floatingButtonStyle} />
           </TouchableOpacity>
         </View>
 
-        <Text appearance="hint" category="s1">
-          {user?.email}
-        </Text>
         <View style={styles.userDataContainer}>
           <ProfileSocial style={styles.userDataItemContainer} hint="Posts" value={`${!userPosts?.length ? 0 : userPosts.length}`} />
           <ProfileSocial style={styles.userDataItemContainer} hint="Groups" value={`${!userGroups?.length ? 0 : userGroups.length}`} />
@@ -111,19 +110,31 @@ export default function ProfileScreen() {
 
         <View style={styles.UserActionListsContainer}>
           <TouchableOpacity onPress={onPressUserPosts} style={styles.actionItemButton}>
-            <MaterialCommunityIcons name="clipboard-multiple-outline" size={40} color={'black'} style={{ marginLeft: 20 }} />
-            <Text category="h4">Posts</Text>
-            <Ionicons name="ios-arrow-forward-circle-outline" size={42} color={'black'} style={{ marginRight: 20 }} />
+            <View style={styles.categoryContainer}>
+              <Image source={require('../assets/images/posts.png')} style={styles.categoryIcon as ImageStyle} />
+            </View>
+            <Text style={styles.actionItemText}>Posts</Text>
+            <View style={styles.goToContainer}>
+              <Image source={require('../assets/images/right-arrow2.png')} style={styles.goToIcon as ImageStyle} />
+            </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={onPressUserGroups} style={styles.actionItemButton}>
-            <FontAwesome name="users" size={34} color={'black'} style={{ marginLeft: 20 }} />
-            <Text category="h4">Groups</Text>
-            <Ionicons name="ios-arrow-forward-circle-outline" size={42} color={'black'} style={{ marginRight: 20 }} />
+            <View style={styles.categoryContainer}>
+              <Image source={require('../assets/images/group.png')} style={styles.categoryIcon as ImageStyle} />
+            </View>
+            <Text style={styles.actionItemText}>Groups</Text>
+            <View style={styles.goToContainer}>
+              <Image source={require('../assets/images/right-arrow2.png')} style={styles.goToIcon as ImageStyle} />
+            </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={onPressUserSettings} style={styles.actionItemButton}>
-            <AntDesign name="setting" size={40} color={'black'} style={{ marginLeft: 20 }} />
-            <Text category="h4">Settings</Text>
-            <Ionicons name="ios-arrow-forward-circle-outline" size={42} color={'black'} style={{ marginRight: 20 }} />
+            <View style={styles.categoryContainer}>
+              <Image source={require('../assets/images/settings3.png')} style={styles.categoryIcon as ImageStyle} />
+            </View>
+            <Text style={styles.actionItemText}>Settings</Text>
+            <View style={styles.goToContainer}>
+              <Image source={require('../assets/images/right-arrow2.png')} style={styles.goToIcon as ImageStyle} />
+            </View>
           </TouchableOpacity>
         </View>
       </View>
@@ -139,9 +150,50 @@ export default function ProfileScreen() {
 }
 
 const styles = StyleSheet.create({
-  fullNameText: { fontSize: 16, fontWeight: 'bold' },
+  fullNameText: { fontFamily: 'Fredoka_One', fontSize: 30 },
+
+  actionItemText: {
+    fontFamily: 'Fredoka_One',
+    textAlign: 'left',
+    marginLeft: 40,
+    fontSize: 26,
+    width: '30%',
+  },
+  goToContainer: {
+    marginHorizontal: 30,
+    marginLeft: 0,
+    borderRadius: 15,
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 35,
+    width: 35,
+  },
+  goToIcon: {
+    marginVertical: 15,
+    height: 35,
+    width: 35,
+    resizeMode: 'contain',
+  },
+  categoryContainer: {
+    marginLeft: 30,
+    marginRight: 0,
+
+    borderRadius: 15,
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 60,
+    width: 60,
+  },
+  categoryIcon: {
+    marginVertical: 15,
+    height: 60,
+    width: 60,
+    resizeMode: 'contain',
+  },
   container: { flex: 1, backgroundColor: 'white', flexDirection: 'column' },
-  actionItemButton: { flexDirection: 'row', width: '100%', alignItems: 'center', justifyContent: 'space-between', marginVertical: 40 },
+  actionItemButton: { flexDirection: 'row', width: '100%', alignItems: 'center', justifyContent: 'space-between', marginVertical: 30 },
   UserActionListsContainer: {
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -149,15 +201,14 @@ const styles = StyleSheet.create({
   },
   floatingButtonStyle: {
     resizeMode: 'contain',
-    width: 32,
-    height: 32,
+    width: 40,
+    height: 40,
   },
   logoutButton: {
     width: 50,
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 30,
   },
   profileAvatar: {
     marginHorizontal: 8,
@@ -168,6 +219,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   userDataContainer: {
+    marginTop: 20,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -179,17 +231,21 @@ const styles = StyleSheet.create({
   },
   profileImageContainer: {
     margin: 15,
-    shadowOffset: { width: 15, height: 15 },
-    shadowColor: 'black',
-    shadowOpacity: 0.8,
-    elevation: 10,
+    marginRight: 0,
+    marginBottom: 2,
     borderRadius: 100,
     overflow: 'hidden',
     backgroundColor: '#0000',
+    borderColor: 'black',
+    borderWidth: 2,
+    width: 55,
+    height: 55,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   profileImage: {
-    width: 80,
-    height: 80,
+    width: 50,
+    height: 50,
     borderRadius: 100,
     resizeMode: 'contain',
   },
