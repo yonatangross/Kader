@@ -63,6 +63,7 @@ const CreateGeneralPostModal = (props: CreateGeneralPostModalProps) => {
           props.setVisible(false);
           console.log('Modal has now been closed.');
         }}
+        presentationStyle={'fullScreen'}
       >
         <PostCreationProgressBar activeSection={activeSection} numberOfSections={numberOfSections} />
         <PostTypeSelector active={activeSection} dispatch={dispatch} setActiveSection={setActiveSection} numberOfSections={numberOfSections} />
@@ -73,7 +74,6 @@ const CreateGeneralPostModal = (props: CreateGeneralPostModalProps) => {
           setActiveSection={setActiveSection}
           finalStage={false}
           setSubmitFlag={setSubmitFlag}
-          numberOfSections={numberOfSections}
         />
 
         <GroupsSelector

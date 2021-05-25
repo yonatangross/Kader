@@ -73,7 +73,6 @@ const CreateGroupPostModal = (props: CreateGroupPostModalProps) => {
           setActiveSection={setActiveSection}
           finalStage={true}
           setSubmitFlag={setSubmitFlag}
-          numberOfSections={numberOfSections}
         />
       </Modal>
     </>

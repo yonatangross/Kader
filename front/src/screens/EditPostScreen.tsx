@@ -1,7 +1,7 @@
 import { Text } from '@ui-kitten/components';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { ImageStyle, StyleSheet, Image, TouchableOpacity, SafeAreaView, TextInput } from 'react-native';
+import { ImageStyle, StyleSheet, Image, TouchableOpacity, SafeAreaView, TextInput, ActivityIndicator } from 'react-native';
 import { View } from '../components/Themed';
 import { IPost } from '../types/IPost';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -11,6 +11,7 @@ import moment from '../services/moment';
 import { updatePost } from '../services/posts';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import UploadImage from '../components/UploadImage';
+import LoadingIndicator from '../components/LoadingIndicator';
 
 export interface EditPostScreenProps {}
 
@@ -146,7 +147,7 @@ const EditPostScreen = (props: EditPostScreenProps) => {
         </View>
       </View>
     );
-  } else return <View>{loading ? <Text>loading...</Text> : <Text>Fetched!!</Text>}</View>;
+  } else return loading && <LoadingIndicator />;
 };
 
 const styles = StyleSheet.create({

@@ -1,6 +1,6 @@
 import { useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, FlatList, TouchableOpacity, Image, Text } from 'react-native';
+import { View, StyleSheet, FlatList, TouchableOpacity, Image, Text, ActivityIndicator } from 'react-native';
 import _ from 'lodash';
 import { getGroup } from '../services/groups';
 import PostListItem from '../components/PostListItem';
@@ -11,6 +11,7 @@ import CreateGroupPostModal from '../components/CreateGroupPostModal';
 import GroupManagementPanel from '../components/GroupManagementPanel';
 import { useAuth } from '../contexts/Auth';
 import { useFonts } from 'expo-font';
+import LoadingIndicator from '../components/LoadingIndicator';
 
 export interface SingleGroupScreenProps {}
 
@@ -73,7 +74,7 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
 
           <View style={styles.membersContainer}>
             <View style={styles.membersHeaderContainer}>
-              <Text style={styles.membersLengthText}>{group.membersCount+ group.managersCount} members</Text>
+              <Text style={styles.membersLengthText}>{group.membersCount} members</Text>
             </View>
             <FlatList
               contentContainerStyle={{ flex: 1, justifyContent: 'space-around' }}
@@ -103,7 +104,7 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
         </TouchableOpacity>
       </View>
     );
-  } else return <View>{loading ? <Text>loading...</Text> : <Text>Fetched!!</Text>}</View>;
+  } else return loading && <LoadingIndicator />;
 };
 
 const styles = StyleSheet.create({

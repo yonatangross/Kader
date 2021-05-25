@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, TouchableWithoutFeedback, ActivityIndicator } from 'react-native';
 import { IPost } from '../../types/IPost';
 import styles from './style';
 import { useNavigation } from '@react-navigation/native';
@@ -52,7 +52,25 @@ const ProfilePostListItem = (props: ProfilePostListItemProps) => {
         </View>
       </TouchableWithoutFeedback>
     );
-  } else return <View>{loading ? <Text>loading...</Text> : <Text>Fetched!!</Text>}</View>;
+  } else
+    return (
+      <>
+        {loading ? (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              flexDirection: 'row',
+              padding: 10,
+            }}
+          >
+            <ActivityIndicator size="large" color="#4975aa" />
+          </View>
+        ) : (
+          <Text>Fetched!!</Text>
+        )}
+      </>
+    );
 };
 
 export default ProfilePostListItem;

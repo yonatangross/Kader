@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, Image, ImageStyle } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Image, ImageStyle, ActivityIndicator } from 'react-native';
 import _ from 'lodash';
 import { Text } from '@ui-kitten/components';
 
@@ -57,7 +57,25 @@ const SinglePostHeaderItem = (props: SinglePostHeaderItemProps) => {
         <View style={styles.categoryContainer}>{!!post.category ? <Text style={styles.categoryText}>{post.category.name}</Text> : <></>}</View>
       </View>
     );
-  } else return <View>{loading ? <Text>loading...</Text> : <Text>Fetched!!</Text>}</View>;
+  } else
+    return (
+      <>
+        {loading ? (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              flexDirection: 'row',
+              padding: 10,
+            }}
+          >
+            <ActivityIndicator size="large" color="#4975aa" />
+          </View>
+        ) : (
+          <Text>Fetched!!</Text>
+        )}
+      </>
+    );
 };
 
 const styles = StyleSheet.create({

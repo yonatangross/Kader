@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { FlatList, StyleSheet, TouchableOpacity, Image, Text } from 'react-native';
+import { FlatList, StyleSheet, TouchableOpacity, Image, Text, ActivityIndicator } from 'react-native';
 import { getGroupsForUser, searchGroups } from '../services/groups';
 import GroupListItem from '../components/GroupListItem';
 import { View } from '../components/Themed';
@@ -15,6 +15,7 @@ import Autocomplete from 'react-native-autocomplete-input';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useFonts } from 'expo-font';
 import { ScrollView } from 'react-native-gesture-handler';
+import LoadingIndicator from '../components/LoadingIndicator';
 
 export interface GroupsProps {}
 
@@ -162,7 +163,7 @@ const GroupsScreen = () => {
         />
       </View>
     );
-  } else return <View>{loading ? <Text>loading...</Text> : <Text>Fetched!!</Text>}</View>;
+  } else return loading && <LoadingIndicator />;
 };
 
 const styles = StyleSheet.create({

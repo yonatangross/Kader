@@ -1,6 +1,6 @@
 import { useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Button, FlatList, TouchableOpacity, Image, StatusBar, ImageStyle } from 'react-native';
+import { View, StyleSheet, Button, FlatList, TouchableOpacity, Image, StatusBar, ImageStyle, ActivityIndicator } from 'react-native';
 import _ from 'lodash';
 import { Text } from '@ui-kitten/components';
 
@@ -53,7 +53,25 @@ const SinglePostItem = (props: SinglePostItemProps) => {
         </View>
       </View>
     );
-  } else return <View>{loading ? <Text>loading...</Text> : <Text>Fetched!!</Text>}</View>;
+  } else
+    return (
+      <>
+        {loading ? (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              flexDirection: 'row',
+              padding: 10,
+            }}
+          >
+            <ActivityIndicator size="large" color="#4975aa" />
+          </View>
+        ) : (
+          <Text>Fetched!!</Text>
+        )}
+      </>
+    );
 };
 
 const styles = StyleSheet.create({

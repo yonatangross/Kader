@@ -1,7 +1,7 @@
 import { Text } from '@ui-kitten/components';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { KeyboardAvoidingView, Platform, StyleSheet, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, KeyboardAvoidingView, Platform, StyleSheet, TouchableOpacity } from 'react-native';
 import { View } from '../components/Themed';
 import { IPost } from '../types/IPost';
 import { updatePost } from '../services/posts';
@@ -12,6 +12,7 @@ import { addRating } from '../services/users';
 import { FlatList } from 'react-native-gesture-handler';
 import CommenterListItem from '../components/CommenterListItem';
 import { IComment } from '../types/IComment';
+import LoadingIndicator from '../components/LoadingIndicator';
 
 export interface ClosePostScreenProps {}
 
@@ -99,7 +100,7 @@ const ClosePostScreen = (props: ClosePostScreenProps) => {
         {showRating === true && <Rating ratingColor="#f3a953" imageSize={20} startingValue={0} ratingCount={5} onFinishRating={onFinishRating} />}
       </View>
     );
-  } else return <View>{loading ? <Text>loading...</Text> : <Text>Fetched!!</Text>}</View>;
+  } else return loading && <LoadingIndicator />;
 };
 
 const styles = StyleSheet.create({
