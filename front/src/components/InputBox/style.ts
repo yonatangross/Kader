@@ -1,7 +1,15 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  container: { flexDirection: 'row', margin: 10, paddingBottom: 0, alignItems: 'center', backgroundColor: 'white',borderRadius:30 },
+  container: {
+    flexDirection: 'row',
+    margin: 10,
+    paddingBottom: 0,
+    alignItems: 'center',
+    alignSelf:'flex-end',
+    backgroundColor: 'white',
+    borderRadius: 30,
+  },
   mainContainer: {
     flexDirection: 'row',
     backgroundColor: 'white',
@@ -12,7 +20,6 @@ const styles = StyleSheet.create({
     maxHeight: 50,
   },
   textInput: {
-    flex: 1,
     marginHorizontal: 10,
   },
   icon: { marginHorizontal: 5 },

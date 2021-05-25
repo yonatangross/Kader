@@ -18,6 +18,8 @@ const CommentActionsModal = (props: CommentActionsModalProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [comment, setComment] = useState<IComment>();
   const [content, setContent] = useState<string>('');
+  const [hideUpdateButton, setHideUpdateButton] = useState<boolean>(true);
+  const [hideDeleteButton, setHideDeleteButton] = useState<boolean>(true);
 
   useEffect(() => {
     let isMounted = true;
@@ -27,6 +29,7 @@ const CommentActionsModal = (props: CommentActionsModalProps) => {
         .then((response) => {
           if (isMounted) {
             const commentResult: IComment = response.data;
+            setContent(commentResult.content);
             setComment(commentResult);
             setLoading(false);
           }
@@ -41,7 +44,7 @@ const CommentActionsModal = (props: CommentActionsModalProps) => {
       props.setVisible(false);
       isMounted = false;
     };
-  }, [props.visible, setComment]);
+  }, [props.visible, setComment, setContent, setHideUpdateButton, setHideDeleteButton]);
 
   const onPressUpdateComment = () => {
     if (!!comment?.content) {
@@ -128,12 +131,37 @@ const CommentActionsModal = (props: CommentActionsModalProps) => {
                 </View>
               </View>
               <View style={styles.buttonsContainer}>
-                <TouchableOpacity activeOpacity={0.7} onPress={onPressUpdateComment} style={styles.updateButtonContainer}>
+                <TouchableOpacity
+                  activeOpacity={0.7}
+                  onPress={() => {
+                    setHideUpdateButton(false);
+                  }}
+                  style={styles.updateButtonContainer}
+                >
                   <Text style={styles.postCreationText}>Update Comment</Text>
                 </TouchableOpacity>
-                <TouchableOpacity activeOpacity={0.7} onPress={onPressDeleteComment} style={styles.deleteButtonContainer}>
-                  <Text style={styles.postCreationText}>Delete Comment</Text>
-                </TouchableOpacity>
+
+                {hideUpdateButton && (
+                  <>
+                    <TouchableOpacity activeOpacity={0.7} onPress={onPressUpdateComment} style={styles.updateButtonContainer}>
+                      <Text style={styles.postCreationText}>Update</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity activeOpacity={0.7} onPress={() => {}} style={styles.updateButtonContainer}>
+                      <Text style={styles.postCreationText}>Cancel</Text>
+                    </TouchableOpacity>
+                  </>
+                )}
+
+                {hideDeleteButton && (
+                  <>
+                    <TouchableOpacity activeOpacity={0.7} onPress={() => {}} style={styles.deleteButtonContainer}>
+                      <Text style={styles.postCreationText}>Delete Comment</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity activeOpacity={0.7} onPress={onPressDeleteComment} style={styles.deleteButtonContainer}>
+                      <Text style={styles.postCreationText}>Delete</Text>
+                    </TouchableOpacity>
+                  </>
+                )}
               </View>
             </View>
           </View>

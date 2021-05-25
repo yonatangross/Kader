@@ -54,19 +54,24 @@ const SinglePostComments = (props: CommentsProps) => {
   if (fontsLoaded) {
     return (
       <>
-        <CommentActionsModal commentId={activeCommentIdOnModal} visible={visibleCommentActionModal} setVisible={setVisibleCommentActionModal} setPostUpdated={props.setPostUpdated} />
+        <CommentActionsModal
+          commentId={activeCommentIdOnModal}
+          visible={visibleCommentActionModal}
+          setVisible={setVisibleCommentActionModal}
+          setPostUpdated={props.setPostUpdated}
+        />
         <KeyboardAvoidingView enabled style={styles.viewContainer} behavior={Platform.OS === 'ios' ? 'padding' : 'position'}>
           <FlatList
             style={styles.commentsList}
             data={comments}
             ListHeaderComponent={<Text style={styles.commentsNumber}>Comments</Text>}
             ListHeaderComponentStyle={{ marginBottom: 5, marginTop: 10, width: '100%' }}
-            ListFooterComponent={<InputBox postId={postId} setPostUpdated={props.setPostUpdated} />}
             renderItem={renderCommentListItem}
             keyExtractor={(item) => item.commentId}
             showsVerticalScrollIndicator={true}
           />
         </KeyboardAvoidingView>
+        <InputBox postId={postId} setPostUpdated={props.setPostUpdated} />
       </>
     );
   } else
@@ -91,7 +96,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   viewContainer: {
-    flex: 1,
     width: '100%',
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
