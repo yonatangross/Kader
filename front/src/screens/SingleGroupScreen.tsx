@@ -73,7 +73,7 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
 
           <View style={styles.membersContainer}>
             <View style={styles.membersHeaderContainer}>
-              <Text style={styles.membersLengthText}>{group.members.length} members</Text>
+              <Text style={styles.membersLengthText}>{group.membersCount+ group.managersCount} members</Text>
             </View>
             <FlatList
               contentContainerStyle={{ flex: 1, justifyContent: 'space-around' }}

@@ -20,6 +20,8 @@ const GroupListItem = (props: GroupListItemProps) => {
   }, [props.group]);
 
   const onClick = () => {
+    console.log(group.groupId);
+    
     navigation.navigate('SingleGroup', {
       id: group.groupId,
     });
