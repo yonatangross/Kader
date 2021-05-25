@@ -5,13 +5,13 @@ import { ColorSchemeName } from 'react-native';
 import { AppStack } from './AppStack';
 import { AuthStack } from './AuthStack';
 import {useAuth} from '../contexts/Auth';
-import { Loading } from '../screens/Loading';
+import LoadingIndicator from '../components/LoadingIndicator';
 
 export default function Router({ colorScheme }: { colorScheme: ColorSchemeName }) {
   const {authData, loading} = useAuth();
 
   if (loading) {
-    return <Loading />;
+    return <LoadingIndicator />;
   }
   return (
     <NavigationContainer theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
