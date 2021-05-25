@@ -8,7 +8,7 @@ export interface LoadingIndicatorProps {
 const LoadingIndicator = (props: LoadingIndicatorProps) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Scanning For Viruses...</Text>
+      <Text style={styles.title}>Loading great things...</Text>
       <ActivityIndicator size="large" color="white" />
       <StatusBar style="auto" />
     </View>
@@ -19,7 +19,7 @@ export default LoadingIndicator;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#623FA0',
+    backgroundColor: '#4975aa',
     alignItems: 'center',
     justifyContent: 'center',
   },
