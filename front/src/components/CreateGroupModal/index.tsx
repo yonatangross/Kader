@@ -20,7 +20,6 @@ const CreateGroupModal = (props: CreateGroupModalProps) => {
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [groupDescription, setGroupDescription] = useState<string>('');
   const [groupMainLocation, setGroupMainLocation] = useState<string>('');
-  const [searchable, setSearchable] = useState<boolean>(false);
   const [groupPrivacyMethod, setGroupPrivacyMethod] = useState<any>(GroupPrivacy.Public);
   const [submitFlag, setSubmitFlag] = useState<boolean>(false);
 
@@ -78,19 +77,6 @@ const CreateGroupModal = (props: CreateGroupModalProps) => {
           }}
         />
 
-        <Text style={styles.labelText}>Group Category</Text>
-
-        <Picker
-          selectedValue={groupCategory}
-          onValueChange={(itemValue) => {
-            setGroupCategory(itemValue);
-          }}
-        >
-          {categories.map((item, index) => {
-            return <Picker.Item label={item.name} value={item.id} key={index} />;
-          })}
-        </Picker>
-
         <Text style={styles.labelText}>Group Description</Text>
         <TextInput
           placeholder={'Group Description'}
@@ -102,6 +88,33 @@ const CreateGroupModal = (props: CreateGroupModalProps) => {
             setGroupDescription(groupDescription);
           }}
         />
+
+        <Text style={styles.labelText}>Group Category</Text>
+        <Picker
+          style={styles.picker}
+          selectedValue={groupCategory}
+          onValueChange={(itemValue) => {
+            setGroupCategory(itemValue);
+          }}
+        >
+          {categories.map((item, index) => {
+            return <Picker.Item label={item.name} value={item.id} key={index} />;
+          })}
+        </Picker>
+        <Text style={styles.labelText}>Group Privacy</Text>
+
+        <Picker
+          style={styles.picker}
+          selectedValue={groupPrivacyMethod}
+          onValueChange={(itemValue) => {
+            setGroupPrivacyMethod(itemValue);
+          }}
+        >
+          <Picker.Item label="Invisible" value={GroupPrivacy.Invisible} />
+          <Picker.Item label="Private" value={GroupPrivacy.Private} />
+          <Picker.Item label="Public" value={GroupPrivacy.Public} />
+        </Picker>
+
         <GooglePlacesAutocomplete
           placeholder="Choose group primary location"
           onPress={(data, details = null) => {
@@ -115,21 +128,6 @@ const CreateGroupModal = (props: CreateGroupModalProps) => {
           }}
           fetchDetails={true}
         />
-
-        <CheckBox checked={searchable} onChange={(nextChecked) => setSearchable(nextChecked)}>
-          {`Searchable: ${searchable}`}
-        </CheckBox>
-
-        <Picker
-          selectedValue={groupPrivacyMethod}
-          onValueChange={(itemValue) => {
-            setGroupPrivacyMethod(itemValue);
-          }}
-        >
-          <Picker.Item label="Invisible" value={GroupPrivacy.Invisible} />
-          <Picker.Item label="Private" value={GroupPrivacy.Private} />
-          <Picker.Item label="Public" value={GroupPrivacy.Public} />
-        </Picker>
 
         <TouchableOpacity
           activeOpacity={0.7}
@@ -146,8 +144,9 @@ const CreateGroupModal = (props: CreateGroupModalProps) => {
 };
 
 const styles = StyleSheet.create({
+  picker: { marginHorizontal: 20 },
   postDetailsContainer: { flexDirection: 'column', width: '100%' },
-  labelText: { fontSize: 12, paddingLeft: 10, paddingTop: 10 },
+  labelText: { fontSize: 16, marginHorizontal: 20, paddingTop: 10 },
   finishButton: {
     backgroundColor: '#047cfb',
     justifyContent: 'center',

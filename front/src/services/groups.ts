@@ -39,9 +39,7 @@ export const addGroup = async (formData: any): Promise<AxiosResponse<any>> => {
       description: formData.description,
       groupPrivacy: formData.groupPrivacy,
       mainLocation: formData.mainLocation,
-      members: formData.members,
       name: formData.name,
-      posts: [],
     };
 
     const saveGroup: AxiosResponse<any> = await kaderApi.post(`/groups`, group);

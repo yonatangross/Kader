@@ -1,7 +1,7 @@
-import { Button, Icon, Text } from '@ui-kitten/components';
+import { Text } from '@ui-kitten/components';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import { FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import PostListItem from '../components/PostListItem';
 import { View } from '../components/Themed';
 import { IPost } from '../types/IPost';
@@ -37,7 +37,7 @@ const HomeScreen = () => {
   }, [posts, loading, visibleCreateGroup, visibleCreatePost]);
 
   const renderPostListItem = ({ item }: any) => {
-    return <PostListItem post={item} key={item.postId} showComments={true}  />;
+    return <PostListItem post={item} key={item.postId} showComments={true} />;
   };
   if (!!posts) {
     return (
