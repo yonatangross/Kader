@@ -28,7 +28,7 @@ export default function ProfileScreen() {
           console.log(`error while fetching user data ${error}`);
         });
     }
-  }, [user, fontsLoaded]);
+  }, [setUser, fontsLoaded]);
 
   const signOut = () => {
     auth.signOut();

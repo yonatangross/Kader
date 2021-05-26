@@ -18,11 +18,21 @@ const PostListItemComments = (props: PostListItemCommentsProps) => {
   const navigation = useNavigation();
 
   const onPressLoadAllComments = () => {
-    navigation.navigate('SinglePost', { id: postId });
+    navigation.navigate('SinglePost', {
+      id: postId,
+    });
   };
 
   const renderPostCommentItem = ({ item }: any) => {
     return <PostCommentItemHolder key={item.commentId} comment={item} dividerFlag={true} />;
+  };
+
+  const renderLoadAllCommentsItem = () => {
+    return (
+      <TouchableOpacity onPress={onPressLoadAllComments} activeOpacity={0.7} style={styles.loadAllCommentsContainer}>
+        <Text style={styles.loadAllCommentsText}>load all comments</Text>
+      </TouchableOpacity>
+    );
   };
 
   if (props.comments.length) {
@@ -36,13 +46,6 @@ const PostListItemComments = (props: PostListItemCommentsProps) => {
           renderItem={renderPostCommentItem}
           keyExtractor={(item) => item.commentId}
           showsVerticalScrollIndicator={false}
-          ListFooterComponent={
-            <TouchableOpacity onPress={onPressLoadAllComments}>
-              <View style={styles.loadAllCommentsContainer}>
-                <Text style={styles.loadAllCommentsText}>load all comments</Text>
-              </View>
-            </TouchableOpacity>
-          }
         />
       </View>
     );

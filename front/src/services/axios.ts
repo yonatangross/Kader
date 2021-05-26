@@ -21,6 +21,8 @@ kaderApi.interceptors.request.use(
     const serverCallUrl = new URL(originalRequest.url);
     const status = error.response.status;
     console.log('request returned with error from kaderApi:');
+    console.log(error);
+
     console.log(status);
     console.log(originalRequest);
     console.log(serverCallUrl);

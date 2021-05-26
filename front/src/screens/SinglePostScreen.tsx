@@ -29,7 +29,6 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
   const [post, setPost] = useState<IPost>();
   const [postUpdated, setPostUpdated] = useState<boolean>(false);
   const [isPostOwner, setIsPostOwner] = useState<boolean>(false);
-
   const [showSettingsSection, setShowSettingsSection] = useState<boolean>(false);
 
   let [fontsLoaded] = useFonts({
@@ -56,9 +55,8 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
     }
     return () => {
       mounted = false;
-      setPostUpdated(false);
     };
-  }, [fontsLoaded, setPost, postUpdated, showSettingsSection,isPostOwner]);
+  }, [fontsLoaded, setPost, setPostUpdated, setShowSettingsSection,setIsPostOwner]);
 
   const onPressSettingsButton = () => {
     if (showSettingsSection) {

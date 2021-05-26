@@ -20,13 +20,6 @@ const PostListItem = (props: PostListItemProps) => {
   const { post } = props;
   const navigation = useNavigation();
 
-  useEffect(() => {
-    let isMounted = true;
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
   const onClick = () => {
     navigation.navigate('SinglePost', {
       post: props.post,

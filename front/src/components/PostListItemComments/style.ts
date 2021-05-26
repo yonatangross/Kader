@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  loadAllCommentsContainer: { flexDirection: 'row', width: '100%' ,justifyContent:'flex-end', paddingRight:10},
+  loadAllCommentsContainer: { flexDirection: 'row', justifyContent: 'flex-end', paddingRight: 10 },
   loadAllCommentsText: { fontSize: 14, color: 'blue' },
   container: {
     marginHorizontal: 10,
