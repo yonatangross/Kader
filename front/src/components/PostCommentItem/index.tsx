@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   },
   commentDate: {
     alignSelf: 'flex-end',
-    marginRight: 10,
+    marginRight: 12,
     fontSize: 12,
     color: 'grey',
   },
