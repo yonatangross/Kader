@@ -79,17 +79,16 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 40,
-    width: 40,
+    height: 50,
+    width: 50,
     borderWidth: 1,
     borderColor: 'black',
   },
   profileImage: {
     margin: 15,
-    height: 50,
-    width: 50,
+    height: 42,
+    width: 42,
     resizeMode: 'contain',
-    borderRadius: 100,
   },
 });
 
