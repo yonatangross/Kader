@@ -26,12 +26,19 @@ const PostCommentItemHolder = (props: PostCommentItemHolderProps) => {
     return (
       <>
         <PostCommentItem comment={comment} />
-        <View style={{ flexDirection: 'column' }}>{dividerFlag === true ? <Divider style={{ marginHorizontal: 20, width: '80%' }} /> : <></>}</View>
+        <View style={styles.commentItem}>{dividerFlag === true ? <Divider style={{ marginHorizontal: 20, width: '80%' }} /> : <></>}</View>
       </>
     );
   } else return <></>;
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+
+
+  commentItem:{
+    flexDirection: 'column',
+  }
+
+});
 
 export default PostCommentItemHolder;
