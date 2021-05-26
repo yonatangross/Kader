@@ -80,7 +80,7 @@ const PostListItem = (props: PostListItemProps) => {
             </View>
           </View>
           {props.showComments === true ? (
-            <PostListItemComments comments={post.comments} commentsInitialNumber={3} />
+            <PostListItemComments comments={post.comments} commentsInitialNumber={3} postId={post.postId} />
           ) : (
             <Text style={styles.commentNumber}>{post.commentsCount} comments</Text>
           )}

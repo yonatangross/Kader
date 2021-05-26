@@ -1,6 +1,8 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+  loadAllCommentsContainer: { flexDirection: 'row', width: '100%' },
+  loadAllCommentsText: { fontSize: 14, color: 'blue' },
   container: {
     marginHorizontal: 10,
     marginVertical: 5,
