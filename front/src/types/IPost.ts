@@ -10,6 +10,7 @@ export interface IPost {
   title: string;
   description: string;
   comments: IComment[];
+  commentsCount: number;
   location: string;
   address: string;
   image: any;
@@ -17,6 +18,6 @@ export interface IPost {
   groupId: string;
   groupName: string;
   created: Date;
-  isActive:boolean;
+  isActive: boolean;
   // updatedAt: Date;
 }

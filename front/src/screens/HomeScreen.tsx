@@ -34,7 +34,7 @@ const HomeScreen = () => {
     () => {
       isMounted = false;
     };
-  }, [posts, setLoading, setVisibleCreateGroup, setVisibleCreatePost]);
+  }, [posts, loading, visibleCreateGroup, visibleCreatePost]);
 
   const renderPostListItem = ({ item }: any) => {
     return <PostListItem post={item} key={item.postId} showComments={true}  />;

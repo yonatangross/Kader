@@ -12,6 +12,8 @@ import GroupManagementPanel from '../components/GroupManagementPanel';
 import { useAuth } from '../contexts/Auth';
 import { useFonts } from 'expo-font';
 import LoadingIndicator from '../components/LoadingIndicator';
+import { IPost } from '../types/IPost';
+import { IUser } from '../types/IUser';
 
 export interface SingleGroupScreenProps {}
 
@@ -54,11 +56,10 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
     };
   }, [fontsLoaded, setGroup]);
 
-  const renderMemberListItem = ({ item }: any) => {
+  const renderMemberListItem = ({ item: item }: { item: IUser }) => {
     return <UserListItem user={item} key={item.id} />;
   };
-
-  const renderPostListItem = ({ item }: any) => {
+  const renderPostListItem = ({ item: item }: { item: IPost }) => {
     return <PostListItem post={item} key={item.postId} showComments={true} />;
   };
 
@@ -81,10 +82,11 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
               showsHorizontalScrollIndicator={true}
               ListFooterComponentStyle={{ flex: 0.1 }}
               ListFooterComponent={
-                <TouchableWithoutFeedback onPress={() => {
-                  console.log('pressed more members load');
-                  
-                }}>
+                <TouchableWithoutFeedback
+                  onPress={() => {
+                    console.log('pressed more members load');
+                  }}
+                >
                   <View style={[styles.profileImageContainer]}>
                     <Text style={styles.extraMembersText}>...</Text>
                   </View>
@@ -133,8 +135,8 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 2,
   },
-  groupDataContainer: { flexDirection: 'column', backgroundColor: 'white', width: '100%', },
-  container: { flexDirection: 'column', width: '100%',height:'100%' },
+  groupDataContainer: { flexDirection: 'column', backgroundColor: 'white', width: '100%', borderBottomColor: '#dedcdf', borderBottomWidth: 10 },
+  container: { flexDirection: 'column', width: '100%', height: '100%' },
   membersHeaderContainer: { alignItems: 'center' },
   membersContainer: { flexDirection: 'column', marginBottom: 10 },
   postsContainer: { flexDirection: 'column', width: '100%' },

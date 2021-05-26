@@ -3,12 +3,16 @@ import { View, Text, FlatList } from 'react-native';
 import styles from './style';
 import { Divider } from '@ui-kitten/components';
 import PostCommentItemHolder from '../PostCommentItemHolder';
+import { IComment } from '../../types/IComment';
 
 export interface PostListItemCommentsProps {
-  comments: any;
+  comments: IComment[];
+  commentsInitialNumber: number;
 }
 
 const PostListItemComments = (props: PostListItemCommentsProps) => {
+  const { comments, commentsInitialNumber } = props;
+
   const renderPostCommentItem = ({ item }: any) => {
     return <PostCommentItemHolder key={item.commentId} comment={item} dividerFlag={true} />;
   };
@@ -18,7 +22,13 @@ const PostListItemComments = (props: PostListItemCommentsProps) => {
       <View>
         <Text style={styles.commentNumber}>{props.comments.length} comments</Text>
         <Divider />
-        <FlatList data={props.comments} maxToRenderPerBatch={2} renderItem={renderPostCommentItem} keyExtractor={(item) => item.commentId} showsVerticalScrollIndicator={false} />
+        <FlatList
+          data={comments.slice(0,commentsInitialNumber)}
+          maxToRenderPerBatch={2}
+          renderItem={renderPostCommentItem}
+          keyExtractor={(item) => item.commentId}
+          showsVerticalScrollIndicator={false}
+        />
       </View>
     );
   } else return <></>;
