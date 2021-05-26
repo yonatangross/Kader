@@ -16,16 +16,10 @@ kaderApi.interceptors.request.use(
     } else console.log('TOKEN IS NULL');
     return config;
   },
-  async function (error) {
-    const originalRequest = error.config;
-    const serverCallUrl = new URL(originalRequest.url);
-    const status = error.response.status;
+  function (error) {
+    const status = error.response;
     console.log('request returned with error from kaderApi:');
     console.log(error);
-
-    console.log(status);
-    console.log(originalRequest);
-    console.log(serverCallUrl);
     return Promise.reject(error);
   }
 );
@@ -45,6 +39,7 @@ kaderPhotoUploadApi.interceptors.request.use(
   },
   async function (error) {
     console.log('request returned with error from kaderUploadPhotoApi:');
+    console.log(error);
     return Promise.reject(error);
   }
 );
@@ -54,11 +49,8 @@ kaderApi.interceptors.response.use(
     return response;
   },
   async (error) => {
-    const originalRequest = error.config;
-    const serverCallUrl = new URL(originalRequest.url);
     console.log('response returned with error from kaderApi:');
     console.log(error);
-
     return Promise.reject(error);
   }
 );
@@ -71,9 +63,7 @@ kaderPhotoUploadApi.interceptors.response.use(
     const originalRequest = error.config;
     const serverCallUrl = new URL(originalRequest.url);
     console.log('response returned with error from kaderUploadPhotoApi:');
-    console.log(status);
-    console.log(originalRequest);
-    console.log(serverCallUrl);
+    console.log(error);
     return Promise.reject(error);
   }
 );
