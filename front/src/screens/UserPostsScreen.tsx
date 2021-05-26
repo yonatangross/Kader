@@ -63,6 +63,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     flex: 1,
+    height: '100%',
+    width: '100%',
     backgroundColor: '#dedcdf',
   },
   list: {

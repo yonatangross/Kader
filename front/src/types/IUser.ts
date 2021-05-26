@@ -1,3 +1,4 @@
+import { NumberLocale } from 'yup/lib/locale';
 import { IComment } from './IComment';
 import { IGroup } from './IGroup';
 import { IPost } from './IPost';
@@ -14,5 +15,8 @@ export interface IUser {
   posts: IPost[];
   comments: IComment[];
   managerInGroups:IGroup[];
+  postsCount:number;
+  memberInGroupsCount:number;
+  managerInGroupsCount:number;
   imageUri?: string;
 }
