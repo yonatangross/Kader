@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text } from 'react-native';
 import { View } from '../components/Themed';
 import { useAuth } from '../contexts/Auth';
 import { useFonts } from 'expo-font';
@@ -45,7 +45,25 @@ const UserSettingsScreen = () => {
         <Text style={styles.userTitle}>{user.firstName + ' ' + user.lastName}</Text>
       </View>
     );
-  } else return <View>{loading ? <Text>loading...</Text> : <Text>Fetched!!</Text>}</View>;
+  } else
+    return (
+      <>
+        {loading ? (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              flexDirection: 'row',
+              padding: 10,
+            }}
+          >
+            <ActivityIndicator size="large" color="#4975aa" />
+          </View>
+        ) : (
+          <Text>Fetched!!</Text>
+        )}
+      </>
+    );
 };
 
 const styles = StyleSheet.create({

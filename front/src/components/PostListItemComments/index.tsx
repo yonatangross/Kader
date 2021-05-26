@@ -3,12 +3,24 @@ import { View, Text, FlatList } from 'react-native';
 import styles from './style';
 import { Divider } from '@ui-kitten/components';
 import PostCommentItemHolder from '../PostCommentItemHolder';
+import { IComment } from '../../types/IComment';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/core';
 
 export interface PostListItemCommentsProps {
-  comments: any;
+  comments: IComment[];
+  commentsInitialNumber: number;
+  postId: string;
 }
 
 const PostListItemComments = (props: PostListItemCommentsProps) => {
+  const { comments, commentsInitialNumber, postId } = props;
+  const navigation = useNavigation();
+
+  const onPressLoadAllComments = () => {
+    navigation.navigate('SinglePost', { id: postId });
+  };
+
   const renderPostCommentItem = ({ item }: any) => {
     return <PostCommentItemHolder key={item.commentId} comment={item} dividerFlag={true} />;
   };
@@ -18,7 +30,20 @@ const PostListItemComments = (props: PostListItemCommentsProps) => {
       <View>
         <Text style={styles.commentNumber}>{props.comments.length} comments</Text>
         <Divider />
-        <FlatList data={props.comments} maxToRenderPerBatch={2} renderItem={renderPostCommentItem} keyExtractor={(item) => item.commentId} showsVerticalScrollIndicator={false} />
+        <FlatList
+          data={comments.slice(0, commentsInitialNumber)}
+          maxToRenderPerBatch={2}
+          renderItem={renderPostCommentItem}
+          keyExtractor={(item) => item.commentId}
+          showsVerticalScrollIndicator={false}
+          ListFooterComponent={
+            <TouchableOpacity onPress={onPressLoadAllComments}>
+              <View style={styles.loadAllCommentsContainer}>
+                <Text style={styles.loadAllCommentsText}>load all comments</Text>
+              </View>
+            </TouchableOpacity>
+          }
+        />
       </View>
     );
   } else return <></>;

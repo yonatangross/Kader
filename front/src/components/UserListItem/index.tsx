@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, Text, Image, TouchableWithoutFeedback, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableWithoutFeedback, StyleSheet, ImageStyle } from 'react-native';
 import { IUser } from '../../types/IUser';
 import { useNavigation } from '@react-navigation/native';
 const testImage = require('../../assets/images/test.png');
 import StarRating from '../StarRating/index';
 import { Avatar } from '@ui-kitten/components';
 import { useAuth } from '../../contexts/Auth';
+import { imageBaseUrl } from '../../services/axios';
 
 export interface UserListItemProps {
   user: IUser;
@@ -30,20 +31,35 @@ const UserListItem = (props: UserListItemProps) => {
 
   return (
     <TouchableWithoutFeedback onPress={onClick}>
-      <View style={styles.ImageContainer}>
-        <Avatar style={styles.profileAvatar} size="large" source={require('../../assets/images/imagePlaceholder.png')} />
+      <View style={styles.profileImageContainer}>
+        {!!user && !!user.imageUri ? (
+          <Image source={{ uri: imageBaseUrl + user.imageUri }} style={styles.profileImage as ImageStyle} />
+        ) : (
+          <Image source={require('../../assets/images/celebrity.png')} style={styles.profileImage as ImageStyle} />
+        )}
       </View>
     </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
-  ImageContainer: {
-    padding: 5,
-    alignItems: 'flex-start',
+  profileImageContainer: {
+    marginVertical: 5,
+    marginHorizontal:-10,
+    borderRadius: 100,
+    overflow: 'hidden',
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 50,
+    width: 50,
+    borderColor: 'black',
+    borderWidth: 2,
   },
-  profileAvatar: {
-    marginHorizontal: 8,
+  profileImage: {
+    height: 42,
+    width: 42,
+    resizeMode: 'contain',
   },
 });
 export default UserListItem;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Image, StyleSheet, View, FlatList, SafeAreaView, Text, Button } from 'react-native';
+import { Image, StyleSheet, View, FlatList, SafeAreaView, Text, Button, ActivityIndicator } from 'react-native';
 import { GroupPrivacy } from '../types/GroupPrivacy';
 import { IGroup } from '../types/IGroup';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -8,6 +8,7 @@ import { getGroupPrivacyName } from '../types/GroupPrivacy';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import UserListItem from '../components/UserListItem';
 import { useFonts } from 'expo-font';
+import LoadingIndicator from '../components/LoadingIndicator';
 
 export interface SingleGroupDetailsPageProps {}
 
@@ -86,8 +87,8 @@ const SingleGroupDetailsScreen = (props: SingleGroupDetailsPageProps) => {
         <View style={styles.buttonContainer}>
           {group.groupPrivacy === GroupPrivacy.Private ? (
             <TouchableOpacity activeOpacity={0.7} onPress={askToJoinPrivateGroup} style={styles.buttonContainer}>
-            <Text style={styles.postCreationText}>Ask to join group</Text>
-          </TouchableOpacity>
+              <Text style={styles.postCreationText}>Ask to join group</Text>
+            </TouchableOpacity>
           ) : (
             <TouchableOpacity activeOpacity={0.7} onPress={joinPublicGroupNow} style={styles.buttonContainer}>
               <Text style={styles.postCreationText}>Join Group</Text>
@@ -96,7 +97,7 @@ const SingleGroupDetailsScreen = (props: SingleGroupDetailsPageProps) => {
         </View>
       </View>
     );
-  } else return <View>{loading ? <Text>loading...</Text> : <Text>Fetched!!</Text>}</View>;
+  } else return loading && <LoadingIndicator />;
 };
 
 const styles = StyleSheet.create({

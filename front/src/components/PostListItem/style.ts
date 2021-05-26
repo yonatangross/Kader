@@ -40,9 +40,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   profileImage: {
-    marginVertical: 15,
-    height: 45,
-    width: 45,
+    height: 42,
+    width: 42,
     resizeMode: 'contain',
   },
   categoryContainer: {

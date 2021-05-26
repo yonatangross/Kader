@@ -18,6 +18,7 @@ const InputBox = (props: InputBoxProps) => {
       addComment(message, props.postId)
         .then((response) => {
           const postResponse: any = response;
+          setMessage('');
           props.setPostUpdated(true);
         })
         .catch((error) => {
@@ -25,6 +26,13 @@ const InputBox = (props: InputBoxProps) => {
         });
     }
   };
+
+  useEffect(() => {
+    setMessage('');
+    return () => {
+      setMessage('');
+    };
+  }, []);
 
   return (
     <View style={styles.container}>

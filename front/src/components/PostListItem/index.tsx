@@ -8,9 +8,10 @@ import moment from '../../services/moment';
 import PostListItemComments from '../PostListItemComments';
 import { getPostTypeName } from '../../types/PostType';
 import { imageBaseUrl } from '../../services/axios';
+import { IPost } from '../../types/IPost';
 
 export interface PostListItemProps {
-  post: any;
+  post: IPost;
   key: string;
   showComments: boolean;
 }
@@ -79,7 +80,7 @@ const PostListItem = (props: PostListItemProps) => {
             </View>
           </View>
           {props.showComments === true ? (
-            <PostListItemComments comments={post.comments} />
+            <PostListItemComments comments={post.comments} commentsInitialNumber={3} postId={post.postId} />
           ) : (
             <Text style={styles.commentNumber}>{post.commentsCount} comments</Text>
           )}

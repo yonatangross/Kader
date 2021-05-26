@@ -1,13 +1,14 @@
 import { Button, Icon, Text } from '@ui-kitten/components';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { FlatList, StyleSheet, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import PostListItem from '../components/PostListItem';
 import { View } from '../components/Themed';
 import { IPost } from '../types/IPost';
 import CreateGeneralPostModal from '../components/CreateGeneralPostModal';
 import { getPostsForUser } from '../services/posts';
 import CreateGroupModal from '../components/CreateGroupModal';
+import LoadingIndicator from '../components/LoadingIndicator';
 
 export interface HomeProps {}
 
@@ -33,10 +34,10 @@ const HomeScreen = () => {
     () => {
       isMounted = false;
     };
-  }, [setPosts, setLoading, setVisibleCreateGroup, setVisibleCreatePost]);
+  }, [posts, loading, visibleCreateGroup, visibleCreatePost]);
 
   const renderPostListItem = ({ item }: any) => {
-    return <PostListItem post={item} key={item.postId} showComments={true} />;
+    return <PostListItem post={item} key={item.postId} showComments={true}  />;
   };
   if (!!posts) {
     return (
@@ -74,7 +75,7 @@ const HomeScreen = () => {
         />
       </View>
     );
-  } else return <View>{loading ? <Text>loading...</Text> : <Text>Fetched!!</Text>}</View>;
+  } else return loading && <LoadingIndicator />;
 };
 
 const styles = StyleSheet.create({

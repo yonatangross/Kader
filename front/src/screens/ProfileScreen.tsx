@@ -5,10 +5,6 @@ import { useAuth } from '../contexts/Auth';
 import { getUser } from '../services/users';
 import { IUser } from '../types/IUser';
 import { TouchableOpacity } from 'react-native';
-import { IPost } from '../types/IPost';
-import { IGroup } from '../types/IGroup';
-import { getPostsForUser } from '../services/posts';
-import { getGroupsForUser } from '../services/groups';
 import _ from 'lodash';
 import { useNavigation } from '@react-navigation/core';
 import { useFonts } from 'expo-font';
@@ -17,9 +13,6 @@ export default function ProfileScreen() {
   const auth = useAuth();
   const navigation = useNavigation();
   const [user, setUser] = useState<IUser>();
-  const [userPosts, setUserPosts] = useState<IPost[]>();
-  const [userGroups, setUserGroups] = useState<IGroup[]>();
-  const [userManagedGroups, setUserManagedGroups] = useState<IGroup[]>();
   let [fontsLoaded] = useFonts({
     Pattaya: require('../assets/fonts/Pattaya/Pattaya-Regular.ttf'),
     Fredoka_One: require('../assets/fonts/Fredoka_One/FredokaOne-Regular.ttf'),
@@ -30,33 +23,12 @@ export default function ProfileScreen() {
         .then((response) => {
           const userResult: IUser = response.data;
           setUser(userResult);
-          getPostsForUser()
-            .then((response) => {
-              const userPostsResult: IPost[] = response.data;
-              setUserPosts(userPostsResult);
-            })
-            .catch((error) => console.log(`error while fetching ${auth.authData?.userId} posts, ${error}`));
-          getGroupsForUser()
-            .then((response) => {
-              const userGroupsResult: IGroup[] = [];
-              const userManagedGroupsResult: IGroup[] = [];
-              _.each(response.data, (group) => {
-                if (group.isManager) {
-                  userGroupsResult.push(group);
-                } else {
-                  userManagedGroupsResult.push(group);
-                }
-              });
-              setUserGroups(userGroupsResult);
-              setUserManagedGroups(userManagedGroupsResult);
-            })
-            .catch((error) => console.log(`error while fetching ${auth.authData?.userId} groups, ${error}`));
         })
         .catch((error) => {
           console.log(`error while fetching user data ${error}`);
         });
     }
-  }, [setUser, setUserPosts, setUserGroups, setUserManagedGroups, fontsLoaded]);
+  }, [user, fontsLoaded]);
 
   const signOut = () => {
     auth.signOut();
@@ -101,9 +73,9 @@ export default function ProfileScreen() {
         </View>
 
         <View style={styles.userDataContainer}>
-          <ProfileSocial style={styles.userDataItemContainer} hint="Posts" value={`${!userPosts?.length ? 0 : userPosts.length}`} />
-          <ProfileSocial style={styles.userDataItemContainer} hint="Groups" value={`${!userGroups?.length ? 0 : userGroups.length}`} />
-          <ProfileSocial style={styles.userDataItemContainer} hint="Managed Groups" value={`${!userManagedGroups ? 0 : userManagedGroups.length}`} />
+          <ProfileSocial style={styles.userDataItemContainer} hint="Posts" value={`${!user.postsCount ? 0 : user.postsCount}`} />
+          <ProfileSocial style={styles.userDataItemContainer} hint="Groups" value={`${!user.memberInGroupsCount ? 0 : user.memberInGroupsCount}`} />
+          <ProfileSocial style={styles.userDataItemContainer} hint="Managed Groups" value={`${!user.managerInGroupsCount ? 0 : user.managerInGroupsCount}`} />
         </View>
 
         {/* <StarRating numOfStars={user?.rating} numOfRatings={user?.numberOfRatings} displayRatings={false} /> */}
@@ -150,7 +122,7 @@ export default function ProfileScreen() {
 }
 
 const styles = StyleSheet.create({
-  fullNameText: { fontFamily: 'Fredoka_One', fontSize: 30 },
+  fullNameText: { fontFamily: 'Fredoka_One', fontSize: 36 },
 
   actionItemText: {
     fontFamily: 'Fredoka_One',
@@ -201,12 +173,12 @@ const styles = StyleSheet.create({
   },
   floatingButtonStyle: {
     resizeMode: 'contain',
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 30,
   },
   logoutButton: {
-    width: 50,
-    height: 50,
+    width: 20,
+    height: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -238,15 +210,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#0000',
     borderColor: 'black',
     borderWidth: 2,
-    width: 55,
-    height: 55,
+    width: 50,
+    height: 50,
     justifyContent: 'center',
     alignItems: 'center',
   },
   profileImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 100,
+    width: 42,
+    height: 42,
     resizeMode: 'contain',
   },
 });

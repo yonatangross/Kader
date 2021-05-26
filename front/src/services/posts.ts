@@ -29,8 +29,6 @@ export const getPost = async (postId: string): Promise<AxiosResponse<any>> => {
 
 export const addPost = async (postData: any): Promise<AxiosResponse<any>> => {
   try {
-    console.log(`postData`);
-    console.log(postData);
     let initialRequest = postData;
     delete initialRequest.image;
     delete initialRequest.groupId;

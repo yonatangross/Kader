@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { FlatList, StyleSheet, Text } from 'react-native';
+import { ActivityIndicator, FlatList, StyleSheet, Text } from 'react-native';
 import { View } from '../components/Themed';
 import { useAuth } from '../contexts/Auth';
 import { useFonts } from 'expo-font';
 import { getPostsForUser } from '../services/posts';
 import PostListItem from '../components/PostListItem';
+import LoadingIndicator from '../components/LoadingIndicator';
 
 export interface UserPostsScreenProps {}
 
@@ -55,27 +56,29 @@ const UserPostsScreen = () => {
         />
       </View>
     );
-  } else return <View>{loading ? <Text>loading...</Text> : <Text>Fetched!!</Text>}</View>;
+  } else return loading && <LoadingIndicator />;
 };
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     flex: 1,
+    height: '100%',
+    width: '100%',
     backgroundColor: '#dedcdf',
   },
   list: {
     width: '100%',
-    marginTop:0
+    marginTop: 0,
   },
-  titleContainer:{backgroundColor:'white'},
+  titleContainer: { backgroundColor: 'white' },
   myPostsTitle: {
     fontFamily: 'Roboto',
     fontWeight: 'bold',
     fontSize: 24,
     color: 'black',
     marginHorizontal: 20,
-    marginVertical:0,
+    marginVertical: 0,
     alignSelf: 'flex-start',
   },
 });

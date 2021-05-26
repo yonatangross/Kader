@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, FlatList, Text, Platform, KeyboardAvoidingView, LogBox, TouchableOpacity } from 'react-native';
+import { StyleSheet, FlatList, Text, Platform, KeyboardAvoidingView, LogBox, TouchableOpacity, View } from 'react-native';
 import { useFonts } from 'expo-font';
 import InputBox from '../InputBox';
 import PostCommentItemHolder from '../PostCommentItemHolder';
@@ -60,7 +60,7 @@ const SinglePostComments = (props: CommentsProps) => {
           setVisible={setVisibleCommentActionModal}
           setPostUpdated={props.setPostUpdated}
         />
-        <KeyboardAvoidingView enabled style={styles.viewContainer} behavior={Platform.OS === 'ios' ? 'padding' : 'position'}>
+        <KeyboardAvoidingView style={styles.viewContainer} behavior={Platform.OS === 'ios' ? 'padding' : 'position'}>
           <FlatList
             style={styles.commentsList}
             data={comments}
@@ -83,6 +83,7 @@ const SinglePostComments = (props: CommentsProps) => {
 };
 
 const styles = StyleSheet.create({
+  outerContainer: {},
   commentsContainer: { width: '100%', backgroundColor: 'transparent', flexDirection: 'column' },
   commentsList: {
     paddingTop: 0,

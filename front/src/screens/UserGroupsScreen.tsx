@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { FlatList, StyleSheet, Text } from 'react-native';
+import { ActivityIndicator, FlatList, StyleSheet, Text } from 'react-native';
 import { getGroupsForUser } from '../services/groups';
 import GroupListItem from '../components/GroupListItem';
 import { View } from '../components/Themed';
 import { useAuth } from '../contexts/Auth';
 import { useFonts } from 'expo-font';
+import LoadingIndicator from '../components/LoadingIndicator';
 
 export interface UserGroupsScreenProps {}
 
@@ -55,13 +56,15 @@ const UserGroupsScreen = () => {
         />
       </View>
     );
-  } else return <View>{loading ? <Text>loading...</Text> : <Text>Fetched!!</Text>}</View>;
+  } else return loading && <LoadingIndicator />;
 };
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     flex: 1,
+    height: '100%',
+    width: '100%',
     backgroundColor: 'white',
   },
   list: {
