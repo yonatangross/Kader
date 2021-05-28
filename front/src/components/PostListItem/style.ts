@@ -3,10 +3,9 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   //Containers
   container: {
-    marginBottom: 10,
     flexDirection: 'column',
     width: '100%',
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
   },
   headerContainer: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%' },
   dataContainer: { flexDirection: 'row', width: '100%' },
@@ -64,7 +63,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   postImageContainer: {
-    margin: 15,
+    marginHorizontal: 15,
     shadowOffset: { width: 15, height: 15 },
     shadowColor: 'black',
     shadowOpacity: 0.8,
@@ -74,21 +73,23 @@ const styles = StyleSheet.create({
     backgroundColor: '#0000',
   },
   postImage: {
-    width: 80,
-    height: 80,
+    width: 100,
+    height: 100,
     borderRadius: 15,
     resizeMode: 'contain',
   },
 
   titleText: {
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 20,
+    maxWidth: 250,
+
     overflow: 'hidden',
   },
   descriptionText: {
-    fontSize: 12,
+    fontSize: 16,
     overflow: 'hidden',
-    maxWidth: 200,
+    maxWidth: 250,
   },
   groupNameTitle: { color: 'grey', fontSize: 13 },
   PostedBy: {
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
   },
   postTypeAndGroupNameText: { color: '#696969', fontSize: 14, maxWidth: 200 },
   postDate: {
-    alignSelf: 'flex-end',
+    alignSelf: 'flex-start',
     fontSize: 10,
     color: 'black',
   },

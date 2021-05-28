@@ -65,7 +65,7 @@ const HomeScreen = () => {
         <CreateGeneralPostModal visible={visibleCreatePost} setVisible={setVisibleCreatePost} />
         <CreateGroupModal visible={visibleCreateGroup} setVisible={setVisibleCreateGroup} />
         <FlatList
-          style={{ width: '100%', marginVertical: 0 }}
+          style={{ width: '100%',  }}
           data={posts}
           renderItem={renderPostListItem}
           keyExtractor={(item) => item.postId}

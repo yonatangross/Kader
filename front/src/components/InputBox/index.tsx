@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import React, { useEffect, useState } from 'react';
-import { View, TextInput } from 'react-native';
+import { View, TextInput, Keyboard } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { addComment } from '../../services/comments';
 import styles from './style';
@@ -18,6 +18,7 @@ const InputBox = (props: InputBoxProps) => {
       addComment(message, props.postId)
         .then((response) => {
           const postResponse: any = response;
+          Keyboard.dismiss();
           setMessage('');
           props.setPostUpdated(true);
         })

@@ -56,7 +56,7 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
     return () => {
       mounted = false;
     };
-  }, [fontsLoaded, setPost, setPostUpdated, setShowSettingsSection,setIsPostOwner]);
+  }, [fontsLoaded, setPost, setPostUpdated, setShowSettingsSection, setIsPostOwner]);
 
   const onPressSettingsButton = () => {
     if (showSettingsSection) {
@@ -79,36 +79,37 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
 
   if (!!post && fontsLoaded) {
     return (
-      <KeyboardAvoidingView enabled style={styles.viewContainer} behavior={Platform.OS === 'ios' ? 'padding' : 'position'}>
-        <View style={styles.container}>
-          {isPostOwner && (
-            <View style={styles.buttonsContainer}>
-              <TouchableOpacity activeOpacity={0.7} onPress={onPressSettingsButton} style={styles.settingsButton}>
-                <Image source={require('../assets/images/settingsIcon.png')} style={styles.floatingButtonStyle} />
-              </TouchableOpacity>
-            </View>
-          )}
+      <View style={styles.container} >
+        {isPostOwner && (
+          <View style={styles.buttonsContainer}>
+            <TouchableOpacity activeOpacity={0.7} onPress={onPressSettingsButton} style={styles.settingsButton}>
+              <Image source={require('../assets/images/settingsIcon.png')} style={styles.floatingButtonStyle} />
+            </TouchableOpacity>
+          </View>
+        )}
 
-          {showSettingsSection && (
-            <View style={styles.settingsButtonsContainer}>
-              <TouchableOpacity activeOpacity={0.7} onPress={onPressEditButton} style={styles.settingButton}>
-                <Text style={styles.closePostButtonText}>Edit Post</Text>
-              </TouchableOpacity>
-              <TouchableOpacity activeOpacity={0.7} onPress={onPressCloseButton} style={styles.settingButton}>
-                <Text style={styles.buttonText}>Close Post</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-          <SinglePostItem post={post} />
-
-          <SinglePostComments comments={post.comments} postId={post.postId} postUpdated={postUpdated} setPostUpdated={setPostUpdated} />
-        </View>
-      </KeyboardAvoidingView>
+        {showSettingsSection && (
+          <View style={styles.settingsButtonsContainer}>
+            <TouchableOpacity activeOpacity={0.7} onPress={onPressEditButton} style={styles.settingButton}>
+              <Text style={styles.closePostButtonText}>Edit Post</Text>
+            </TouchableOpacity>
+            <TouchableOpacity activeOpacity={0.7} onPress={onPressCloseButton} style={styles.settingButton}>
+              <Text style={styles.buttonText}>Close Post</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+        <SinglePostItem post={post} />
+        <Text style={styles.commentsNumber}>Comments</Text>
+        <SinglePostComments comments={post.comments} postId={post.postId} postUpdated={postUpdated} setPostUpdated={setPostUpdated} />
+        <InputBox postId={post.postId} setPostUpdated={setPostUpdated} />
+      </View>
     );
   } else return <></>;
 };
 
 const styles = StyleSheet.create({
+  commentsNumber: { alignSelf: 'flex-start', justifyContent: 'center', marginLeft: 25, fontWeight: 'bold', fontSize: 20 },
+
   settingsButtonsContainer: { flexDirection: 'row', backgroundColor: 'white', width: '100%' },
   settingButton: {
     margin: 10,
@@ -176,7 +177,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flexDirection: 'column',
-    alignItems: 'center',
+    height: '100%',
   },
 });
 

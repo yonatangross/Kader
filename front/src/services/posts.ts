@@ -45,7 +45,7 @@ export const addPost = async (postData: any): Promise<AxiosResponse<any>> => {
     delete initialRequest.groupId;
     console.log(initialRequest);
 
-    const response: AxiosResponse<any> = await kaderApi.post(`/posts/post/${postData.groupId}`, { postData: initialRequest });
+    const response: AxiosResponse<any> = await kaderApi.post(`/posts/post/${postData.groupId}`, { initialRequest });
     console.log('postId:');
     console.log(response.data.postId);
 

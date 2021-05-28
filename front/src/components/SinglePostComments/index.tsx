@@ -60,18 +60,14 @@ const SinglePostComments = (props: CommentsProps) => {
           setVisible={setVisibleCommentActionModal}
           setPostUpdated={props.setPostUpdated}
         />
-        <KeyboardAvoidingView style={styles.viewContainer} behavior={Platform.OS === 'ios' ? 'padding' : 'position'}>
-          <FlatList
-            style={styles.commentsList}
-            data={comments}
-            ListHeaderComponent={<Text style={styles.commentsNumber}>Comments</Text>}
-            ListHeaderComponentStyle={{ marginBottom: 5, marginTop: 10, width: '100%' }}
-            renderItem={renderCommentListItem}
-            keyExtractor={(item) => item.commentId}
-            showsVerticalScrollIndicator={true}
-          />
-        </KeyboardAvoidingView>
-        <InputBox postId={postId} setPostUpdated={props.setPostUpdated} />
+        <FlatList
+          style={styles.commentsList}
+          data={comments}
+          renderItem={renderCommentListItem}
+          keyExtractor={(item) => item.commentId}
+          showsVerticalScrollIndicator={true}
+          scrollEnabled={true}
+        />
       </>
     );
   } else
@@ -86,8 +82,8 @@ const styles = StyleSheet.create({
   outerContainer: {},
   commentsContainer: { width: '100%', backgroundColor: 'transparent', flexDirection: 'column' },
   commentsList: {
+    height: '30%',
     paddingTop: 0,
-    marginVertical: 10,
     width: '100%',
     paddingHorizontal: 15,
   },
@@ -98,6 +94,7 @@ const styles = StyleSheet.create({
   },
   viewContainer: {
     width: '100%',
+
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
   },

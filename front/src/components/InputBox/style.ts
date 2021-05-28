@@ -2,9 +2,6 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    flexBasis: 1,
-    flexGrow: 1,
-    flexShrink: 0,
     flexDirection: 'row',
     margin: 10,
     paddingBottom: 0,
@@ -12,6 +9,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     backgroundColor: 'white',
     borderRadius: 30,
+    width: '100%',
   },
   mainContainer: {
     flexDirection: 'row',

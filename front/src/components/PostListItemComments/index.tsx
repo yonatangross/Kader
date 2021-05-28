@@ -46,6 +46,7 @@ const PostListItemComments = (props: PostListItemCommentsProps) => {
           renderItem={renderPostCommentItem}
           keyExtractor={(item) => item.commentId}
           showsVerticalScrollIndicator={false}
+          style={{backgroundColor:'#dedcdf',paddingBottom:10}}
         />
       </View>
     );

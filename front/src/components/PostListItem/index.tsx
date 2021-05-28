@@ -46,8 +46,10 @@ const PostListItem = (props: PostListItemProps) => {
               <Text style={styles.PostedBy}>
                 {post.creator.firstName} {post.creator.lastName}
               </Text>
-              <Text style={styles.postTypeAndGroupNameText}>{getPostTypeName(post.type)} at</Text>
-              <Text style={styles.groupText}>{post.groupName}</Text>
+              <Text style={styles.postTypeAndGroupNameText}>
+                {getPostTypeName(post.type)} {moment(post.created).fromNow(false)}
+              </Text>
+              <Text style={styles.groupText}> {post.groupName}</Text>
             </View>
             <View style={styles.categoryContainer}>
               {!!post.category && !!post.category.imageUri ? (
@@ -69,11 +71,10 @@ const PostListItem = (props: PostListItemProps) => {
             <View style={styles.titleAndDescriptionContainer}>
               <Text style={styles.titleText}>{post.title}</Text>
               <Text style={styles.descriptionText}>{post.description}</Text>
-              <Text style={styles.postDate}>{moment(post.created).fromNow()}</Text>
             </View>
           </View>
           {props.showComments === true ? (
-            <PostListItemComments comments={post.comments} commentsInitialNumber={3} postId={post.postId} />
+            <PostListItemComments comments={post.comments} commentsInitialNumber={2} postId={post.postId} />
           ) : (
             <Text style={styles.commentNumber}>{post.commentsCount} comments</Text>
           )}

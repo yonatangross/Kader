@@ -118,9 +118,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     fontWeight: 'bold',
     fontSize: 20,
-    
   },
-  description: { fontFamily: 'Rubik', alignSelf: 'flex-start', marginVertical: 20, padding: 0, fontSize: 14, color: 'grey' },
+  description: { fontFamily: 'Rubik', alignSelf: 'flex-start', marginVertical: 20, marginLeft: 30, padding: 0, fontSize: 14, color: 'grey', maxWidth: 300 },
   ratingText: { color: '#f3a953', fontSize: 18, fontWeight: 'bold', alignSelf: 'center', justifyContent: 'center' },
   postDateContainer: { flexDirection: 'column', alignItems: 'center', marginVertical: 20 },
   locationContainer: { flexDirection: 'column', alignItems: 'center', marginVertical: 20 },
@@ -213,10 +212,10 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   commentsHeader: { alignSelf: 'center', justifyContent: 'center', fontSize: 24, margin: 10 },
-  titleText: { 
+  titleText: {
     fontWeight: '700',
     fontSize: 24,
-   },
+  },
 
   postTabsContainer: {
     flexDirection: 'row',

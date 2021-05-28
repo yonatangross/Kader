@@ -99,13 +99,19 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
             <Text style={styles.membersLengthText}>{group.membersCount} members</Text>
           </View>
         </View>
-        <FlatList
-          style={styles.postsContainer}
-          data={group.posts}
-          renderItem={renderPostListItem}
-          keyExtractor={(item) => item.postId}
-          showsVerticalScrollIndicator={true}
-        />
+        {group.postsCount !== 0 ? (
+          <FlatList
+            style={styles.postsContainer}
+            data={group.posts}
+            renderItem={renderPostListItem}
+            keyExtractor={(item) => item.postId}
+            showsVerticalScrollIndicator={true}
+          />
+        ) : (
+          <View style={styles.noPostsMessageContainer}>
+            <Text style={styles.noPostsMessageText}>Be the first to post on {group.name}!</Text>
+          </View>
+        )}
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => {
@@ -121,6 +127,8 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
 };
 
 const styles = StyleSheet.create({
+  noPostsMessageContainer: { marginHorizontal: 20 },
+  noPostsMessageText: { fontSize: 30,fontFamily:'Halvetica' },
   extraMembersText: { textAlign: 'center', justifyContent: 'center', fontSize: 16 },
   profileImageContainer: {
     marginVertical: 5,

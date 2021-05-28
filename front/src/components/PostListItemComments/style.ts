@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import Colors from '../../constants/Colors';
 
 const styles = StyleSheet.create({
   loadAllCommentsContainer: { flexDirection: 'row', justifyContent: 'flex-end', paddingRight: 10 },
@@ -15,7 +16,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   commentNumber: {
-    color: '#9ea5be',
+    marginTop:30,
+    color: Colors.light.tint,
     alignSelf: 'flex-end',
     marginHorizontal: 10,
   },

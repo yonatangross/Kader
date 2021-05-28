@@ -12,13 +12,13 @@ export const getPostTypeName = (postType: PostType) => {
   let result = '';
   switch (postType) {
     case PostType.Request:
-      result = 'requests help';
+      result = 'requested help';
       break;
     case PostType.Offer:
-      result = 'offers help';
+      result = 'offered help';
       break;
     case PostType.Handover:
-      result = 'handovers an item';
+      result = 'offered an handover';
       break;
     default:
       break;
