@@ -6,7 +6,7 @@ import PostListItem from '../components/PostListItem';
 import { View } from '../components/Themed';
 import { IPost } from '../types/IPost';
 import CreateGeneralPostModal from '../components/CreateGeneralPostModal';
-import { getPostsForUser } from '../services/posts';
+import { getPostsForUser, getRecommendedPosts } from '../services/posts';
 import CreateGroupModal from '../components/CreateGroupModal';
 import LoadingIndicator from '../components/LoadingIndicator';
 
@@ -20,7 +20,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     let isMounted = true;
-    getPostsForUser()
+    getRecommendedPosts()
       .then((response) => {
         if (isMounted) {
           const postsResult: IPost[] = response.data;

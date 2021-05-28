@@ -34,15 +34,8 @@ export const getGroup = async (groupId: string): Promise<AxiosResponse<any>> => 
 
 export const addGroup = async (formData: any): Promise<AxiosResponse<any>> => {
   try {
-    const group = {
-      category: formData.category,
-      description: formData.description,
-      groupPrivacy: formData.groupPrivacy,
-      mainLocation: formData.mainLocation,
-      name: formData.name,
-    };
-
-    const saveGroup: AxiosResponse<any> = await kaderApi.post(`/groups`, group);
+    console.log(formData);
+    const saveGroup: AxiosResponse<any> = await kaderApi.post(`/groups`, formData);
     return saveGroup;
   } catch (error) {
     throw new Error(error);

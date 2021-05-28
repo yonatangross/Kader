@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Image, Dimensions, Button } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, Image, Dimensions, Button, Text } from 'react-native';
 const logo = require('../assets/images/bigLogo.png');
 const { width: WIDTH } = Dimensions.get('window');
 import { Formik, Field } from 'formik';
@@ -30,20 +30,22 @@ const registerValidationSchema = yup.object().shape({
   passwordConfirmation: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
 });
 export default function RegisterScreen() {
-  const [loading, isLoading] = useState(false);
+  const [errorString, setErrorString] = useState(false);
   const auth = useAuth();
 
-  const handleSubmit = (values: FormValues) => {
-    console.log(values);
+  useEffect(() => {
+    return () => {};
+  }, [setErrorString]);
 
-    authService
-      .register(values)
+  const handleSubmit = (values: FormValues) => {
+    auth
+      .signUp(values)
       .then(async (response) => {
-        isLoading(true);
-        await auth.signIn(values.username, values.password);
+        console.log('pressed handleSubmit');
       })
       .catch((error) => {
-        console.log(`Error while registering ${error}`);
+        console.log('errorText:');
+        console.log(error);
       });
   };
 
@@ -139,17 +141,23 @@ export default function RegisterScreen() {
                 }}
                 onBlur={() => setFieldTouched('lastName')}
               />
-
-              <Button onPress={handleSubmit} title="REGISTER" disabled={!isValid} />
+              <Button onPress={handleSubmit} title="REGISTER" disabled={!isValid} style={styles.finishButton}>
+                Submit
+              </Button>
             </>
           )}
         </Formik>
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>{errorString}</Text>
+        </View>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  errorContainer: { width: '100%', marginHorizontal: 40 },
+  errorText: { color: 'red', fontSize: 12 },
   innerContainer: { flexDirection: 'column', width: '100%', flex: 1 },
   labelText: { fontSize: 16, paddingLeft: 10, paddingTop: 5 },
   finishButton: {
@@ -161,9 +169,7 @@ const styles = StyleSheet.create({
     borderColor: '#394d51',
     margin: 10,
     marginTop: 30,
-    marginRight: 40,
-    marginLeft: 40,
-    padding: 10,
+    marginHorizontal: 40,
   },
   finishButtonText: { fontSize: 20, fontWeight: 'bold' },
   textInput: { fontSize: 16, backgroundColor: '#f1f0f0', borderRadius: 15, marginBottom: 20, marginHorizontal: 20, padding: 10 },

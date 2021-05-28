@@ -7,6 +7,7 @@ type AuthContextData = {
   authData?: AuthData;
   loading: boolean;
   signIn(username: string, password: string): Promise<void>;
+  signUp(formData: any): Promise<void>;
   signOut(): void;
 };
 
@@ -80,6 +81,28 @@ const AuthProvider: React.FC = ({ children }) => {
     }
   };
 
+  const signUp = async (formData: any) => {
+    await authService
+      .register(formData)
+      .then((response) => {
+        console.log(`registered successfully:`);
+        console.log(response);
+        signIn(formData.username, formData.password)
+          .then((response) => {
+            console.log('signIn from register responded successfully.');
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log('error from signIn from register:');
+            console.log(error);
+          });
+      })
+      .catch((error) => {
+        console.log(`error in signUp function: `);
+        console.log(error);
+      });
+  };
+
   const signOut = async () => {
     console.log(`Singing out, Removing authData`);
     setAuthData(undefined);
@@ -87,7 +110,7 @@ const AuthProvider: React.FC = ({ children }) => {
     await SecureStore.deleteItemAsync('jwt_token');
   };
 
-  return <AuthContext.Provider value={{ authData, loading, signIn, signOut }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ authData, loading, signIn, signOut, signUp }}>{children}</AuthContext.Provider>;
 };
 
 function useAuth(): AuthContextData {

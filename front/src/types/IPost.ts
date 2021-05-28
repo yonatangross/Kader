@@ -1,5 +1,6 @@
 import { ICategory } from './ICategory';
 import { IComment } from './IComment';
+import { IGroup } from './IGroup';
 import { IUser } from './IUser';
 import { PostType } from './PostType';
 
@@ -16,7 +17,7 @@ export interface IPost {
   image: any;
   creator: IUser;
   groupId: string;
-  groupName: string;
+  group: IGroup;
   created: Date;
   isActive: boolean;
   // updatedAt: Date;

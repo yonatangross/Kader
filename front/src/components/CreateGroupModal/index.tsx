@@ -1,4 +1,5 @@
 import { Picker } from '@react-native-picker/picker';
+import { useNavigation } from '@react-navigation/core';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Modal, View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
@@ -12,7 +13,32 @@ export interface CreateGroupModalProps {
   setVisible: Function;
 }
 
+const formatAddress = (addressDetails: any) => {
+  var routeName: string = '';
+  var streetNumber: number = 0;
+  var locality: string = '';
+  var finalAddress: string = '';
+  if (!!addressDetails) {
+    let addressComponents = addressDetails.address_components;
+
+    addressComponents.forEach((addressComponent: any) => {
+      if (addressComponent.types[0] === 'route') routeName = addressComponent.long_name;
+      if (addressComponent.types[0] === 'street_number') streetNumber = addressComponent.long_name;
+      if (addressComponent.types[0] === 'locality') locality = addressComponent.long_name;
+    });
+
+    if (streetNumber == 0) {
+      finalAddress = routeName + ', ' + locality;
+    } else finalAddress = routeName + ' ' + streetNumber + ', ' + locality;
+    console.log(finalAddress);
+
+    return finalAddress;
+  }
+  return '';
+};
+
 const CreateGroupModal = (props: CreateGroupModalProps) => {
+  const navigation = useNavigation();
   const [loading, setLoading] = useState<boolean>(false);
   const [groupName, setGroupName] = useState<string>('');
   const [groupCategory, setGroupCategory] = useState<any>();
@@ -22,20 +48,31 @@ const CreateGroupModal = (props: CreateGroupModalProps) => {
   const [groupPrivacyMethod, setGroupPrivacyMethod] = useState<any>(GroupPrivacy.Public);
   const [submitFlag, setSubmitFlag] = useState<boolean>(false);
 
-  const submitGroup = () => {
+  const onPressSubmitGroup = () => {
+    setSubmitFlag(true);
     addGroup({
       name: groupName,
-      category: groupCategory,
+      categoryId: groupCategory,
       description: groupDescription,
-      groupMainLocation: groupMainLocation,
+      address: groupMainLocation,
       groupPrivacy: groupPrivacyMethod,
-    });
+    })
+      .then((response) => {
+        props.setVisible(false);
+        console.log(`group created successfully:`);
+        navigation.navigate('SingleGroup', {
+          id: response.data.groupId,
+        });
+      })
+      .catch((error) => {
+        console.log(`error while creating group:`);
+        console.log(error);
+      });
   };
 
   useEffect(() => {
     let isMounted = true;
     if (submitFlag) {
-      submitGroup();
       setSubmitFlag(false);
     }
     getCategories()
@@ -94,6 +131,8 @@ const CreateGroupModal = (props: CreateGroupModalProps) => {
             style={styles.picker}
             selectedValue={groupCategory}
             onValueChange={(itemValue) => {
+              console.log(itemValue);
+
               setGroupCategory(itemValue);
             }}
           >
@@ -119,11 +158,11 @@ const CreateGroupModal = (props: CreateGroupModalProps) => {
               placeholder="Choose group primary location"
               onPress={(data, details = null) => {
                 // 'details' is provided when fetchDetails = true
-                setGroupMainLocation(data.description);
+                if (!!details) setGroupMainLocation(formatAddress(details));
               }}
               query={{
                 key: 'AIzaSyDtlSYdojyjmTTwvSYaIP3N50n-OzrWcUg',
-                language: 'en',
+                language: 'iw',
                 components: 'country:il',
               }}
               fetchDetails={true}
@@ -157,13 +196,7 @@ const CreateGroupModal = (props: CreateGroupModalProps) => {
                 },
               }}
             />
-            <TouchableOpacity
-              activeOpacity={0.7}
-              onPress={() => {
-                setSubmitFlag(true);
-              }}
-              style={styles.finishButton}
-            >
+            <TouchableOpacity activeOpacity={0.7} onPress={onPressSubmitGroup} style={styles.finishButton}>
               <Text style={styles.finishButtonText}>Submit group</Text>
             </TouchableOpacity>
           </View>

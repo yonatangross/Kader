@@ -18,6 +18,17 @@ export const getPostsForUser = async (userId?: string): Promise<AxiosResponse<an
   }
 };
 
+export const getRecommendedPosts = async (): Promise<AxiosResponse<any>> => {
+  try {
+    // console.log('requesting posts');
+    const response: AxiosResponse<any> = await kaderApi.get(`/posts/recommended`);
+    // console.log('finished requesting posts');
+    return response;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 export const getPost = async (postId: string): Promise<AxiosResponse<any>> => {
   try {
     const response: AxiosResponse<any> = await kaderApi.get(`/posts/post/${postId}`, { params: {} });

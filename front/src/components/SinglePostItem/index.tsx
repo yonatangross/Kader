@@ -1,12 +1,10 @@
-import { useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Button, FlatList, TouchableOpacity, Image, StatusBar, ImageStyle, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, Image, ImageStyle, ActivityIndicator } from 'react-native';
 import _ from 'lodash';
 import { Text } from '@ui-kitten/components';
 
 import { IPost } from '../../types/IPost';
 import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
-import { Rating } from 'react-native-ratings';
 import moment from '../../services/moment';
 
 export interface SinglePostItemProps {
@@ -22,7 +20,7 @@ const SinglePostItem = (props: SinglePostItemProps) => {
     () => {
       mounted = false;
     };
-  }, []);
+  }, [setLoading]);
 
   if (!!post) {
     return (
@@ -218,7 +216,6 @@ const styles = StyleSheet.create({
   titleText: { 
     fontWeight: '700',
     fontSize: 24,
-    marginRight: '12',
    },
 
   postTabsContainer: {

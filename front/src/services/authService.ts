@@ -30,7 +30,8 @@ const register = async (formData: any): Promise<AxiosResponse<any>> => {
     const saveUser: AxiosResponse<any> = await kaderApi.post(`/users/register`, formData);
     return saveUser;
   } catch (error) {
-    console.log(`error in sign up authService, ${error}`);
+    console.log(`error in sign up authService`);
+    console.log(error);
 
     throw new Error(error);
   }
