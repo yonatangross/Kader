@@ -45,7 +45,7 @@ const UserListItem = (props: UserListItemProps) => {
 const styles = StyleSheet.create({
   profileImageContainer: {
     marginVertical: 5,
-    marginHorizontal:-10,
+    marginHorizontal: -10,
     borderRadius: 100,
     overflow: 'hidden',
     backgroundColor: 'white',
@@ -57,9 +57,9 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   profileImage: {
-    height: 42,
-    width: 42,
-    resizeMode: 'contain',
+    height: 50,
+    width: 50,
+    borderRadius: 100,
   },
 });
 export default UserListItem;

@@ -25,7 +25,8 @@ export default function ProfileScreen() {
           setUser(userResult);
         })
         .catch((error) => {
-          console.log(`error while fetching user data ${error}`);
+          console.log(`error while fetching user data:`);
+          console.log(error);
         });
     }
   }, [setUser, fontsLoaded]);

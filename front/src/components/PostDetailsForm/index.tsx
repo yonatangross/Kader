@@ -112,8 +112,6 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
               <GooglePlacesAutocomplete
                 placeholder="Search"
                 onPress={(data, details = null) => {
-                  // 'details' is provided when fetchDetails = true
-                  // console.log(data.description, details);
                   props.dispatch({
                     type: 'Details',
                     payload: {

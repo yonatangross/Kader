@@ -85,10 +85,9 @@ const styles = StyleSheet.create({
     borderColor: 'black',
   },
   profileImage: {
-    margin: 15,
-    height: 42,
-    width: 42,
-    resizeMode: 'contain',
+    height: 50,
+    width: 50,
+    borderRadius: 100,
   },
 });
 

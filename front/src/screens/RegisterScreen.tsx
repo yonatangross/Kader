@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Image, Dimensions, Button, Text } from 'react-native';
+import { View, StyleSheet, Image, Dimensions, ActivityIndicator } from 'react-native';
 const logo = require('../assets/images/bigLogo.png');
 const { width: WIDTH } = Dimensions.get('window');
 import { Formik, Field } from 'formik';
 import * as yup from 'yup';
 import CustomInput from '../components/validation/CustomInput';
-import { authService } from '../services/authService';
 import { useAuth } from '../contexts/Auth';
+import { Button, Text } from '@ui-kitten/components';
+import { ImageOverlay } from '../layouts/auth/login/extra/image-overlay.component';
+import { KeyboardAvoidingView } from '../layouts/auth/login/extra/3rd-party';
+import { ArrowForwardIcon } from '../layouts/auth/login/extra/icons';
+import { useNavigation } from '@react-navigation/core';
 
 interface FormValues {
   username: string;
@@ -30,14 +34,22 @@ const registerValidationSchema = yup.object().shape({
   passwordConfirmation: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
 });
 export default function RegisterScreen() {
+  const [loading, isLoading] = useState(false);
+
   const [errorString, setErrorString] = useState(false);
   const auth = useAuth();
+  const navigation = useNavigation();
 
   useEffect(() => {
     return () => {};
   }, [setErrorString]);
 
+  const onSignInButtonPress = (): void => {
+    navigation.navigate('Login');
+  };
+
   const handleSubmit = (values: FormValues) => {
+    isLoading(true);
     auth
       .signUp(values)
       .then(async (response) => {
@@ -50,112 +62,149 @@ export default function RegisterScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <View>
-        <Image source={logo} style={styles.logo} />
-      </View>
-      <View style={styles.innerContainer}>
-        <Formik
-          validationSchema={registerValidationSchema}
-          initialValues={{
-            username: '',
-            email: '',
-            password: '',
-            passwordConfirmation: '',
-            firstName: '',
-            lastName: '',
-          }}
-          onSubmit={(values) => handleSubmit(values)}
-        >
-          {({ handleSubmit, isValid, values, setFieldValue, setFieldTouched, errors, touched }) => (
-            <>
-              <Field
-                component={CustomInput}
-                name="username"
-                placeholder="Enter username"
-                multiline
-                numberOfLines={1}
-                value={values.username}
-                onChangeText={(username: string) => {
-                  setFieldValue('username', username);
-                }}
-                onBlur={() => setFieldTouched('username')}
-              />
-              <Field
-                component={CustomInput}
-                name="email"
-                placeholder="Enter email"
-                multiline
-                numberOfLines={1}
-                value={values.email}
-                onChangeText={(email: string) => {
-                  setFieldValue('email', email);
-                }}
-                onBlur={() => setFieldTouched('email')}
-              />
-              <Field
-                component={CustomInput}
-                name="password"
-                placeholder="Enter password"
-                multiline
-                numberOfLines={1}
-                value={values.password}
-                onChangeText={(password: string) => {
-                  setFieldValue('password', password);
-                }}
-                onBlur={() => setFieldTouched('password')}
-              />
-              <Field
-                component={CustomInput}
-                name="passwordConfirmation"
-                placeholder="Enter password again"
-                multiline
-                numberOfLines={1}
-                value={values.passwordConfirmation}
-                onChangeText={(passwordConfirmation: string) => {
-                  setFieldValue('passwordConfirmation', passwordConfirmation);
-                }}
-                onBlur={() => setFieldTouched('passwordConfirmation')}
-              />
-              <Field
-                component={CustomInput}
-                name="firstName"
-                placeholder="Enter firstName"
-                multiline
-                numberOfLines={1}
-                value={values.firstName}
-                onChangeText={(firstName: string) => {
-                  setFieldValue('firstName', firstName);
-                }}
-                onBlur={() => setFieldTouched('firstName')}
-              />
-              <Field
-                component={CustomInput}
-                name="lastName"
-                placeholder="Enter last name"
-                multiline
-                numberOfLines={1}
-                value={values.lastName}
-                onChangeText={(lastName: string) => {
-                  setFieldValue('lastName', lastName);
-                }}
-                onBlur={() => setFieldTouched('lastName')}
-              />
-              <Button onPress={handleSubmit} title="REGISTER" disabled={!isValid} style={styles.finishButton}>
-                Submit
-              </Button>
-            </>
-          )}
-        </Formik>
-        <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>{errorString}</Text>
+    <KeyboardAvoidingView>
+      <ImageOverlay style={styles.container} source={require('../assets/images/bg2.jpg')}>
+        <View style={styles.signUpContainer}>
+          <Text style={styles.signUpLabel} status="control" category="h4">
+            SIGN UP
+          </Text>
+          <Button style={styles.signInButton} appearance="ghost" status="control" size="giant" accessoryLeft={ArrowForwardIcon} onPress={onSignInButtonPress}>
+            Sign In
+          </Button>
         </View>
-      </View>
-    </View>
+        <View style={styles.innerContainer}>
+          <Formik
+            validationSchema={registerValidationSchema}
+            initialValues={{
+              username: '',
+              email: '',
+              password: '',
+              passwordConfirmation: '',
+              firstName: '',
+              lastName: '',
+            }}
+            onSubmit={(values) => handleSubmit(values)}
+          >
+            {({ handleSubmit, isValid, values, setFieldValue, setFieldTouched, errors, touched }) => (
+              <>
+                <Field
+                  component={CustomInput}
+                  name="username"
+                  placeholder="Username"
+                  multiline
+                  numberOfLines={1}
+                  value={values.username}
+                  onChangeText={(username: string) => {
+                    setFieldValue('username', username);
+                  }}
+                  onBlur={() => setFieldTouched('username')}
+                  style={styles.fieldInputText}
+                />
+                <Field
+                  component={CustomInput}
+                  name="email"
+                  placeholder="Email"
+                  multiline
+                  numberOfLines={1}
+                  value={values.email}
+                  onChangeText={(email: string) => {
+                    setFieldValue('email', email);
+                  }}
+                  onBlur={() => setFieldTouched('email')}
+                  style={styles.fieldInputText}
+                />
+                <Field
+                  component={CustomInput}
+                  name="password"
+                  placeholder="Password"
+                  multiline
+                  numberOfLines={1}
+                  value={values.password}
+                  onChangeText={(password: string) => {
+                    setFieldValue('password', password);
+                  }}
+                  onBlur={() => setFieldTouched('password')}
+                  style={styles.fieldInputText}
+                />
+                <Field
+                  component={CustomInput}
+                  name="passwordConfirmation"
+                  placeholder="Enter password again"
+                  multiline
+                  numberOfLines={1}
+                  value={values.passwordConfirmation}
+                  onChangeText={(passwordConfirmation: string) => {
+                    setFieldValue('passwordConfirmation', passwordConfirmation);
+                  }}
+                  onBlur={() => setFieldTouched('passwordConfirmation')}
+                  style={styles.fieldInputText}
+                />
+                <Field
+                  component={CustomInput}
+                  name="firstName"
+                  placeholder="First name"
+                  multiline
+                  numberOfLines={1}
+                  value={values.firstName}
+                  onChangeText={(firstName: string) => {
+                    setFieldValue('firstName', firstName);
+                  }}
+                  onBlur={() => setFieldTouched('firstName')}
+                  style={styles.fieldInputText}
+                />
+                <Field
+                  component={CustomInput}
+                  name="lastName"
+                  placeholder="Last name"
+                  multiline
+                  numberOfLines={1}
+                  value={values.lastName}
+                  onChangeText={(lastName: string) => {
+                    setFieldValue('lastName', lastName);
+                  }}
+                  onBlur={() => setFieldTouched('lastName')}
+                  style={styles.fieldInputText}
+                />
+                <View style={styles.submitContainer}>
+                  <Text style={styles.submitHeader} status="control" category="h4">
+                    Sign Up to Kader!
+                  </Text>
+                  {loading ? (
+                    <ActivityIndicator color={'#000'} animating={true} size="small" />
+                  ) : (
+                    <Button style={styles.submitButton} status="control" size="large" onPress={handleSubmit}>
+                      SUBMIT
+                    </Button>
+                  )}
+                </View>
+              </>
+            )}
+          </Formik>
+        </View>
+      </ImageOverlay>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
+  signUpLabel: {
+    flex: 1,
+  },
+  signInButton: {
+    flexDirection: 'row-reverse',
+    paddingHorizontal: 0,
+  },
+  signUpContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 24,
+  },
+  fieldInputText: { marginHorizontal: 20, marginVertical: 15, backgroundColor: 'white', padding: 10, borderRadius: 15, opacity: 0.6 },
+  submitContainer: {
+    marginBottom: 140,
+  },
+  submitHeader: { alignSelf: 'center', marginBottom: 30 },
+  submitButton: {  },
   errorContainer: { width: '100%', marginHorizontal: 40 },
   errorText: { color: 'red', fontSize: 12 },
   innerContainer: { flexDirection: 'column', width: '100%', flex: 1 },
@@ -175,15 +224,15 @@ const styles = StyleSheet.create({
   textInput: { fontSize: 16, backgroundColor: '#f1f0f0', borderRadius: 15, marginBottom: 20, marginHorizontal: 20, padding: 10 },
   container: {
     flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#f9f3f3',
-    justifyContent: 'center',
-    marginLeft: 10,
+    paddingVertical: 24,
+    paddingHorizontal: 16,
   },
   logo: {
     width: 500,
     height: 100,
     resizeMode: 'contain',
+    justifyContent: 'center',
+    alignSelf: 'center',
   },
   inputContainer: {
     marginTop: 10,

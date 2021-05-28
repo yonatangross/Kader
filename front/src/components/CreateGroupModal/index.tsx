@@ -18,6 +18,7 @@ const formatAddress = (addressDetails: any) => {
   var streetNumber: number = 0;
   var locality: string = '';
   var finalAddress: string = '';
+
   if (!!addressDetails) {
     let addressComponents = addressDetails.address_components;
 
@@ -30,7 +31,6 @@ const formatAddress = (addressDetails: any) => {
     if (streetNumber == 0) {
       finalAddress = routeName + ', ' + locality;
     } else finalAddress = routeName + ' ' + streetNumber + ', ' + locality;
-    console.log(finalAddress);
 
     return finalAddress;
   }
@@ -63,6 +63,9 @@ const CreateGroupModal = (props: CreateGroupModalProps) => {
         navigation.navigate('SingleGroup', {
           id: response.data.groupId,
         });
+        setGroupName('');
+        setGroupDescription('');
+        setGroupMainLocation('');
       })
       .catch((error) => {
         console.log(`error while creating group:`);
