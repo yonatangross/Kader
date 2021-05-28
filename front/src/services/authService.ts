@@ -21,6 +21,21 @@ const signIn = async (email: string, password: string): Promise<AxiosResponse<Au
     throw new Error(error);
   }
 };
+
+const register = async (formData: any): Promise<AxiosResponse<any>> => {
+  delete formData.passwordConfirmation;
+  console.log(formData);
+
+  try {
+    const saveUser: AxiosResponse<any> = await kaderApi.post(`/users/register`, formData);
+    return saveUser;
+  } catch (error) {
+    console.log(`error in sign up authService, ${error}`);
+
+    throw new Error(error);
+  }
+};
+
 export type AuthData = {
   token: string;
   userId: string;
@@ -31,5 +46,6 @@ export type AuthData = {
 
 export const authService = {
   signIn,
+  register,
   getUser,
 };

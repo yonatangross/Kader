@@ -22,29 +22,6 @@ export const getUser = async (userId: string): Promise<AxiosResponse<any>> => {
   }
 };
 
-export const addUser = async (formData: IUser): Promise<AxiosResponse<any>> => {
-  try {
-    const user: Omit<IUser, 'id'> = {
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      email: formData.email,
-      phoneNumber: formData.phoneNumber,
-      rating: 0,
-      numberOfRatings: 0,
-      memberInGroups: [],
-      managerInGroups: [],
-      comments: [],
-      posts: [],
-      imageUri: undefined,
-    };
-
-    const saveUser: AxiosResponse<any> = await kaderApi.post(`/users/${user}`, user);
-    return saveUser;
-  } catch (error) {
-    throw new Error(error);
-  }
-};
-
 export const updateUser = async (user: IUser): Promise<AxiosResponse<any>> => {
   try {
     const updatedUser: AxiosResponse<any> = await kaderApi.put(`/users/${user.id}`, user);

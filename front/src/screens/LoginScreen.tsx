@@ -7,11 +7,13 @@ import { KeyboardAvoidingView } from '../layouts/auth/login/extra/3rd-party';
 import { useState } from 'react';
 import { useAuth } from '../contexts/Auth';
 import { ActivityIndicator } from 'react-native';
+import { useNavigation } from '@react-navigation/core';
 
 export interface LoginScreenProps {}
 
-export default function LoginScreen(navigation: any) {
+export default function LoginScreen() {
   const [loading, isLoading] = useState(false);
+  const navigation = useNavigation();
   const auth = useAuth();
   const passwordFieldRef = useRef<Input>(null);
 
@@ -23,7 +25,7 @@ export default function LoginScreen(navigation: any) {
   const [password, setPassword] = React.useState<string>();
 
   const onSignUpButtonPress = (): void => {
-    navigation && navigation.navigate('SignUp1');
+    navigation.navigate('Register');
   };
 
   return (
@@ -38,21 +40,7 @@ export default function LoginScreen(navigation: any) {
           </Button>
         </View>
         <View style={styles.formContainer}>
-          <Input
-            // onKeyPress={(e) => {
-            //   console.log('yoni');
-            //   if (e.nativeEvent.key === 'Enter') {
-            //     console.log('yoni2');
-            //     e.preventDefault();
-            //     if (!!passwordFieldRef && !!passwordFieldRef.current) passwordFieldRef.current.focus();
-            //   }
-            // }}
-            label="EMAIL"
-            placeholder="Email"
-            status="control"
-            value={email}
-            onChangeText={setEmail}
-          />
+          <Input label="EMAIL" placeholder="Email" status="control" value={email} onChangeText={setEmail} />
           <Input
             style={styles.passwordInput}
             secureTextEntry={true}

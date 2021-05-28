@@ -15,9 +15,6 @@ const blogValidationSchema = yup.object().shape({
     .string()
     .min(20, ({ min, value }) => `${min - value.length} characters to go`)
     .required('Description is required'),
-
-  // location: yup.string().required('Primary location is required'),
-  // photo: yup.object().required('Photo is required'),
 });
 
 export interface PostDetailsFormProps {
