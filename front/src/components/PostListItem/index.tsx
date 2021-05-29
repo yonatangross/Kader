@@ -19,6 +19,7 @@ export interface PostListItemProps {
 const PostListItem = (props: PostListItemProps) => {
   const { post } = props;
   const navigation = useNavigation();
+  
 
   const onClick = () => {
     navigation.navigate('SinglePost', {
@@ -26,6 +27,7 @@ const PostListItem = (props: PostListItemProps) => {
       id: props.post.postId,
       title: props.post.title,
     });
+    console.log(post.postId);
   };
   if (!!post) {
     return (

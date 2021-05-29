@@ -60,6 +60,7 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
     return <UserListItem user={item} key={item.id} />;
   };
   const renderPostListItem = ({ item: item }: { item: IPost }) => {
+    
     return <PostListItem post={item} key={item.postId} showComments={true} />;
   };
 
@@ -128,7 +129,7 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
 
 const styles = StyleSheet.create({
   noPostsMessageContainer: { marginHorizontal: 20 },
-  noPostsMessageText: { fontSize: 30,fontFamily:'Halvetica' },
+  noPostsMessageText: { fontSize: 30},
   extraMembersText: { textAlign: 'center', justifyContent: 'center', fontSize: 16 },
   profileImageContainer: {
     marginVertical: 5,
