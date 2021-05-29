@@ -4,11 +4,11 @@ import { CreatePostActionsTypes, CreatePostStateType } from '../types/CreatePost
 export const initCreatePost = () => {
   const initPost: {
     postType: PostType;
-    details: { title: string; description: string; location: string; image: any };
+    details: { title: string; description: string; address: string; image: any };
     groups: string[];
   } = {
     postType: PostType.Request,
-    details: { title: '', description: '', location: '', image: undefined },
+    details: { title: '', description: '', address: '', image: undefined },
     groups: [],
   };
   return initPost;

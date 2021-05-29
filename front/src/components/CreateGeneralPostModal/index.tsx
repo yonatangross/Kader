@@ -7,6 +7,7 @@ import GroupsSelector from '../GroupsSelector';
 import PostCreationProgressBar from '../PostCreationProgressBar';
 import PostDetailsForm from '../PostDetailsForm';
 import PostTypeSelector from '../PostTypeSelector';
+import { useNavigation } from '@react-navigation/core';
 
 export interface CreateGeneralPostModalProps {
   visible: boolean;
@@ -20,6 +21,7 @@ const createPostInitState = {
 };
 
 const CreateGeneralPostModal = (props: CreateGeneralPostModalProps) => {
+  const navigation = useNavigation();
   const [state, dispatch] = useReducer(createPostReducer, createPostInitState, initCreatePost);
   const [activeSection, setActiveSection] = useState<number>(0);
   const [submitFlag, setSubmitFlag] = useState<boolean>(false);
@@ -32,10 +34,12 @@ const CreateGeneralPostModal = (props: CreateGeneralPostModalProps) => {
         title: state.details.title,
         description: state.details.description,
         groupId: groupId,
-        address: state.details.location,
+        address: state.details.address,
         image: state.details.image,
       });
     });
+
+    navigation.navigate('Home');
   };
 
   useEffect(() => {
@@ -49,6 +53,7 @@ const CreateGeneralPostModal = (props: CreateGeneralPostModalProps) => {
     }
     if (submitFlag) {
       submitPost();
+
       props.setVisible(false);
     }
   }, [props.visible, setSubmitFlag, setActiveSection]);

@@ -37,8 +37,11 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
 
   useEffect(() => {
     let mounted = true;
+
     if (!!route.params) {
       const params: any = route.params;
+      console.log(params.id);
+
       getPost(params.id)
         .then((response) => {
           if (mounted) {
@@ -79,15 +82,15 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
 
   if (!!post && fontsLoaded) {
     return (
-      <View style={styles.container} >
-        {isPostOwner && (
+      <View style={styles.container}>
+        {/* {isPostOwner && (
           <View style={styles.buttonsContainer}>
             <TouchableOpacity activeOpacity={0.7} onPress={onPressSettingsButton} style={styles.settingsButton}>
               <Image source={require('../assets/images/settingsIcon.png')} style={styles.floatingButtonStyle} />
             </TouchableOpacity>
           </View>
-        )}
-
+        )} */}
+        {/* 
         {showSettingsSection && (
           <View style={styles.settingsButtonsContainer}>
             <TouchableOpacity activeOpacity={0.7} onPress={onPressEditButton} style={styles.settingButton}>
@@ -97,7 +100,7 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
               <Text style={styles.buttonText}>Close Post</Text>
             </TouchableOpacity>
           </View>
-        )}
+        )} */}
         <SinglePostItem post={post} />
         <Text style={styles.commentsNumber}>Comments</Text>
         <SinglePostComments comments={post.comments} postId={post.postId} postUpdated={postUpdated} setPostUpdated={setPostUpdated} />

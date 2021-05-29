@@ -54,7 +54,7 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
     () => {
       mounted = false;
     };
-  }, [fontsLoaded, setGroup]);
+  }, [fontsLoaded, setGroup, visibleCreatePost, setVisibleCreatePost]);
 
   const renderMemberListItem = ({ item: item }: { item: IUser }) => {
     return <UserListItem user={item} key={item.id} />;
@@ -128,7 +128,7 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
 
 const styles = StyleSheet.create({
   noPostsMessageContainer: { marginHorizontal: 20 },
-  noPostsMessageText: { fontSize: 30,fontFamily:'Halvetica' },
+  noPostsMessageText: { fontSize: 30, fontFamily: 'Halvetica' },
   extraMembersText: { textAlign: 'center', justifyContent: 'center', fontSize: 16 },
   profileImageContainer: {
     marginVertical: 5,

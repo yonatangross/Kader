@@ -29,20 +29,19 @@ const registerValidationSchema = yup.object().shape({
   password: yup
     .string()
     .required('No password provided.')
-    .min(8, 'Password is too short - should be 8 chars minimum.')
-    .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
+    .min(8, 'Password is too short - must contain 8 chars that includes.')
+    .matches(/[a-zA-Z]/, 'Password should contain english letters with captical letters and special chars.'),
   passwordConfirmation: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
 });
 export default function RegisterScreen() {
   const [loading, isLoading] = useState(false);
 
-  const [errorString, setErrorString] = useState(false);
   const auth = useAuth();
   const navigation = useNavigation();
 
   useEffect(() => {
     return () => {};
-  }, [setErrorString]);
+  }, []);
 
   const onSignInButtonPress = (): void => {
     navigation.navigate('Login');

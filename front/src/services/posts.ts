@@ -40,16 +40,12 @@ export const getPost = async (postId: string): Promise<AxiosResponse<any>> => {
 
 export const addPost = async (postData: any): Promise<AxiosResponse<any>> => {
   try {
+    const postImage = postData.image;
     let initialRequest = postData;
     delete initialRequest.image;
     delete initialRequest.groupId;
-    console.log(initialRequest);
 
-    const response: AxiosResponse<any> = await kaderApi.post(`/posts/post/${postData.groupId}`, { initialRequest });
-    console.log('postId:');
-    console.log(response.data.postId);
-
-    let postImage = postData.image as ImagePickerResult;
+    const response: AxiosResponse<any> = await kaderApi.post(`/posts/post/${postData.groupId}`, initialRequest);
 
     //use formData
     var formData = new FormData();
@@ -58,7 +54,7 @@ export const addPost = async (postData: any): Promise<AxiosResponse<any>> => {
     formData.append('postId', response.data.postId);
     formData.append('post_image', {
       // @ts-ignore
-      uri: Platform.OS === 'android' ? postImage.uri : postImage.uri.replace('file://', ''),
+      uri: Platform.OS === 'android' ? postImage.uri : postImage.uri.replace('file:/', ''),
       type: 'image/jpeg',
       name: `${response.data.postId}.jpg`,
     });
@@ -69,8 +65,7 @@ export const addPost = async (postData: any): Promise<AxiosResponse<any>> => {
       data: formData,
     })
       .then((response) => {
-        console.log('image uploaded, response:');
-        console.log(response);
+        return response;
       })
       .catch((error) => {
         console.log('error while uploading photo, error:');
@@ -78,7 +73,9 @@ export const addPost = async (postData: any): Promise<AxiosResponse<any>> => {
       });
     return response;
   } catch (error) {
-    throw new Error(`error while sending post ${postData}, error: ${error}`);
+    console.log('error:');
+    console.log(error);
+    throw new Error(error);
   }
 };
 

@@ -8,6 +8,7 @@ import styles from './style';
 export interface UploadImageProps {
   postImage: any;
   setPostImage: Function;
+  setFieldValue: Function;
 }
 
 const UploadImage = (props: UploadImageProps) => {
@@ -22,6 +23,7 @@ const UploadImage = (props: UploadImageProps) => {
       });
       if (!data.cancelled) {
         props.setPostImage(data);
+        props.setFieldValue('image', data);
       }
     } else {
       Alert.alert('you need to give up permission to work');
@@ -37,8 +39,8 @@ const UploadImage = (props: UploadImageProps) => {
         quality: 1,
       });
       if (!data.cancelled) {
-        console.log('uploaded photo:');
         props.setPostImage(data);
+        props.setFieldValue('image', data);
       }
     } else {
       Alert.alert('you need to give up permission to work');
