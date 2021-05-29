@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     width: '100%',
     backgroundColor: 'white',
-
   },
   headerContainer: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%' },
   dataContainer: { flexDirection: 'row', width: '100%' },

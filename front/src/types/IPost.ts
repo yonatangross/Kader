@@ -18,6 +18,7 @@ export interface IPost {
   creator: IUser;
   groupId: string;
   group: IGroup;
+  groupName: string;
   created: Date;
   isActive: boolean;
   // updatedAt: Date;

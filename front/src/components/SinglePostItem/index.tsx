@@ -132,6 +132,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: 'white',
     width: '100%',
+    marginBottom:10,
   },
   container: {
     flexDirection: 'column',

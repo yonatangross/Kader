@@ -32,6 +32,7 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
 
     if (route.params) {
       const params: any = route.params;
+
       getGroup(params.id)
         .then((response) => {
           if (mounted) {
@@ -60,7 +61,7 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
     return <UserListItem user={item} key={item.id} />;
   };
   const renderPostListItem = ({ item: item }: { item: IPost }) => {
-    return <PostListItem post={item} key={item.postId} showComments={true} />;
+    return <PostListItem post={item} key={item.postId} showComments={true} groupName={group?.name} groupCategory={group?.category} />;
   };
 
   if (!!group && fontsLoaded) {
@@ -96,7 +97,7 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
             />
           </View>
           <View style={styles.membersHeaderContainer}>
-            <Text style={styles.membersLengthText}>{group.membersCount} members</Text>
+            <Text style={styles.membersLengthText}>{group.members.length} members</Text>
           </View>
         </View>
         {group.postsCount !== 0 ? (

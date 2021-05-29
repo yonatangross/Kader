@@ -34,7 +34,7 @@ const HomeScreen = () => {
     () => {
       isMounted = false;
     };
-  }, [setPosts, setLoading, visibleCreateGroup, visibleCreatePost]);
+  }, [posts, loading, visibleCreateGroup, visibleCreatePost]);
 
   const renderPostListItem = ({ item }: any) => {
     return <PostListItem post={item} key={item.postId} showComments={true} />;
@@ -65,7 +65,7 @@ const HomeScreen = () => {
         <CreateGeneralPostModal visible={visibleCreatePost} setVisible={setVisibleCreatePost} />
         <CreateGroupModal visible={visibleCreateGroup} setVisible={setVisibleCreateGroup} />
         <FlatList
-          style={{ width: '100%',  }}
+          style={{ width: '100%' }}
           data={posts}
           renderItem={renderPostListItem}
           keyExtractor={(item) => item.postId}

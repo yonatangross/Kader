@@ -9,17 +9,24 @@ import PostListItemComments from '../PostListItemComments';
 import { getPostTypeName } from '../../types/PostType';
 import { imageBaseUrl } from '../../services/axios';
 import { IPost } from '../../types/IPost';
+import { ICategory } from '../../types/ICategory';
 
 export interface PostListItemProps {
   post: IPost;
   key: string;
   showComments: boolean;
+  groupName?: string;
+  groupCategory?: ICategory;
 }
 
 const PostListItem = (props: PostListItemProps) => {
-  const { post } = props;
+  const { post,groupName,groupCategory } = props;
   const navigation = useNavigation();
-  
+
+  useEffect(() => {
+    
+    return () => {};
+  }, []);
 
   const onClick = () => {
     navigation.navigate('SinglePost', {
@@ -27,7 +34,6 @@ const PostListItem = (props: PostListItemProps) => {
       id: props.post.postId,
       title: props.post.title,
     });
-    console.log(post.postId);
   };
   if (!!post) {
     return (
@@ -51,11 +57,11 @@ const PostListItem = (props: PostListItemProps) => {
               <Text style={styles.postTypeAndGroupNameText}>
                 {getPostTypeName(post.type)} {moment(post.created).fromNow(false)}
               </Text>
-              <Text style={styles.groupText}> {post.groupName}</Text>
+              <Text style={styles.groupText}>{groupName}</Text>
             </View>
             <View style={styles.categoryContainer}>
-              {!!post.category && !!post.category.imageUri ? (
-                <Image source={{ uri: imageBaseUrl + post.category.imageUri }} style={styles.categoryIcon as ImageStyle} />
+              {!!groupCategory && !!groupCategory?.imageUri ? (
+                <Image source={{ uri: imageBaseUrl + groupCategory?.imageUri }} style={styles.categoryIcon as ImageStyle} />
               ) : (
                 <Image source={require('../../assets/images/categoryIcon.png')} style={styles.categoryIcon as ImageStyle} />
               )}

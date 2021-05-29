@@ -46,11 +46,11 @@ const PostListItemComments = (props: PostListItemCommentsProps) => {
           renderItem={renderPostCommentItem}
           keyExtractor={(item) => item.commentId}
           showsVerticalScrollIndicator={false}
-          style={{backgroundColor:'#dedcdf',paddingBottom:10}}
+          style={{ backgroundColor: '#dedcdf', paddingBottom: 10 }}
         />
       </View>
     );
-  } else return <></>;
+  } else return <View style={{ marginBottom: 10,backgroundColor:'#dedcdf' }}><Text></Text></View>;
 };
 
 export default PostListItemComments;
