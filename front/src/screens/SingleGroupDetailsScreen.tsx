@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Image, StyleSheet, View, FlatList, SafeAreaView, Text, Button, ActivityIndicator } from 'react-native';
+import { Image, StyleSheet, View, FlatList, SafeAreaView, Text, Button, ActivityIndicator, TouchableWithoutFeedback } from 'react-native';
 import { GroupPrivacy } from '../types/GroupPrivacy';
 import { IGroup } from '../types/IGroup';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -75,11 +75,23 @@ const SingleGroupDetailsScreen = (props: SingleGroupDetailsPageProps) => {
             <Text style={styles.membersLengthText}>{group.members.length} members</Text>
           </View>
           <FlatList
-            contentContainerStyle={{ flex: 1, justifyContent: 'space-around' }}
+            contentContainerStyle={{ flex: 0.9, justifyContent: 'center', width: '100%' }}
             data={group.members}
             renderItem={renderMemberListItem}
             keyExtractor={(item, index) => item.id + index.toString()}
-            showsVerticalScrollIndicator={false}
+            showsVerticalScrollIndicator={true}
+            ListFooterComponentStyle={{ flex: 0.1 }}
+            ListFooterComponent={
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  console.log('pressed more members load');
+                }}
+              >
+                <View style={[styles.profileImageContainer]}>
+                  <Text style={styles.extraMembersText}>...</Text>
+                </View>
+              </TouchableWithoutFeedback>
+            }
             horizontal
           />
         </View>
@@ -154,12 +166,39 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   buttonContainer: {
-    flexWrap: 'wrap',
-    alignSelf: 'center',
+    flexDirection: 'row',
+    margin: 10,
+    backgroundColor: '#4975aa',
+    borderRadius: 30,
+    alignItems: 'center',
+    width: 150,
+    height: 40,
+    justifyContent: 'center',
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    shadowOpacity: 0.8,
+    elevation: 6,
+    shadowRadius: 15,
+    shadowOffset: { width: 1, height: 13 },
+    
   },
   button: {
     margin: 2,
   },
+  profileImageContainer: {
+    marginVertical: 5,
+    marginHorizontal: -10,
+    borderRadius: 100,
+    overflow: 'hidden',
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 50,
+    width: 50,
+    borderColor: 'black',
+    borderWidth: 2,
+  },
+  extraMembersText: { textAlign: 'center', justifyContent: 'center', fontSize: 16 },
+
 });
 
 export default SingleGroupDetailsScreen;

@@ -131,7 +131,7 @@ const CommentActionsModal = (props: CommentActionsModalProps) => {
                 </View>
               </View>
               <View style={styles.buttonsContainer}>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   activeOpacity={0.7}
                   onPress={() => {
                     setHideUpdateButton(false);
@@ -139,14 +139,14 @@ const CommentActionsModal = (props: CommentActionsModalProps) => {
                   style={styles.updateButtonContainer}
                 >
                   <Text style={styles.postCreationText}>Update Comment</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
                 {hideUpdateButton && (
                   <>
                     <TouchableOpacity activeOpacity={0.7} onPress={onPressUpdateComment} style={styles.updateButtonContainer}>
                       <Text style={styles.postCreationText}>Update</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity activeOpacity={0.7} onPress={() => {}} style={styles.updateButtonContainer}>
+                    <TouchableOpacity activeOpacity={0.7} onPress={() => {}} style={styles.cancelButtonContainer}>
                       <Text style={styles.postCreationText}>Cancel</Text>
                     </TouchableOpacity>
                   </>
@@ -154,9 +154,7 @@ const CommentActionsModal = (props: CommentActionsModalProps) => {
 
                 {hideDeleteButton && (
                   <>
-                    <TouchableOpacity activeOpacity={0.7} onPress={() => {}} style={styles.deleteButtonContainer}>
-                      <Text style={styles.postCreationText}>Delete Comment</Text>
-                    </TouchableOpacity>
+              
                     <TouchableOpacity activeOpacity={0.7} onPress={onPressDeleteComment} style={styles.deleteButtonContainer}>
                       <Text style={styles.postCreationText}>Delete</Text>
                     </TouchableOpacity>
@@ -195,11 +193,26 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   updateButtonContainer: {
+   
     margin: 10,
     backgroundColor: '#4975aa',
     borderRadius: 30,
     alignItems: 'center',
-    width: 150,
+    width: 80,
+    height: 40,
+    justifyContent: 'center',
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    shadowOpacity: 0.8,
+    elevation: 6,
+    shadowRadius: 15,
+    shadowOffset: { width: 1, height: 13 },
+  },
+  cancelButtonContainer:{
+    margin: 10,
+    backgroundColor: '#4975aa',
+    borderRadius: 30,
+    alignItems: 'center',
+    width: 80,
     height: 40,
     justifyContent: 'center',
     shadowColor: 'rgba(0, 0, 0, 0.1)',
@@ -213,7 +226,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     borderRadius: 30,
     alignItems: 'center',
-    width: 150,
+    width: 80,
     height: 40,
     justifyContent: 'center',
     shadowColor: 'rgba(0, 0, 0, 0.1)',
