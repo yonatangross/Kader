@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core';
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import React, { createRef, useEffect, useRef, useState } from 'react';
 import { StyleSheet, Modal, View, Text, TextInput, TouchableOpacity, Image, ImageStyle } from 'react-native';
 import { imageBaseUrl } from '../../services/axios';
 import { deleteComment, getComment, updateComment } from '../../services/comments';
@@ -18,8 +18,9 @@ const CommentActionsModal = (props: CommentActionsModalProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [comment, setComment] = useState<IComment>();
   const [content, setContent] = useState<string>('');
-  const [hideUpdateButton, setHideUpdateButton] = useState<boolean>(true);
-  const [hideDeleteButton, setHideDeleteButton] = useState<boolean>(true);
+  const [showSubmitUpdateButton, setShowSubmitUpdateButton] = useState<boolean>(true);
+  const [showSubmitDeleteButton, setShowSubmitDeleteButton] = useState<boolean>(false);
+  const commentRef = useRef();
 
   useEffect(() => {
     let isMounted = true;
@@ -32,6 +33,9 @@ const CommentActionsModal = (props: CommentActionsModalProps) => {
             setContent(commentResult.content);
             setComment(commentResult);
             setLoading(false);
+            if (!!commentRef && !!commentRef.current) {
+              commentRef.current.focus();
+            }
           }
         })
         .catch((error) => {
@@ -44,7 +48,7 @@ const CommentActionsModal = (props: CommentActionsModalProps) => {
       props.setVisible(false);
       isMounted = false;
     };
-  }, [props.visible, setComment, setContent, setHideUpdateButton, setHideDeleteButton]);
+  }, [props.visible, setComment, setContent, showSubmitDeleteButton, showSubmitDeleteButton]);
 
   const onPressUpdateComment = () => {
     if (!!comment?.content) {
@@ -57,9 +61,6 @@ const CommentActionsModal = (props: CommentActionsModalProps) => {
         console.log(`updated ${comment?.commentId} successfully`);
         props.setVisible(false);
         props.setPostUpdated(true);
-        navigation.navigate('SinglePost', {
-          id: comment?.postId,
-        });
       })
       .catch((error) => {
         console.log(`error while updating comment ${error}`);
@@ -116,6 +117,7 @@ const CommentActionsModal = (props: CommentActionsModalProps) => {
                     {comment.creator.firstName} {comment.creator.lastName}
                   </Text>
                   <TextInput
+                    ref={commentRef}
                     placeholder={comment.content}
                     style={styles.commentContentText}
                     numberOfLines={2}
@@ -141,24 +143,28 @@ const CommentActionsModal = (props: CommentActionsModalProps) => {
                   <Text style={styles.postCreationText}>Update Comment</Text>
                 </TouchableOpacity> */}
 
-                {hideUpdateButton && (
-                  <>
-                    <TouchableOpacity activeOpacity={0.7} onPress={onPressUpdateComment} style={styles.updateButtonContainer}>
-                      <Text style={styles.postCreationText}>Update</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity activeOpacity={0.7} onPress={() => {}} style={styles.cancelButtonContainer}>
-                      <Text style={styles.postCreationText}>Cancel</Text>
-                    </TouchableOpacity>
-                  </>
+                {showSubmitUpdateButton && (
+                  <TouchableOpacity activeOpacity={0.7} onPress={onPressUpdateComment} style={styles.updateButtonContainer}>
+                    <Text style={styles.postCreationText}>Update</Text>
+                  </TouchableOpacity>
                 )}
-
-                {hideDeleteButton && (
-                  <>
-              
-                    <TouchableOpacity activeOpacity={0.7} onPress={onPressDeleteComment} style={styles.deleteButtonContainer}>
-                      <Text style={styles.postCreationText}>Delete</Text>
-                    </TouchableOpacity>
-                  </>
+             
+                {!showSubmitDeleteButton && (
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    onPress={() => {
+                      setShowSubmitDeleteButton(true);
+                      setShowSubmitUpdateButton(false);
+                    }}
+                    style={styles.deleteButtonContainer}
+                  >
+                    <Text style={styles.postCreationText}>Delete</Text>
+                  </TouchableOpacity>
+                )}
+                {showSubmitDeleteButton && (
+                  <TouchableOpacity activeOpacity={0.7} onPress={onPressDeleteComment} style={styles.deleteButtonContainer}>
+                    <Text style={styles.postCreationText}>Delete!</Text>
+                  </TouchableOpacity>
                 )}
               </View>
             </View>
@@ -193,7 +199,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   updateButtonContainer: {
-   
     margin: 10,
     backgroundColor: '#4975aa',
     borderRadius: 30,
@@ -207,7 +212,7 @@ const styles = StyleSheet.create({
     shadowRadius: 15,
     shadowOffset: { width: 1, height: 13 },
   },
-  cancelButtonContainer:{
+  cancelButtonContainer: {
     margin: 10,
     backgroundColor: '#4975aa',
     borderRadius: 30,

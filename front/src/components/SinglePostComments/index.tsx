@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, FlatList, Text, Platform, KeyboardAvoidingView, LogBox, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, FlatList, Text, Platform, KeyboardAvoidingView, LogBox, TouchableOpacity, View, RefreshControl } from 'react-native';
 import { useFonts } from 'expo-font';
 import InputBox from '../InputBox';
 import PostCommentItemHolder from '../PostCommentItemHolder';
 import { IComment } from '../../types/IComment';
 import { useAuth } from '../../contexts/Auth';
 import CommentActionsModal from '../CommentActionsModal';
+import { getComments } from '../../services/comments';
 
 export interface CommentsProps {
   comments: IComment[];
@@ -15,14 +16,31 @@ export interface CommentsProps {
 }
 
 const SinglePostComments = (props: CommentsProps) => {
+  const { comments: receivedComments, postId } = props;
   const auth = useAuth();
   const [visibleCommentActionModal, setVisibleCommentActionModal] = useState<boolean>(false);
   const [activeCommentIdOnModal, setActiveCommentIdOnModal] = useState<string>('');
+  const [comments, setComments] = useState<IComment[]>(receivedComments);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
 
-  const { comments, postId } = props;
   let [fontsLoaded] = useFonts({
     Rubik: require('../../assets/fonts/Rubik/Rubik-VariableFont_wght.ttf'),
   });
+
+  const onRefresh = React.useCallback(async () => {
+    setRefreshing(true);
+    getComments(props.postId)
+      .then((response) => {
+        const commentsResponse: IComment[] = response.data.commentViews;
+        setComments(commentsResponse);
+        setRefreshing(false);
+        props.setPostUpdated(true);
+      })
+      .catch((error) => {
+        setRefreshing(false);
+        console.log(error);
+      });
+  }, [refreshing]);
 
   useEffect(() => {
     let mounted = true;
@@ -31,7 +49,7 @@ const SinglePostComments = (props: CommentsProps) => {
     return () => {
       mounted = false;
     };
-  }, [fontsLoaded, props.postUpdated, props.setPostUpdated, setVisibleCommentActionModal]);
+  }, [fontsLoaded, props.postUpdated, setVisibleCommentActionModal, refreshing]);
 
   const renderCommentListItem = ({ item }: { item: IComment; index: number }) => {
     const isOwner = item.creator.id === auth.authData?.userId;
@@ -51,7 +69,7 @@ const SinglePostComments = (props: CommentsProps) => {
     else return <PostCommentItemHolder comment={item} dividerFlag={true} />;
   };
 
-  if (fontsLoaded) {
+  if (fontsLoaded && !!comments) {
     return (
       <>
         <CommentActionsModal
@@ -62,11 +80,12 @@ const SinglePostComments = (props: CommentsProps) => {
         />
         <FlatList
           style={styles.commentsList}
-          data={comments}
+          data={comments.reverse()}
           renderItem={renderCommentListItem}
           keyExtractor={(item) => item.commentId}
           showsVerticalScrollIndicator={true}
           scrollEnabled={true}
+          refreshControl={<RefreshControl enabled={true} refreshing={refreshing} onRefresh={onRefresh} />}
         />
       </>
     );

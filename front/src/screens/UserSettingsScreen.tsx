@@ -54,8 +54,6 @@ const UserSettingsScreen = () => {
         .then((response) => {
           if (isMounted) {
             const userResult: IUser = response.data;
-            console.log(userResult);
-            
             setUser(userResult);
             setLoading(false);
           }

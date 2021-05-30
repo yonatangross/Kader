@@ -39,8 +39,8 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
     let mounted = true;
 
     if (!!route.params) {
+      console.log('yoni');
       const params: any = route.params;
-      console.log(params.id);
 
       getPost(params.id)
         .then((response) => {
@@ -59,7 +59,7 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
     return () => {
       mounted = false;
     };
-  }, [fontsLoaded, setPost, setPostUpdated, setShowSettingsSection, setIsPostOwner]);
+  }, [fontsLoaded, setPost, setShowSettingsSection, isPostOwner,postUpdated]);
 
   const onPressSettingsButton = () => {
     if (showSettingsSection) {
@@ -103,8 +103,8 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
         )} */}
         <SinglePostItem post={post} />
         <Text style={styles.commentsNumber}>Comments</Text>
-        <SinglePostComments comments={post.comments} postId={post.postId} postUpdated={postUpdated} setPostUpdated={setPostUpdated} />
-        <InputBox postId={post.postId} setPostUpdated={setPostUpdated} />
+        <SinglePostComments comments={post.comments} postId={post.postId} postUpdated={postUpdated} setPostUpdated={setPostUpdated}  />
+        <InputBox postId={post.postId} postUpdated={postUpdated} setPostUpdated={setPostUpdated} />
       </View>
     );
   } else return <></>;

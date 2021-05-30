@@ -57,7 +57,7 @@ const PostListItem = (props: PostListItemProps) => {
               <Text style={styles.postTypeAndGroupNameText}>
                 {getPostTypeName(post.type)} {moment(post.created).fromNow(false)}
               </Text>
-              <Text style={styles.groupText}>{groupName}</Text>
+              <Text style={styles.groupText}>{post.groupName}</Text>
             </View>
             <View style={styles.categoryContainer}>
               {!!groupCategory && !!groupCategory?.imageUri ? (

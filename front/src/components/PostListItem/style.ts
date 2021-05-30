@@ -81,13 +81,13 @@ const styles = StyleSheet.create({
 
   titleText: {
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 17,
     maxWidth: 250,
 
     overflow: 'hidden',
   },
   descriptionText: {
-    fontSize: 16,
+    fontSize: 14,
     overflow: 'hidden',
     maxWidth: 250,
   },

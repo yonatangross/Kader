@@ -3,9 +3,9 @@ import { AxiosResponse } from 'axios';
 import { CommentApiDataType } from '../types/ApiDataTypes';
 import { IComment } from '../types/IComment';
 
-export const getComments = async (): Promise<AxiosResponse<any>> => {
+export const getComments = async (postId: string): Promise<AxiosResponse<any>> => {
   try {
-    const response: AxiosResponse<any> = await kaderApi.get(`/comments`, {
+    const response: AxiosResponse<any> = await kaderApi.get(`/comments/${postId}`, {
       params: {},
     });
     return response;

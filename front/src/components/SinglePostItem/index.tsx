@@ -20,7 +20,7 @@ const SinglePostItem = (props: SinglePostItemProps) => {
     () => {
       mounted = false;
     };
-  }, [setLoading]);
+  }, [loading]);
 
   if (!!post) {
     return (
@@ -34,7 +34,9 @@ const SinglePostItem = (props: SinglePostItemProps) => {
             )}
           </View>
           <View style={styles.middleDataContainer}>
-            <Text style={styles.titleText}>{post.title}</Text>
+            <View style={styles.textContainer}>
+              <Text style={styles.titleText}>{post.title}</Text>
+            </View>
             <View style={styles.postDateContainer}>
               <FontAwesome5 name="clock" color={'#4975aa'} size={20} />
               <Text style={styles.postDate}>{moment(post.created).fromNow()}</Text>
@@ -73,6 +75,13 @@ const SinglePostItem = (props: SinglePostItemProps) => {
 };
 
 const styles = StyleSheet.create({
+  textContainer: { flexDirection: 'row', width: 200, marginTop: 5 },
+  titleText: {
+    flexDirection: 'row',
+    flexShrink: 1,
+    fontWeight: '700',
+    fontSize: 16,
+  },
   postCreationText: {
     fontSize: 16,
     fontWeight: 'bold',
@@ -132,13 +141,13 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: 'white',
     width: '100%',
-    marginBottom:10,
+    marginBottom: 10,
   },
   container: {
     flexDirection: 'column',
     alignItems: 'center',
   },
-  middleDataContainer: { flexDirection: 'column', justifyContent: 'center', alignSelf: 'flex-start', marginTop: 20 },
+  middleDataContainer: { flexDirection: 'column', justifyContent: 'center', alignSelf: 'flex-start', marginTop: 20, backgroundColor: '#fefefe' },
   extraDataContainer: { flexDirection: 'column', justifyContent: 'center', alignContent: 'center' },
   headerContainer: {
     flexDirection: 'row',
@@ -174,7 +183,7 @@ const styles = StyleSheet.create({
   postDate: { paddingHorizontal: 0 },
   locationText: { paddingHorizontal: 0, marginTop: -2 },
   postImageContainer: {
-    margin: 15,
+    marginHorizontal: 15,
     shadowOffset: { width: 15, height: 15 },
     shadowColor: 'black',
     shadowOpacity: 0.8,
@@ -184,8 +193,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#0000',
   },
   postImage: {
-    width: 200,
-    height: 200,
+    width: 170,
+    height: 170,
     borderRadius: 15,
     resizeMode: 'contain',
   },
@@ -213,10 +222,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   commentsHeader: { alignSelf: 'center', justifyContent: 'center', fontSize: 24, margin: 10 },
-  titleText: {
-    fontWeight: '700',
-    fontSize: 24,
-  },
 
   postTabsContainer: {
     flexDirection: 'row',
