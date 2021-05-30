@@ -39,7 +39,6 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
     let mounted = true;
 
     if (!!route.params) {
-      console.log('yoni');
       const params: any = route.params;
 
       getPost(params.id)

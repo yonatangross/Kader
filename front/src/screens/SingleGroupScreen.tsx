@@ -39,7 +39,7 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
             const groupResponse: IGroup = response.data;
             setIsAdmin(
               _.some(groupResponse.managers, (user) => {
-                if (user.id === auth.authData?.userId) return true;
+                if (user.userId === auth.authData?.userId) return true;
               })
             );
             setGroup(groupResponse);
@@ -58,7 +58,7 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
   }, [fontsLoaded, setGroup, visibleCreatePost, setVisibleCreatePost]);
 
   const renderMemberListItem = ({ item: item }: { item: IUser }) => {
-    return <UserListItem user={item} key={item.id} />;
+    return <UserListItem user={item} key={item.userId} />;
   };
   const renderPostListItem = ({ item: item }: { item: IPost }) => {
     return <PostListItem post={item} key={item.postId} showComments={true} groupName={group?.name} groupCategory={group?.category} />;
@@ -79,7 +79,7 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
               contentContainerStyle={{ flex: 0.9, justifyContent: 'center', width: '100%' }}
               data={group.members}
               renderItem={renderMemberListItem}
-              keyExtractor={(item, index) => item.id + index.toString()}
+              keyExtractor={(item, index) => item.userId + index.toString()}
               showsHorizontalScrollIndicator={true}
               ListFooterComponentStyle={{ flex: 0.1 }}
               ListFooterComponent={
