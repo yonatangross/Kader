@@ -14,7 +14,7 @@ export interface IPost {
   commentsCount: number;
   location: string;
   address: string;
-  image: any;
+  imagesUri: string[];
   creator: IUser;
   groupId: string;
   group: IGroup;

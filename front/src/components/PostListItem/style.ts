@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   //Containers
+  hideCommentsContainer: { borderBottomWidth: 10, borderBottomColor: '#dedcdf' },
   container: {
     flexDirection: 'column',
     width: '100%',
@@ -14,6 +15,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     margin: 10,
+    marginTop: 20,
   },
   titleAndDescriptionContainer: { flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'space-around', width: '60%' },
   creatorDetailsContainer: { flexDirection: 'row' },
@@ -63,6 +65,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   postImageContainer: {
+    alignSelf: 'center',
     marginHorizontal: 15,
     shadowOffset: { width: 15, height: 15 },
     shadowColor: 'black',
@@ -76,7 +79,6 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 15,
-    resizeMode: 'contain',
   },
 
   titleText: {

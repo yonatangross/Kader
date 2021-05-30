@@ -20,11 +20,10 @@ export interface PostListItemProps {
 }
 
 const PostListItem = (props: PostListItemProps) => {
-  const { post,groupName,groupCategory } = props;
+  const { post, groupName, groupCategory } = props;
   const navigation = useNavigation();
 
   useEffect(() => {
-    
     return () => {};
   }, []);
 
@@ -60,8 +59,8 @@ const PostListItem = (props: PostListItemProps) => {
               <Text style={styles.groupText}>{post.groupName}</Text>
             </View>
             <View style={styles.categoryContainer}>
-              {!!groupCategory && !!groupCategory?.imageUri ? (
-                <Image source={{ uri: imageBaseUrl + groupCategory?.imageUri }} style={styles.categoryIcon as ImageStyle} />
+              {!!post.category && !!post.category.imageUri ? (
+                <Image source={{ uri: imageBaseUrl + post.category.imageUri }} style={styles.categoryIcon as ImageStyle} />
               ) : (
                 <Image source={require('../../assets/images/categoryIcon.png')} style={styles.categoryIcon as ImageStyle} />
               )}
@@ -70,8 +69,8 @@ const PostListItem = (props: PostListItemProps) => {
           <Divider style={{ marginHorizontal: 20 }} />
           <View style={styles.postDetailsContainer}>
             <View style={styles.postImageContainer}>
-              {post.image !== undefined ? (
-                <Image source={{ uri: post.image }} style={styles.postImage as ImageStyle} />
+              {!!post.imagesUri && post.imagesUri.length >= 1 ? (
+                <Image source={{ uri: imageBaseUrl + post.imagesUri[0] }} style={styles.postImage as ImageStyle} />
               ) : (
                 <Image source={require('../../assets/images/itemPlaceholder.png')} style={styles.postImage as ImageStyle} />
               )}
@@ -84,7 +83,9 @@ const PostListItem = (props: PostListItemProps) => {
           {props.showComments === true ? (
             <PostListItemComments comments={post.comments} commentsInitialNumber={2} postId={post.postId} />
           ) : (
-            <Text style={styles.commentNumber}>{post.commentsCount} comments</Text>
+            <View style={styles.hideCommentsContainer}>
+              <Text style={styles.commentNumber}>{post.commentsCount} comments</Text>
+            </View>
           )}
         </View>
       </TouchableWithoutFeedback>

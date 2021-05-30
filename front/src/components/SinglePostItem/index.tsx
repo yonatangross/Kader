@@ -6,6 +6,7 @@ import { Text } from '@ui-kitten/components';
 import { IPost } from '../../types/IPost';
 import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import moment from '../../services/moment';
+import { imageBaseUrl } from '../../services/axios';
 
 export interface SinglePostItemProps {
   post: IPost;
@@ -27,8 +28,8 @@ const SinglePostItem = (props: SinglePostItemProps) => {
       <View style={styles.postContainer}>
         <View style={styles.postDataContainer}>
           <View style={styles.postImageContainer}>
-            {post.image !== undefined ? (
-              <Image source={{ uri: post.image }} style={styles.postImage as ImageStyle} />
+          {!!post.imagesUri && post.imagesUri.length >= 1 ? (
+                <Image source={{ uri: imageBaseUrl + post.imagesUri[0] }} style={styles.postImage as ImageStyle} />
             ) : (
               <Image source={require('../../assets/images/itemPlaceholder.png')} style={styles.postImage as ImageStyle} />
             )}
@@ -196,7 +197,6 @@ const styles = StyleSheet.create({
     width: 170,
     height: 170,
     borderRadius: 15,
-    resizeMode: 'contain',
   },
   creatorTitle: { fontWeight: 'bold', alignSelf: 'flex-start', marginTop: 10, marginRight: 5, fontSize: 16 },
   postTypeTitle: { fontWeight: '100', alignSelf: 'flex-start', marginTop: 10, fontSize: 16 },

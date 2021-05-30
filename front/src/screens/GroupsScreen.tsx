@@ -80,7 +80,7 @@ const GroupsScreen = () => {
 
   const getMembershipStatus = (members: IUser[], userId: string) => {
     members.forEach((member) => {
-      if (member.id === userId) {
+      if (member.userId === userId) {
         return true;
       }
     });
