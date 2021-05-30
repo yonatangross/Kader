@@ -32,7 +32,7 @@ const CommenterListItem = (props: CommenterListItemProps) => {
 
   const onPressRateUser = () => {
     props.setShowRating(true);
-    props.setSelectedUserId(comment.creator.id);
+    props.setSelectedUserId(comment.creator.userId);
   };
 
   if (!!comment) {

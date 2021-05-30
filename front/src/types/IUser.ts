@@ -4,7 +4,7 @@ import { IGroup } from './IGroup';
 import { IPost } from './IPost';
 
 export interface IUser {
-  id: string;
+  userId: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -14,10 +14,10 @@ export interface IUser {
   memberInGroups: IGroup[];
   posts: IPost[];
   comments: IComment[];
-  managerInGroups:IGroup[];
-  postsCount:number;
-  memberInGroupsCount:number;
-  managerInGroupsCount:number;
+  managerInGroups: IGroup[];
+  postsCount: number;
+  memberInGroupsCount: number;
+  managerInGroupsCount: number;
   imageUri?: string;
-  userName:string;
+  userName: string;
 }

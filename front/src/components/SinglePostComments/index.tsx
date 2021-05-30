@@ -52,7 +52,7 @@ const SinglePostComments = (props: CommentsProps) => {
   }, [fontsLoaded, props.postUpdated, setVisibleCommentActionModal, refreshing]);
 
   const renderCommentListItem = ({ item }: { item: IComment; index: number }) => {
-    const isOwner = item.creator.id === auth.authData?.userId;
+    const isOwner = item.creator.userId === auth.authData?.userId;
     if (isOwner)
       return (
         <TouchableOpacity

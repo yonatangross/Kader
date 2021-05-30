@@ -47,7 +47,7 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
           if (mounted) {
             const postResponse: IPost = response.data.post;
             setPost(postResponse);
-            if (postResponse?.creator.id === auth.authData?.userId) {
+            if (postResponse?.creator.userId === auth.authData?.userId) {
               setIsPostOwner(true);
             }
           }
