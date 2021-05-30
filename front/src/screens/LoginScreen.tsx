@@ -19,9 +19,9 @@ export default function LoginScreen() {
 
   const signIn = async () => {
     isLoading(true);
-    if (!!email && !!password) await auth.signIn(email, password);
+    if (!!username && !!password) await auth.signIn(username, password);
   };
-  const [email, setEmail] = React.useState<string>();
+  const [username, setUsername] = React.useState<string>();
   const [password, setPassword] = React.useState<string>();
 
   const onSignUpButtonPress = (): void => {
@@ -40,7 +40,7 @@ export default function LoginScreen() {
           </Button>
         </View>
         <View style={styles.formContainer}>
-          <Input label="EMAIL" placeholder="Email" status="control" value={email} onChangeText={setEmail} />
+          <Input label="USERNAME" placeholder="Username" status="control" value={username} onChangeText={setUsername} />
           <Input
             style={styles.passwordInput}
             secureTextEntry={true}

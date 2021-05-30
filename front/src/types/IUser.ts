@@ -19,4 +19,5 @@ export interface IUser {
   memberInGroupsCount:number;
   managerInGroupsCount:number;
   imageUri?: string;
+  userName:string;
 }

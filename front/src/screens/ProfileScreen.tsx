@@ -18,6 +18,8 @@ export default function ProfileScreen() {
     Fredoka_One: require('../assets/fonts/Fredoka_One/FredokaOne-Regular.ttf'),
   });
   useEffect(() => {
+    console.log(auth.authData?.userId);
+    
     if (!!auth && !!auth.authData) {
       getUser(auth.authData.userId)
         .then((response) => {

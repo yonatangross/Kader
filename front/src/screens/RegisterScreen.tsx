@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Image, Dimensions, ActivityIndicator } from 'react-native';
-const logo = require('../assets/images/bigLogo.png');
 const { width: WIDTH } = Dimensions.get('window');
 import { Formik, Field } from 'formik';
 import * as yup from 'yup';
@@ -51,7 +50,7 @@ export default function RegisterScreen() {
     isLoading(true);
     auth
       .signUp(values)
-      .then(async (response) => {
+      .then(async () => {
         console.log('pressed handleSubmit');
       })
       .catch((error) => {
@@ -84,7 +83,7 @@ export default function RegisterScreen() {
             }}
             onSubmit={(values) => handleSubmit(values)}
           >
-            {({ handleSubmit, isValid, values, setFieldValue, setFieldTouched, errors, touched }) => (
+            {({ handleSubmit, values, setFieldValue, setFieldTouched }) => (
               <>
                 <Field
                   component={CustomInput}

@@ -57,9 +57,9 @@ const AuthProvider: React.FC = ({ children }) => {
     }
   }
 
-  const signIn = async (email: string, password: string) => {
+  const signIn = async (username: string, password: string) => {
     await authService
-      .signIn(email, password)
+      .signIn(username, password)
       .then((response) => {
         const decodedToken: any = decode(response.data.token);
         setAuthData({
