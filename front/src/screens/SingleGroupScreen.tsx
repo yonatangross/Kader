@@ -32,7 +32,6 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
 
     if (route.params) {
       const params: any = route.params;
-
       getGroup(params.id)
         .then((response) => {
           if (mounted) {
@@ -70,14 +69,15 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
         <CreateGroupPostModal visible={visibleCreatePost} setVisible={setVisibleCreatePost} groupId={group.groupId} />
         <View style={styles.groupDataContainer}>
           <GroupManagementPanel group={group} isAdmin={isAdmin} />
-          <Text style={styles.nameText}>{group.name}</Text>
-          <Text style={styles.descriptionText}>{group.description}</Text>
-          <Text style={styles.groupPrivacyText}>Group Privacy: {getGroupPrivacyName(group.groupPrivacy)}</Text>
-
+          <View style={styles.textContainer}>
+            <Text style={styles.nameText}>{group.name}</Text>
+            <Text style={styles.descriptionText}>{group.description}</Text>
+            <Text style={styles.groupPrivacyText}>Group Privacy: {getGroupPrivacyName(group.groupPrivacy)}</Text>
+          </View>
           <View style={styles.membersContainer}>
             <FlatList
               contentContainerStyle={{ flex: 0.9, justifyContent: 'center', width: '100%' }}
-              data={group.members}
+              data={group.members.slice(0, 7)}
               renderItem={renderMemberListItem}
               keyExtractor={(item, index) => item.userId + index.toString()}
               showsHorizontalScrollIndicator={true}
@@ -128,6 +128,7 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
 };
 
 const styles = StyleSheet.create({
+  textContainer: { flexDirection: 'column', width: '100%', alignItems: 'center', justifyContent: 'center', paddingHorizontal: 20 },
   noPostsMessageContainer: { marginHorizontal: 20 },
   noPostsMessageText: { fontSize: 30, fontFamily: 'Halvetica' },
   extraMembersText: { textAlign: 'center', justifyContent: 'center', fontSize: 16 },

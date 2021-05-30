@@ -76,7 +76,7 @@ const SinglePostItem = (props: SinglePostItemProps) => {
 };
 
 const styles = StyleSheet.create({
-  textContainer: { flexDirection: 'row', width: 200, marginTop: 5 },
+  textContainer: { flexDirection: 'row', width: 200, marginTop: 5 ,},
   titleText: {
     flexDirection: 'row',
     flexShrink: 1,

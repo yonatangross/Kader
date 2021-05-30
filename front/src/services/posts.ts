@@ -41,11 +41,14 @@ export const getPost = async (postId: string): Promise<AxiosResponse<any>> => {
 export const addPost = async (postData: any): Promise<AxiosResponse<any>> => {
   try {
     const postImage = postData.image;
+    const groupId = postData.groupId;
     let initialRequest = postData;
     delete initialRequest.image;
     delete initialRequest.groupId;
+    console.log(`groupId: ${groupId}`);
+    console.log(groupId);
 
-    const response: AxiosResponse<any> = await kaderApi.post(`/posts/post/${postData.groupId}`, initialRequest);
+    const response: AxiosResponse<any> = await kaderApi.post(`/posts/post/${groupId}`, initialRequest);
 
     //use formData
     var formData = new FormData();

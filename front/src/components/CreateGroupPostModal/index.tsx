@@ -28,8 +28,12 @@ const CreateGroupPostModal = (props: CreateGroupPostModalProps) => {
   const numberOfSections = 2;
 
   useEffect(() => {
+    console.log('useeffect');
+    
+    console.log(props.groupId);
+    
     if (submitFlag) {
-      submitPost();
+      submitPost(props.groupId);
       props.setVisible(false);
       setSubmitFlag(false);
     }
@@ -44,12 +48,14 @@ const CreateGroupPostModal = (props: CreateGroupPostModalProps) => {
     }
   }, [props.visible, setSubmitFlag, setActiveSection, submitFlag]);
 
-  const submitPost = async () => {
+  const submitPost = async (groupId: string) => {
+    console.log(`submitPost: props.groupId:${props.groupId}`);
+
     addPost({
       type: state.postType,
       title: state.details.title,
       description: state.details.description,
-      groupId: props.groupId,
+      groupId: groupId,
       address: state.details.address,
       image: state.details.image,
     })

@@ -48,11 +48,6 @@ const GroupsScreen = () => {
   const onSelect = (group: IGroup) => {
     switch (group.groupPrivacy) {
       case GroupPrivacy.Invisible:
-        navigation.navigate('SingleGroupDetails', {
-          id: group.groupId,
-          name: group.name,
-        });
-        break;
       case GroupPrivacy.Private:
       case GroupPrivacy.Public: {
         if (!!auth && !!auth.authData) {

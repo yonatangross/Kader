@@ -11,8 +11,8 @@ import { getComments } from '../../services/comments';
 export interface CommentsProps {
   comments: IComment[];
   postId: string;
-  postUpdated: boolean;
-  setPostUpdated: Function;
+  commentAdded: boolean;
+  setCommentAdded: Function;
 }
 
 const SinglePostComments = (props: CommentsProps) => {
@@ -32,9 +32,9 @@ const SinglePostComments = (props: CommentsProps) => {
     getComments(props.postId)
       .then((response) => {
         const commentsResponse: IComment[] = response.data.commentViews;
-        setComments(commentsResponse);
+        setComments(commentsResponse.reverse());
         setRefreshing(false);
-        props.setPostUpdated(true);
+        props.setCommentAdded(false);
       })
       .catch((error) => {
         setRefreshing(false);
@@ -45,11 +45,13 @@ const SinglePostComments = (props: CommentsProps) => {
   useEffect(() => {
     let mounted = true;
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
-
+    if (props.commentAdded) {
+      onRefresh();
+    }
     return () => {
       mounted = false;
     };
-  }, [fontsLoaded, props.postUpdated, setVisibleCommentActionModal, refreshing]);
+  }, [fontsLoaded, props.commentAdded, setVisibleCommentActionModal, refreshing, props.setCommentAdded]);
 
   const renderCommentListItem = ({ item }: { item: IComment; index: number }) => {
     const isOwner = item.creator.userId === auth.authData?.userId;
@@ -76,11 +78,11 @@ const SinglePostComments = (props: CommentsProps) => {
           commentId={activeCommentIdOnModal}
           visible={visibleCommentActionModal}
           setVisible={setVisibleCommentActionModal}
-          setPostUpdated={props.setPostUpdated}
+          setPostUpdated={props.setCommentAdded}
         />
         <FlatList
           style={styles.commentsList}
-          data={comments.reverse()}
+          data={comments}
           renderItem={renderCommentListItem}
           keyExtractor={(item) => item.commentId}
           showsVerticalScrollIndicator={true}

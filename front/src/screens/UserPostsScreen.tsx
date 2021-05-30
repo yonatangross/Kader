@@ -8,6 +8,7 @@ import { useFonts } from 'expo-font';
 import { getPostsForUser } from '../services/posts';
 import PostListItem from '../components/PostListItem';
 import LoadingIndicator from '../components/LoadingIndicator';
+import { IPost } from '../types/IPost';
 
 export interface UserPostsScreenProps {}
 
@@ -26,8 +27,9 @@ const UserPostsScreen = () => {
     if (!!auth.authData)
       getPostsForUser(auth.authData?.userId)
         .then((response) => {
+
           if (isMounted) {
-            const postsResult: any[] = response.data;
+            const postsResult: IPost[] = response.data;
             setUserPosts(postsResult);
             setLoading(false);
           }

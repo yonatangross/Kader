@@ -63,9 +63,9 @@ const SingleGroupDetailsScreen = (props: SingleGroupDetailsPageProps) => {
     return <UserListItem user={item} key={item.id} />;
   };
 
-  if (group) {
+  if (!!group) {
     return (
-      <View>
+      <View style={styles.container}>
         <Text style={styles.nameText}>{group.name}</Text>
         <Text style={styles.descriptionText}>{group.description}</Text>
         <Text style={styles.groupPrivacyText}>Group Privacy: {getGroupPrivacyName(group.groupPrivacy)}</Text>
@@ -76,9 +76,9 @@ const SingleGroupDetailsScreen = (props: SingleGroupDetailsPageProps) => {
           </View>
           <FlatList
             contentContainerStyle={{ flex: 0.9, justifyContent: 'center', width: '100%' }}
-            data={group.members}
+            data={group.members.slice(0, 7)}
             renderItem={renderMemberListItem}
-            keyExtractor={(item, index) => item.id + index.toString()}
+            keyExtractor={(item, index) => item.userId + index.toString()}
             showsVerticalScrollIndicator={true}
             ListFooterComponentStyle={{ flex: 0.1 }}
             ListFooterComponent={
@@ -96,7 +96,7 @@ const SingleGroupDetailsScreen = (props: SingleGroupDetailsPageProps) => {
           />
         </View>
 
-        <View style={styles.buttonContainer}>
+        <View style={styles.buttonsContainer}>
           {group.groupPrivacy === GroupPrivacy.Private ? (
             <TouchableOpacity activeOpacity={0.7} onPress={askToJoinPrivateGroup} style={styles.buttonContainer}>
               <Text style={styles.postCreationText}>Ask to join group</Text>
@@ -113,13 +113,14 @@ const SingleGroupDetailsScreen = (props: SingleGroupDetailsPageProps) => {
 };
 
 const styles = StyleSheet.create({
+  buttonsContainer: { alignSelf: 'center', width: '100%', backgroundColor: 'black' },
   postCreationText: {
     fontSize: 16,
     fontWeight: 'bold',
     color: 'white',
   },
   groupDataContainer: { flexDirection: 'column', backgroundColor: 'white', width: '100%' },
-  container: { flexDirection: 'column', width: '100%' },
+  container: { flexDirection: 'column', width: '100%', justifyContent: 'center', alignItems: 'center' },
   membersHeaderContainer: { alignItems: 'center' },
   membersContainer: { flexDirection: 'column', marginBottom: 10 },
   postsContainer: { flexDirection: 'column', width: '100%' },
@@ -179,7 +180,6 @@ const styles = StyleSheet.create({
     elevation: 6,
     shadowRadius: 15,
     shadowOffset: { width: 1, height: 13 },
-    
   },
   button: {
     margin: 2,
@@ -198,7 +198,6 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   extraMembersText: { textAlign: 'center', justifyContent: 'center', fontSize: 16 },
-
 });
 
 export default SingleGroupDetailsScreen;

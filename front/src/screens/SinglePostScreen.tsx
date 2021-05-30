@@ -30,6 +30,7 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
   const [postUpdated, setPostUpdated] = useState<boolean>(false);
   const [isPostOwner, setIsPostOwner] = useState<boolean>(false);
   const [showSettingsSection, setShowSettingsSection] = useState<boolean>(false);
+  const [commentAdded, setCommentAdded] = useState<boolean>(false);
 
   let [fontsLoaded] = useFonts({
     Rubik: require('../assets/fonts/Rubik/Rubik-VariableFont_wght.ttf'),
@@ -37,7 +38,6 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
 
   useEffect(() => {
     let mounted = true;
-
     if (!!route.params) {
       const params: any = route.params;
 
@@ -45,6 +45,8 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
         .then((response) => {
           if (mounted) {
             const postResponse: IPost = response.data.post;
+            console.log(postResponse.comments.length);
+
             setPost(postResponse);
             if (postResponse?.creator.userId === auth.authData?.userId) {
               setIsPostOwner(true);
@@ -58,7 +60,7 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
     return () => {
       mounted = false;
     };
-  }, [fontsLoaded, setPost, setShowSettingsSection, isPostOwner,postUpdated]);
+  }, [fontsLoaded, setPost, setShowSettingsSection, isPostOwner, postUpdated]);
 
   const onPressSettingsButton = () => {
     if (showSettingsSection) {
@@ -82,14 +84,14 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
   if (!!post && fontsLoaded) {
     return (
       <View style={styles.container}>
-        {/* {isPostOwner && (
+        {isPostOwner && (
           <View style={styles.buttonsContainer}>
             <TouchableOpacity activeOpacity={0.7} onPress={onPressSettingsButton} style={styles.settingsButton}>
               <Image source={require('../assets/images/settingsIcon.png')} style={styles.floatingButtonStyle} />
             </TouchableOpacity>
           </View>
-        )} */}
-        {/* 
+        )}
+
         {showSettingsSection && (
           <View style={styles.settingsButtonsContainer}>
             <TouchableOpacity activeOpacity={0.7} onPress={onPressEditButton} style={styles.settingButton}>
@@ -99,11 +101,11 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
               <Text style={styles.buttonText}>Close Post</Text>
             </TouchableOpacity>
           </View>
-        )} */}
+        )}
         <SinglePostItem post={post} />
         <Text style={styles.commentsNumber}>Comments</Text>
-        <SinglePostComments comments={post.comments} postId={post.postId} postUpdated={postUpdated} setPostUpdated={setPostUpdated}  />
-        <InputBox postId={post.postId} postUpdated={postUpdated} setPostUpdated={setPostUpdated} />
+        <SinglePostComments comments={post.comments.reverse()} postId={post.postId} commentAdded={commentAdded} setCommentAdded={setCommentAdded} />
+        <InputBox postId={post.postId} commentAdded={commentAdded} setCommentAdded={setCommentAdded} />
       </View>
     );
   } else return <></>;

@@ -7,8 +7,8 @@ import styles from './style';
 
 export interface InputBoxProps {
   postId: string;
-  postUpdated: boolean;
-  setPostUpdated: Function;
+  commentAdded: boolean;
+  setCommentAdded: Function;
 }
 
 const InputBox = (props: InputBoxProps) => {
@@ -22,7 +22,7 @@ const InputBox = (props: InputBoxProps) => {
           console.log('added new comment');
 
           Keyboard.dismiss();
-          props.setPostUpdated(true);
+          props.setCommentAdded(true);
           setMessage('');
         })
         .catch((error) => {
@@ -36,7 +36,7 @@ const InputBox = (props: InputBoxProps) => {
     return () => {
       setMessage('');
     };
-  }, [props.postUpdated]);
+  }, [props.commentAdded]);
 
   return (
     <View style={styles.container}>

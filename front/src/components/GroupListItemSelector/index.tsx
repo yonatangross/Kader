@@ -36,12 +36,12 @@ const GroupListItemSelector = (props: GroupListItemSelectorProps) => {
   return (
     <View style={styles.GroupListItemContainer}>
       <View style={styles.categoryContainer}>
-          {!!item.category && !!item.category.imageUri ? (
-            <Image source={{ uri: imageBaseUrl + item.category.imageUri }} style={styles.categoryIcon as ImageStyle} />
-          ) : (
-            <Image source={require('../../assets/images/categoryIcon.png')} style={styles.categoryIcon as ImageStyle} />
-          )}
-        </View>
+        {!!item.category && !!item.category.imageUri ? (
+          <Image source={{ uri: imageBaseUrl + item.category.imageUri }} style={styles.categoryIcon as ImageStyle} />
+        ) : (
+          <Image source={require('../../assets/images/categoryIcon.png')} style={styles.categoryIcon as ImageStyle} />
+        )}
+      </View>
       <View style={styles.dataContainer}>
         <View style={styles.upperContainer}>
           <Text style={styles.upperText}>{item.membersCount} members already posting in</Text>
@@ -49,9 +49,7 @@ const GroupListItemSelector = (props: GroupListItemSelectorProps) => {
         <View style={styles.middleContainer}>
           <Text style={styles.dataText}>{item.name}</Text>
         </View>
-        <View style={styles.lowerContainer}>
-          <Text>members</Text>
-        </View>
+      
       </View>
       <View style={styles.linkContainer}>
         <BouncyCheckbox
@@ -86,7 +84,7 @@ const styles = StyleSheet.create({
   categoryContainer: {
     margin: 15,
     marginRight: 20,
-    marginLeft:5,
+    marginLeft: 5,
     shadowOffset: { width: 1, height: 1 },
     shadowColor: 'black',
     shadowOpacity: 0.8,
@@ -113,7 +111,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   groupCategoryImageContainer: { flexDirection: 'column', justifyContent: 'center', alignContent: 'center', marginRight: 20 },
-  dataContainer: { flexDirection: 'column', alignItems: 'center', backgroundColor: 'white', width: '75%' },
+  dataContainer: { flexDirection: 'column', alignItems: 'center', backgroundColor: 'white', width: '75%',justifyContent:'center' },
   upperContainer: { flexDirection: 'row', alignItems: 'flex-start', width: '100%' },
   middleContainer: { flexDirection: 'row', width: '100%' },
   lowerContainer: { flexDirection: 'row', width: '100%' },
@@ -136,12 +134,12 @@ const styles = StyleSheet.create({
   upperText: {
     color: 'grey',
     fontWeight: 'bold',
-    fontSize: 12,
+    fontSize: 14,
   },
   dataText: {
     color: 'black',
-    fontWeight: 'bold',
-    fontSize: 14,
+    fontWeight: '600',
+    fontSize: 16,
   },
 });
 export default GroupListItemSelector;
