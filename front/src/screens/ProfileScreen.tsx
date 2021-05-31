@@ -6,32 +6,52 @@ import { getUser } from '../services/users';
 import { IUser } from '../types/IUser';
 import { TouchableOpacity } from 'react-native';
 import _ from 'lodash';
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation, useRoute, useIsFocused } from '@react-navigation/core';
 import { useFonts } from 'expo-font';
+import { imageBaseUrl } from '../services/axios';
 
 export default function ProfileScreen() {
   const auth = useAuth();
+  const route = useRoute();
+  const isFocused = useIsFocused();
   const navigation = useNavigation();
   const [user, setUser] = useState<IUser>();
+  const [sameUser, setSameUser] = useState<boolean>(false);
+
   let [fontsLoaded] = useFonts({
     Pattaya: require('../assets/fonts/Pattaya/Pattaya-Regular.ttf'),
     Fredoka_One: require('../assets/fonts/Fredoka_One/FredokaOne-Regular.ttf'),
   });
   useEffect(() => {
-    console.log(auth.authData?.userId);
-    
-    if (!!auth && !!auth.authData) {
-      getUser(auth.authData.userId)
+    console.log('yoni');
+    console.log(route);
+
+    if (!!route.params) {
+      const { id }: any = route.params;
+
+      getUser(id)
         .then((response) => {
           const userResult: IUser = response.data;
           setUser(userResult);
         })
         .catch((error) => {
-          console.log(`error while fetching user data:`);
+          console.log(`error while fetching user ${id} profile:`);
           console.log(error);
         });
+    } else {
+      if (!!auth && !!auth.authData) {
+        getUser(auth.authData.userId)
+          .then((response) => {
+            const userResult: IUser = response.data;
+            setUser(userResult);
+          })
+          .catch((error) => {
+            console.log(`error while fetching user data:`);
+            console.log(error);
+          });
+      }
     }
-  }, [setUser, fontsLoaded]);
+  }, [setUser, fontsLoaded, isFocused]);
 
   const signOut = () => {
     auth.signOut();
@@ -64,15 +84,17 @@ export default function ProfileScreen() {
         <View style={styles.userBasicDetailsContainer}>
           <View style={styles.profileImageContainer}>
             {!!user.imageUri ? (
-              <Image source={{ uri: user.imageUri }} style={styles.profileImage as ImageStyle} />
+              <Image source={{ uri: imageBaseUrl + user.imageUri }} style={styles.profileImage as ImageStyle} />
             ) : (
               <Image source={require('../assets/images/celebrity.png')} style={styles.profileImage as ImageStyle} />
             )}
           </View>
           <Text style={styles.fullNameText}>{user?.firstName + ' ' + user?.lastName}</Text>
-          <TouchableOpacity activeOpacity={0.7} onPress={signOut} style={styles.logoutButton}>
-            <Image source={require('../assets/images/logout2.png')} style={styles.floatingButtonStyle} />
-          </TouchableOpacity>
+          {sameUser && (
+            <TouchableOpacity activeOpacity={0.7} onPress={signOut} style={styles.logoutButton}>
+              <Image source={require('../assets/images/logout2.png')} style={styles.floatingButtonStyle} />
+            </TouchableOpacity>
+          )}
         </View>
 
         <View style={styles.userDataContainer}>
@@ -125,7 +147,7 @@ export default function ProfileScreen() {
 }
 
 const styles = StyleSheet.create({
-  fullNameText: { fontFamily: 'Fredoka_One', fontSize: 36 },
+  fullNameText: { fontFamily: 'Fredoka_One', fontSize: 36, marginTop: 15 },
 
   actionItemText: {
     fontFamily: 'Fredoka_One',
@@ -180,6 +202,7 @@ const styles = StyleSheet.create({
     height: 30,
   },
   logoutButton: {
+    marginTop: 15,
     width: 20,
     height: 20,
     alignItems: 'center',
@@ -219,8 +242,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   profileImage: {
-    width: 42,
-    height: 42,
-    resizeMode: 'contain',
+    width: 50,
+    height: 50,
+    borderRadius: 100,
   },
 });

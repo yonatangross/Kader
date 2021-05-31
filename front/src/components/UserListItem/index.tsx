@@ -24,7 +24,10 @@ const UserListItem = (props: UserListItemProps) => {
       if (user.userId === auth.authData.userId) {
         navigation.navigate('Profile');
       } else {
-        navigation.navigate('UserProfile', { id: user.userId, name: user.firstName + ' ' + user.lastName });
+        console.log('bla');
+        console.log(user.userId);
+        
+        navigation.navigate('Profile', { id: user.userId });
       }
     }
   };
@@ -45,10 +48,10 @@ const UserListItem = (props: UserListItemProps) => {
 const styles = StyleSheet.create({
   profileImageContainer: {
     marginVertical: 5,
-    marginHorizontal: -10,
+    marginHorizontal: -5,
     borderRadius: 100,
     overflow: 'hidden',
-    backgroundColor: 'white',
+    backgroundColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
     height: 50,

@@ -28,7 +28,7 @@ const EditPostScreen = (props: EditPostScreenProps) => {
       if (isMounted) {
         const params: any = route.params;
         setPost(params.post);
-        setPostImage(post?.image);
+        setPostImage(post?.imagesUri[0]);
         setLoading(false);
       }
     }

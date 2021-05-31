@@ -12,9 +12,7 @@ import { IGroup } from '../types/IGroup';
 import { GroupPrivacy } from '../types/GroupPrivacy';
 import { IUser } from '../types/IUser';
 import Autocomplete from 'react-native-autocomplete-input';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useFonts } from 'expo-font';
-import { ScrollView } from 'react-native-gesture-handler';
 import LoadingIndicator from '../components/LoadingIndicator';
 import { imageBaseUrl } from '../services/axios';
 
@@ -143,13 +141,24 @@ const GroupsScreen = () => {
             <Text style={styles.postCreationText}>Create Group</Text>
           </TouchableOpacity>
         </View>
-        <View style={{ flexDirection: 'row', width: '100%', marginHorizontal: 20, justifyContent: 'center', alignSelf: 'center', backgroundColor: 'white' }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            width: '100%',
+            marginHorizontal: 20,
+            justifyContent: 'center',
+            alignSelf: 'center',
+            backgroundColor: 'white',
+            borderBottomColor: '#dedcdf',
+            borderBottomWidth: 20,
+          }}
+        >
           <Autocomplete
             autoCapitalize="none"
             autoCorrect={false}
             inputContainerStyle={styles.autocompleteContainer}
             // Data to show in suggestion
-            data={searchedGroups.slice(0, 5)}
+            data={searchedGroups.slice(0, 3)}
             // Default value if you want to set something in input
             defaultValue={searchQuery}
             // Onchange of the text changing the state of the query
@@ -205,8 +214,8 @@ const GroupsScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  searchGroupNameContainer: { width: '50%', backgroundColor: 'transparent',marginHorizontal:20 },
-  searchItemText: {fontSize:12,marginBottom:0},
+  searchGroupNameContainer: { width: '50%', backgroundColor: 'transparent', marginHorizontal: 20 },
+  searchItemText: { fontSize: 12, marginBottom: 0 },
   goToContainer: {
     marginHorizontal: 30,
     marginLeft: 0,
@@ -298,14 +307,22 @@ const styles = StyleSheet.create({
   middleContainer: { flexDirection: 'row', width: '100%' },
   lowerContainer: { flexDirection: 'row', width: '100%' },
   linkContainer: { flexDirection: 'column', alignItems: 'center' },
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignSelf: 'flex-start',
+    width: '100%',
+    height:50,
+    backgroundColor: 'transparent',
+  },
   buttonContainer: {
-    justifyContent: 'center',
+    margin: 10,
+    backgroundColor: '#4975aa',
+    borderRadius: 30,
     alignItems: 'center',
-    width: 40,
+    width: 120,
     height: 40,
-    borderRadius: 20,
-    backgroundColor: '#f0eff5',
-    marginLeft: 20,
+    justifyContent: 'center',
   },
   profileAvatar: {
     marginHorizontal: 8,
@@ -338,19 +355,12 @@ const styles = StyleSheet.create({
     width: '100%',
     borderWidth: 0,
     borderRadius: 7,
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
   autocompleteView: {
     margin: 30,
   },
-  buttonsContainer: {
-    marginVertical: 0,
-    marginBottom: 10,
-    marginTop: -10,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    width: '100%',
-    backgroundColor: 'white',
-  },
+
   postCreationText: {
     fontSize: 16,
     fontWeight: 'bold',
@@ -387,6 +397,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flexDirection: 'column',
+    height: '100%',
     flex: 1,
     backgroundColor: 'white',
   },
@@ -407,7 +418,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 24,
     color: 'black',
-    marginHorizontal: 20,
+    margin: 20,
+
     alignSelf: 'flex-start',
   },
   myGroups: {},

@@ -20,7 +20,6 @@ export default function MainTabNavigator() {
     <MainTab.Navigator
       initialRouteName="Home"
       activeColor="#4975aa"
-      
       barStyle={{
         borderTopColor: '#f1efee',
         borderTopWidth: 0.5,

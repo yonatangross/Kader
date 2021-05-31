@@ -94,119 +94,121 @@ const CreateGroupModal = (props: CreateGroupModalProps) => {
     };
   }, [props.visible, submitFlag]);
 
-  return (
-    <>
-      <View style={styles.outerContainer}>
-        <Modal
-          animationType={'slide'}
-          transparent={false}
-          visible={props.visible}
-          onRequestClose={() => {
-            props.setVisible(false);
-            console.log('Modal has now been closed.');
-          }}
-        >
-          <Text style={styles.labelText}>Group Name</Text>
-          <TextInput
-            placeholder={'Group Name'}
-            style={styles.textInput}
-            numberOfLines={1}
-            value={groupName}
-            onChangeText={(groupName) => {
-              setGroupName(groupName);
-            }}
-          />
-
-          <Text style={styles.labelText}>Group Description</Text>
-          <TextInput
-            placeholder={'Group Description'}
-            style={styles.textInput}
-            numberOfLines={3}
-            multiline
-            value={groupDescription}
-            onChangeText={(groupDescription) => {
-              setGroupDescription(groupDescription);
-            }}
-          />
-
-          <Text style={styles.labelText}>Group Category</Text>
-          <Picker
-            style={styles.picker}
-            selectedValue={groupCategory}
-            onValueChange={(itemValue) => {
-              console.log(itemValue);
-
-              setGroupCategory(itemValue);
+  if (props.visible) {
+    return (
+      <>
+        <View style={styles.outerContainer}>
+          <Modal
+            animationType={'slide'}
+            transparent={false}
+            visible={props.visible}
+            onRequestClose={() => {
+              props.setVisible(false);
+              console.log('Modal has now been closed.');
             }}
           >
-            {categories.map((item, index) => {
-              return <Picker.Item label={item.name} value={item.id} key={index} />;
-            })}
-          </Picker>
-          <Text style={styles.labelText}>Group Privacy</Text>
-
-          <Picker
-            style={styles.picker}
-            selectedValue={groupPrivacyMethod}
-            onValueChange={(itemValue) => {
-              setGroupPrivacyMethod(itemValue);
-            }}
-          >
-            <Picker.Item label="Invisible" value={GroupPrivacy.Invisible} />
-            <Picker.Item label="Private" value={GroupPrivacy.Private} />
-            <Picker.Item label="Public" value={GroupPrivacy.Public} />
-          </Picker>
-          <View style={styles.autocompleteContainer}>
-            <GooglePlacesAutocomplete
-              placeholder="Choose group primary location"
-              onPress={(data, details = null) => {
-                // 'details' is provided when fetchDetails = true
-                if (!!details) setGroupMainLocation(formatAddress(details));
-              }}
-              query={{
-                key: 'AIzaSyDtlSYdojyjmTTwvSYaIP3N50n-OzrWcUg',
-                language: 'iw',
-                components: 'country:il',
-              }}
-              fetchDetails={true}
-              styles={{
-                container: {
-                  flexDirection: 'column',
-                },
-                listView: {
-                  height: 200,
-                  backgroundColor: 'white',
-                  borderRadius: 15,
-                  paddingBottom: 10,
-                  paddingHorizontal: 10,
-                  marginHorizontal: 20,
-
-                  elevation: 3,
-                },
-                textInput: {
-                  fontSize: 16,
-                  backgroundColor: '#f1f0f0',
-                  borderRadius: 15,
-                  margin: 20,
-                  padding: 10,
-                },
-                description: {
-                  // color: '#ac879a',
-                  fontWeight: '300',
-                },
-                predefinedPlacesDescription: {
-                  color: '#1faadb',
-                },
+            <Text style={styles.labelText}>Group Name</Text>
+            <TextInput
+              placeholder={'Group Name'}
+              style={styles.textInput}
+              numberOfLines={1}
+              value={groupName}
+              onChangeText={(groupName) => {
+                setGroupName(groupName);
               }}
             />
-            <TouchableOpacity activeOpacity={0.7} onPress={onPressSubmitGroup} style={styles.finishButton}>
-              <Text style={styles.finishButtonText}>Submit group</Text>
-            </TouchableOpacity>
-          </View>
-        </Modal>
-      </View>
-    </>
-  );
+
+            <Text style={styles.labelText}>Group Description</Text>
+            <TextInput
+              placeholder={'Group Description'}
+              style={styles.textInput}
+              numberOfLines={3}
+              multiline
+              value={groupDescription}
+              onChangeText={(groupDescription) => {
+                setGroupDescription(groupDescription);
+              }}
+            />
+
+            <Text style={styles.labelText}>Group Category</Text>
+            <Picker
+              style={styles.picker}
+              selectedValue={groupCategory}
+              onValueChange={(itemValue) => {
+                console.log(itemValue);
+
+                setGroupCategory(itemValue);
+              }}
+            >
+              {categories.map((item, index) => {
+                return <Picker.Item label={item.name} value={item.id} key={index} />;
+              })}
+            </Picker>
+            <Text style={styles.labelText}>Group Privacy</Text>
+
+            <Picker
+              style={styles.picker}
+              selectedValue={groupPrivacyMethod}
+              onValueChange={(itemValue) => {
+                setGroupPrivacyMethod(itemValue);
+              }}
+            >
+              <Picker.Item label="Invisible" value={GroupPrivacy.Invisible} />
+              <Picker.Item label="Private" value={GroupPrivacy.Private} />
+              <Picker.Item label="Public" value={GroupPrivacy.Public} />
+            </Picker>
+            <View style={styles.autocompleteContainer}>
+              <GooglePlacesAutocomplete
+                placeholder="Choose group primary location"
+                onPress={(data, details = null) => {
+                  // 'details' is provided when fetchDetails = true
+                  if (!!details) setGroupMainLocation(formatAddress(details));
+                }}
+                query={{
+                  key: 'AIzaSyDtlSYdojyjmTTwvSYaIP3N50n-OzrWcUg',
+                  language: 'iw',
+                  components: 'country:il',
+                }}
+                fetchDetails={true}
+                styles={{
+                  container: {
+                    flexDirection: 'column',
+                  },
+                  listView: {
+                    height: 200,
+                    backgroundColor: 'white',
+                    borderRadius: 15,
+                    paddingBottom: 10,
+                    paddingHorizontal: 10,
+                    marginHorizontal: 20,
+
+                    elevation: 3,
+                  },
+                  textInput: {
+                    fontSize: 16,
+                    backgroundColor: '#f1f0f0',
+                    borderRadius: 15,
+                    margin: 20,
+                    padding: 10,
+                  },
+                  description: {
+                    // color: '#ac879a',
+                    fontWeight: '300',
+                  },
+                  predefinedPlacesDescription: {
+                    color: '#1faadb',
+                  },
+                }}
+              />
+              <TouchableOpacity activeOpacity={0.7} onPress={onPressSubmitGroup} style={styles.finishButton}>
+                <Text style={styles.finishButtonText}>Submit group</Text>
+              </TouchableOpacity>
+            </View>
+          </Modal>
+        </View>
+      </>
+    );
+  } else return <></>;
 };
 
 const styles = StyleSheet.create({

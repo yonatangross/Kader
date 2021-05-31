@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Image, ImageStyle } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import MainTabNavigator from './MainTabNavigator';
 import Colors from '../constants/Colors';
@@ -8,7 +8,6 @@ import SinglePostScreen from '../screens/SinglePostScreen';
 import SingleGroupScreen from '../screens/SingleGroupScreen';
 import SingleGroupDetailsScreen from '../screens/SingleGroupDetailsScreen';
 import { RootStackParamList } from '../types/Tabs';
-import UserProfileScreen from '../screens/UserProfileScreen';
 import UserPostsScreen from '../screens/UserPostsScreen';
 import UserGroupsScreen from '../screens/UserGroupsScreen';
 import UserSettingsScreen from '../screens/UserSettingsScreen';
@@ -73,15 +72,6 @@ export const AppStack = () => {
       <Stack.Screen
         name="SingleGroupDetails"
         component={SingleGroupDetailsScreen}
-        options={({ route }) => ({
-          title: route.params.name,
-          headerTintColor: Colors.light.tint,
-          cardStyle: { backgroundColor: '#dedcdf' },
-        })}
-      />
-      <Stack.Screen
-        name="UserProfile"
-        component={UserProfileScreen}
         options={({ route }) => ({
           title: route.params.name,
           headerTintColor: Colors.light.tint,

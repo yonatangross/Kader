@@ -93,7 +93,7 @@ const SingleGroupDetailsScreen = (props: SingleGroupDetailsPageProps) => {
 
         <View style={styles.membersContainer}>
           <FlatList
-            contentContainerStyle={{ justifyContent: 'center' ,width:350,}}
+            contentContainerStyle={{ justifyContent: 'center', width: 350 }}
             data={group.members.slice(0, 7)}
             renderItem={renderMemberListItem}
             keyExtractor={(item, index) => item.userId + index.toString()}
@@ -141,18 +141,17 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   groupDataContainer: { flexDirection: 'column', backgroundColor: 'white', width: '100%' },
-  container: { flexDirection: 'column', width: '100%', justifyContent: 'flex-start', alignItems: 'center', marginTop: 40, flex: 1 },
+  container: { flexDirection: 'column', width: '100%', justifyContent: 'flex-start', alignItems: 'center', marginTop: 40, flex: 1, },
   membersHeaderContainer: { alignItems: 'center' },
   membersContainer: { flexDirection: 'column', marginBottom: 10, height: 60 },
   postsContainer: { flexDirection: 'column', width: '100%' },
   nameText: {
-    alignSelf: 'center',
-    fontSize: 42,
+    fontSize: 30,
     fontFamily: 'Pattaya',
     color: '#f2a854',
   },
-  groupPrivacyText: { alignSelf: 'center', fontSize: 20 },
-  descriptionText: { alignSelf: 'center', fontSize: 16 },
+  groupPrivacyText: { alignSelf: 'center', fontSize: 20, },
+  descriptionText: { alignSelf: 'center', fontSize: 16 ,},
   membersLengthText: { alignSelf: 'center', fontSize: 20 },
   postCreationButton: {
     backgroundColor: 'white',
