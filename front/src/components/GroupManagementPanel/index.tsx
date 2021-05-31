@@ -7,6 +7,8 @@ import { IGroup } from '../../types/IGroup';
 export interface GroupManagementPanelProps {
   group: IGroup;
   isAdmin: boolean;
+  isUpdated:boolean;
+  setIsUpdated:Function
 }
 
 const GroupManagementPanel = (props: GroupManagementPanelProps) => {

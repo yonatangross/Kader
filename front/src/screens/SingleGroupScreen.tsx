@@ -24,9 +24,11 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
   const [visibleCreatePost, setVisibleCreatePost] = useState<boolean>(false);
   const [group, setGroup] = useState<IGroup>();
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [isUpdated, setIsUpdated] = useState<boolean>(false);
   let [fontsLoaded] = useFonts({
     Pattaya: require('../assets/fonts/Pattaya/Pattaya-Regular.ttf'),
   });
+
   useEffect(() => {
     let mounted = true;
 
@@ -46,7 +48,9 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
           }
         })
         .catch((error) => {
-          console.log(`error fetching group ${params.id}, error: ${error}`);
+          console.log(`error fetching group ${params.id}, error:`);
+          console.log(error);
+          
         });
     } else {
       console.log(`error fetching route.params`);
@@ -54,7 +58,7 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
     () => {
       mounted = false;
     };
-  }, [fontsLoaded, setGroup, visibleCreatePost, setVisibleCreatePost]);
+  }, [fontsLoaded, setGroup, visibleCreatePost, setVisibleCreatePost, setLoading, isUpdated]);
 
   const renderMemberListItem = ({ item: item }: { item: IUser }) => {
     return <UserListItem user={item} key={item.userId} />;
@@ -68,7 +72,7 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
       <View style={styles.container}>
         <CreateGroupPostModal visible={visibleCreatePost} setVisible={setVisibleCreatePost} groupId={group.groupId} />
         <View style={styles.groupDataContainer}>
-          <GroupManagementPanel group={group} isAdmin={isAdmin} />
+          <GroupManagementPanel group={group} isAdmin={isAdmin} isUpdated={isUpdated} setIsUpdated={setIsUpdated} />
           <View style={styles.textContainer}>
             <Text style={styles.nameText}>{group.name}</Text>
             <Text style={styles.descriptionText}>{group.description}</Text>
@@ -129,8 +133,8 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
 
 const styles = StyleSheet.create({
   textContainer: { flexDirection: 'column', width: '100%', alignItems: 'center', justifyContent: 'center', paddingHorizontal: 20 },
-  noPostsMessageContainer: { marginHorizontal: 20 },
-  noPostsMessageText: { fontSize: 30, fontFamily: 'Halvetica' },
+  noPostsMessageContainer: { marginHorizontal: 20, alignItems: 'center' },
+  noPostsMessageText: { fontSize: 24 },
   extraMembersText: { textAlign: 'center', justifyContent: 'center', fontSize: 16 },
   profileImageContainer: {
     marginVertical: 5,

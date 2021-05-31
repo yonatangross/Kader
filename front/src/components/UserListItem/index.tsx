@@ -21,10 +21,10 @@ const UserListItem = (props: UserListItemProps) => {
 
   const onClick = () => {
     if (!!auth && !!auth.authData) {
-      if (user.id === auth.authData.userId) {
+      if (user.userId === auth.authData.userId) {
         navigation.navigate('Profile');
       } else {
-        navigation.navigate('UserProfile', { id: user.id, name: user.firstName + ' ' + user.lastName });
+        navigation.navigate('UserProfile', { id: user.userId, name: user.firstName + ' ' + user.lastName });
       }
     }
   };

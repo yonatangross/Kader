@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { FlatList, StyleSheet, TouchableOpacity, Image, Text, ActivityIndicator } from 'react-native';
+import { FlatList, StyleSheet, TouchableOpacity, Image, Text, ActivityIndicator, RefreshControl, ImageStyle } from 'react-native';
 import { getGroupsForUser, searchGroups } from '../services/groups';
 import GroupListItem from '../components/GroupListItem';
 import { View } from '../components/Themed';
@@ -16,6 +16,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { useFonts } from 'expo-font';
 import { ScrollView } from 'react-native-gesture-handler';
 import LoadingIndicator from '../components/LoadingIndicator';
+import { imageBaseUrl } from '../services/axios';
 
 export interface GroupsProps {}
 
@@ -26,15 +27,16 @@ const GroupsScreen = () => {
   const [visibleCreateGroup, setVisibleCreateGroup] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [userGroups, setUserGroups] = useState<IGroup[]>();
-  const [searchedGroups, setSearchedGroups] = React.useState<any[]>([]);
+  const [searchedGroups, setSearchedGroups] = React.useState<IGroup[]>([]);
   const [searchQuery, setSearchQuery] = React.useState<string>('');
+  const [refreshing, setRefreshing] = useState<boolean>(false);
 
   let [fontsLoaded] = useFonts({
     Roboto: require('../assets/fonts/Roboto/Roboto-Light.ttf'),
   });
 
   const searchGroupsByParameter = () => {
-    if (auth.authData)
+    if (!!auth.authData)
       searchGroups(searchQuery, undefined, undefined, undefined)
         .then((response) => {
           const groupsResult: IGroup[] = response.data;
@@ -82,26 +84,49 @@ const GroupsScreen = () => {
     return false;
   };
 
+  const renderSearchHeader = () => {
+    return (
+      <View style={styles.searchHeaderContainer}>
+        <Text style={styles.searchResultsHeaderText}>Search Results:</Text>
+      </View>
+    );
+  };
+
+  const onRefresh = React.useCallback(async () => {
+    setRefreshing(true);
+    getGroupsForUser(auth.authData?.userId)
+      .then((response) => {
+        const groupsResult: IGroup[] = response.data;
+        setUserGroups(groupsResult);
+        setRefreshing(false);
+      })
+      .catch((error) => {
+        console.log(`error while fetching groups ${error}`);
+        setRefreshing(false);
+      });
+  }, [refreshing]);
+
   useEffect(() => {
     let isMounted = true;
     if (!!auth.authData)
       getGroupsForUser(auth.authData?.userId)
         .then((response) => {
           if (isMounted) {
-            const groupsResult: any[] = response.data;
+            const groupsResult: IGroup[] = response.data;
             setUserGroups(groupsResult);
             setLoading(false);
           }
         })
         .catch((error) => {
-          console.log(`error while fetching groups ${error}`);
+          console.log(`error while fetching groups:`);
+          console.log(error);
         });
     searchGroupsByParameter();
 
     return () => {
       isMounted = false;
     };
-  }, [fontsLoaded, searchQuery, userGroups, searchGroups,loading]);
+  }, [fontsLoaded, searchQuery, setUserGroups, searchGroups, setLoading, refreshing]);
 
   if (!!userGroups && !!fontsLoaded) {
     return (
@@ -122,9 +147,9 @@ const GroupsScreen = () => {
           <Autocomplete
             autoCapitalize="none"
             autoCorrect={false}
-            containerStyle={styles.autocompleteContainer}
+            inputContainerStyle={styles.autocompleteContainer}
             // Data to show in suggestion
-            data={searchedGroups}
+            data={searchedGroups.slice(0, 5)}
             // Default value if you want to set something in input
             defaultValue={searchQuery}
             // Onchange of the text changing the state of the query
@@ -133,18 +158,35 @@ const GroupsScreen = () => {
             onChangeText={(text) => setSearchQuery(text)}
             placeholder="Search groups here..."
             flatListProps={{
+              ListHeaderComponent: renderSearchHeader,
+              style: styles.searchResultContainer,
               keyExtractor: (item) => item.groupId,
               renderItem: ({ item }) => (
                 <TouchableOpacity
-                  style={{ width: '100%', marginHorizontal: 20, alignContent: 'center', justifyContent: 'center' }}
+                  style={{ width: '100%', alignContent: 'center', justifyContent: 'center', height: 50 }}
                   onPress={() => {
                     onSelect(item);
                   }}
                 >
-                  <Text style={styles.itemText}>{item.name}</Text>
+                  <View style={styles.GroupListItemContainer}>
+                    <View style={styles.searchCategoryContainer}>
+                      {!!item.category && !!item.category.imageUri ? (
+                        <Image source={{ uri: imageBaseUrl + item.category.imageUri }} style={styles.searchCategoryIcon as ImageStyle} />
+                      ) : (
+                        <Image source={require('../assets/images/categoryIcon.png')} style={styles.searchCategoryIcon as ImageStyle} />
+                      )}
+                    </View>
+                    <View style={styles.searchGroupNameContainer}>
+                      <Text style={styles.searchItemText}>{item.name}</Text>
+                    </View>
+                    <View style={styles.searchGoToContainer}>
+                      <Image source={require('../assets/images/right-arrow2.png')} style={styles.searchGoToIcon as ImageStyle} />
+                    </View>
+                  </View>
                 </TouchableOpacity>
               ),
             }}
+            onBlur={(event) => {}}
           />
         </View>
         <Text style={styles.myGroupsTitle}>My Groups</Text>
@@ -155,6 +197,7 @@ const GroupsScreen = () => {
           keyExtractor={(item) => item.groupId}
           showsVerticalScrollIndicator={false}
           scrollEnabled={true}
+          refreshControl={<RefreshControl enabled={true} refreshing={refreshing} onRefresh={onRefresh} />}
         />
       </View>
     );
@@ -162,8 +205,139 @@ const GroupsScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  searchGroupNameContainer: { width: '50%', backgroundColor: 'transparent',marginHorizontal:20 },
+  searchItemText: {fontSize:12,marginBottom:0},
+  goToContainer: {
+    marginHorizontal: 30,
+    marginLeft: 0,
+    borderRadius: 15,
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 35,
+    width: 35,
+  },
+  goToIcon: {
+    marginVertical: 15,
+    height: 35,
+    width: 35,
+    resizeMode: 'contain',
+  },
+  searchGoToContainer: {
+    marginHorizontal: 30,
+    marginLeft: 0,
+    borderRadius: 15,
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 20,
+    width: 20,
+  },
+  searchGoToIcon: {
+    marginVertical: 15,
+    height: 20,
+    width: 20,
+    resizeMode: 'contain',
+  },
+
+  searchCategoryContainer: {
+    marginVertical: 15,
+    marginLeft: 15,
+    borderRadius: 15,
+    overflow: 'hidden',
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 30,
+    width: 30,
+  },
+  searchCategoryIcon: {
+    height: 30,
+    width: 30,
+    resizeMode: 'contain',
+  },
+  categoryContainer: {
+    margin: 15,
+    marginRight: 20,
+    shadowOffset: { width: 1, height: 1 },
+    shadowColor: 'black',
+    shadowOpacity: 0.8,
+    elevation: 10,
+    borderRadius: 15,
+    overflow: 'hidden',
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 40,
+    width: 40,
+  },
+  categoryIcon: {
+    marginVertical: 15,
+    height: 40,
+    width: 40,
+    resizeMode: 'contain',
+  },
+  GroupListItemContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    backgroundColor: 'white',
+    alignSelf: 'center',
+    marginVertical: 10,
+    marginHorizontal: 10,
+    paddingHorizontal: 20,
+    width: '100%',
+    alignItems: 'center',
+    borderBottomColor: '#f8f7fa',
+    borderBottomWidth: 1,
+  },
+  groupCategoryImageContainer: { flexDirection: 'column', justifyContent: 'center', alignContent: 'center', marginRight: 20 },
+  searchDataContainer: { flexDirection: 'column', alignItems: 'center', backgroundColor: 'white', width: '65%' },
+
+  dataContainer: { flexDirection: 'column', alignItems: 'center', backgroundColor: 'white', width: '65%' },
+  upperContainer: { flexDirection: 'row', alignItems: 'flex-start', width: '100%' },
+  middleContainer: { flexDirection: 'row', width: '100%' },
+  lowerContainer: { flexDirection: 'row', width: '100%' },
+  linkContainer: { flexDirection: 'column', alignItems: 'center' },
+  buttonContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#f0eff5',
+    marginLeft: 20,
+  },
+  profileAvatar: {
+    marginHorizontal: 8,
+  },
+  goToGroupButton: {
+    color: '#96bfe5',
+  },
+  upperText: {
+    color: 'grey',
+    fontWeight: 'bold',
+    fontSize: 12,
+  },
+  dataText: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 14,
+  },
+  searchResultsHeaderText: { fontWeight: 'bold' },
+  searchHeaderContainer: {
+    backgroundColor: 'transparent',
+    margin: 10,
+  },
+  searchResultContainer: {
+    marginHorizontal: 20,
+    borderWidth: 0,
+    borderRadius: 7,
+  },
   autocompleteContainer: {
     marginHorizontal: 20,
+    width: '100%',
+    borderWidth: 0,
+    borderRadius: 7,
   },
   autocompleteView: {
     margin: 30,
@@ -176,20 +350,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     width: '100%',
     backgroundColor: 'white',
-  },
-  buttonContainer: {
-    margin: 10,
-    backgroundColor: '#4975aa',
-    borderRadius: 30,
-    alignItems: 'center',
-    width: 120,
-    height: 40,
-    justifyContent: 'center',
-    shadowColor: 'rgba(0, 0, 0, 0.1)',
-    shadowOpacity: 0.8,
-    elevation: 6,
-    shadowRadius: 15,
-    shadowOffset: { width: 1, height: 13 },
   },
   postCreationText: {
     fontSize: 16,

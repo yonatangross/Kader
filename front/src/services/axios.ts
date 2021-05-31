@@ -49,6 +49,7 @@ kaderApi.interceptors.response.use(
   },
   async (error) => {
     console.log('response returned with error from kaderApi:');
+    console.log(error);
     return Promise.reject(error.response);
   }
 );
