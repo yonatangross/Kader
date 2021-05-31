@@ -16,36 +16,22 @@ export default function ProfileScreen() {
   const isFocused = useIsFocused();
   const navigation = useNavigation();
   const [user, setUser] = useState<IUser>();
-  const [sameUser, setSameUser] = useState<boolean>(false);
 
   let [fontsLoaded] = useFonts({
     Pattaya: require('../assets/fonts/Pattaya/Pattaya-Regular.ttf'),
     Fredoka_One: require('../assets/fonts/Fredoka_One/FredokaOne-Regular.ttf'),
   });
   useEffect(() => {
-    if (!!route.params) {
-      const { id }: any = route.params;
-      getUser(id)
+    if (!!auth && !!auth.authData) {
+      getUser(auth.authData.userId)
         .then((response) => {
           const userResult: IUser = response.data;
           setUser(userResult);
         })
         .catch((error) => {
-          console.log(`error while fetching user ${id} profile:`);
+          console.log(`error while fetching user data:`);
           console.log(error);
         });
-    } else {
-      if (!!auth && !!auth.authData) {
-        getUser(auth.authData.userId)
-          .then((response) => {
-            const userResult: IUser = response.data;
-            setUser(userResult);
-          })
-          .catch((error) => {
-            console.log(`error while fetching user data:`);
-            console.log(error);
-          });
-      }
     }
   }, [setUser, fontsLoaded, isFocused]);
 
@@ -86,11 +72,9 @@ export default function ProfileScreen() {
             )}
           </View>
           <Text style={styles.fullNameText}>{user?.firstName + ' ' + user?.lastName}</Text>
-          {sameUser && (
-            <TouchableOpacity activeOpacity={0.7} onPress={signOut} style={styles.logoutButton}>
-              <Image source={require('../assets/images/logout2.png')} style={styles.floatingButtonStyle} />
-            </TouchableOpacity>
-          )}
+          <TouchableOpacity activeOpacity={0.7} onPress={signOut} style={styles.logoutButton}>
+            <Image source={require('../assets/images/logout2.png')} style={styles.floatingButtonStyle} />
+          </TouchableOpacity>
         </View>
 
         <View style={styles.userDataContainer}>
