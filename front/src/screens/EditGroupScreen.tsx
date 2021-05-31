@@ -98,7 +98,7 @@ const EditGroupScreen = (props: EditGroupScreenProps) => {
               }}
               query={{
                 //todo: move to backend
-                key: 'AIzaSyDtlSYdojyjmTTwvSYaIP3N50n-OzrWcUg',
+                key: 'AIzaSyDkrbVxjoYBgsnGT2v3QfqYVFzZRsHuwyE',
                 language: 'iw',
                 components: 'country:il',
               }}

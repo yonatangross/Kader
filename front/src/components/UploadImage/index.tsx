@@ -53,14 +53,18 @@ const UploadImage = (props: UploadImageProps) => {
         <View style={styles.postImageContainer}>
           <Image source={{ uri: props.postImage.uri }} style={styles.postImage as ImageStyle} />
         </View>
-      ) : null}
+      ) : (
+        <View style={styles.postImageContainer}>
+          <Image source={require('../../assets/images/itemPlaceholder.png')} style={styles.postImage as ImageStyle} />
+        </View>
+      )}
       <View style={styles.buttonsContainer}>
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => {
             pickFromCamera();
           }}
-          style={styles.uploadFromCameraButton}
+          style={styles.buttonContainer}
         >
           <Image source={require('../../assets/images/camera.png')} style={styles.floatingButtonStyle} />
         </TouchableOpacity>
@@ -69,7 +73,7 @@ const UploadImage = (props: UploadImageProps) => {
           onPress={() => {
             pickFromGallery();
           }}
-          style={styles.uploadFromGalleryButton}
+          style={styles.buttonContainer}
         >
           <Image source={require('../../assets/images/gallery.png')} style={styles.floatingButtonStyle} />
         </TouchableOpacity>

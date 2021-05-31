@@ -1,29 +1,16 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  buttonsContainer: { flexDirection: 'row', width: '100%', justifyContent: 'space-around', backgroundColor: 'white' },
+  buttonsContainer: { flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: 'transparent' },
   container: {
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    marginHorizontal: 50,
     backgroundColor: 'white',
-    flexDirection: 'column',
+    flexDirection: 'row',
   },
-  uploadFromCameraButton: {
-    backgroundColor: 'white',
-    width: 50,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 30,
-    shadowColor: 'rgba(0, 0, 0, 0.1)',
-    shadowOpacity: 0.8,
-    elevation: 6,
-    shadowRadius: 15,
-    shadowOffset: { width: 1, height: 13 },
-    borderColor: 'black',
-    borderWidth: 0.8,
-  },
-  uploadFromGalleryButton: {
+  buttonContainer: {
+    margin: 20,
     backgroundColor: 'white',
     width: 50,
     height: 50,
@@ -44,20 +31,23 @@ const styles = StyleSheet.create({
     height: 32,
   },
   postImageContainer: {
-    margin: 15,
-    shadowOffset: { width: 15, height: 15 },
-    shadowColor: 'black',
-    shadowOpacity: 0.8,
-    elevation: 10,
-    borderRadius: 15,
+    margin: 10,
+    marginRight: 0,
+    marginBottom: 2,
+    borderRadius: 30,
     overflow: 'hidden',
     backgroundColor: '#0000',
+    borderColor: 'black',
+    borderWidth: 2,
+    width: 150,
+    height: 150,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   postImage: {
-    width: 200,
+    width: 150,
     height: 150,
-    borderRadius: 15,
-    resizeMode: 'contain',
+    borderRadius: 30,
   },
 });
 

@@ -1,6 +1,6 @@
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, FlatList, TouchableOpacity, Image, Text, ActivityIndicator, TouchableWithoutFeedback, ImageStyle } from 'react-native';
+import { View, StyleSheet, FlatList, TouchableOpacity, Image, Text, TouchableWithoutFeedback } from 'react-native';
 import _ from 'lodash';
 import { getGroup } from '../services/groups';
 import PostListItem from '../components/PostListItem';
@@ -20,11 +20,13 @@ export interface SingleGroupScreenProps {}
 const SingleGroupScreen = (props: SingleGroupScreenProps) => {
   const route = useRoute();
   const auth = useAuth();
+  const navigation = useNavigation();
   const [loading, setLoading] = useState<boolean>(true);
   const [visibleCreatePost, setVisibleCreatePost] = useState<boolean>(false);
   const [group, setGroup] = useState<IGroup>();
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [isUpdated, setIsUpdated] = useState<boolean>(false);
+
   let [fontsLoaded] = useFonts({
     Pattaya: require('../assets/fonts/Pattaya/Pattaya-Regular.ttf'),
   });
@@ -38,6 +40,7 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
         .then((response) => {
           if (mounted) {
             const groupResponse: IGroup = response.data;
+
             setIsAdmin(
               _.some(groupResponse.managers, (user) => {
                 if (user.userId === auth.authData?.userId) return true;
@@ -50,7 +53,6 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
         .catch((error) => {
           console.log(`error fetching group ${params.id}, error:`);
           console.log(error);
-          
         });
     } else {
       console.log(`error fetching route.params`);
@@ -89,19 +91,19 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
               ListFooterComponent={
                 <TouchableWithoutFeedback
                   onPress={() => {
+                    navigation.navigate('GroupMembers', {
+                      id: group.groupId,
+                    });
                     console.log('pressed more members load');
                   }}
                 >
                   <View style={[styles.profileImageContainer]}>
-                    <Text style={styles.extraMembersText}>...</Text>
+                    <Text style={styles.extraMembersText}>and {group.members.length} more </Text>
                   </View>
                 </TouchableWithoutFeedback>
               }
               horizontal
             />
-          </View>
-          <View style={styles.membersHeaderContainer}>
-            <Text style={styles.membersLengthText}>{group.members.length} members</Text>
           </View>
         </View>
         {group.postsCount !== 0 ? (
@@ -135,7 +137,7 @@ const styles = StyleSheet.create({
   textContainer: { flexDirection: 'column', width: '100%', alignItems: 'center', justifyContent: 'center', paddingHorizontal: 20 },
   noPostsMessageContainer: { marginHorizontal: 20, alignItems: 'center' },
   noPostsMessageText: { fontSize: 24 },
-  extraMembersText: { textAlign: 'center', justifyContent: 'center', fontSize: 16 },
+  extraMembersText: { textAlign: 'center', justifyContent: 'center', fontSize: 12, width: 30 },
   profileImageContainer: {
     marginVertical: 5,
     marginHorizontal: -10,
