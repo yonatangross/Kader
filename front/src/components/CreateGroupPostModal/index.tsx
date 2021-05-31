@@ -28,10 +28,6 @@ const CreateGroupPostModal = (props: CreateGroupPostModalProps) => {
   const numberOfSections = 2;
 
   useEffect(() => {
-    console.log('useeffect');
-    
-    console.log(props.groupId);
-    
     if (submitFlag) {
       submitPost(props.groupId);
       props.setVisible(false);

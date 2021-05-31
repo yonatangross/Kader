@@ -220,9 +220,7 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
 
 const styles = StyleSheet.create({
   autocompleteContainer: { width: '100%', height: 200 },
-
-  outerContainer: { flex: 1 },
-  innerContainer: { flexDirection: 'column', width: '100%', flex: 1 },
+  innerContainer: { flexDirection: 'column', width: '100%', flex: 1, height: '100%' },
   labelText: { fontSize: 16, paddingLeft: 10, paddingTop: 5 },
   finishButton: {
     backgroundColor: '#047cfb',

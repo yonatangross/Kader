@@ -9,14 +9,21 @@ import CreateGeneralPostModal from '../components/CreateGeneralPostModal';
 import { getPostsForUser, getRecommendedPosts } from '../services/posts';
 import CreateGroupModal from '../components/CreateGroupModal';
 import LoadingIndicator from '../components/LoadingIndicator';
+import { useAuth } from '../contexts/Auth';
+import { getUser } from '../services/users';
+import { IUser } from '../types/IUser';
+import Alert from '../components/Alert';
 
 export interface HomeProps {}
 
 const HomeScreen = () => {
+  const auth = useAuth();
   const [visibleCreatePost, setVisibleCreatePost] = useState<boolean>(false);
   const [visibleCreateGroup, setVisibleCreateGroup] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [posts, setPosts] = useState<IPost[]>();
+  const [groupsNumber, setGroupsNumber] = useState<number>(0);
+  const [showErrorCreatingPost, setShowErrorCreatingPost] = useState<boolean>(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -25,7 +32,18 @@ const HomeScreen = () => {
         if (isMounted) {
           const postsResult: IPost[] = response.data;
           setPosts(postsResult);
-          setLoading(false);
+          if (!!auth && !!auth.authData) {
+            getUser(auth.authData?.userId)
+              .then((response) => {
+                const userResponse: IUser = response.data;
+                setGroupsNumber(userResponse.memberInGroupsCount);
+                setLoading(false);
+              })
+              .catch((error) => {
+                console.log(`error while fetching ${auth.authData?.userId} data.`);
+                console.log(error);
+              });
+          }
         }
       })
       .catch((error) => {
@@ -34,7 +52,7 @@ const HomeScreen = () => {
     () => {
       isMounted = false;
     };
-  }, [setPosts, setLoading, visibleCreateGroup, visibleCreatePost]);
+  }, [setPosts, setLoading, visibleCreateGroup, visibleCreatePost, showErrorCreatingPost]);
 
   const renderPostListItem = ({ item }: any) => {
     return <PostListItem post={item} key={item.postId} showComments={true} />;
@@ -46,7 +64,11 @@ const HomeScreen = () => {
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => {
-              setVisibleCreatePost(!visibleCreatePost);
+              if (groupsNumber > 0) {
+                setVisibleCreatePost(!visibleCreatePost);
+              } else {
+                setShowErrorCreatingPost(true);
+              }
             }}
             style={styles.buttonContainer}
           >
@@ -62,10 +84,18 @@ const HomeScreen = () => {
             <Text style={styles.postCreationText}>Create Group</Text>
           </TouchableOpacity>
         </View>
+        {showErrorCreatingPost && (
+          <Alert
+            title={'Ooops!'}
+            message={'Please join a group first!'}
+            showErrorCreatingPost={showErrorCreatingPost}
+            setShowErrorCreatingPost={setShowErrorCreatingPost}
+          />
+        )}
         <CreateGeneralPostModal visible={visibleCreatePost} setVisible={setVisibleCreatePost} />
         <CreateGroupModal visible={visibleCreateGroup} setVisible={setVisibleCreateGroup} />
         <FlatList
-          style={{ width: '100%',  }}
+          style={{ width: '100%' }}
           data={posts}
           renderItem={renderPostListItem}
           keyExtractor={(item) => item.postId}
