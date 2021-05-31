@@ -23,7 +23,6 @@ const GroupManagementPanel = (props: GroupManagementPanelProps) => {
     deleteGroup(props.group.groupId)
       .then((response) => {
         const deleteGroupResponse: any = response.data;
-        console.log(deleteGroupResponse);
         navigation.navigate('Groups');
       })
       .catch((error) => {

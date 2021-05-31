@@ -15,6 +15,7 @@ import UserSettingsScreen from '../screens/UserSettingsScreen';
 import ClosePostScreen from '../screens/ClosePostScreen';
 import EditPostScreen from '../screens/EditPostScreen';
 import SinglePostHeaderItem from '../components/SinglePostHeaderItem';
+import UserProfileScreen from '../screens/UserProfileScreen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -61,6 +62,16 @@ export const AppStack = () => {
           cardStyle: { backgroundColor: '#dedcdf' },
         })}
       />
+
+      <Stack.Screen
+        name="UserProfile"
+        component={UserProfileScreen}
+        options={({ route }) => ({
+          title: '',
+          headerTintColor: Colors.light.tint,
+          cardStyle: { backgroundColor: '#dedcdf' },
+        })}
+      />
       <Stack.Screen
         name="SingleGroup"
         component={SingleGroupScreen}
@@ -92,7 +103,7 @@ export const AppStack = () => {
         name="UserPosts"
         component={UserPostsScreen}
         options={({ route }) => ({
-          title: route.params.user.firstName + ' ' + route.params.user.lastName + ' posts',
+          title: '',
           headerTintColor: Colors.light.tint,
           cardStyle: { backgroundColor: '#dedcdf' },
         })}
@@ -101,7 +112,7 @@ export const AppStack = () => {
         name="UserGroups"
         component={UserGroupsScreen}
         options={({ route }) => ({
-          title: route.params.user.firstName + ' ' + route.params.user.lastName + ' groups',
+          title: '',
           headerTintColor: Colors.light.tint,
           cardStyle: { backgroundColor: '#dedcdf' },
         })}

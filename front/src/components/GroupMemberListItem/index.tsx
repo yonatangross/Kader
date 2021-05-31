@@ -17,7 +17,7 @@ const GroupMemberListItem = (props: GroupMemberListItemProps) => {
   const navigation = useNavigation();
 
   const onClick = () => {
-    navigation.navigate('Profile', {
+    navigation.navigate('UserProfile', {
       id: user.userId,
     });
   };
@@ -103,17 +103,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: 'transparent',
     alignSelf: 'center',
     marginVertical: 5,
-    marginHorizontal: 10,
-    paddingHorizontal: 20,
+    marginHorizontal: 20,
     width: '100%',
     borderBottomColor: '#f8f7fa',
     borderBottomWidth: 1,
   },
   groupCategoryImageContainer: { flexDirection: 'column', justifyContent: 'center', alignContent: 'center', marginRight: 20 },
-  dataContainer: { flexDirection: 'column', alignItems: 'flex-start', marginLeft: 20, backgroundColor: 'white', width: '65%' },
+  dataContainer: { flexDirection: 'column', alignItems: 'flex-start', marginLeft: 20, backgroundColor: 'transparent', width: '65%' },
   upperContainer: { flexDirection: 'row', alignItems: 'flex-start', width: '100%' },
   middleContainer: { flexDirection: 'row', width: '100%' },
   lowerContainer: { flexDirection: 'row', width: '100%' },

@@ -9,14 +9,15 @@ import { getPostsForUser } from '../services/posts';
 import PostListItem from '../components/PostListItem';
 import LoadingIndicator from '../components/LoadingIndicator';
 import { IPost } from '../types/IPost';
+import { useRoute } from '@react-navigation/core';
 
 export interface UserPostsScreenProps {}
 
 const UserPostsScreen = () => {
   const auth = useAuth();
-
+  const route = useRoute();
   const [loading, setLoading] = useState<boolean>(true);
-  const [userPosts, setUserPosts] = useState<any[]>();
+  const [userPosts, setUserPosts] = useState<IPost[]>();
 
   let [fontsLoaded] = useFonts({
     Roboto: require('../assets/fonts/Roboto/Roboto-Light.ttf'),
@@ -24,10 +25,10 @@ const UserPostsScreen = () => {
 
   useEffect(() => {
     let isMounted = true;
-    if (!!auth.authData)
-      getPostsForUser(auth.authData?.userId)
+    if (!!route.params) {
+      const { id }: any = route.params;
+      getPostsForUser(id)
         .then((response) => {
-
           if (isMounted) {
             const postsResult: IPost[] = response.data;
             setUserPosts(postsResult);
@@ -37,7 +38,7 @@ const UserPostsScreen = () => {
         .catch((error) => {
           console.log(`error while fetching posts ${error}`);
         });
-
+    }
     return () => {
       isMounted = false;
     };
@@ -47,7 +48,7 @@ const UserPostsScreen = () => {
     return (
       <View style={styles.container}>
         <View style={styles.titleContainer}>
-          <Text style={styles.myPostsTitle}>My Posts</Text>
+          <Text style={styles.myPostsTitle}>Posts</Text>
         </View>
         <FlatList
           style={styles.list}

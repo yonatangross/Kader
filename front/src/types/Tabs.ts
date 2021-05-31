@@ -7,6 +7,7 @@ export type RootStackParamList = {
   SingleGroup: undefined;
   SingleGroupDetails: undefined;
   GroupMembers: undefined;
+  UserProfile: undefined;
   UserPosts: undefined;
   UserGroups: undefined;
   UserSettings: undefined;

@@ -8,14 +8,16 @@ import { View } from '../components/Themed';
 import { useAuth } from '../contexts/Auth';
 import { useFonts } from 'expo-font';
 import LoadingIndicator from '../components/LoadingIndicator';
+import { useRoute } from '@react-navigation/core';
+import { IGroup } from '../types/IGroup';
 
 export interface UserGroupsScreenProps {}
 
 const UserGroupsScreen = () => {
   const auth = useAuth();
-
+  const route = useRoute();
   const [loading, setLoading] = useState<boolean>(true);
-  const [userGroups, setUserGroups] = useState<any[]>();
+  const [userGroups, setUserGroups] = useState<IGroup[]>();
 
   let [fontsLoaded] = useFonts({
     Roboto: require('../assets/fonts/Roboto/Roboto-Light.ttf'),
@@ -23,12 +25,12 @@ const UserGroupsScreen = () => {
 
   useEffect(() => {
     let isMounted = true;
-    if (!!auth.authData)
-      getGroupsForUser(auth.authData?.userId)
+    if (!!route.params) {
+      const { id }: any = route.params;
+      getGroupsForUser(id)
         .then((response) => {
           if (isMounted) {
-            const groupsResult: any[] = response.data;
-            console.log(groupsResult);
+            const groupsResult: IGroup[] = response.data;
 
             setUserGroups(groupsResult);
             setLoading(false);
@@ -37,7 +39,7 @@ const UserGroupsScreen = () => {
         .catch((error) => {
           console.log(`error while fetching groups ${error}`);
         });
-
+    }
     return () => {
       isMounted = false;
     };
