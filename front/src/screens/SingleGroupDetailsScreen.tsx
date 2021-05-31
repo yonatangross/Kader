@@ -114,7 +114,7 @@ const SingleGroupDetailsScreen = (props: SingleGroupDetailsPageProps) => {
           />
         </View>
         <View style={styles.membersHeaderContainer}>
-          <Text style={styles.membersLengthText}>{group.membersCount} members</Text>
+          <Text style={styles.membersLengthText}>{group.members.length} members</Text>
         </View>
 
         <View style={styles.buttonsContainer}>
