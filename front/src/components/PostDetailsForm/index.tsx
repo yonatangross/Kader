@@ -1,16 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button, Keyboard, LogBox, Platform, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { KeyboardAvoidingView } from '../../layouts/auth/login/extra/3rd-party';
 import { CreatePostStateType } from '../../types/CreatePostTypes';
 import UploadImage from '../UploadImage';
 import { Formik, Field } from 'formik';
 import * as yup from 'yup';
 import CustomInput from '../validation/CustomInput';
-import { Input } from 'react-native-elements';
-import { ScrollView } from 'react-native-gesture-handler';
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 const blogValidationSchema = yup.object().shape({
   title: yup.string().required('Title is required'),
   description: yup
@@ -96,7 +92,8 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
   }, [postImage, props.setActiveSection, setPostImage]);
   if (props.active === 1) {
     return (
-      <KeyboardAvoidingView style={styles.viewContainer} behavior={Platform.OS === 'ios' ? 'padding' : 'position'}>
+      // <View style={styles.viewContainer} behavior={Platform.OS === 'ios' ? 'padding' : 'position'}>
+      <KeyboardAwareScrollView style={styles.viewContainer} keyboardShouldPersistTaps={'always'}>
         <Formik
           validationSchema={blogValidationSchema}
           initialValues={{
@@ -152,65 +149,68 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
                 onBlur={() => setFieldTouched('description')}
               />
               <UploadImage postImage={postImage} setPostImage={setPostImage} setFieldValue={setFieldValue} />
-              <GooglePlacesAutocomplete
-                placeholder="Choose group primary address"
-                debounce={200}
-                autoFocus={true}
-                numberOfLines={2}
-                onPress={(data, details = null) => {
-                  if (!!details) {
-                    props.dispatch({
-                      type: 'Details',
-                      payload: {
-                        title: props.state.details.title,
-                        description: props.state.details.description,
-                        address: formatAddress(details),
-                        image: props.state.details.image,
-                      },
-                    });
-                    setFieldValue('address', formatAddress(details));
-                  }
-                }}
-                query={{
-                  key: 'AIzaSyDkrbVxjoYBgsnGT2v3QfqYVFzZRsHuwyE',
-                  language: 'iw',
-                  components: 'country:il',
-                }}
-                fetchDetails={true}
-                styles={{
-                  container: {
-                    flexDirection: 'column',
-                  },
-                  listView: {
-                    height: 200,
-                    backgroundColor: 'white',
-                    borderRadius: 15,
-                    marginHorizontal: 20,
-                    elevation: 3,
-                  },
-                  textInput: {
-                    fontSize: 16,
-                    backgroundColor: '#f1f0f0',
-                    borderRadius: 15,
-                    margin: 20,
-                    padding: 10,
-                  },
-                  description: {
-                    // color: '#ac879a',
-                    fontWeight: '300',
-                  },
-                  predefinedPlacesDescription: {
-                    color: '#1faadb',
-                  },
-                }}
-              />
+              <View style={{ width: '100%', minHeight: 200, maxHeight: 400 }}>
+                <GooglePlacesAutocomplete
+                  placeholder="Choose group primary address"
+                  debounce={200}
+                  autoFocus={true}
+                  onPress={(data, details = null) => {
+                    if (!!details) {
+                      props.dispatch({
+                        type: 'Details',
+                        payload: {
+                          title: props.state.details.title,
+                          description: props.state.details.description,
+                          address: formatAddress(details),
+                          image: props.state.details.image,
+                        },
+                      });
+                      setFieldValue('address', formatAddress(details));
+                    }
+                  }}
+                  query={{
+                    key: 'AIzaSyDkrbVxjoYBgsnGT2v3QfqYVFzZRsHuwyE',
+                    language: 'iw',
+                    components: 'country:il',
+                  }}
+                  fetchDetails={true}
+                  listViewDisplayed={'auto'}
+                  renderDescription={(row) => row.description} // custom description render
+                  styles={{
+                    container: {
+                      flexDirection: 'column',
+                    },
+                    listView: {
+                      height: 200,
+                      backgroundColor: 'white',
+                      borderRadius: 15,
+                      marginHorizontal: 20,
+                      elevation: 3,
+                    },
+                    textInput: {
+                      fontSize: 16,
+                      backgroundColor: '#f1f0f0',
+                      borderRadius: 15,
+                      margin: 20,
+                      padding: 10,
+                    },
+                    description: {
+                      // color: '#ac879a',
+                      fontWeight: '300',
+                    },
+                    predefinedPlacesDescription: {
+                      color: '#1faadb',
+                    },
+                  }}
+                />
+              </View>
               <TouchableOpacity activeOpacity={0.7} disabled={!isValid || values.title === ''} onPress={handleSubmit} style={styles.finishButton}>
                 {!props.finalStage ? <Text style={styles.finishButtonText}>Continue</Text> : <Text style={styles.finishButtonText}>Submit post</Text>}
               </TouchableOpacity>
             </>
           )}
         </Formik>
-      </KeyboardAvoidingView>
+      </KeyboardAwareScrollView>
     );
   } else {
     return null;

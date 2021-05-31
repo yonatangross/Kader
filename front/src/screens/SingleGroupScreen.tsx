@@ -94,7 +94,6 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
                     navigation.navigate('GroupMembers', {
                       id: group.groupId,
                     });
-                    console.log('pressed more members load');
                   }}
                 >
                   <View style={[styles.profileImageContainer]}>
