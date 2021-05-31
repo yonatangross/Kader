@@ -1,7 +1,7 @@
 import { Text } from '@ui-kitten/components';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { FlatList, RefreshControl, StyleSheet, TouchableOpacity } from 'react-native';
 import PostListItem from '../components/PostListItem';
 import { View } from '../components/Themed';
 import { IPost } from '../types/IPost';
@@ -24,6 +24,34 @@ const HomeScreen = () => {
   const [posts, setPosts] = useState<IPost[]>();
   const [groupsNumber, setGroupsNumber] = useState<number>(0);
   const [showErrorCreatingPost, setShowErrorCreatingPost] = useState<boolean>(false);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
+
+  const onRefresh = React.useCallback(async () => {
+    setRefreshing(true);
+    getRecommendedPosts()
+      .then((response) => {
+        const postsResult: IPost[] = response.data;
+        setPosts(postsResult);
+        if (!!auth && !!auth.authData) {
+          getUser(auth.authData?.userId)
+            .then((response) => {
+              const userResponse: IUser = response.data;
+              setGroupsNumber(userResponse.memberInGroupsCount);
+              setRefreshing(false);
+              setLoading(false);
+            })
+            .catch((error) => {
+              console.log(`error while fetching ${auth.authData?.userId} data.`);
+              console.log(error);
+              setRefreshing(false);
+            });
+        }
+      })
+      .catch((error) => {
+        console.log(`error while fetching posts ${error}`);
+        setRefreshing(false);
+      });
+  }, [refreshing]);
 
   useEffect(() => {
     let isMounted = true;
@@ -52,7 +80,7 @@ const HomeScreen = () => {
     () => {
       isMounted = false;
     };
-  }, [setPosts, loading, visibleCreateGroup, visibleCreatePost, showErrorCreatingPost, groupsNumber]);
+  }, [setPosts, loading, visibleCreateGroup, visibleCreatePost, showErrorCreatingPost, setGroupsNumber, refreshing]);
 
   const renderPostListItem = ({ item }: any) => {
     return <PostListItem post={item} key={item.postId} showComments={true} />;
@@ -102,6 +130,7 @@ const HomeScreen = () => {
           initialNumToRender={6}
           maxToRenderPerBatch={2}
           showsVerticalScrollIndicator={false}
+          refreshControl={<RefreshControl enabled={true} refreshing={refreshing} onRefresh={onRefresh} />}
         />
       </View>
     );

@@ -104,7 +104,7 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
           }}
           onSubmit={(values) => handleSubmit(values)}
         >
-          {({ handleSubmit, isValid, values, setFieldValue, setFieldTouched }) => (
+          {({ handleSubmit, isValid, values, setFieldValue, setFieldTouched, setValues }) => (
             <>
               <Field
                 component={CustomInput}

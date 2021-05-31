@@ -16,6 +16,7 @@ import ClosePostScreen from '../screens/ClosePostScreen';
 import EditPostScreen from '../screens/EditPostScreen';
 import SinglePostHeaderItem from '../components/SinglePostHeaderItem';
 import UserProfileScreen from '../screens/UserProfileScreen';
+import EditGroupScreen from '../screens/EditGroupScreen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -126,7 +127,15 @@ export const AppStack = () => {
           cardStyle: { backgroundColor: '#dedcdf' },
         })}
       />
-
+      <Stack.Screen
+        name="EditGroup"
+        component={EditGroupScreen}
+        options={({ route }) => ({
+          title: 'Edit Group',
+          headerTintColor: Colors.light.tint,
+          cardStyle: { backgroundColor: '#dedcdf' },
+        })}
+      />
       <Stack.Screen
         name="EditPost"
         component={EditPostScreen}

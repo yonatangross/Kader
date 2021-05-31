@@ -60,7 +60,7 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
     return () => {
       mounted = false;
     };
-  }, [fontsLoaded, setPost, setShowSettingsSection, isPostOwner, postUpdated]);
+  }, [fontsLoaded, setPost, setShowSettingsSection, setIsPostOwner, postUpdated]);
 
   const onPressSettingsButton = () => {
     if (showSettingsSection) {

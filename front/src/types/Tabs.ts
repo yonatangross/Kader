@@ -1,3 +1,4 @@
+import { EditGroupScreenProps } from './../screens/EditGroupScreen';
 export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
@@ -13,6 +14,7 @@ export type RootStackParamList = {
   UserSettings: undefined;
   ClosePost: undefined;
   EditPost: undefined;
+  EditGroup: undefined;
 };
 
 export type MainTabParamList = {
@@ -67,3 +69,4 @@ export type UserGroupsProps = { UserGroupsScreen: undefined };
 export type UserSettingsProps = { UserSettingsScreen: undefined };
 export type ClosePostProps = { ClosePostScreen: undefined };
 export type EditPostProps = { EditPostScreen: undefined };
+export type EditGroupProps = { EditGroupScreen: undefined };

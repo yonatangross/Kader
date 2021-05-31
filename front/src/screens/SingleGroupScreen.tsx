@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, FlatList, TouchableOpacity, Image, Text, TouchableWithoutFeedback } from 'react-native';
+import { View, StyleSheet, FlatList, TouchableOpacity, Image, Text, TouchableWithoutFeedback, RefreshControl } from 'react-native';
 import _ from 'lodash';
 import { getGroup } from '../services/groups';
 import PostListItem from '../components/PostListItem';
@@ -26,10 +26,38 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
   const [group, setGroup] = useState<IGroup>();
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [isUpdated, setIsUpdated] = useState<boolean>(false);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
 
   let [fontsLoaded] = useFonts({
     Pattaya: require('../assets/fonts/Pattaya/Pattaya-Regular.ttf'),
   });
+
+  const onRefresh = React.useCallback(async () => {
+    setRefreshing(true);
+    if (route.params) {
+      const params: any = route.params;
+      getGroup(params.id)
+        .then((response) => {
+          const groupResponse: IGroup = response.data;
+          setIsAdmin(
+            _.some(groupResponse.managers, (user) => {
+              if (user.userId === auth.authData?.userId) return true;
+            })
+          );
+          setGroup(groupResponse);
+          setLoading(false);
+          setRefreshing(false);
+        })
+        .catch((error) => {
+          console.log(`error fetching group ${params.id}, error:`);
+          console.log(error);
+          setRefreshing(false);
+        });
+    } else {
+      console.log(`error fetching route.params`);
+      setRefreshing(false);
+    }
+  }, [refreshing]);
 
   useEffect(() => {
     let mounted = true;
@@ -60,7 +88,7 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
     () => {
       mounted = false;
     };
-  }, [fontsLoaded, setGroup, visibleCreatePost, setVisibleCreatePost, setLoading, isUpdated]);
+  }, [fontsLoaded, setGroup, visibleCreatePost, setVisibleCreatePost, setLoading, isUpdated, refreshing]);
 
   const renderMemberListItem = ({ item: item }: { item: IUser }) => {
     return <UserListItem user={item} key={item.userId} />;
@@ -97,7 +125,11 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
                   }}
                 >
                   <View style={[styles.profileImageContainer]}>
-                    <Text style={styles.extraMembersText}>and {group.members.length} more </Text>
+                    {group.members.length - 7 <= 0 ? (
+                      <Text style={styles.extraMembersText}>... </Text>
+                    ) : (
+                      <Text style={styles.extraMembersText}>and {group.members.length - 7} more </Text>
+                    )}
                   </View>
                 </TouchableWithoutFeedback>
               }
@@ -112,6 +144,7 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
             renderItem={renderPostListItem}
             keyExtractor={(item) => item.postId}
             showsVerticalScrollIndicator={true}
+            refreshControl={<RefreshControl enabled={true} refreshing={refreshing} onRefresh={onRefresh} />}
           />
         ) : (
           <View style={styles.noPostsMessageContainer}>
