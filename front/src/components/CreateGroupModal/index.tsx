@@ -130,6 +130,50 @@ const CreateGroupModal = (props: CreateGroupModalProps) => {
               }}
             />
 
+            <View style={styles.autocompleteContainer}>
+              <GooglePlacesAutocomplete
+                placeholder="Choose group primary location"
+                onPress={(data, details = null) => {
+                  // 'details' is provided when fetchDetails = true
+                  if (!!details) setGroupMainLocation(formatAddress(details));
+                }}
+                query={{
+                  key: 'AIzaSyDkrbVxjoYBgsnGT2v3QfqYVFzZRsHuwyE',
+                  language: 'iw',
+                  components: 'country:il',
+                }}
+                fetchDetails={true}
+                styles={{
+                  container: {
+                    flexDirection: 'column',
+                  },
+                  listView: {
+                    height: 200,
+                    backgroundColor: 'white',
+                    borderRadius: 15,
+                    paddingBottom: 10,
+                    paddingHorizontal: 10,
+                    marginHorizontal: 20,
+                    elevation: 3,
+                  },
+                  textInput: {
+                    fontSize: 16,
+                    backgroundColor: '#f1f0f0',
+                    borderRadius: 15,
+                    margin: 20,
+                    padding: 10,
+                  },
+                  description: {
+                    // color: '#ac879a',
+                    fontWeight: '300',
+                  },
+                  predefinedPlacesDescription: {
+                    color: '#1faadb',
+                  },
+                }}
+              />
+            </View>
+
             <Text style={styles.labelText}>Group Category</Text>
             <Picker
               style={styles.picker}
@@ -157,53 +201,9 @@ const CreateGroupModal = (props: CreateGroupModalProps) => {
               <Picker.Item label="Private" value={GroupPrivacy.Private} />
               <Picker.Item label="Public" value={GroupPrivacy.Public} />
             </Picker>
-            <View style={styles.autocompleteContainer}>
-              <GooglePlacesAutocomplete
-                placeholder="Choose group primary location"
-                onPress={(data, details = null) => {
-                  // 'details' is provided when fetchDetails = true
-                  if (!!details) setGroupMainLocation(formatAddress(details));
-                }}
-                query={{
-                  key: 'AIzaSyDtlSYdojyjmTTwvSYaIP3N50n-OzrWcUg',
-                  language: 'iw',
-                  components: 'country:il',
-                }}
-                fetchDetails={true}
-                styles={{
-                  container: {
-                    flexDirection: 'column',
-                  },
-                  listView: {
-                    height: 200,
-                    backgroundColor: 'white',
-                    borderRadius: 15,
-                    paddingBottom: 10,
-                    paddingHorizontal: 10,
-                    marginHorizontal: 20,
-
-                    elevation: 3,
-                  },
-                  textInput: {
-                    fontSize: 16,
-                    backgroundColor: '#f1f0f0',
-                    borderRadius: 15,
-                    margin: 20,
-                    padding: 10,
-                  },
-                  description: {
-                    // color: '#ac879a',
-                    fontWeight: '300',
-                  },
-                  predefinedPlacesDescription: {
-                    color: '#1faadb',
-                  },
-                }}
-              />
-              <TouchableOpacity activeOpacity={0.7} onPress={onPressSubmitGroup} style={styles.finishButton}>
-                <Text style={styles.finishButtonText}>Submit group</Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity activeOpacity={0.7} onPress={onPressSubmitGroup} style={styles.finishButton}>
+              <Text style={styles.finishButtonText}>Submit group</Text>
+            </TouchableOpacity>
           </Modal>
         </View>
       </>
@@ -212,7 +212,7 @@ const CreateGroupModal = (props: CreateGroupModalProps) => {
 };
 
 const styles = StyleSheet.create({
-  autocompleteContainer: { width: '100%', height: '40%' },
+  autocompleteContainer: { width: '100%', height:300 },
   outerContainer: { height: '100%', width: '100%', flex: 1 },
   picker: { marginHorizontal: 20 },
   postDetailsContainer: { flexDirection: 'column', width: '100%' },

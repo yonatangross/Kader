@@ -6,6 +6,7 @@ export type RootStackParamList = {
   SinglePost: undefined;
   SingleGroup: undefined;
   SingleGroupDetails: undefined;
+  GroupMembers: undefined;
   UserPosts: undefined;
   UserGroups: undefined;
   UserSettings: undefined;
@@ -26,6 +27,10 @@ export type HomeParamList = {
 
 export type GroupsParamList = {
   GroupsScreen: undefined;
+};
+
+export type GroupMembersParamList = {
+  GroupMembersScreen: undefined;
 };
 
 export type ProfileParamList = {

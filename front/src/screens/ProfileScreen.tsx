@@ -23,12 +23,8 @@ export default function ProfileScreen() {
     Fredoka_One: require('../assets/fonts/Fredoka_One/FredokaOne-Regular.ttf'),
   });
   useEffect(() => {
-    console.log('yoni');
-    console.log(route);
-
     if (!!route.params) {
       const { id }: any = route.params;
-
       getUser(id)
         .then((response) => {
           const userResult: IUser = response.data;

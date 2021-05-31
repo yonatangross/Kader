@@ -24,9 +24,6 @@ const UserListItem = (props: UserListItemProps) => {
       if (user.userId === auth.authData.userId) {
         navigation.navigate('Profile');
       } else {
-        console.log('bla');
-        console.log(user.userId);
-        
         navigation.navigate('Profile', { id: user.userId });
       }
     }

@@ -111,6 +111,7 @@ const GroupsScreen = () => {
         .then((response) => {
           if (isMounted) {
             const groupsResult: IGroup[] = response.data;
+            
             setUserGroups(groupsResult);
             setLoading(false);
           }

@@ -10,6 +10,7 @@ import SingleGroupDetailsScreen from '../screens/SingleGroupDetailsScreen';
 import { RootStackParamList } from '../types/Tabs';
 import UserPostsScreen from '../screens/UserPostsScreen';
 import UserGroupsScreen from '../screens/UserGroupsScreen';
+import GroupMembersScreen from '../screens/GroupMembersScreen';
 import UserSettingsScreen from '../screens/UserSettingsScreen';
 import ClosePostScreen from '../screens/ClosePostScreen';
 import EditPostScreen from '../screens/EditPostScreen';
@@ -79,6 +80,15 @@ export const AppStack = () => {
         })}
       />
       <Stack.Screen
+        name="GroupMembers"
+        component={GroupMembersScreen}
+        options={({ route }) => ({
+          title: '',
+          headerTintColor: Colors.light.tint,
+          cardStyle: { backgroundColor: '#dedcdf' },
+        })}
+      />
+      <Stack.Screen
         name="UserPosts"
         component={UserPostsScreen}
         options={({ route }) => ({
@@ -105,6 +115,7 @@ export const AppStack = () => {
           cardStyle: { backgroundColor: '#dedcdf' },
         })}
       />
+
       <Stack.Screen
         name="EditPost"
         component={EditPostScreen}

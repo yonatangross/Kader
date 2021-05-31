@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button, Keyboard, LogBox, Platform, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -8,6 +8,8 @@ import UploadImage from '../UploadImage';
 import { Formik, Field } from 'formik';
 import * as yup from 'yup';
 import CustomInput from '../validation/CustomInput';
+import { Input } from 'react-native-elements';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const blogValidationSchema = yup.object().shape({
   title: yup.string().required('Title is required'),
@@ -61,7 +63,7 @@ const formatAddress = (addressDetails: any) => {
 
 const PostDetailsForm = (props: PostDetailsFormProps) => {
   const [postImage, setPostImage] = useState<any>(null);
-
+  const placesRef = useRef();
   const handleSubmit = (values: FormValues) => {
     props.dispatch({
       type: 'Details',
@@ -94,7 +96,7 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
   }, [postImage, props.setActiveSection, setPostImage]);
   if (props.active === 1) {
     return (
-      <View style={styles.innerContainer}>
+      <KeyboardAvoidingView style={styles.viewContainer} behavior={Platform.OS === 'ios' ? 'padding' : 'position'}>
         <Formik
           validationSchema={blogValidationSchema}
           initialValues={{
@@ -150,68 +152,65 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
                 onBlur={() => setFieldTouched('description')}
               />
               <UploadImage postImage={postImage} setPostImage={setPostImage} setFieldValue={setFieldValue} />
-
-              <View style={styles.autocompleteContainer}>
-                <GooglePlacesAutocomplete
-                  placeholder="Choose group primary address"
-                  onPress={(data, details = null) => {
-                    if (!!details) {
-                      props.dispatch({
-                        type: 'Details',
-                        payload: {
-                          title: props.state.details.title,
-                          description: props.state.details.description,
-                          address: formatAddress(details),
-                          image: props.state.details.image,
-                        },
-                      });
-                      setFieldValue('address', formatAddress(details));
-                    }
-                  }}
-                  query={{
-                    key: 'AIzaSyDtlSYdojyjmTTwvSYaIP3N50n-OzrWcUg',
-                    language: 'iw',
-                    components: 'country:il',
-                  }}
-                  fetchDetails={true}
-                  styles={{
-                    container: {
-                      flexDirection: 'column',
-                    },
-                    listView: {
-                      height: 200,
-                      backgroundColor: 'white',
-                      borderRadius: 15,
-                      paddingBottom: 10,
-                      paddingHorizontal: 10,
-                      marginHorizontal: 20,
-                      elevation: 3,
-                    },
-                    textInput: {
-                      fontSize: 16,
-                      backgroundColor: '#f1f0f0',
-                      borderRadius: 15,
-                      margin: 20,
-                      padding: 10,
-                    },
-                    description: {
-                      // color: '#ac879a',
-                      fontWeight: '300',
-                    },
-                    predefinedPlacesDescription: {
-                      color: '#1faadb',
-                    },
-                  }}
-                />
-              </View>
-
+              <GooglePlacesAutocomplete
+                placeholder="Choose group primary address"
+                debounce={200}
+                autoFocus={true}
+                numberOfLines={2}
+                onPress={(data, details = null) => {
+                  if (!!details) {
+                    props.dispatch({
+                      type: 'Details',
+                      payload: {
+                        title: props.state.details.title,
+                        description: props.state.details.description,
+                        address: formatAddress(details),
+                        image: props.state.details.image,
+                      },
+                    });
+                    setFieldValue('address', formatAddress(details));
+                  }
+                }}
+                query={{
+                  key: 'AIzaSyDkrbVxjoYBgsnGT2v3QfqYVFzZRsHuwyE',
+                  language: 'iw',
+                  components: 'country:il',
+                }}
+                fetchDetails={true}
+                styles={{
+                  container: {
+                    flexDirection: 'column',
+                  },
+                  listView: {
+                    height: 200,
+                    backgroundColor: 'white',
+                    borderRadius: 15,
+                    marginHorizontal: 20,
+                    elevation: 3,
+                  },
+                  textInput: {
+                    fontSize: 16,
+                    backgroundColor: '#f1f0f0',
+                    borderRadius: 15,
+                    margin: 20,
+                    padding: 10,
+                  },
+                  description: {
+                    // color: '#ac879a',
+                    fontWeight: '300',
+                  },
+                  predefinedPlacesDescription: {
+                    color: '#1faadb',
+                  },
+                }}
+              />
               <TouchableOpacity activeOpacity={0.7} disabled={!isValid || values.title === ''} onPress={handleSubmit} style={styles.finishButton}>
                 {!props.finalStage ? <Text style={styles.finishButtonText}>Continue</Text> : <Text style={styles.finishButtonText}>Submit post</Text>}
               </TouchableOpacity>
             </>
           )}
         </Formik>
-      </View>
+      </KeyboardAvoidingView>
     );
   } else {
     return null;
@@ -219,7 +218,11 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
 };
 
 const styles = StyleSheet.create({
-  autocompleteContainer: { width: '100%', height: 200 },
+  viewContainer: {
+    width: '100%',
+    height: '100%',
+  },
+  autocompleteContainer: { width: '100%', height: 200, position: 'relative' },
   innerContainer: { flexDirection: 'column', width: '100%', flex: 1, height: '100%' },
   labelText: { fontSize: 16, paddingLeft: 10, paddingTop: 5 },
   finishButton: {
