@@ -1,22 +1,16 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Button, FlatList, TouchableOpacity, Image, StatusBar, ImageStyle, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Image, ImageStyle, ActivityIndicator } from 'react-native';
 import _ from 'lodash';
 import { Text } from '@ui-kitten/components';
-
-import { IPost } from '../../types/IPost';
-import { FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import moment from '../../services/moment';
-import { Rating } from 'react-native-ratings';
-import { getPostTypeName } from '../../types/PostType';
-import { IUser } from '../../types/IUser';
 import { IComment } from '../../types/IComment';
 import { capitalize } from '../../utils/text';
+import { imageBaseUrl } from '../../services/axios';
 
 export interface CommenterListItemProps {
   comment: IComment;
   setShowRating: Function;
-  setSelectedUserId: Function;
+  setSelectedUser: Function;
 }
 
 const CommenterListItem = (props: CommenterListItemProps) => {
@@ -32,30 +26,28 @@ const CommenterListItem = (props: CommenterListItemProps) => {
   }, []);
 
   const onPressRateUser = () => {
+    props.setSelectedUser(comment);
     props.setShowRating(true);
-    props.setSelectedUserId(comment.creator.userId);
   };
 
   if (!!comment) {
     return (
       <View style={styles.container}>
-        <View style={styles.headerRightContainer}>
-          <View style={styles.ImageContainer}>
-            {!!comment.creator.imageUri ? (
-              <Image source={{ uri: comment.creator.imageUri }} style={styles.imageDesign as ImageStyle} />
-            ) : (
-              <Image source={require('../../assets/images/imagePlaceholder.png')} style={styles.imageDesign as ImageStyle} />
-            )}
-          </View>
-          <View style={styles.creatorContainer}>
-            <View style={styles.upperCreatorContainer}>
-              <Text style={styles.creatorTitle}>{capitalize(comment.creator.firstName) + ' ' + capitalize(comment.creator.lastName)}</Text>
-            </View>
-          </View>
+        <View style={styles.ImageContainer}>
+          {!!comment.creator.imageUri ? (
+            <Image source={{ uri: imageBaseUrl + comment.creator.imageUri }} style={styles.imageDesign as ImageStyle} />
+          ) : (
+            <Image source={require('../../assets/images/imagePlaceholder.png')} style={styles.imageDesign as ImageStyle} />
+          )}
         </View>
-        <TouchableOpacity activeOpacity={0.7} onPress={onPressRateUser} style={styles.settingButton}>
-          <Text style={styles.buttonText}>Rate user</Text>
-        </TouchableOpacity>
+        <View style={styles.creatorContainer}>
+          <Text style={styles.creatorTitle}>{capitalize(comment.creator.firstName) + ' ' + capitalize(comment.creator.lastName)}</Text>
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity activeOpacity={0.7} onPress={onPressRateUser} style={styles.settingButton}>
+            <Text style={styles.buttonText}>Rate user</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   } else
@@ -80,6 +72,7 @@ const CommenterListItem = (props: CommenterListItemProps) => {
 };
 
 const styles = StyleSheet.create({
+  buttonContainer: { alignSelf: 'flex-end' },
   settingButton: {
     margin: 10,
     marginVertical: 15,
@@ -89,7 +82,7 @@ const styles = StyleSheet.create({
     width: 120,
     height: 40,
     justifyContent: 'center',
-    alignSelf: 'center',
+    alignSelf: 'flex-start',
     shadowColor: 'rgba(0, 0, 0, 0.1)',
     shadowOpacity: 0.8,
     elevation: 6,
@@ -101,9 +94,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
   },
-  container: { flexDirection: 'row', paddingTop: 40, backgroundColor: 'white', justifyContent: 'space-between' },
+  container: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    justifyContent: 'space-between',
+    marginHorizontal: 20,
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+  },
   locationText: { paddingHorizontal: 0, marginTop: -2 },
-  creatorContainer: { flexDirection: 'column', marginTop: 10, marginLeft: 10 },
+  creatorContainer: { flexDirection: 'column', marginLeft: 10, marginRight: 75, width: 100 },
   categoryContainer: {
     margin: 10,
     marginVertical: 15,

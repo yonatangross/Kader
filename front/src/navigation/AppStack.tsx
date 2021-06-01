@@ -13,10 +13,8 @@ import UserGroupsScreen from '../screens/UserGroupsScreen';
 import GroupMembersScreen from '../screens/GroupMembersScreen';
 import UserSettingsScreen from '../screens/UserSettingsScreen';
 import ClosePostScreen from '../screens/ClosePostScreen';
-import EditPostScreen from '../screens/EditPostScreen';
 import SinglePostHeaderItem from '../components/SinglePostHeaderItem';
 import UserProfileScreen from '../screens/UserProfileScreen';
-import EditGroupScreen from '../screens/EditGroupScreen';
 import { capitalize } from '../utils/text';
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -124,24 +122,6 @@ export const AppStack = () => {
         component={UserSettingsScreen}
         options={({ route }) => ({
           title: capitalize(route.params.user.firstName) + ' ' + capitalize(route.params.user.lastName) + ' settings',
-          headerTintColor: Colors.light.tint,
-          cardStyle: { backgroundColor: '#dedcdf' },
-        })}
-      />
-      <Stack.Screen
-        name="EditGroup"
-        component={EditGroupScreen}
-        options={({ route }) => ({
-          title: 'Edit Group',
-          headerTintColor: Colors.light.tint,
-          cardStyle: { backgroundColor: '#dedcdf' },
-        })}
-      />
-      <Stack.Screen
-        name="EditPost"
-        component={EditPostScreen}
-        options={({ route }) => ({
-          title: 'Edit Post',
           headerTintColor: Colors.light.tint,
           cardStyle: { backgroundColor: '#dedcdf' },
         })}

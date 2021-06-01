@@ -24,7 +24,7 @@ export const getUser = async (userId: string): Promise<AxiosResponse<any>> => {
 
 export const updateUser = async (user: IUser): Promise<AxiosResponse<any>> => {
   try {
-    const updatedUser: AxiosResponse<any> = await kaderApi.put(`/users/${user.id}`, user);
+    const updatedUser: AxiosResponse<any> = await kaderApi.put(`/users/${user.userId}`, user);
     return updatedUser;
   } catch (error) {
     throw new Error(error);
@@ -41,7 +41,7 @@ export const deleteUser = async (id: string): Promise<AxiosResponse<any>> => {
 };
 export const addRating = async (userId: string, rating: number): Promise<AxiosResponse<any>> => {
   try {
-    const ratedUserResponse: AxiosResponse<any> = await kaderApi.post(`/users/${userId}`, rating);
+    const ratedUserResponse: AxiosResponse<any> = await kaderApi.post(`/users/${userId}/rating`, { newRating: rating });
     return ratedUserResponse;
   } catch (error) {
     throw new Error(error);

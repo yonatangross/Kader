@@ -98,19 +98,20 @@ export default function ProfileScreen() {
             <Image source={require('../assets/images/log-out.png')} style={styles.floatingButtonStyle} />
           </TouchableOpacity>
         </View>
-        {!!user.phoneNumber && (
-          <TouchableOpacity onPress={() => callNumber(user.phoneNumber)} style={styles.userDataContainer}>
-            <SimpleLineIcons name="call-in" color={'#4975aa'} size={22} />
-            <Text style={styles.phoneText}> {user.phoneNumber.replace(/[^\d]+/g, '')}</Text>
-          </TouchableOpacity>
-        )}
-        {!!user.email && (
-          <TouchableOpacity onPress={() => Linking.openURL(`mailto:${user.email}?subject=Kader App&body=Description`)} style={styles.userDataContainer}>
-            <Fontisto name="email" color={'#4975aa'} size={22} />
-            <Text style={styles.phoneText}> {user.email}</Text>
-          </TouchableOpacity>
-        )}
-
+        <View style={styles.userContactInfoContainer}>
+          {!!user.phoneNumber && (
+            <TouchableOpacity onPress={() => callNumber(user.phoneNumber)} style={styles.userContactInfoItem}>
+              <SimpleLineIcons name="call-in" color={'#4975aa'} size={22} />
+              <Text style={styles.phoneText}> {user.phoneNumber.replace(/[^\d]+/g, '')}</Text>
+            </TouchableOpacity>
+          )}
+          {!!user.email && (
+            <TouchableOpacity onPress={() => Linking.openURL(`mailto:${user.email}?subject=Kader App&body=Description`)} style={styles.userDataContainer}>
+              <Fontisto name="email" color={'#4975aa'} size={22} />
+              <Text style={styles.phoneText}> {user.email}</Text>
+            </TouchableOpacity>
+          )}
+        </View>
         <View style={styles.userDataContainer}>
           <ProfileSocial style={styles.userDataItemContainer} hint="Posts" value={`${!user.postsCount ? 0 : user.postsCount}`} />
           <ProfileSocial style={styles.userDataItemContainer} hint="Groups" value={`${!user.memberInGroupsCount ? 0 : user.memberInGroupsCount}`} />
@@ -161,6 +162,8 @@ export default function ProfileScreen() {
 }
 
 const styles = StyleSheet.create({
+  userContactInfoContainer: { justifyContent: 'center', alignItems: 'center', flexDirection: 'column' },
+  userContactInfoItem: { alignSelf: 'center', marginRight: 10, marginTop: 20, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' },
   fullNameText: { fontFamily: 'Fredoka_One', fontSize: 36, marginTop: 15 },
   phoneText: { fontWeight: '700', fontSize: 18 },
   actionItemText: {

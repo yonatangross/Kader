@@ -81,7 +81,7 @@ export const addPost = async (postData: any): Promise<AxiosResponse<any>> => {
   }
 };
 
-export const updatePost = async (post: IPost): Promise<AxiosResponse<any>> => {
+export const updatePost = async (post: any): Promise<AxiosResponse<any>> => {
   try {
     const response: AxiosResponse<any> = await kaderApi.put(`/posts/${post.postId}`, post);
     return response;

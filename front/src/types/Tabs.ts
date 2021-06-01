@@ -1,4 +1,3 @@
-import { EditGroupScreenProps } from './../screens/EditGroupScreen';
 export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
@@ -68,5 +67,3 @@ export type UserPostsProps = { UserPostsScreen: undefined };
 export type UserGroupsProps = { UserGroupsScreen: undefined };
 export type UserSettingsProps = { UserSettingsScreen: undefined };
 export type ClosePostProps = { ClosePostScreen: undefined };
-export type EditPostProps = { EditPostScreen: undefined };
-export type EditGroupProps = { EditGroupScreen: undefined };
