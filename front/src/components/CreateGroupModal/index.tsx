@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Modal, View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { addGroup } from '../../services/groups';
-import { getCategories } from '../../services/posts';
+import { getCategories } from '../../services/categories';
 import { GroupPrivacy } from '../../types/GroupPrivacy';
 import { ICategory } from '../../types/ICategory';
 
@@ -128,7 +128,33 @@ const CreateGroupModal = (props: CreateGroupModalProps) => {
                 setGroupDescription(groupDescription);
               }}
             />
+            <Text style={styles.labelText}>Group Category</Text>
+            <Picker
+              style={styles.picker}
+              selectedValue={groupCategory}
+              onValueChange={(itemValue) => {
+                console.log(itemValue);
 
+                setGroupCategory(itemValue);
+              }}
+            >
+              {categories.map((item, index) => {
+                return <Picker.Item label={item.name} value={item.id} key={index} />;
+              })}
+            </Picker>
+            <Text style={styles.labelText}>Group Privacy</Text>
+
+            <Picker
+              style={styles.picker}
+              selectedValue={groupPrivacyMethod}
+              onValueChange={(itemValue) => {
+                setGroupPrivacyMethod(itemValue);
+              }}
+            >
+              <Picker.Item label="Invisible" value={GroupPrivacy.Invisible} />
+              <Picker.Item label="Private" value={GroupPrivacy.Private} />
+              <Picker.Item label="Public" value={GroupPrivacy.Public} />
+            </Picker>
             <View style={styles.autocompleteContainer}>
               <GooglePlacesAutocomplete
                 placeholder="Choose group primary location"
@@ -173,33 +199,6 @@ const CreateGroupModal = (props: CreateGroupModalProps) => {
               />
             </View>
 
-            <Text style={styles.labelText}>Group Category</Text>
-            <Picker
-              style={styles.picker}
-              selectedValue={groupCategory}
-              onValueChange={(itemValue) => {
-                console.log(itemValue);
-
-                setGroupCategory(itemValue);
-              }}
-            >
-              {categories.map((item, index) => {
-                return <Picker.Item label={item.name} value={item.id} key={index} />;
-              })}
-            </Picker>
-            <Text style={styles.labelText}>Group Privacy</Text>
-
-            <Picker
-              style={styles.picker}
-              selectedValue={groupPrivacyMethod}
-              onValueChange={(itemValue) => {
-                setGroupPrivacyMethod(itemValue);
-              }}
-            >
-              <Picker.Item label="Invisible" value={GroupPrivacy.Invisible} />
-              <Picker.Item label="Private" value={GroupPrivacy.Private} />
-              <Picker.Item label="Public" value={GroupPrivacy.Public} />
-            </Picker>
             <TouchableOpacity activeOpacity={0.7} onPress={onPressSubmitGroup} style={styles.finishButton}>
               <Text style={styles.finishButtonText}>Submit group</Text>
             </TouchableOpacity>
@@ -216,7 +215,7 @@ const styles = StyleSheet.create({
   outerContainer: { height: '100%', width: '100%', flex: 1 },
   picker: { marginHorizontal: 20 },
   postDetailsContainer: { flexDirection: 'column', width: '100%' },
-  labelText: { fontSize: 16, marginHorizontal: 20, paddingTop: 10 },
+  labelText: { fontSize: 18, marginHorizontal: 20, paddingTop: 10, },
   finishButton: {
     backgroundColor: '#047cfb',
     justifyContent: 'center',

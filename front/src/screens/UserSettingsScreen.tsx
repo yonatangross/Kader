@@ -26,7 +26,7 @@ interface FormValues {
   passwordConfirmation: string;
   phoneNumber: string;
 }
-const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+const phoneRegExp = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
 
 const userSettingsValidationSchema = yup.object().shape({
   username: yup.string().required('username'),
@@ -71,10 +71,6 @@ const UserSettingsScreen = () => {
     };
   }, [fontsLoaded, setUser]);
 
-  const onSignInButtonPress = (): void => {
-    navigation.navigate('Login');
-  };
-
   const handleSubmit = (values: FormValues) => {
     setLoading(true);
     auth
@@ -91,7 +87,7 @@ const UserSettingsScreen = () => {
   if (!!user && !!fontsLoaded) {
     return (
       <KeyboardAvoidingView>
-        <ImageOverlay style={styles.container} source={require('../assets/images/bg2.jpg')}>
+        <ImageOverlay style={styles.container} source={require('../assets/images/authBg.jpg')}>
           <View style={styles.signUpContainer}>
             <Text style={styles.signUpLabel} status="control" category="h4">
               {capitalize(user.firstName)} {capitalize(user.lastName)}

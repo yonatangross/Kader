@@ -15,6 +15,7 @@ import LoadingIndicator from '../components/LoadingIndicator';
 import { IPost } from '../types/IPost';
 import { IUser } from '../types/IUser';
 import { capitalize } from '../utils/text';
+import EditGroupModal from '../components/EditGroupModal';
 
 export interface SingleGroupScreenProps {}
 
@@ -27,6 +28,7 @@ const SingleGroupScreen = () => {
   const [group, setGroup] = useState<IGroup>();
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [isUpdated, setIsUpdated] = useState<boolean>(false);
+  const [editGroupVisible, setEditGroupVisible] = useState<boolean>(false);
   const [refreshing, setRefreshing] = useState<boolean>(false);
 
   let [fontsLoaded] = useFonts({
@@ -89,7 +91,7 @@ const SingleGroupScreen = () => {
     () => {
       mounted = false;
     };
-  }, [fontsLoaded, setGroup, visibleCreatePost, setVisibleCreatePost, setLoading, isUpdated, setIsUpdated, refreshing]);
+  }, [fontsLoaded, setGroup, visibleCreatePost, setVisibleCreatePost, setLoading, isUpdated, setIsUpdated, refreshing, setEditGroupVisible, editGroupVisible]);
 
   const renderMemberListItem = ({ item: item }: { item: IUser }) => {
     return <UserListItem user={item} key={item.userId} />;
@@ -108,8 +110,16 @@ const SingleGroupScreen = () => {
           isUpdated={isUpdated}
           setIsUpdated={setIsUpdated}
         />
+        <EditGroupModal visible={editGroupVisible} setVisible={setEditGroupVisible} group={group} />
         <View style={styles.groupDataContainer}>
-          <GroupManagementPanel group={group} isAdmin={isAdmin} isUpdated={isUpdated} setIsUpdated={setIsUpdated} />
+          <GroupManagementPanel
+            group={group}
+            isAdmin={isAdmin}
+            isUpdated={isUpdated}
+            setIsUpdated={setIsUpdated}
+            editGroupVisible={editGroupVisible}
+            setEditGroupVisible={setEditGroupVisible}
+          />
           <View style={styles.textContainer}>
             <Text style={styles.nameText}>{capitalize(group.name)}</Text>
             <Text style={styles.descriptionText}>{capitalize(group.description)}</Text>

@@ -92,14 +92,6 @@ export const updatePost = async (post: any): Promise<AxiosResponse<any>> => {
   }
 };
 
-export const getCategories = async (): Promise<AxiosResponse<any>> => {
-  try {
-    const response: AxiosResponse<any> = await kaderApi.get(`/categories`);
-    return response;
-  } catch (error) {
-    throw new Error(error);
-  }
-};
 
 export const deletePost = async (id: string): Promise<AxiosResponse<any>> => {
   try {

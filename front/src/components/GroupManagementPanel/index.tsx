@@ -7,22 +7,21 @@ import { IGroup } from '../../types/IGroup';
 export interface GroupManagementPanelProps {
   group: IGroup;
   isAdmin: boolean;
-  isUpdated:boolean;
-  setIsUpdated:Function
+  isUpdated: boolean;
+  setIsUpdated: Function;
+  editGroupVisible: boolean;
+  setEditGroupVisible: Function;
 }
 
 const GroupManagementPanel = (props: GroupManagementPanelProps) => {
   const navigation = useNavigation();
 
   const onPressEditGroup = () => {
-    navigation.navigate('EditGroup', {
-      group: props.group,
-    });
+    props.setEditGroupVisible(true);
   };
   const onPressDeleteGroup = () => {
     deleteGroup(props.group.groupId)
       .then((response) => {
-        const deleteGroupResponse: any = response.data;
         navigation.navigate('Groups');
       })
       .catch((error) => {

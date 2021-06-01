@@ -16,7 +16,6 @@ import { Rating } from 'react-native-elements';
 
 export default function ProfileScreen() {
   const auth = useAuth();
-  const route = useRoute();
   const isFocused = useIsFocused();
   const navigation = useNavigation();
   const [user, setUser] = useState<IUser>();
@@ -25,6 +24,8 @@ export default function ProfileScreen() {
     Pattaya: require('../assets/fonts/Pattaya/Pattaya-Regular.ttf'),
     Fredoka_One: require('../assets/fonts/Fredoka_One/FredokaOne-Regular.ttf'),
   });
+
+  
   useEffect(() => {
     if (!!auth && !!auth.authData) {
       getUser(auth.authData.userId)
@@ -37,7 +38,7 @@ export default function ProfileScreen() {
           console.log(error);
         });
     }
-  }, [user, fontsLoaded, isFocused, navigation]);
+  }, [user, fontsLoaded, isFocused, navigation, setUser, auth]);
 
   const signOut = () => {
     auth.signOut();

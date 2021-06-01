@@ -20,7 +20,7 @@ interface FormValues {
   passwordConfirmation: string;
   phoneNumber: string;
 }
-const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+const phoneRegExp = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
 
 const registerValidationSchema = yup.object().shape({
   username: yup.string().required('username'),
@@ -64,7 +64,7 @@ export default function RegisterScreen() {
 
   return (
     <KeyboardAvoidingView>
-      <ImageOverlay style={styles.container} source={require('../assets/images/bg2.jpg')}>
+      <ImageOverlay style={styles.container} source={require('../assets/images/authBg.jpg')}>
         <View style={styles.signUpContainer}>
           <Text style={styles.signUpLabel} status="control" category="h4">
             SIGN UP
@@ -216,9 +216,10 @@ const styles = StyleSheet.create({
   },
   fieldInputText: { marginHorizontal: 20, marginVertical: 5, backgroundColor: 'white', padding: 10, borderRadius: 15, opacity: 0.6 },
   submitContainer: {
-    marginBottom: 140,
+    marginTop: 40,
   },
   submitHeader: { alignSelf: 'center', marginBottom: 30 },
+
   submitButton: {},
   errorContainer: { width: '100%', marginHorizontal: 40 },
   errorText: { color: 'red', fontSize: 12 },

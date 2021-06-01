@@ -9,6 +9,7 @@ export interface IGroup {
   category: ICategory;
   description: string;
   mainLocation: string;
+  address: string;
   groupPrivacy: GroupPrivacy;
   members: IUser[];
   managers: IUser[];
