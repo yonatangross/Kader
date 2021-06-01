@@ -62,14 +62,14 @@ const EditPostModal = (props: EditPostModalProps) => {
   const submitUpdatedPost = async (groupId: string) => {
     console.log(`submitUpdatedPost: props.groupId:${props.post.groupId}`);
 
-    updatePost({
-      type: state.postType,
-      title: state.details.title,
-      description: state.details.description,
-      groupId: groupId,
-      address: state.details.address,
-      image: state.details.image,
-    })
+    let updatedPost: IPost = props.post;
+    updatedPost.type = state.postType;
+    updatedPost.title = state.details.title;
+    updatedPost.description = state.details.description;
+    updatedPost.address = state.details.address;
+    updatedPost.imagesUri[0] = state.details.image;
+
+    updatePost(updatedPost)
       .then((response) => {
         props.setVisible(false);
         console.log(`updated post successfully:`);

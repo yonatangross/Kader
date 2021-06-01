@@ -89,7 +89,7 @@ const SingleGroupScreen = () => {
     () => {
       mounted = false;
     };
-  }, [fontsLoaded, setGroup, visibleCreatePost, setVisibleCreatePost, setLoading, isUpdated, refreshing]);
+  }, [fontsLoaded, setGroup, visibleCreatePost, setVisibleCreatePost, setLoading, isUpdated, setIsUpdated, refreshing]);
 
   const renderMemberListItem = ({ item: item }: { item: IUser }) => {
     return <UserListItem user={item} key={item.userId} />;
@@ -101,7 +101,13 @@ const SingleGroupScreen = () => {
   if (!!group && fontsLoaded) {
     return (
       <View style={styles.container}>
-        <CreateGroupPostModal visible={visibleCreatePost} setVisible={setVisibleCreatePost} groupId={group.groupId} />
+        <CreateGroupPostModal
+          visible={visibleCreatePost}
+          setVisible={setVisibleCreatePost}
+          groupId={group.groupId}
+          isUpdated={isUpdated}
+          setIsUpdated={setIsUpdated}
+        />
         <View style={styles.groupDataContainer}>
           <GroupManagementPanel group={group} isAdmin={isAdmin} isUpdated={isUpdated} setIsUpdated={setIsUpdated} />
           <View style={styles.textContainer}>

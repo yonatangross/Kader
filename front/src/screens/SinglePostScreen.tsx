@@ -1,7 +1,7 @@
 import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { getPost, updatePost } from '../services/posts';
+import { deletePost, getPost, updatePost } from '../services/posts';
 import { useFonts } from 'expo-font';
 import { IPost } from '../types/IPost';
 import InputBox from '../components/InputBox';
@@ -49,7 +49,7 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
     return () => {
       mounted = false;
     };
-  }, [fontsLoaded, setPost, setShowSettingsSection, isPostOwner, postUpdated, setPostUpdated, isFocused, editModalVisible,setEditModalVisible]);
+  }, [fontsLoaded, setPost, setShowSettingsSection, isPostOwner, postUpdated, setPostUpdated, isFocused, editModalVisible, setEditModalVisible]);
 
   const onPressSettingsButton = () => {
     if (showSettingsSection) {
@@ -66,6 +66,22 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
     navigation.navigate('ClosePost', {
       postId: post?.postId,
     });
+  };
+
+  const onPressDeleteButton = () => {
+    if (!!post) {
+      deletePost(post.postId)
+        .then(() => {
+          console.log(`Deleted post ${post.postId}`);
+          navigation.navigate('SingleGroup', {
+            id: post?.groupId,
+          });
+        })
+        .catch((error) => {
+          console.log('error while deleting post');
+          console.log(error);
+        });
+    }
   };
 
   const onPressReopenButton = () => {
@@ -97,10 +113,10 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
             {post.isActive && showSettingsSection && (
               <>
                 <TouchableOpacity activeOpacity={0.7} onPress={onPressEditButton} style={styles.settingButton}>
-                  <Text style={styles.closePostButtonText}>Edit Post</Text>
+                  <Text style={styles.buttonText}>Edit post</Text>
                 </TouchableOpacity>
                 <TouchableOpacity activeOpacity={0.7} onPress={onPressCloseButton} style={styles.settingButton}>
-                  <Text style={styles.buttonText}>Close Post</Text>
+                  <Text style={styles.buttonText}>Close post</Text>
                 </TouchableOpacity>
               </>
             )}
@@ -108,6 +124,13 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
               <>
                 <TouchableOpacity activeOpacity={0.7} onPress={onPressReopenButton} style={styles.settingButton}>
                   <Text style={styles.buttonText}>Reopen post</Text>
+                </TouchableOpacity>
+              </>
+            )}
+            {showSettingsSection && (
+              <>
+                <TouchableOpacity activeOpacity={0.7} onPress={onPressDeleteButton} style={styles.settingButton}>
+                  <Text style={styles.buttonText}>Delete post</Text>
                 </TouchableOpacity>
               </>
             )}
@@ -132,8 +155,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#f2a853',
     borderRadius: 30,
     alignItems: 'center',
-    width: 120,
-    height: 40,
+    width: 80,
+    height: 30,
     justifyContent: 'center',
     alignSelf: 'center',
     shadowColor: 'rgba(0, 0, 0, 0.1)',
@@ -143,7 +166,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 1, height: 13 },
   },
   buttonText: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: 'bold',
     color: 'white',
   },

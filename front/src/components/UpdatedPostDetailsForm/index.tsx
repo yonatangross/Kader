@@ -151,7 +151,7 @@ const UpdatedPostDetailsForm = (props: UpdatedPostDetailsFormProps) => {
               <UploadImage postImage={postImage} setPostImage={setPostImage} setFieldValue={setFieldValue} />
               <View style={{ width: '100%', minHeight: 200, maxHeight: 400 }}>
                 <GooglePlacesAutocomplete
-                  placeholder="Choose group primary address"
+                  placeholder={props.state.details.address !== '' ? props.state.details.address : 'Choose group primary address'}
                   debounce={200}
                   autoFocus={true}
                   onPress={(data, details = null) => {

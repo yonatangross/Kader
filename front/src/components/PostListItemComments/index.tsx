@@ -27,14 +27,6 @@ const PostListItemComments = (props: PostListItemCommentsProps) => {
     return <PostCommentItemHolder key={item.commentId} comment={item} dividerFlag={true} />;
   };
 
-  const renderLoadAllCommentsItem = () => {
-    return (
-      <TouchableOpacity onPress={onPressLoadAllComments} activeOpacity={0.7} style={styles.loadAllCommentsContainer}>
-        <Text style={styles.loadAllCommentsText}>load all comments</Text>
-      </TouchableOpacity>
-    );
-  };
-
   if (props.comments.length) {
     return (
       <View>
@@ -50,7 +42,12 @@ const PostListItemComments = (props: PostListItemCommentsProps) => {
         />
       </View>
     );
-  } else return <View style={{ marginBottom: 10,backgroundColor:'#dedcdf' }}><Text></Text></View>;
+  } else
+    return (
+      <View style={{}}>
+        <Text></Text>
+      </View>
+    );
 };
 
 export default PostListItemComments;

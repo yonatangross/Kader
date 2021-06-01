@@ -34,11 +34,8 @@ const SinglePostHeaderItem = (props: SinglePostHeaderItemProps) => {
   };
 
   useEffect(() => {
-    let mounted = true;
     setLoading(false);
-    () => {
-      mounted = false;
-    };
+    console.log(props.groupCategory);
   }, []);
 
   if (!!post) {

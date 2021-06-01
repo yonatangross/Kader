@@ -12,6 +12,8 @@ export interface CreateGroupPostModalProps {
   visible: boolean;
   setVisible: Function;
   groupId: string;
+  isUpdated: boolean;
+  setIsUpdated: Function;
 }
 
 const createPostInitState = {
@@ -31,6 +33,7 @@ const CreateGroupPostModal = (props: CreateGroupPostModalProps) => {
     if (submitFlag) {
       submitPost(props.groupId);
       props.setVisible(false);
+      props.setIsUpdated(true);
       setSubmitFlag(false);
     }
     if (props.visible) {
@@ -42,7 +45,7 @@ const CreateGroupPostModal = (props: CreateGroupPostModalProps) => {
       props.setVisible(false);
       setActiveSection(-1);
     }
-  }, [props.visible, setSubmitFlag, setActiveSection, submitFlag]);
+  }, [props.visible, setSubmitFlag, setActiveSection, submitFlag, props.setIsUpdated]);
 
   const submitPost = async (groupId: string) => {
     console.log(`submitPost: props.groupId:${props.groupId}`);
