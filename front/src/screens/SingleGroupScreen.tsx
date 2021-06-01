@@ -14,6 +14,7 @@ import { useFonts } from 'expo-font';
 import LoadingIndicator from '../components/LoadingIndicator';
 import { IPost } from '../types/IPost';
 import { IUser } from '../types/IUser';
+import { capitalize } from '../utils/text';
 
 export interface SingleGroupScreenProps {}
 
@@ -104,9 +105,9 @@ const SingleGroupScreen = (props: SingleGroupScreenProps) => {
         <View style={styles.groupDataContainer}>
           <GroupManagementPanel group={group} isAdmin={isAdmin} isUpdated={isUpdated} setIsUpdated={setIsUpdated} />
           <View style={styles.textContainer}>
-            <Text style={styles.nameText}>{group.name}</Text>
-            <Text style={styles.descriptionText}>{group.description}</Text>
-            <Text style={styles.groupPrivacyText}>Group Privacy: {getGroupPrivacyName(group.groupPrivacy)}</Text>
+            <Text style={styles.nameText}>{capitalize(group.name)}</Text>
+            <Text style={styles.descriptionText}>{capitalize(group.description)}</Text>
+            <Text style={styles.groupPrivacyText}>Group privacy: {getGroupPrivacyName(group.groupPrivacy)}</Text>
           </View>
           <View style={styles.membersContainer}>
             <FlatList

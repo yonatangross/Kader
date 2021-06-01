@@ -18,6 +18,7 @@ interface FormValues {
   lastName: string;
   password: string;
   passwordConfirmation: string;
+  phoneNumber: string;
 }
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
@@ -31,7 +32,7 @@ const registerValidationSchema = yup.object().shape({
     .string()
     .required('No password provided.')
     .min(8, 'Password is too short - must contain 8 chars that includes.')
-    .matches(/[a-zA-Z]/, 'Password should contain english letters with captical letters and special chars.'),
+    .matches(/[a-zA-Z]/, 'Password should contain english letters with capital letters and special chars.'),
   passwordConfirmation: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
 });
 export default function RegisterScreen() {

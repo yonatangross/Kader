@@ -32,6 +32,8 @@ const PostListItem = (props: PostListItemProps) => {
       post: props.post,
       id: props.post.postId,
       title: props.post.title,
+      groupName: groupName,
+      groupCategory: groupCategory,
     });
   };
   if (!!post) {
@@ -59,8 +61,8 @@ const PostListItem = (props: PostListItemProps) => {
               <Text style={styles.groupText}>{groupName}</Text>
             </View>
             <View style={styles.categoryContainer}>
-              {!!post.category && !!post.category.imageUri ? (
-                <Image source={{ uri: imageBaseUrl + post.category.imageUri }} style={styles.categoryIcon as ImageStyle} />
+              {!!groupCategory && !!groupCategory.imageUri ? (
+                <Image source={{ uri: imageBaseUrl + groupCategory.imageUri }} style={styles.categoryIcon as ImageStyle} />
               ) : (
                 <Image source={require('../../assets/images/categoryIcon.png')} style={styles.categoryIcon as ImageStyle} />
               )}

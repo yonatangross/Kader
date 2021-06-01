@@ -37,9 +37,10 @@ const GroupMembersScreen = (props: GroupMembersScreenProps) => {
             const groupResponse: IGroup = response.data;
             setGroup(groupResponse);
             let membersArr: IUser[] = [];
-            groupResponse.members.forEach((member) => {
-              const isManager: boolean = _.includes(group?.managers, member);
-              if (!isManager) membersArr.push(member);
+            membersArr = _.differenceWith(groupResponse.members, groupResponse.managers, function (membersValue, managersValue) {
+              const res = membersValue.userId === managersValue.userId;
+              console.log(res);
+              return res;
             });
             setManagers(groupResponse.managers);
             setMembers(membersArr);

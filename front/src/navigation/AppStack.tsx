@@ -57,9 +57,9 @@ export const AppStack = () => {
           title: '',
           header: () => {
             // @ts-ignore
-            const { post } = route.params;
+            const { post,groupName,groupCategory } = route.params;
 
-            if (!!post) return <SinglePostHeaderItem post={post} />;
+            if (!!post) return <SinglePostHeaderItem post={post} groupName={groupName} groupCategory={groupCategory} />;
           },
           cardStyle: { backgroundColor: '#dedcdf' },
         })}

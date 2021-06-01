@@ -4,13 +4,13 @@ const styles = StyleSheet.create({
   buttonsContainer: { flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: 'transparent' },
   container: {
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     marginHorizontal: 50,
     backgroundColor: 'white',
     flexDirection: 'row',
   },
   buttonContainer: {
-    margin: 20,
+    margin: 5,
     backgroundColor: 'white',
     width: 50,
     height: 50,

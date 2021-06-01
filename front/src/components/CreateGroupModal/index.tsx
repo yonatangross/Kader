@@ -107,7 +107,7 @@ const CreateGroupModal = (props: CreateGroupModalProps) => {
               console.log('Modal has now been closed.');
             }}
           >
-            <Text style={styles.labelText}>Group Name</Text>
+            <Text style={styles.createGroupText}>Create Group</Text>
             <TextInput
               placeholder={'Group Name'}
               style={styles.textInput}
@@ -118,7 +118,6 @@ const CreateGroupModal = (props: CreateGroupModalProps) => {
               }}
             />
 
-            <Text style={styles.labelText}>Group Description</Text>
             <TextInput
               placeholder={'Group Description'}
               style={styles.textInput}
@@ -212,7 +211,8 @@ const CreateGroupModal = (props: CreateGroupModalProps) => {
 };
 
 const styles = StyleSheet.create({
-  autocompleteContainer: { width: '100%', height:300 },
+  createGroupText: { fontSize: 20, fontWeight: 'bold', margin: 20, marginBottom: 5 },
+  autocompleteContainer: { width: '100%', height: 300 },
   outerContainer: { height: '100%', width: '100%', flex: 1 },
   picker: { marginHorizontal: 20 },
   postDetailsContainer: { flexDirection: 'column', width: '100%' },
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
   finishButtonText: { fontSize: 20, fontWeight: 'bold' },
 
   text: { margin: 5 },
-  textInput: { fontSize: 16, backgroundColor: '#f1f0f0', borderRadius: 15, margin: 20, padding: 10 },
+  textInput: { fontSize: 16, backgroundColor: '#f1f0f0', borderRadius: 15, marginHorizontal: 20, marginVertical: 10, padding: 10 },
   inputField: {
     marginBottom: 20,
     marginTop: 20,

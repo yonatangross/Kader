@@ -13,6 +13,7 @@ import { useFonts } from 'expo-font';
 import { getUser } from '../services/users';
 import { IUser } from '../types/IUser';
 import { capitalize } from '../utils/text';
+import { imageBaseUrl } from '../services/axios';
 
 export interface UserSettingsScreenProps {}
 
@@ -23,21 +24,23 @@ interface FormValues {
   lastName: string;
   password: string;
   passwordConfirmation: string;
+  phoneNumber: string;
 }
+const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 const userSettingsValidationSchema = yup.object().shape({
   username: yup.string().required('username'),
   email: yup.string().email('Email is not valid').required('Email is required'),
   firstName: yup.string().required('First name required.').min(2, 'First name is too short - should be 2 chars minimum'),
   lastName: yup.string().required('Last name required.').min(2, 'Last name is too short - should be 2 chars minimum'),
+  phoneNumber: yup.string().matches(phoneRegExp, 'Phone number is not valid'),
   password: yup
     .string()
     .required('No password provided.')
     .min(8, 'Password is too short - must contain 8 chars that includes.')
-    .matches(/[a-zA-Z]/, 'Password should contain english letters with captical letters and special chars.'),
+    .matches(/[a-zA-Z]/, 'Password should contain english letters with capital letters and special chars.'),
   passwordConfirmation: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
 });
-
 const UserSettingsScreen = () => {
   const auth = useAuth();
   const navigation = useNavigation();
@@ -104,6 +107,7 @@ const UserSettingsScreen = () => {
                 passwordConfirmation: '',
                 firstName: user.firstName,
                 lastName: user.lastName,
+                phoneNumber: user.phoneNumber,
               }}
               onSubmit={(values) => handleSubmit(values)}
             >
@@ -111,7 +115,7 @@ const UserSettingsScreen = () => {
                 <>
                   <View style={styles.postImageContainer}>
                     {!!user.imageUri ? (
-                      <Image source={{ uri: user.imageUri }} style={styles.postImage as ImageStyle} />
+                      <Image source={{ uri: imageBaseUrl + user.imageUri }} style={styles.postImage as ImageStyle} />
                     ) : (
                       <Image source={require('../assets/images/imagePlaceholder.png')} style={styles.postImage as ImageStyle} />
                     )}
@@ -194,6 +198,19 @@ const UserSettingsScreen = () => {
                     onBlur={() => setFieldTouched('lastName')}
                     style={styles.fieldInputText}
                   />
+                  <Field
+                    component={CustomInput}
+                    name="phoneNumber"
+                    placeholder="Phone number"
+                    multiline
+                    numberOfLines={1}
+                    value={values.phoneNumber}
+                    onChangeText={(phoneNumber: string) => {
+                      setFieldValue('phoneNumber', phoneNumber);
+                    }}
+                    onBlur={() => setFieldTouched('phoneNumber')}
+                    style={styles.fieldInputText}
+                  />
                   <View style={styles.submitContainer}>
                     {loading ? (
                       <ActivityIndicator color={'#000'} animating={true} size="small" />
@@ -258,10 +275,11 @@ const styles = StyleSheet.create({
   signUpContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 24,
+    marginTop: 5,
   },
-  fieldInputText: { marginHorizontal: 20, marginVertical: 5, backgroundColor: 'white', padding: 10, borderRadius: 15, opacity: 0.6 },
+  fieldInputText: { marginHorizontal: 20, marginVertical: 3, backgroundColor: 'white', padding: 10, borderRadius: 15, opacity: 0.6 },
   submitContainer: {
+    marginTop: 20,
     marginBottom: 140,
   },
   submitHeader: { alignSelf: 'center', marginBottom: 30 },

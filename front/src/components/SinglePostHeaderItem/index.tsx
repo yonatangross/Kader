@@ -9,16 +9,19 @@ import { Ionicons } from '@expo/vector-icons';
 import { getPostTypeName } from '../../types/PostType';
 import { imageBaseUrl } from '../../services/axios';
 import { useAuth } from '../../contexts/Auth';
+import { ICategory } from '../../types/ICategory';
 
 export interface SinglePostHeaderItemProps {
   post: IPost;
+  groupName: string;
+  groupCategory: ICategory;
 }
 
 const SinglePostHeaderItem = (props: SinglePostHeaderItemProps) => {
   const navigation = useNavigation();
   const auth = useAuth();
   const [loading, setLoading] = useState<boolean>(true);
-  const { post } = props;
+  const { post, groupName, groupCategory } = props;
 
   const onPressGroupName = (groupId: string) => {
     navigation.navigate('SingleGroup', { id: groupId });
@@ -70,12 +73,12 @@ const SinglePostHeaderItem = (props: SinglePostHeaderItemProps) => {
             </View>
             <View style={styles.lowerCreatorContainer}>
               <TouchableOpacity onPress={() => onPressGroupName(post.groupId)}>
-                <Text style={styles.postGroupText}>{post.groupName}</Text>
+                <Text style={styles.postGroupText}>{groupName}</Text>
               </TouchableOpacity>
             </View>
           </View>
         </View>
-        <View style={styles.categoryContainer}>{!!post.category ? <Text style={styles.categoryText}>{post.category.name}</Text> : <></>}</View>
+        <View style={styles.categoryContainer}>{!!groupCategory ? <Text style={styles.categoryText}>{groupCategory.name}</Text> : <></>}</View>
       </View>
     );
   } else
