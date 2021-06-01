@@ -82,8 +82,8 @@ const HomeScreen = () => {
     };
   }, [setPosts, loading, visibleCreateGroup, visibleCreatePost, showErrorCreatingPost, setGroupsNumber, refreshing]);
 
-  const renderPostListItem = ({ item }: any) => {
-    return <PostListItem post={item} key={item.postId} showComments={true} />;
+  const renderPostListItem = ({ item: item }: { item: IPost }) => {
+    return <PostListItem post={item} key={item.postId} showComments={true} groupName={item.groupName} groupCategory={item.category} />;
   };
   if (!!posts) {
     return (
