@@ -10,7 +10,7 @@ export interface IUser {
   email: string;
   phoneNumber: string;
   rating: number;
-  numberOfRatings: number;
+  numberOfRating: number;
   memberInGroups: IGroup[];
   posts: IPost[];
   comments: IComment[];

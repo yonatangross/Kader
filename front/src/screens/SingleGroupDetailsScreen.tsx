@@ -102,11 +102,14 @@ const SingleGroupDetailsScreen = (props: SingleGroupDetailsPageProps) => {
                   navigation.navigate('GroupMembers', {
                     id: group.groupId,
                   });
-                  console.log('pressed more members load');
                 }}
               >
                 <View style={[styles.profileImageContainer]}>
-                  <Text style={styles.extraMembersText}>...</Text>
+                  {group.members.length - 7 <= 0 ? (
+                    <Text style={styles.extraMembersText}>... </Text>
+                  ) : (
+                    <Text style={styles.extraMembersText}>and {group.members.length - 7} more </Text>
+                  )}
                 </View>
               </TouchableWithoutFeedback>
             }

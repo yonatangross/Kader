@@ -7,6 +7,7 @@ import { Formik, Field } from 'formik';
 import * as yup from 'yup';
 import CustomInput from '../validation/CustomInput';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { IPost } from '../../types/IPost';
 const blogValidationSchema = yup.object().shape({
   title: yup.string().required('Title is required'),
   description: yup
@@ -24,7 +25,7 @@ interface FormValues {
   image: any;
 }
 
-export interface PostDetailsFormProps {
+export interface UpdatedPostDetailsFormProps {
   active: number;
   state: CreatePostStateType;
   dispatch: Function;
@@ -57,7 +58,7 @@ const formatAddress = (addressDetails: any) => {
   return '';
 };
 
-const PostDetailsForm = (props: PostDetailsFormProps) => {
+const UpdatedPostDetailsForm = (props: UpdatedPostDetailsFormProps) => {
   const [postImage, setPostImage] = useState<any>(null);
   const handleSubmit = (values: FormValues) => {
     props.dispatch({
@@ -96,10 +97,10 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
         <Formik
           validationSchema={blogValidationSchema}
           initialValues={{
-            title: '',
-            description: '',
-            address: '',
-            image: undefined,
+            title: props.state.details.title,
+            description: props.state.details.description,
+            address: props.state.details.address,
+            image: props.state.details.image,
           }}
           onSubmit={(values) => handleSubmit(values)}
         >
@@ -241,4 +242,4 @@ const styles = StyleSheet.create({
   textInput: { fontSize: 16, backgroundColor: '#f1f0f0', borderRadius: 15, marginBottom: 20, marginHorizontal: 20, padding: 10 },
 });
 
-export default PostDetailsForm;
+export default UpdatedPostDetailsForm;

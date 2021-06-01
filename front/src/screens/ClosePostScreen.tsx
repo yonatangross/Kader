@@ -38,7 +38,10 @@ const ClosePostScreen = (props: ClosePostScreenProps) => {
           .then((response) => {
             const postResponse: IPost = response.data;
             setPost(postResponse);
-            const uniqueMembersResponse: IComment[] = _.uniqBy(postResponse.comments, 'creator.userId');
+            let uniqueMembersResponse: IComment[] = _.uniqBy(postResponse.comments, 'creator.userId');
+            uniqueMembersResponse = _.filter(uniqueMembersResponse, (comment) => {
+              return post?.creator.userId !== comment.creator.userId;
+            });
             setUniqueComments(uniqueMembersResponse);
             setLoading(false);
           })
@@ -127,7 +130,13 @@ const ClosePostScreen = (props: ClosePostScreenProps) => {
                 </View>
               )}
               <View style={styles.buttonContainer}>
-                <Rating ratingColor="#f3a953" imageSize={22} startingValue={3} ratingCount={5} onFinishRating={onFinishRating} />
+                <Rating
+                  ratingColor="#f3a953"
+                  imageSize={22}
+                  startingValue={selectedCommenter?.creator.rating}
+                  ratingCount={5}
+                  onFinishRating={onFinishRating}
+                />
               </View>
             </View>
           </>

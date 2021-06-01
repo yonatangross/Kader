@@ -12,6 +12,7 @@ import { imageBaseUrl } from '../services/axios';
 import { Linking } from 'react-native';
 import { Fontisto, SimpleLineIcons } from '@expo/vector-icons';
 import { capitalize } from '../utils/text';
+import { Rating } from 'react-native-elements';
 
 export default function ProfileScreen() {
   const auth = useAuth();
@@ -36,7 +37,7 @@ export default function ProfileScreen() {
           console.log(error);
         });
     }
-  }, [setUser, fontsLoaded, isFocused]);
+  }, [user, fontsLoaded, isFocused, navigation]);
 
   const signOut = () => {
     auth.signOut();
@@ -111,14 +112,18 @@ export default function ProfileScreen() {
               <Text style={styles.phoneText}> {user.email}</Text>
             </TouchableOpacity>
           )}
+          {!!user.rating && (
+            <View style={styles.ratingContainer}>
+              <Text style={styles.ratingNumberText}>Ratings: {user.numberOfRating}</Text>
+              <Rating readonly ratingColor="#f3a953" imageSize={22} startingValue={user.rating} ratingCount={5} />
+            </View>
+          )}
         </View>
         <View style={styles.userDataContainer}>
           <ProfileSocial style={styles.userDataItemContainer} hint="Posts" value={`${!user.postsCount ? 0 : user.postsCount}`} />
           <ProfileSocial style={styles.userDataItemContainer} hint="Groups" value={`${!user.memberInGroupsCount ? 0 : user.memberInGroupsCount}`} />
           <ProfileSocial style={styles.userDataItemContainer} hint="Managed Groups" value={`${!user.managerInGroupsCount ? 0 : user.managerInGroupsCount}`} />
         </View>
-
-        {/* <StarRating numOfStars={user?.rating} numOfRatings={user?.numberOfRatings} displayRatings={false} /> */}
 
         <View style={styles.UserActionListsContainer}>
           <TouchableOpacity onPress={onPressUserPosts} style={styles.actionItemButton}>
@@ -162,6 +167,8 @@ export default function ProfileScreen() {
 }
 
 const styles = StyleSheet.create({
+  ratingNumberText: { fontWeight: '600', fontSize: 20, marginBottom: 5 },
+  ratingContainer: { justifyContent: 'center', alignItems: 'center', margin: 15, flexDirection: 'column' },
   userContactInfoContainer: { justifyContent: 'center', alignItems: 'center', flexDirection: 'column' },
   userContactInfoItem: { alignSelf: 'center', marginRight: 10, marginTop: 20, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' },
   fullNameText: { fontFamily: 'Fredoka_One', fontSize: 36, marginTop: 15 },

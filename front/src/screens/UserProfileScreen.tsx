@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Image, ImageStyle, Text } from 'react-native';
+import { StyleSheet, View, Image, ImageStyle, Text, Linking, Platform, Alert } from 'react-native';
 import { ProfileSocial } from '../layouts/social/profile/extra/profile-social.component';
 import { useAuth } from '../contexts/Auth';
 import { getUser } from '../services/users';
@@ -10,6 +10,8 @@ import { useNavigation, useRoute, useIsFocused } from '@react-navigation/core';
 import { useFonts } from 'expo-font';
 import { imageBaseUrl } from '../services/axios';
 import { capitalize } from '../utils/text';
+import { SimpleLineIcons, Fontisto } from '@expo/vector-icons';
+import { Rating } from 'react-native-ratings';
 
 export default function UserProfileScreen() {
   const auth = useAuth();
@@ -39,6 +41,25 @@ export default function UserProfileScreen() {
     }
   }, [setUser, fontsLoaded, isFocused]);
 
+  const callNumber = (phone: string) => {
+    console.log('callNumber ----> ', phone);
+    let phoneNumber = phone;
+    if (Platform.OS !== 'android') {
+      phoneNumber = `telprompt:${phone}`;
+    } else {
+      phoneNumber = `tel:${phone}`;
+    }
+    Linking.canOpenURL(phoneNumber)
+      .then((supported) => {
+        if (!supported) {
+          Alert.alert('Phone number is not available');
+        } else {
+          return Linking.openURL(phoneNumber);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
   const onPressUserPosts = () => {
     if (!!user)
       navigation.navigate('UserPosts', {
@@ -67,13 +88,32 @@ export default function UserProfileScreen() {
           <Text style={styles.fullNameText}>{capitalize(user?.firstName) + ' ' + capitalize(user?.lastName)}</Text>
         </View>
 
+        <View style={styles.userContactInfoContainer}>
+          {!!user.phoneNumber && (
+            <TouchableOpacity onPress={() => callNumber(user.phoneNumber)} style={styles.userContactInfoItem}>
+              <SimpleLineIcons name="call-in" color={'#4975aa'} size={22} />
+              <Text style={styles.phoneText}> {user.phoneNumber.replace(/[^\d]+/g, '')}</Text>
+            </TouchableOpacity>
+          )}
+          {!!user.email && (
+            <TouchableOpacity onPress={() => Linking.openURL(`mailto:${user.email}?subject=Kader App&body=Description`)} style={styles.userDataContainer}>
+              <Fontisto name="email" color={'#4975aa'} size={22} />
+              <Text style={styles.phoneText}> {user.email}</Text>
+            </TouchableOpacity>
+          )}
+          {!!user.rating && (
+            <View style={styles.ratingContainer}>
+              <Text style={styles.ratingNumberText}>{user.numberOfRating}</Text>
+              <Rating readonly ratingColor="#f3a953" imageSize={22} startingValue={user.rating} ratingCount={5} />
+            </View>
+          )}
+        </View>
+
         <View style={styles.userDataContainer}>
           <ProfileSocial style={styles.userDataItemContainer} hint="Posts" value={`${!user.postsCount ? 0 : user.postsCount}`} />
           <ProfileSocial style={styles.userDataItemContainer} hint="Groups" value={`${!user.memberInGroupsCount ? 0 : user.memberInGroupsCount}`} />
           <ProfileSocial style={styles.userDataItemContainer} hint="Managed Groups" value={`${!user.managerInGroupsCount ? 0 : user.managerInGroupsCount}`} />
         </View>
-
-        {/* <StarRating numOfStars={user?.rating} numOfRatings={user?.numberOfRatings} displayRatings={false} /> */}
 
         <View style={styles.UserActionListsContainer}>
           <TouchableOpacity onPress={onPressUserPosts} style={styles.actionItemButton}>
@@ -101,7 +141,12 @@ export default function UserProfileScreen() {
 }
 
 const styles = StyleSheet.create({
+  ratingNumberText: { fontWeight: '600', fontSize: 20 },
+  ratingContainer: { justifyContent: 'center', alignItems: 'center', margin: 15, flexDirection: 'column' },
+  userContactInfoContainer: { justifyContent: 'center', alignItems: 'center', flexDirection: 'column' },
+  userContactInfoItem: { alignSelf: 'center', marginRight: 10, marginTop: 20, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' },
   fullNameText: { fontFamily: 'Fredoka_One', fontSize: 36, marginTop: 15 },
+  phoneText: { fontWeight: '700', fontSize: 18 },
 
   actionItemText: {
     fontFamily: 'Fredoka_One',

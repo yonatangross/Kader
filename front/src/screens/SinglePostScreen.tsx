@@ -49,7 +49,7 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
     return () => {
       mounted = false;
     };
-  }, [fontsLoaded, setPost, setShowSettingsSection, isPostOwner, postUpdated, setPostUpdated, isFocused, editModalVisible]);
+  }, [fontsLoaded, setPost, setShowSettingsSection, isPostOwner, postUpdated, setPostUpdated, isFocused, editModalVisible,setEditModalVisible]);
 
   const onPressSettingsButton = () => {
     if (showSettingsSection) {

@@ -8,6 +8,7 @@ import PostDetailsForm from '../PostDetailsForm';
 import PostTypeSelector from '../PostTypeSelector';
 import { useNavigation } from '@react-navigation/core';
 import { IPost } from '../../types/IPost';
+import UpdatedPostDetailsForm from '../UpdatedPostDetailsForm';
 
 export interface EditPostModalProps {
   visible: boolean;
@@ -15,18 +16,16 @@ export interface EditPostModalProps {
   post: IPost;
 }
 
-const createPostInitState = {
-  postType: PostType.Request,
-  details: { title: '', description: '', address: '', image: undefined },
-  groups: [],
-};
-
 const EditPostModal = (props: EditPostModalProps) => {
   const navigation = useNavigation();
 
-  const [state, dispatch] = useReducer(createPostReducer, createPostInitState, initCreatePost);
   const [activeSection, setActiveSection] = useState<number>(0);
   const [post, setPost] = useState<IPost>();
+  const [state, dispatch] = useReducer(createPostReducer, {
+    postType: PostType.Request,
+    details: { title: '', description: '', address: '', image: undefined },
+    groups: [],
+  });
   const [submitFlag, setSubmitFlag] = useState<boolean>(false);
   const numberOfSections = 2;
 
@@ -40,7 +39,19 @@ const EditPostModal = (props: EditPostModalProps) => {
       //modal opened after was closed
       setPost(post);
       setActiveSection(0);
-      dispatch({ type: 'Reset' });
+      dispatch({
+        type: 'PostType',
+        payload: props.post.type,
+      });
+      dispatch({
+        type: 'Details',
+        payload: {
+          title: props.post.title,
+          description: props.post.description,
+          address: props.post.address,
+          image: props.post.imagesUri[0],
+        },
+      });
     } else {
       // modal closed after was open.
       props.setVisible(false);
@@ -69,7 +80,7 @@ const EditPostModal = (props: EditPostModalProps) => {
         });
       })
       .catch((error) => {
-        console.log(`error while creating post:`);
+        console.log(`error while updating post:`);
         console.log(error);
       });
   };
@@ -87,7 +98,7 @@ const EditPostModal = (props: EditPostModalProps) => {
       >
         <PostCreationProgressBar activeSection={activeSection} numberOfSections={numberOfSections} />
         <PostTypeSelector active={activeSection} dispatch={dispatch} setActiveSection={setActiveSection} numberOfSections={numberOfSections} />
-        <PostDetailsForm
+        <UpdatedPostDetailsForm
           active={activeSection}
           state={state}
           dispatch={dispatch}

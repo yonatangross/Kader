@@ -18,7 +18,7 @@ import { capitalize } from '../utils/text';
 
 export interface SingleGroupScreenProps {}
 
-const SingleGroupScreen = (props: SingleGroupScreenProps) => {
+const SingleGroupScreen = () => {
   const route = useRoute();
   const auth = useAuth();
   const navigation = useNavigation();
