@@ -40,13 +40,12 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
     let mounted = true;
     if (!!route.params) {
       const params: any = route.params;
+      console.log(params.id);
 
       getPost(params.id)
         .then((response) => {
           if (mounted) {
             const postResponse: IPost = response.data.post;
-            console.log(postResponse.comments.length);
-
             setPost(postResponse);
             if (postResponse?.creator.userId === auth.authData?.userId) {
               setIsPostOwner(true);

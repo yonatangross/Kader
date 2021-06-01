@@ -53,7 +53,9 @@ const UserPostsScreen = () => {
         <FlatList
           style={styles.list}
           data={userPosts}
-          renderItem={({ item }) => <PostListItem key={item.groupId} post={item} showComments={false} />}
+          renderItem={({ item }) => (
+            <PostListItem key={item.groupId} post={item} showComments={false} groupName={item.groupName} groupCategory={item.category} />
+          )}
           keyExtractor={(item) => item.postId}
           showsVerticalScrollIndicator={false}
         />
