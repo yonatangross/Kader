@@ -21,7 +21,7 @@ const HomeScreen = () => {
   const [visibleCreatePost, setVisibleCreatePost] = useState<boolean>(false);
   const [visibleCreateGroup, setVisibleCreateGroup] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
-  const [posts, setPosts] = useState<IPost[]>();
+  const [posts, setPosts] = useState<IPost[]>([]);
   const [groupsNumber, setGroupsNumber] = useState<number>(0);
   const [showErrorCreatingPost, setShowErrorCreatingPost] = useState<boolean>(false);
   const [refreshing, setRefreshing] = useState<boolean>(false);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Image, ImageStyle, Text } from 'react-native';
+import { StyleSheet, View, Image, ImageStyle, Text, Alert, Platform } from 'react-native';
 import { ProfileSocial } from '../layouts/social/profile/extra/profile-social.component';
 import { useAuth } from '../contexts/Auth';
 import { getUser } from '../services/users';
@@ -9,6 +9,9 @@ import _ from 'lodash';
 import { useNavigation, useRoute, useIsFocused } from '@react-navigation/core';
 import { useFonts } from 'expo-font';
 import { imageBaseUrl } from '../services/axios';
+import { Linking } from 'react-native';
+import { Fontisto, SimpleLineIcons } from '@expo/vector-icons';
+import { capitalize } from '../utils/text';
 
 export default function ProfileScreen() {
   const auth = useAuth();
@@ -60,6 +63,25 @@ export default function ProfileScreen() {
       });
   };
 
+  const callNumber = (phone: string) => {
+    console.log('callNumber ----> ', phone);
+    let phoneNumber = phone;
+    if (Platform.OS !== 'android') {
+      phoneNumber = `telprompt:${phone}`;
+    } else {
+      phoneNumber = `tel:${phone}`;
+    }
+    Linking.canOpenURL(phoneNumber)
+      .then((supported) => {
+        if (!supported) {
+          Alert.alert('Phone number is not available');
+        } else {
+          return Linking.openURL(phoneNumber);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
   if (!!user && fontsLoaded) {
     return (
       <View style={styles.container}>
@@ -71,11 +93,23 @@ export default function ProfileScreen() {
               <Image source={require('../assets/images/celebrity.png')} style={styles.profileImage as ImageStyle} />
             )}
           </View>
-          <Text style={styles.fullNameText}>{user?.firstName + ' ' + user?.lastName}</Text>
+          <Text style={styles.fullNameText}>{capitalize(user?.firstName) + ' ' + capitalize(user?.lastName)}</Text>
           <TouchableOpacity activeOpacity={0.7} onPress={signOut} style={styles.logoutButton}>
-            <Image source={require('../assets/images/logout2.png')} style={styles.floatingButtonStyle} />
+            <Image source={require('../assets/images/log-out.png')} style={styles.floatingButtonStyle} />
           </TouchableOpacity>
         </View>
+        {!!user.phoneNumber && (
+          <TouchableOpacity onPress={() => callNumber(user.phoneNumber)} style={styles.userDataContainer}>
+            <SimpleLineIcons name="call-in" color={'#4975aa'} size={22} />
+            <Text style={styles.phoneText}> {user.phoneNumber.replace(/[^\d]+/g, '')}</Text>
+          </TouchableOpacity>
+        )}
+        {!!user.email && (
+          <TouchableOpacity onPress={() => Linking.openURL(`mailto:${user.email}?subject=Kader App&body=Description`)} style={styles.userDataContainer}>
+            <Fontisto name="email" color={'#4975aa'} size={22} />
+            <Text style={styles.phoneText}> {user.email}</Text>
+          </TouchableOpacity>
+        )}
 
         <View style={styles.userDataContainer}>
           <ProfileSocial style={styles.userDataItemContainer} hint="Posts" value={`${!user.postsCount ? 0 : user.postsCount}`} />
@@ -128,7 +162,7 @@ export default function ProfileScreen() {
 
 const styles = StyleSheet.create({
   fullNameText: { fontFamily: 'Fredoka_One', fontSize: 36, marginTop: 15 },
-
+  phoneText: { fontWeight: '700', fontSize: 18 },
   actionItemText: {
     fontFamily: 'Fredoka_One',
     textAlign: 'left',
@@ -182,7 +216,7 @@ const styles = StyleSheet.create({
     height: 30,
   },
   logoutButton: {
-    marginTop: 15,
+    marginTop: 20,
     width: 20,
     height: 20,
     alignItems: 'center',
@@ -208,7 +242,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   profileImageContainer: {
-    margin: 15,
+    margin: 20,
+    marginLeft: 10,
     marginRight: 0,
     marginBottom: 2,
     borderRadius: 100,

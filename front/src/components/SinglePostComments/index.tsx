@@ -33,12 +33,12 @@ const SinglePostComments = (props: CommentsProps) => {
       .then((response) => {
         const commentsResponse: IComment[] = response.data.commentViews;
         setComments(commentsResponse.reverse());
-        setRefreshing(false);
         props.setCommentAdded(false);
+        setRefreshing(false);
       })
       .catch((error) => {
-        setRefreshing(false);
         console.log(error);
+        setRefreshing(false);
       });
   }, [refreshing]);
 

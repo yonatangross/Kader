@@ -17,6 +17,7 @@ import EditPostScreen from '../screens/EditPostScreen';
 import SinglePostHeaderItem from '../components/SinglePostHeaderItem';
 import UserProfileScreen from '../screens/UserProfileScreen';
 import EditGroupScreen from '../screens/EditGroupScreen';
+import { capitalize } from '../utils/text';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -122,7 +123,7 @@ export const AppStack = () => {
         name="UserSettings"
         component={UserSettingsScreen}
         options={({ route }) => ({
-          title: route.params.user.firstName + ' ' + route.params.user.lastName + ' settings',
+          title: capitalize(route.params.user.firstName) + ' ' + capitalize(route.params.user.lastName) + ' settings',
           headerTintColor: Colors.light.tint,
           cardStyle: { backgroundColor: '#dedcdf' },
         })}

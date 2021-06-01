@@ -9,6 +9,7 @@ import _ from 'lodash';
 import { useNavigation, useRoute, useIsFocused } from '@react-navigation/core';
 import { useFonts } from 'expo-font';
 import { imageBaseUrl } from '../services/axios';
+import { capitalize } from '../utils/text';
 
 export default function UserProfileScreen() {
   const auth = useAuth();
@@ -63,7 +64,7 @@ export default function UserProfileScreen() {
               <Image source={require('../assets/images/celebrity.png')} style={styles.profileImage as ImageStyle} />
             )}
           </View>
-          <Text style={styles.fullNameText}>{user?.firstName + ' ' + user?.lastName}</Text>
+          <Text style={styles.fullNameText}>{capitalize(user?.firstName) + ' ' + capitalize(user?.lastName)}</Text>
         </View>
 
         <View style={styles.userDataContainer}>

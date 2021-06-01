@@ -11,6 +11,7 @@ import { Rating } from 'react-native-ratings';
 import { getPostTypeName } from '../../types/PostType';
 import { IUser } from '../../types/IUser';
 import { IComment } from '../../types/IComment';
+import { capitalize } from '../../utils/text';
 
 export interface CommenterListItemProps {
   comment: IComment;
@@ -48,7 +49,7 @@ const CommenterListItem = (props: CommenterListItemProps) => {
           </View>
           <View style={styles.creatorContainer}>
             <View style={styles.upperCreatorContainer}>
-              <Text style={styles.creatorTitle}>{comment.creator.firstName + ' ' + comment.creator.lastName}</Text>
+              <Text style={styles.creatorTitle}>{capitalize(comment.creator.firstName) + ' ' + capitalize(comment.creator.lastName)}</Text>
             </View>
           </View>
         </View>

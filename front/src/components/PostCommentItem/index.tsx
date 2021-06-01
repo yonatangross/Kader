@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { StyleSheet, View, Text, Image, ImageStyle } from 'react-native';
 import { imageBaseUrl } from '../../services/axios';
 import { IComment } from '../../types/IComment';
+import { capitalize } from '../../utils/text';
 
 export interface PostCommentItemProps {
   comment: IComment;
@@ -33,7 +34,7 @@ const PostCommentItem = (props: PostCommentItemProps) => {
         </View>
         <View style={styles.dataContainer}>
           <Text style={styles.commenterName}>
-            {comment.creator.firstName} {comment.creator.lastName}
+            {capitalize(comment.creator.firstName)} {capitalize(comment.creator.lastName)}
           </Text>
           <View style={styles.commentInfoContainer}>
             <View style={styles.commentDetailsContainer}>

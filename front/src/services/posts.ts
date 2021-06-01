@@ -11,9 +11,6 @@ export const getPostsForUser = async (userId?: string): Promise<AxiosResponse<an
     const response: AxiosResponse<any> = await kaderApi.get(`/posts`, {
       params: { userId },
     });
-    console.log('finished requesting posts');
-    console.log(response);
-
     return response;
   } catch (error) {
     throw new Error(error);

@@ -5,6 +5,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { AntDesign } from '@expo/vector-icons';
 import { imageBaseUrl } from '../../services/axios';
 import { IUser } from '../../types/IUser';
+import { capitalize } from '../../utils/text';
 
 export interface GroupMemberListItemProps {
   user: IUser;
@@ -33,7 +34,7 @@ const GroupMemberListItem = (props: GroupMemberListItemProps) => {
           )}
         </View>
         <View style={styles.dataContainer}>
-          <Text style={styles.upperText}>{user.firstName + ' ' + user.lastName}</Text>
+          <Text style={styles.upperText}>{capitalize(user.firstName) + ' ' + capitalize(user.lastName)}</Text>
         </View>
         <View style={styles.goToContainer}>
           <Image source={require('../../assets/images/right-arrow2.png')} style={styles.goToIcon as ImageStyle} />

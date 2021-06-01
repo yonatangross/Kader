@@ -12,6 +12,7 @@ import { useNavigation } from '@react-navigation/core';
 import { useFonts } from 'expo-font';
 import { getUser } from '../services/users';
 import { IUser } from '../types/IUser';
+import { capitalize } from '../utils/text';
 
 export interface UserSettingsScreenProps {}
 
@@ -90,7 +91,7 @@ const UserSettingsScreen = () => {
         <ImageOverlay style={styles.container} source={require('../assets/images/bg2.jpg')}>
           <View style={styles.signUpContainer}>
             <Text style={styles.signUpLabel} status="control" category="h4">
-              {user.firstName} {user.lastName}
+              {capitalize(user.firstName)} {capitalize(user.lastName)}
             </Text>
           </View>
           <View style={styles.innerContainer}>
@@ -109,7 +110,7 @@ const UserSettingsScreen = () => {
               {({ handleSubmit, values, setFieldValue, setFieldTouched }) => (
                 <>
                   <View style={styles.postImageContainer}>
-                    {!!user.imageUri  ? (
+                    {!!user.imageUri ? (
                       <Image source={{ uri: user.imageUri }} style={styles.postImage as ImageStyle} />
                     ) : (
                       <Image source={require('../assets/images/imagePlaceholder.png')} style={styles.postImage as ImageStyle} />
@@ -240,7 +241,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     overflow: 'hidden',
     backgroundColor: 'transparent',
-    alignSelf:'center'
+    alignSelf: 'center',
   },
   postImage: {
     width: 150,
@@ -264,7 +265,7 @@ const styles = StyleSheet.create({
     marginBottom: 140,
   },
   submitHeader: { alignSelf: 'center', marginBottom: 30 },
-  submitButton: {  },
+  submitButton: {},
   errorContainer: { width: '100%', marginHorizontal: 40 },
   errorText: { color: 'red', fontSize: 12 },
   innerContainer: { flexDirection: 'column', width: '100%', flex: 1 },

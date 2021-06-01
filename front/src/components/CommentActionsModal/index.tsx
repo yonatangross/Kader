@@ -5,6 +5,7 @@ import { StyleSheet, Modal, View, Text, TextInput, TouchableOpacity, Image, Imag
 import { imageBaseUrl } from '../../services/axios';
 import { deleteComment, getComment, updateComment } from '../../services/comments';
 import { IComment } from '../../types/IComment';
+import { capitalize } from '../../utils/text';
 
 export interface CommentActionsModalProps {
   commentId: string;
@@ -114,7 +115,7 @@ const CommentActionsModal = (props: CommentActionsModalProps) => {
                 </View>
                 <View style={styles.commentDetailsContainer}>
                   <Text style={styles.commenterName}>
-                    {comment.creator.firstName} {comment.creator.lastName}
+                    {capitalize(comment.creator.firstName)} {capitalize(comment.creator.lastName)}
                   </Text>
                   <TextInput
                     ref={commentRef}
@@ -148,7 +149,7 @@ const CommentActionsModal = (props: CommentActionsModalProps) => {
                     <Text style={styles.postCreationText}>Update</Text>
                   </TouchableOpacity>
                 )}
-             
+
                 {!showSubmitDeleteButton && (
                   <TouchableOpacity
                     activeOpacity={0.7}

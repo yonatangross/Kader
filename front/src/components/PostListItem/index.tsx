@@ -10,7 +10,7 @@ import { getPostTypeName } from '../../types/PostType';
 import { imageBaseUrl } from '../../services/axios';
 import { IPost } from '../../types/IPost';
 import { ICategory } from '../../types/ICategory';
-
+import { capitalize } from '../../utils/text';
 export interface PostListItemProps {
   post: IPost;
   key: string;
@@ -51,12 +51,12 @@ const PostListItem = (props: PostListItemProps) => {
             </View>
             <View style={styles.creatorCenterContainer}>
               <Text style={styles.PostedBy}>
-                {post.creator.firstName} {post.creator.lastName}
+                {capitalize(post.creator.firstName)} {capitalize(post.creator.lastName)}
               </Text>
               <Text style={styles.postTypeAndGroupNameText}>
                 {getPostTypeName(post.type)} {moment(post.created).fromNow(false)}
               </Text>
-              <Text style={styles.groupText}>{post.groupName}</Text>
+              <Text style={styles.groupText}>{groupName}</Text>
             </View>
             <View style={styles.categoryContainer}>
               {!!post.category && !!post.category.imageUri ? (
