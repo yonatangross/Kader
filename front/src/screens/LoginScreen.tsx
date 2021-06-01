@@ -40,9 +40,9 @@ export default function LoginScreen() {
     };
   }, [loading]);
 
-  const handleSubmit = (values: FormValues) => {
+  const handleSubmit = async (values: FormValues) => {
     if (!!values.username && !!values.password)
-      auth
+      await auth
         .signIn(values.username, values.password)
         .then(() => {
           isLoading(true);
