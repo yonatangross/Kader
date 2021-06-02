@@ -1,10 +1,8 @@
 import React from 'react';
-import { View, Text, Image, TouchableWithoutFeedback, StyleSheet, ImageStyle } from 'react-native';
+import { View, Image, TouchableWithoutFeedback, StyleSheet, ImageStyle } from 'react-native';
 import { IUser } from '../../types/IUser';
 import { useNavigation } from '@react-navigation/native';
 const testImage = require('../../assets/images/test.png');
-import StarRating from '../StarRating/index';
-import { Avatar } from '@ui-kitten/components';
 import { useAuth } from '../../contexts/Auth';
 import { imageBaseUrl } from '../../services/axios';
 

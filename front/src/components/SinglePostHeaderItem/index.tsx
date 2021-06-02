@@ -35,7 +35,6 @@ const SinglePostHeaderItem = (props: SinglePostHeaderItemProps) => {
 
   useEffect(() => {
     setLoading(false);
-    console.log(props.groupCategory);
   }, []);
 
   if (!!post) {

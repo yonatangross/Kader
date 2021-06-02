@@ -13,6 +13,7 @@ import { Linking } from 'react-native';
 import { Fontisto, SimpleLineIcons } from '@expo/vector-icons';
 import { capitalize } from '../utils/text';
 import { Rating } from 'react-native-elements';
+import RatingItem from '../components/RatingItem';
 
 export default function ProfileScreen() {
   const auth = useAuth();
@@ -25,7 +26,6 @@ export default function ProfileScreen() {
     Fredoka_One: require('../assets/fonts/Fredoka_One/FredokaOne-Regular.ttf'),
   });
 
-  
   useEffect(() => {
     if (!!auth && !!auth.authData) {
       getUser(auth.authData.userId)
@@ -38,10 +38,11 @@ export default function ProfileScreen() {
           console.log(error);
         });
     }
-  }, [user, fontsLoaded, isFocused, navigation, setUser, auth]);
+  }, [user, fontsLoaded, isFocused, navigation, setUser]);
 
   const signOut = () => {
     auth.signOut();
+    navigation.navigate('Login');
   };
 
   const onPressUserPosts = () => {
@@ -113,12 +114,7 @@ export default function ProfileScreen() {
               <Text style={styles.phoneText}> {user.email}</Text>
             </TouchableOpacity>
           )}
-          {!!user.rating && (
-            <View style={styles.ratingContainer}>
-              <Text style={styles.ratingNumberText}>Ratings: {user.numberOfRating}</Text>
-              <Rating readonly ratingColor="#f3a953" imageSize={22} startingValue={user.rating} ratingCount={5} />
-            </View>
-          )}
+          {!!user.rating && <RatingItem numberOfRatings={user.numberOfRating} rating={user.rating} showNumberOfRatings={true} />}
         </View>
         <View style={styles.userDataContainer}>
           <ProfileSocial style={styles.userDataItemContainer} hint="Posts" value={`${!user.postsCount ? 0 : user.postsCount}`} />

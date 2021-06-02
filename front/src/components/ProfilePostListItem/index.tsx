@@ -3,9 +3,8 @@ import { View, Text, TouchableWithoutFeedback, ActivityIndicator } from 'react-n
 import { IPost } from '../../types/IPost';
 import styles from './style';
 import { useNavigation } from '@react-navigation/native';
-import StarRating from '../StarRating/index';
 import { useEffect } from 'react';
-import { Avatar, Icon } from '@ui-kitten/components';
+import { Icon } from '@ui-kitten/components';
 import moment from '../../services/moment';
 
 export interface ProfilePostListItemProps {

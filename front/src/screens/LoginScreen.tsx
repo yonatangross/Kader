@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet, View, Image } from 'react-native';
 import { Button, Input, Text } from '@ui-kitten/components';
 import { ImageOverlay } from '../layouts/auth/login/extra/image-overlay.component';
 import { ArrowForwardIcon } from '../layouts/auth/login/extra/icons';
@@ -107,7 +107,9 @@ export default function LoginScreen() {
                   onBlur={() => setFieldTouched('password')}
                   style={styles.fieldInputText}
                 />
-
+                <View style={styles.logoContainer}>
+                  <Image source={require('../assets/images/KaderLogo.png')} style={styles.logoStyle} />
+                </View>
                 <View style={styles.submitContainer}>
                   <Text style={styles.submitHeader} status="control" category="h4">
                     Sign Up to Kader!
@@ -130,6 +132,8 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
+  logoContainer: { justifyContent: 'center', alignItems: 'center' },
+  logoStyle: { width: 300, height: 300, borderColor: 'black', borderWidth: 3, borderRadius: 150, backgroundColor: 'white', margin: 20 },
   signUpLabel: {
     flex: 1,
   },
@@ -144,7 +148,6 @@ const styles = StyleSheet.create({
   },
   fieldInputText: { marginHorizontal: 20, marginVertical: 5, backgroundColor: 'white', padding: 10, borderRadius: 15, opacity: 0.8 },
   submitContainer: {
-    marginTop: 200,
   },
   submitHeader: { alignSelf: 'center', marginBottom: 30 },
   submitButton: {},

@@ -12,6 +12,7 @@ import { imageBaseUrl } from '../services/axios';
 import { capitalize } from '../utils/text';
 import { SimpleLineIcons, Fontisto } from '@expo/vector-icons';
 import { Rating } from 'react-native-ratings';
+import RatingItem from '../components/RatingItem';
 
 export default function UserProfileScreen() {
   const auth = useAuth();
@@ -30,8 +31,6 @@ export default function UserProfileScreen() {
       getUser(id)
         .then((response) => {
           const userResult: IUser = response.data;
-          console.log(id);
-
           setUser(userResult);
         })
         .catch((error) => {
@@ -101,12 +100,7 @@ export default function UserProfileScreen() {
               <Text style={styles.phoneText}> {user.email}</Text>
             </TouchableOpacity>
           )}
-          {!!user.rating && (
-            <View style={styles.ratingContainer}>
-              <Text style={styles.ratingNumberText}>{user.numberOfRating}</Text>
-              <Rating readonly ratingColor="#f3a953" imageSize={22} startingValue={user.rating} ratingCount={5} />
-            </View>
-          )}
+          {!!user.rating && <RatingItem numberOfRatings={user.numberOfRating} rating={user.rating} showNumberOfRatings={true} />}
         </View>
 
         <View style={styles.userDataContainer}>

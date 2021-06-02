@@ -61,7 +61,6 @@ const EditPostModal = (props: EditPostModalProps) => {
 
   const submitUpdatedPost = async (groupId: string) => {
     console.log(`submitUpdatedPost: props.groupId:${props.post.groupId}`);
-
     let updatedPost: IPost = props.post;
     updatedPost.type = state.postType;
     updatedPost.title = state.details.title;

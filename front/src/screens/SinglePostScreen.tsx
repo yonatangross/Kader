@@ -103,7 +103,6 @@ const SinglePostScreen = (props: SinglePostScreenProps) => {
   if (!!post && fontsLoaded) {
     return (
       <View style={styles.container}>
-        <View style={styles.buttonsContainer}></View>
         <EditPostModal visible={editModalVisible} post={post} setVisible={setEditModalVisible} />
         {isPostOwner && (
           <View style={styles.settingsButtonsContainer}>
