@@ -60,6 +60,8 @@ const formatAddress = (addressDetails: any) => {
 
 const UpdatedPostDetailsForm = (props: UpdatedPostDetailsFormProps) => {
   const [postImage, setPostImage] = useState<any>();
+  const [oldPostImage, setOldPostImage] = useState<any>();
+
   const handleSubmit = (values: FormValues) => {
     props.dispatch({
       type: 'Details',
@@ -80,7 +82,7 @@ const UpdatedPostDetailsForm = (props: UpdatedPostDetailsFormProps) => {
 
   useEffect(() => {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
-    setPostImage(props.state.details.image);
+    setOldPostImage(props.state.details.image);
     console.log(props.state.details.image);
 
     props.dispatch({
@@ -89,10 +91,10 @@ const UpdatedPostDetailsForm = (props: UpdatedPostDetailsFormProps) => {
         title: props.state.details.title,
         description: props.state.details.description,
         address: props.state.details.address,
-        image: postImage,
+        image: props.state.details.image,
       },
     });
-  }, [setPostImage, props.setActiveSection]);
+  }, [setPostImage, props.setActiveSection, setOldPostImage, props.state.details.image]);
   if (props.active === 1) {
     return (
       // <View style={styles.viewContainer} behavior={Platform.OS === 'ios' ? 'padding' : 'position'}>
@@ -151,7 +153,13 @@ const UpdatedPostDetailsForm = (props: UpdatedPostDetailsFormProps) => {
                 }}
                 onBlur={() => setFieldTouched('description')}
               />
-              <UploadImageFromUpdatePost postImage={postImage} setPostImage={setPostImage} setFieldValue={setFieldValue} />
+              <UploadImageFromUpdatePost
+                postImage={postImage}
+                setPostImage={setPostImage}
+                oldPostImage={props.state.details.image}
+                setOldPostImage={setOldPostImage}
+                setFieldValue={setFieldValue}
+              />
               <View style={{ width: '100%', minHeight: 200, maxHeight: 400 }}>
                 <GooglePlacesAutocomplete
                   placeholder={props.state.details.address !== '' ? props.state.details.address : 'Choose group primary address'}

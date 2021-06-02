@@ -5,11 +5,13 @@ import { View } from '../Themed';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import styles from './style';
-import { imageBaseUrl } from '../../services/axios';
+import { baseUrl, imageBaseUrl } from '../../services/axios';
 export interface UploadImageFromUpdatePostProps {
   postImage: any;
   setPostImage: Function;
   setFieldValue: Function;
+  oldPostImage: any;
+  setOldPostImage: Function;
 }
 
 const UploadImageFromUpdatePost = (props: UploadImageFromUpdatePostProps) => {
@@ -49,20 +51,22 @@ const UploadImageFromUpdatePost = (props: UploadImageFromUpdatePostProps) => {
   };
 
   useEffect(() => {
+    console.log(`from uploadimagefromupadted`);
+    console.log(props.oldPostImage);
     console.log(props.postImage);
 
     return () => {};
-  }, [props.setPostImage]);
+  }, [props.setPostImage, props.setOldPostImage, props.oldPostImage]);
 
   return (
     <View style={styles.container}>
       {!!props.postImage ? (
         <View style={styles.postImageContainer}>
-          <Image source={{ uri: imageBaseUrl + props.postImage }} style={styles.postImage as ImageStyle} />
+          <Image source={props.postImage} style={styles.postImage as ImageStyle} />
         </View>
       ) : (
         <View style={styles.postImageContainer}>
-          <Image source={require('../../assets/images/itemPlaceholder.png')} style={styles.postImage as ImageStyle} />
+          <Image source={{ uri: imageBaseUrl + props.oldPostImage }} style={styles.postImage as ImageStyle} />
         </View>
       )}
       <View style={styles.buttonsContainer}>
