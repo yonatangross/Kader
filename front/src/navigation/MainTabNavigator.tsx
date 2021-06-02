@@ -44,13 +44,6 @@ export default function MainTabNavigator() {
           tabBarIcon: ({ color }) => <Ionicons name="person" color={'#4975aa'} size={22} />,
         }}
       />
-      <MainTab.Screen
-        name="Notifications"
-        component={NotificationsNavigator}
-        options={{
-          tabBarIcon: ({ color }) => <FontAwesome name="bell" color={'#4975aa'} size={22} />,
-        }}
-      />
     </MainTab.Navigator>
   );
 }

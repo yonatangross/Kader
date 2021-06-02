@@ -92,7 +92,12 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
   if (props.active === 1) {
     return (
       // <View style={styles.viewContainer} behavior={Platform.OS === 'ios' ? 'padding' : 'position'}>
-      <KeyboardAwareScrollView style={styles.viewContainer} keyboardShouldPersistTaps={'always'}>
+      <KeyboardAwareScrollView
+        scrollEnabled={true}
+        style={styles.viewContainer}
+        keyboardShouldPersistTaps={'always'}
+        contentContainerStyle={styles.viewContentContainer}
+      >
         <Formik
           validationSchema={blogValidationSchema}
           initialValues={{
@@ -203,9 +208,11 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
                   }}
                 />
               </View>
-              <TouchableOpacity activeOpacity={0.7} disabled={!isValid || values.title === ''} onPress={handleSubmit} style={styles.finishButton}>
-                {!props.finalStage ? <Text style={styles.finishButtonText}>Continue</Text> : <Text style={styles.finishButtonText}>Submit post</Text>}
-              </TouchableOpacity>
+              <View style={styles.continueButtonContainer}>
+                <TouchableOpacity activeOpacity={0.7} disabled={!isValid || values.title === ''} onPress={handleSubmit} style={styles.finishButton}>
+                  {!props.finalStage ? <Text style={styles.finishButtonText}>Continue</Text> : <Text style={styles.finishButtonText}>Submit post</Text>}
+                </TouchableOpacity>
+              </View>
             </>
           )}
         </Formik>
@@ -217,9 +224,10 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
 };
 
 const styles = StyleSheet.create({
+  viewContentContainer: { flexDirection: 'column', justifyContent: 'space-between' },
+  continueButtonContainer: { marginVertical: 50 },
   viewContainer: {
     width: '100%',
-    height: '100%',
   },
   autocompleteContainer: { width: '100%', height: 200, position: 'relative' },
   innerContainer: { flexDirection: 'column', width: '100%', flex: 1, height: '100%' },

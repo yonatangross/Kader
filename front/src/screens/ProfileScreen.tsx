@@ -6,13 +6,12 @@ import { getUser } from '../services/users';
 import { IUser } from '../types/IUser';
 import { TouchableOpacity } from 'react-native';
 import _ from 'lodash';
-import { useNavigation, useRoute, useIsFocused } from '@react-navigation/core';
+import { useNavigation, useIsFocused } from '@react-navigation/core';
 import { useFonts } from 'expo-font';
 import { imageBaseUrl } from '../services/axios';
 import { Linking } from 'react-native';
 import { Fontisto, SimpleLineIcons } from '@expo/vector-icons';
 import { capitalize } from '../utils/text';
-import { Rating } from 'react-native-elements';
 import RatingItem from '../components/RatingItem';
 
 export default function ProfileScreen() {
@@ -20,6 +19,7 @@ export default function ProfileScreen() {
   const isFocused = useIsFocused();
   const navigation = useNavigation();
   const [user, setUser] = useState<IUser>();
+  const [loading, isLoading] = useState(false);
 
   let [fontsLoaded] = useFonts({
     Pattaya: require('../assets/fonts/Pattaya/Pattaya-Regular.ttf'),
@@ -38,11 +38,10 @@ export default function ProfileScreen() {
           console.log(error);
         });
     }
-  }, [user, fontsLoaded, isFocused, navigation, setUser]);
+  }, [user, fontsLoaded, isFocused, setUser]);
 
   const signOut = () => {
     auth.signOut();
-    navigation.navigate('Login');
   };
 
   const onPressUserPosts = () => {

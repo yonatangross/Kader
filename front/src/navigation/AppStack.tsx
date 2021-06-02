@@ -19,7 +19,7 @@ import { capitalize } from '../utils/text';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
-export const AppStack = () => {
+function AppStack() {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -55,7 +55,7 @@ export const AppStack = () => {
           title: '',
           header: () => {
             // @ts-ignore
-            const { post,groupName,groupCategory } = route.params;
+            const { post, groupName, groupCategory } = route.params;
 
             if (!!post) return <SinglePostHeaderItem post={post} groupName={groupName} groupCategory={groupCategory} />;
           },
@@ -146,6 +146,7 @@ export const AppStack = () => {
       />
     </Stack.Navigator>
   );
-};
+}
 
 const styles = StyleSheet.create({});
+export default AppStack;

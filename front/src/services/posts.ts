@@ -75,23 +75,53 @@ export const addPost = async (postData: any): Promise<AxiosResponse<any>> => {
       });
     return response;
   } catch (error) {
-    console.log('error:');
+    console.log('error creating post from postsService:');
     console.log(error);
     throw new Error(error);
   }
 };
 
-export const updatePost = async (post: any): Promise<AxiosResponse<any>> => {
+export const updatePost = async (post: any, postImage?: any): Promise<AxiosResponse<any>> => {
   try {
     const postId: string = post.postId;
     delete post.postId;
+    delete post.imagesUri;
     const response: AxiosResponse<any> = await kaderApi.put(`/posts/${postId}`, post);
+
+    if (!!postImage) {
+      //use formData
+      var formData = new FormData();
+
+      //append created photo{} to formData
+      formData.append('postId', post.postId);
+      formData.append('post_image', {
+        // @ts-ignore
+        uri: Platform.OS === 'android' ? postImage.uri : postImage.uri.replace('file:/', ''),
+        type: 'image/jpeg',
+        name: `${post.postId}.jpg`,
+      });
+      //use axios to POST
+      kaderPhotoUploadApi({
+        method: 'POST',
+        url: `/posts/post/${post.postId}/image`,
+        data: formData,
+      })
+        .then((response) => {
+          return response;
+        })
+        .catch((error) => {
+          console.log('error while uploading photo in updating post, error:');
+          console.log(error);
+        });
+    }
+
     return response;
   } catch (error) {
+    console.log('error updating post from postsService:');
+    console.log(error);
     throw new Error(error);
   }
 };
-
 
 export const deletePost = async (id: string): Promise<AxiosResponse<any>> => {
   try {

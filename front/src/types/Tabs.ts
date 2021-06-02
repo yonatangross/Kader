@@ -1,8 +1,6 @@
 export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
-  Register: undefined;
-  Login: undefined;
   SinglePost: undefined;
   SingleGroup: undefined;
   SingleGroupDetails: undefined;
@@ -14,6 +12,15 @@ export type RootStackParamList = {
   ClosePost: undefined;
   EditPost: undefined;
   EditGroup: undefined;
+};
+export type RouterStackParamList = {
+  AppStack: undefined;
+  AuthStack: undefined;
+};
+
+export type AuthStackParamList = {
+  Register: undefined;
+  Login: undefined;
 };
 
 export type MainTabParamList = {

@@ -107,7 +107,15 @@ const AuthProvider: React.FC = ({ children }) => {
     console.log(`Singing out, Removing authData`);
     setAuthData(undefined);
 
-    await SecureStore.deleteItemAsync('jwt_token');
+    await SecureStore.deleteItemAsync('jwt_token')
+      .then((response) => {
+        console.log(`Signed out successfully`);
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(`error while signOut:`);
+        console.log(error);
+      });
   };
 
   return <AuthContext.Provider value={{ authData, loading, signIn, signOut, signUp }}>{children}</AuthContext.Provider>;

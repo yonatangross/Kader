@@ -6,6 +6,7 @@ import GroupListItemSelector from '../GroupListItemSelector';
 import { CreatePostStateType } from '../../types/CreatePostTypes';
 import { getGroupsForUser } from '../../services/groups';
 import { useAuth } from '../../contexts/Auth';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export interface GroupsSelectorProps {
   active: number;
@@ -39,9 +40,9 @@ const GroupsSelector = (props: GroupsSelectorProps) => {
   };
   if (props.active === 2) {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <FlatList
-          style={{ width: '100%', height: '78%', paddingTop: 20, marginTop: 10 }}
+          style={{ width: '100%',  paddingTop: 20, marginTop: 10 }}
           data={groups}
           renderItem={renderGroupListItemSelector}
           keyExtractor={(item) => item.groupId}
@@ -61,13 +62,13 @@ const GroupsSelector = (props: GroupsSelectorProps) => {
         >
           <Text style={styles.finishButtonText}>Publish post</Text>
         </TouchableOpacity>
-      </View>
+      </SafeAreaView>
     );
   } else return null;
 };
 
 const styles = StyleSheet.create({
-  container: { flexDirection: 'column' },
+  container: { flexDirection: 'column', height: '100%' },
   title: {
     marginTop: 10,
     fontSize: 20,

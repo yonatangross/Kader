@@ -6,13 +6,13 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import styles from './style';
 import { imageBaseUrl } from '../../services/axios';
-export interface UploadImageProps {
+export interface UploadImageFromUpdatePostProps {
   postImage: any;
   setPostImage: Function;
   setFieldValue: Function;
 }
 
-const UploadImage = (props: UploadImageProps) => {
+const UploadImageFromUpdatePost = (props: UploadImageFromUpdatePostProps) => {
   const pickFromGallery = async () => {
     const { granted } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY_WRITE_ONLY);
     if (granted) {
@@ -58,7 +58,7 @@ const UploadImage = (props: UploadImageProps) => {
     <View style={styles.container}>
       {!!props.postImage ? (
         <View style={styles.postImageContainer}>
-          <Image source={{ uri: imageBaseUrl + props.postImage.uri }} style={styles.postImage as ImageStyle} />
+          <Image source={{ uri: imageBaseUrl + props.postImage }} style={styles.postImage as ImageStyle} />
         </View>
       ) : (
         <View style={styles.postImageContainer}>
@@ -89,4 +89,4 @@ const UploadImage = (props: UploadImageProps) => {
   );
 };
 
-export default UploadImage;
+export default UploadImageFromUpdatePost;

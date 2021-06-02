@@ -27,7 +27,7 @@ const loginValidationSchema = yup.object().shape({
     .matches(/[a-zA-Z]/, 'Password should contain english letters with capital letters and special chars.'),
 });
 
-export default function LoginScreen() {
+const LoginScreen = () => {
   const [loading, isLoading] = useState(false);
   const navigation = useNavigation();
   const auth = useAuth();
@@ -40,17 +40,14 @@ export default function LoginScreen() {
     };
   }, [loading]);
 
-  const handleSubmit = async (values: FormValues) => {
+  const handleSubmit = (values: FormValues) => {
     if (!!values.username && !!values.password)
-      await auth
+      auth
         .signIn(values.username, values.password)
-        .then(() => {
-          isLoading(true);
-        })
+        .then(() => {})
         .catch((error) => {
           console.log('handleSubmitSignIn failed:');
           console.log(error);
-          isLoading(false);
         });
   };
 
@@ -100,6 +97,7 @@ export default function LoginScreen() {
                   placeholder="Password"
                   multiline
                   numberOfLines={1}
+                  secureTextEntry={true}
                   value={values.password}
                   onChangeText={(password: string) => {
                     setFieldValue('password', password);
@@ -129,7 +127,7 @@ export default function LoginScreen() {
       </ImageOverlay>
     </KeyboardAvoidingView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   logoContainer: { justifyContent: 'center', alignItems: 'center' },
@@ -147,8 +145,7 @@ const styles = StyleSheet.create({
     marginTop: 24,
   },
   fieldInputText: { marginHorizontal: 20, marginVertical: 5, backgroundColor: 'white', padding: 10, borderRadius: 15, opacity: 0.8 },
-  submitContainer: {
-  },
+  submitContainer: {},
   submitHeader: { alignSelf: 'center', marginBottom: 30 },
   submitButton: {},
   errorContainer: { width: '100%', marginHorizontal: 40 },
@@ -244,3 +241,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
   },
 });
+
+export default LoginScreen;

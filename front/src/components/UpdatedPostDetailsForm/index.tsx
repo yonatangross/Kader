@@ -7,7 +7,7 @@ import { Formik, Field } from 'formik';
 import * as yup from 'yup';
 import CustomInput from '../validation/CustomInput';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { IPost } from '../../types/IPost';
+import UploadImageFromUpdatePost from '../UploadImageFromUpdatePost';
 const blogValidationSchema = yup.object().shape({
   title: yup.string().required('Title is required'),
   description: yup
@@ -59,7 +59,7 @@ const formatAddress = (addressDetails: any) => {
 };
 
 const UpdatedPostDetailsForm = (props: UpdatedPostDetailsFormProps) => {
-  const [postImage, setPostImage] = useState<any>(null);
+  const [postImage, setPostImage] = useState<any>();
   const handleSubmit = (values: FormValues) => {
     props.dispatch({
       type: 'Details',
@@ -80,6 +80,9 @@ const UpdatedPostDetailsForm = (props: UpdatedPostDetailsFormProps) => {
 
   useEffect(() => {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    setPostImage(props.state.details.image);
+    console.log(props.state.details.image);
+
     props.dispatch({
       type: 'Details',
       payload: {
@@ -89,11 +92,11 @@ const UpdatedPostDetailsForm = (props: UpdatedPostDetailsFormProps) => {
         image: postImage,
       },
     });
-  }, [postImage, props.setActiveSection, setPostImage]);
+  }, [setPostImage, props.setActiveSection]);
   if (props.active === 1) {
     return (
       // <View style={styles.viewContainer} behavior={Platform.OS === 'ios' ? 'padding' : 'position'}>
-      <KeyboardAwareScrollView style={styles.viewContainer} keyboardShouldPersistTaps={'always'}>
+      <KeyboardAwareScrollView style={styles.viewContainer} keyboardShouldPersistTaps={'always'} contentContainerStyle={styles.viewContentContainer}>
         <Formik
           validationSchema={blogValidationSchema}
           initialValues={{
@@ -148,7 +151,7 @@ const UpdatedPostDetailsForm = (props: UpdatedPostDetailsFormProps) => {
                 }}
                 onBlur={() => setFieldTouched('description')}
               />
-              <UploadImage postImage={postImage} setPostImage={setPostImage} setFieldValue={setFieldValue} />
+              <UploadImageFromUpdatePost postImage={postImage} setPostImage={setPostImage} setFieldValue={setFieldValue} />
               <View style={{ width: '100%', minHeight: 200, maxHeight: 400 }}>
                 <GooglePlacesAutocomplete
                   placeholder={props.state.details.address !== '' ? props.state.details.address : 'Choose group primary address'}
@@ -204,9 +207,11 @@ const UpdatedPostDetailsForm = (props: UpdatedPostDetailsFormProps) => {
                   }}
                 />
               </View>
-              <TouchableOpacity activeOpacity={0.7} disabled={!isValid || values.title === ''} onPress={handleSubmit} style={styles.finishButton}>
-                {!props.finalStage ? <Text style={styles.finishButtonText}>Continue</Text> : <Text style={styles.finishButtonText}>Submit post</Text>}
-              </TouchableOpacity>
+              <View style={styles.continueButtonContainer}>
+                <TouchableOpacity activeOpacity={0.7} disabled={!isValid || values.title === ''} onPress={handleSubmit} style={styles.finishButton}>
+                  {!props.finalStage ? <Text style={styles.finishButtonText}>Continue</Text> : <Text style={styles.finishButtonText}>Submit updated post</Text>}
+                </TouchableOpacity>
+              </View>
             </>
           )}
         </Formik>
@@ -218,6 +223,8 @@ const UpdatedPostDetailsForm = (props: UpdatedPostDetailsFormProps) => {
 };
 
 const styles = StyleSheet.create({
+  viewContentContainer: { flexDirection: 'column', justifyContent: 'space-between' },
+  continueButtonContainer: { marginVertical: 50 },
   viewContainer: {
     width: '100%',
     height: '100%',
