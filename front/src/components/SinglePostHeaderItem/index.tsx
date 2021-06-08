@@ -10,6 +10,7 @@ import { getPostTypeName } from '../../types/PostType';
 import { imageBaseUrl } from '../../services/axios';
 import { useAuth } from '../../contexts/Auth';
 import { ICategory } from '../../types/ICategory';
+import Fonts from '../../constants/Fonts';
 
 export interface SinglePostHeaderItemProps {
   post: IPost;
@@ -46,7 +47,7 @@ const SinglePostHeaderItem = (props: SinglePostHeaderItemProps) => {
           }}
           style={styles.backButtonContainer}
         >
-          <Ionicons name="arrow-back" color={'#4975aa'} size={24} />
+          <Ionicons name="arrow-back" color={'#4975aa'} size={30} />
         </TouchableOpacity>
         <View style={styles.headerRightContainer}>
           <View style={styles.ImageContainer}>
@@ -99,17 +100,18 @@ const SinglePostHeaderItem = (props: SinglePostHeaderItemProps) => {
 };
 
 const styles = StyleSheet.create({
-  postGroupText: { width: 150, fontSize: 12, fontWeight: 'bold' },
+  postGroupText: { width: 150, fontSize: Fonts.post.postHeader.groupNameFontSize, fontWeight: 'bold' },
   headerContainer: { flexDirection: 'row', paddingTop: 40, backgroundColor: 'white', justifyContent: 'space-between' },
   locationText: { paddingHorizontal: 0, marginTop: -2 },
   creatorContainer: { flexDirection: 'column', marginTop: 10, marginLeft: 20 },
   categoryContainer: {
     margin: 10,
+    marginLeft:0,
     marginVertical: 20,
     backgroundColor: '#f2a853',
     borderRadius: 30,
     alignItems: 'center',
-    width: 120,
+    width: 100,
     height: 40,
     justifyContent: 'center',
     shadowColor: 'rgba(0, 0, 0, 0.1)',
@@ -118,8 +120,8 @@ const styles = StyleSheet.create({
     shadowRadius: 15,
     shadowOffset: { width: 1, height: 13 },
   },
-  creatorTitle: { fontWeight: 'bold', marginRight: 5, fontSize: 16 },
-  postTypeTitle: { fontWeight: '100', fontSize: 16, color: '#848484' },
+  creatorTitle: { fontWeight: 'bold', marginRight: 5, fontSize: Fonts.post.postHeader.fullNameFontSize },
+  postTypeTitle: { fontWeight: '100', fontSize: Fonts.post.postHeader.fullNameFontSize, color: '#848484' },
   categoryText: {
     fontSize: 16,
     fontWeight: 'bold',
@@ -150,8 +152,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   imageDesign: {
-    width: 50,
-    height: 50,
+    width: 70,
+    height: 70,
     borderRadius: 15,
   },
 });

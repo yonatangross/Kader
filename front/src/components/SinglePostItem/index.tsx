@@ -7,6 +7,7 @@ import { IPost } from '../../types/IPost';
 import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import moment from '../../services/moment';
 import { imageBaseUrl } from '../../services/axios';
+import Fonts from '../../constants/Fonts';
 
 export interface SinglePostItemProps {
   post: IPost;
@@ -80,8 +81,8 @@ const styles = StyleSheet.create({
   titleText: {
     flexDirection: 'row',
     flexShrink: 1,
-    fontWeight: '700',
-    fontSize: 16,
+    fontWeight: 'bold',
+    fontSize: 18,
   },
   postCreationText: {
     fontSize: 16,
@@ -127,9 +128,9 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     justifyContent: 'center',
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 24,
   },
-  description: { fontFamily: 'Rubik', alignSelf: 'flex-start', marginVertical: 20, marginLeft: 30, padding: 0, fontSize: 14, color: 'grey', maxWidth: 300 },
+  description: { fontFamily: 'Rubik', alignSelf: 'flex-start', marginVertical: 20, marginLeft: 30, padding: 0, fontSize: 16, color: 'grey', maxWidth: 300 },
   ratingText: { color: '#f3a953', fontSize: 18, fontWeight: 'bold', alignSelf: 'center', justifyContent: 'center' },
   postDateContainer: { flexDirection: 'column', alignItems: 'center', marginVertical: 20 },
   locationContainer: { flexDirection: 'column', alignItems: 'center', marginVertical: 20 },

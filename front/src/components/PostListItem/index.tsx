@@ -56,7 +56,7 @@ const PostListItem = (props: PostListItemProps) => {
                 {capitalize(post.creator.firstName)} {capitalize(post.creator.lastName)}
               </Text>
               <Text style={styles.postTypeAndGroupNameText}>
-                {getPostTypeName(post.type)} {moment(post.created).fromNow(false)}
+                {getPostTypeName(post.type)} {moment(post.created).fromNow(false)} in
               </Text>
               <Text style={styles.groupText}>{groupName}</Text>
             </View>

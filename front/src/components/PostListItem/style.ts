@@ -1,4 +1,5 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ImageStyle } from 'react-native';
+import Fonts from '../../constants/Fonts';
 
 const styles = StyleSheet.create({
   //Containers
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
     margin: 10,
     marginTop: 20,
   },
-  titleAndDescriptionContainer: { flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'space-around', width: '55%' },
+  titleAndDescriptionContainer: { flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-start', width: '55%' },
   creatorDetailsContainer: { flexDirection: 'row' },
   creatorImageAndRatingContainer: { flexDirection: 'column', marginRight: 20 },
   creatorCenterContainer: { flexDirection: 'column', justifyContent: 'center', alignSelf: 'center', marginVertical: 10, width: '60%' },
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
 
   profileImageContainer: {
     margin: 15,
-    marginRight:0,
+    marginRight: 0,
     borderRadius: 100,
     overflow: 'hidden',
     backgroundColor: 'transparent',
@@ -78,21 +79,22 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     borderRadius: 15,
+    resizeMode: 'stretch',
   },
 
   titleText: {
-    fontWeight: 'bold',
-    fontSize: 16,
+    fontWeight: Fonts.post.postData.postTitleFontWeight,
+    fontSize: Fonts.post.postData.postTitleFontSize,
     maxWidth: 250,
+    overflow: 'hidden',
+    marginBottom: 20,
+  },
 
-    overflow: 'hidden',
-  },
   descriptionText: {
-    fontSize: 14,
+    fontSize: Fonts.post.postData.postDescriptionFontSize,
     overflow: 'hidden',
     maxWidth: 250,
   },
-  groupNameTitle: { color: 'grey', fontSize: 13 },
   PostedBy: {
     alignSelf: 'flex-start',
     fontSize: 18,

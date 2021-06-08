@@ -106,7 +106,6 @@ const styles = StyleSheet.create({
     height: '30%',
     paddingTop: 0,
     width: '100%',
-    paddingHorizontal: 15,
   },
   inputBoxContainer: {
     alignItems: 'center',
@@ -115,7 +114,6 @@ const styles = StyleSheet.create({
   },
   viewContainer: {
     width: '100%',
-
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
   },
