@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   commentNumber: {
-    marginTop:30,
     color: Colors.light.tint,
     alignSelf: 'flex-end',
     marginHorizontal: 10,

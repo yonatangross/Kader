@@ -51,9 +51,9 @@ const PostCommentItem = (props: PostCommentItemProps) => {
 };
 
 const styles = StyleSheet.create({
-  dataContainer: { flexDirection: 'column', marginTop: -5, marginLeft: -10 },
-  commentContainer: { flexDirection: 'row', width: '100%', marginTop: 15, marginBottom: 5, marginLeft: 10 },
-  commenterContainer: { flexDirection: 'column', marginTop: 0, marginLeft: 5, width: '20%' },
+  dataContainer: { flexDirection: 'column', marginTop: -5,marginLeft:-2, width:'85%' },
+  commentContainer: { flexDirection: 'row', width: '100%', marginTop: 15, marginBottom: 5,  },
+  commenterContainer: { flexDirection: 'column', marginTop: 0, width:'10%',marginLeft:5 },
   commentDateContainer: { flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 3 },
   commentInfoContainer: {
     flexDirection: 'row',

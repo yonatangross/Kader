@@ -17,10 +17,10 @@ const styles = StyleSheet.create({
     margin: 10,
     marginTop: 20,
   },
-  titleAndDescriptionContainer: { flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'space-around', width: '60%' },
+  titleAndDescriptionContainer: { flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'space-around', width: '55%' },
   creatorDetailsContainer: { flexDirection: 'row' },
   creatorImageAndRatingContainer: { flexDirection: 'column', marginRight: 20 },
-  creatorCenterContainer: { flexDirection: 'column', justifyContent: 'center', alignSelf: 'center', marginVertical: 15, width: '50%' },
+  creatorCenterContainer: { flexDirection: 'column', justifyContent: 'center', alignSelf: 'center', marginVertical: 10, width: '60%' },
   commentNumber: {
     marginRight: 10,
     alignSelf: 'flex-end',
@@ -29,24 +29,23 @@ const styles = StyleSheet.create({
 
   profileImageContainer: {
     margin: 15,
-    marginLeft: 30,
+    marginRight:0,
     borderRadius: 100,
     overflow: 'hidden',
     backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 50,
-    width: 50,
+    height: 60,
+    width: 60,
     borderColor: 'black',
     borderWidth: 2,
   },
   profileImage: {
-    height: 50,
-    width: 50,
+    height: 70,
+    width: 70,
     borderRadius: 100,
   },
   categoryContainer: {
-    margin: 15,
     marginRight: 30,
     borderRadius: 100,
     overflow: 'hidden',
@@ -66,24 +65,24 @@ const styles = StyleSheet.create({
   },
   postImageContainer: {
     alignSelf: 'center',
-    marginHorizontal: 15,
+    marginRight: 15,
     shadowOffset: { width: 15, height: 15 },
     shadowColor: 'black',
-    shadowOpacity: 0.8,
+    shadowOpacity: 0.6,
     elevation: 10,
     borderRadius: 15,
     overflow: 'hidden',
     backgroundColor: '#0000',
   },
   postImage: {
-    width: 100,
-    height: 100,
+    width: 150,
+    height: 150,
     borderRadius: 15,
   },
 
   titleText: {
     fontWeight: 'bold',
-    fontSize: 17,
+    fontSize: 16,
     maxWidth: 250,
 
     overflow: 'hidden',
@@ -96,19 +95,19 @@ const styles = StyleSheet.create({
   groupNameTitle: { color: 'grey', fontSize: 13 },
   PostedBy: {
     alignSelf: 'flex-start',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#202020',
   },
-  postTypeAndGroupNameText: { color: '#696969', fontSize: 14, maxWidth: 200 },
+  postTypeAndGroupNameText: { color: '#696969', fontSize: 16, maxWidth: 200 },
   postDate: {
     alignSelf: 'flex-start',
-    fontSize: 10,
+    fontSize: 12,
     color: 'black',
   },
 
   arrowIcon: { height: 24, width: 24 },
-  groupText: { fontSize: 14, fontWeight: 'bold', color: 'black' },
+  groupText: { fontSize: 16, fontWeight: 'bold', color: 'black' },
 });
 
 export default styles;
