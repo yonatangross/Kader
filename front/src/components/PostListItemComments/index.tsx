@@ -6,6 +6,7 @@ import PostCommentItemHolder from '../PostCommentItemHolder';
 import { IComment } from '../../types/IComment';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/core';
+import Colors from '../../constants/Colors';
 
 export interface PostListItemCommentsProps {
   comments: IComment[];
@@ -29,7 +30,7 @@ const PostListItemComments = (props: PostListItemCommentsProps) => {
 
   if (props.comments.length) {
     return (
-      <View>
+      <View >
         <Text style={styles.commentNumber}>{props.comments.length} comments</Text>
         <Divider />
         <FlatList
@@ -38,13 +39,13 @@ const PostListItemComments = (props: PostListItemCommentsProps) => {
           renderItem={renderPostCommentItem}
           keyExtractor={(item) => item.commentId}
           showsVerticalScrollIndicator={false}
-          style={{ backgroundColor: '#dedcdf', paddingBottom: 10 }}
+          style={{ backgroundColor: 'white', paddingBottom: 10 }}
         />
       </View>
     );
   } else
     return (
-      <View style={{}}>
+      <View style={{ paddingBottom: 10, backgroundColor: Colors.light.offColor }}>
         <Text></Text>
       </View>
     );

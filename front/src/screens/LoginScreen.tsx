@@ -97,16 +97,17 @@ const LoginScreen = () => {
                   placeholder="Password"
                   multiline
                   numberOfLines={1}
-                  secureTextEntry={true}
                   value={values.password}
                   onChangeText={(password: string) => {
                     setFieldValue('password', password);
                   }}
                   onBlur={() => setFieldTouched('password')}
                   style={styles.fieldInputText}
+                  secureTextEntry={true}
+                  keyboardType={'default'}
                 />
                 <View style={styles.logoContainer}>
-                  <Image source={require('../assets/images/KaderLogo.png')} style={styles.logoStyle} />
+                  <Image source={require('../assets/images/KaderWhiteLogo.png')} style={styles.logoStyle} />
                 </View>
                 <View style={styles.submitContainer}>
                   <Text style={styles.submitHeader} status="control" category="h4">

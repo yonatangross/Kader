@@ -19,7 +19,6 @@ export default function ProfileScreen() {
   const isFocused = useIsFocused();
   const navigation = useNavigation();
   const [user, setUser] = useState<IUser>();
-  const [loading, isLoading] = useState(false);
 
   let [fontsLoaded] = useFonts({
     Pattaya: require('../assets/fonts/Pattaya/Pattaya-Regular.ttf'),

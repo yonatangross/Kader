@@ -9,6 +9,7 @@ import { useAuth } from '../contexts/Auth';
 import SinglePostComments from '../components/SinglePostComments';
 import SinglePostItem from '../components/SinglePostItem';
 import EditPostModal from '../components/EditPostModal';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export interface SinglePostScreenProps {}
 
@@ -207,6 +208,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     height: '100%',
+    backgroundColor: 'white',
   },
 });
 

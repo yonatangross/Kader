@@ -5,6 +5,7 @@ import { imageBaseUrl } from '../../services/axios';
 import { IComment } from '../../types/IComment';
 import { capitalize } from '../../utils/text';
 import Fonts from '../../constants/Fonts';
+import Colors from '../../constants/Colors';
 
 export interface PostCommentItemProps {
   comment: IComment;
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     borderRadius: 30,
     borderTopLeftRadius: 0,
-    backgroundColor: 'white',
+    backgroundColor: Colors.light.offColor,
     marginLeft: 10,
     marginRight: 5,
   },

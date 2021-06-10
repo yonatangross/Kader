@@ -58,6 +58,8 @@ const UserSettingsScreen = () => {
         .then((response) => {
           if (isMounted) {
             const userResult: IUser = response.data;
+            console.log(userResult);
+
             setUser(userResult);
             setLoading(false);
           }
@@ -113,7 +115,7 @@ const UserSettingsScreen = () => {
                     {!!user.imageUri ? (
                       <Image source={{ uri: imageBaseUrl + user.imageUri }} style={styles.postImage as ImageStyle} />
                     ) : (
-                      <Image source={require('../assets/images/imagePlaceholder.png')} style={styles.postImage as ImageStyle} />
+                      <Image source={require('../assets/images/celebrity.png')} style={styles.postImage as ImageStyle} />
                     )}
                   </View>
                   <Field

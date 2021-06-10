@@ -3,13 +3,16 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    margin: 10,
     paddingBottom: 0,
-    alignItems: 'center',
-    alignSelf: 'flex-end',
     backgroundColor: 'white',
-    borderRadius: 30,
     width: '100%',
+  },
+  contentContainer: {
+    alignSelf: 'flex-end',
+    width: '100%',
+    flexDirection: 'row',
+
+    alignItems: 'center',
   },
   mainContainer: {
     flexDirection: 'row',

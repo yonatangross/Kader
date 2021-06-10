@@ -145,7 +145,7 @@ const SingleGroupScreen = () => {
                     {group.members.length - 7 <= 0 ? (
                       <Text style={styles.extraMembersText}>... </Text>
                     ) : (
-                      <Text style={styles.extraMembersText}>and {group.members.length - 7} more </Text>
+                      <Text style={styles.extraMembersText}>+{group.members.length - 7}</Text>
                     )}
                   </View>
                 </TouchableWithoutFeedback>

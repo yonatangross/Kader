@@ -1,4 +1,5 @@
 import { StyleSheet, ImageStyle } from 'react-native';
+import Colors from '../../constants/Colors';
 import Fonts from '../../constants/Fonts';
 
 const styles = StyleSheet.create({
@@ -8,6 +9,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     width: '100%',
     backgroundColor: 'white',
+    borderBottomColor: Colors.light.offColor,
+    borderBottomWidth: 10,
   },
   headerContainer: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%' },
   dataContainer: { flexDirection: 'row', width: '100%' },
@@ -101,7 +104,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#202020',
   },
-  postTypeAndGroupNameText: { color: '#696969', fontSize: 16, maxWidth: 200 },
+  postTypeAndGroupNameText: { color: '#696969', fontSize: 16, maxWidth: 220 },
   postDate: {
     alignSelf: 'flex-start',
     fontSize: 12,

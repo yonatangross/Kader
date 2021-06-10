@@ -10,11 +10,12 @@ export interface RatingItemProps {
 
 const RatingItem = (props: RatingItemProps) => {
   const { numberOfRatings, rating, showNumberOfRatings } = props;
+  const fixedRating = rating.toFixed(2);
   return (
     <View style={styles.ratingContainer}>
       {showNumberOfRatings && (
         <Text style={styles.ratingNumberText}>
-          {rating}/5 rated: {numberOfRatings} times
+          {fixedRating}/5 rated: {numberOfRatings} times
         </Text>
       )}
       <Rating readonly ratingColor="#f3a953" imageSize={22} startingValue={rating} ratingCount={5} />

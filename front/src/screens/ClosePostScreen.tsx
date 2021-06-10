@@ -38,10 +38,12 @@ const ClosePostScreen = (props: ClosePostScreenProps) => {
           .then((response) => {
             const postResponse: IPost = response.data;
             setPost(postResponse);
+            
             let uniqueMembersResponse: IComment[] = _.uniqBy(postResponse.comments, 'creator.userId');
             uniqueMembersResponse = _.filter(uniqueMembersResponse, (comment) => {
               return post?.creator.userId !== comment.creator.userId;
             });
+            
             setUniqueComments(uniqueMembersResponse);
             setLoading(false);
           })
@@ -53,7 +55,7 @@ const ClosePostScreen = (props: ClosePostScreenProps) => {
     () => {
       isMounted = false;
     };
-  }, [showRating, selectedCommenter, setUniqueComments]);
+  }, [showRating, selectedCommenter, uniqueComments,setUniqueComments]);
 
   const onFinishRating = (rating: number) => {
     if (!!selectedCommenter)

@@ -49,16 +49,14 @@ const UploadImage = (props: UploadImageProps) => {
   };
 
   useEffect(() => {
-    console.log(props.postImage);
-
     return () => {};
-  }, [props.setPostImage]);
+  }, [props.setPostImage, props.postImage]);
 
   return (
     <View style={styles.container}>
       {!!props.postImage ? (
         <View style={styles.postImageContainer}>
-          <Image source={{ uri: imageBaseUrl + props.postImage.uri }} style={styles.postImage as ImageStyle} />
+          <Image source={{ uri: props.postImage.uri }} style={styles.postImage as ImageStyle} />
         </View>
       ) : (
         <View style={styles.postImageContainer}>
