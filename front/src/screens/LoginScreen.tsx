@@ -95,7 +95,6 @@ const LoginScreen = () => {
                   component={CustomInput}
                   name="password"
                   placeholder="Password"
-                  multiline
                   numberOfLines={1}
                   value={values.password}
                   onChangeText={(password: string) => {
@@ -146,6 +145,8 @@ const styles = StyleSheet.create({
     marginTop: 24,
   },
   fieldInputText: { marginHorizontal: 20, marginVertical: 5, backgroundColor: 'white', padding: 10, borderRadius: 15, opacity: 0.8 },
+  fieldInputPassword: { },
+
   submitContainer: {},
   submitHeader: { alignSelf: 'center', marginBottom: 30 },
   submitButton: {},

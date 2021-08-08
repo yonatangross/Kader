@@ -180,7 +180,7 @@ const UpdatedPostDetailsForm = (props: UpdatedPostDetailsFormProps) => {
                     }
                   }}
                   query={{
-                    key: 'AIzaSyDkrbVxjoYBgsnGT2v3QfqYVFzZRsHuwyE',
+                    key: 'AIzaSyB9Q-gb22IQY92mNyZY6XFs0dDfcU7joAY',
                     language: 'iw',
                     components: 'country:il',
                   }}

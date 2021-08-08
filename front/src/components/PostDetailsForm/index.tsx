@@ -155,7 +155,7 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
               <UploadImage postImage={postImage} setPostImage={setPostImage} setFieldValue={setFieldValue} />
               <View style={{ width: '100%', minHeight: 200, maxHeight: 400 }}>
                 <GooglePlacesAutocomplete
-                  placeholder="Choose group primary address"
+                  placeholder="Choose primary address"
                   debounce={200}
                   autoFocus={true}
                   onPress={(data, details = null) => {
@@ -173,7 +173,7 @@ const PostDetailsForm = (props: PostDetailsFormProps) => {
                     }
                   }}
                   query={{
-                    key: 'AIzaSyDkrbVxjoYBgsnGT2v3QfqYVFzZRsHuwyE',
+                    key: 'AIzaSyB9Q-gb22IQY92mNyZY6XFs0dDfcU7joAY',
                     language: 'iw',
                     components: 'country:il',
                   }}

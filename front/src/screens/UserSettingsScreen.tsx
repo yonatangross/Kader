@@ -148,7 +148,6 @@ const UserSettingsScreen = () => {
                     component={CustomInput}
                     name="password"
                     placeholder="Password"
-                    multiline
                     numberOfLines={1}
                     value={values.password}
                     onChangeText={(password: string) => {
@@ -156,12 +155,12 @@ const UserSettingsScreen = () => {
                     }}
                     onBlur={() => setFieldTouched('password')}
                     style={styles.fieldInputText}
+                    secureTextEntry={true}
                   />
                   <Field
                     component={CustomInput}
                     name="passwordConfirmation"
                     placeholder="Enter password again"
-                    multiline
                     numberOfLines={1}
                     value={values.passwordConfirmation}
                     onChangeText={(passwordConfirmation: string) => {
@@ -169,6 +168,7 @@ const UserSettingsScreen = () => {
                     }}
                     onBlur={() => setFieldTouched('passwordConfirmation')}
                     style={styles.fieldInputText}
+                    secureTextEntry={true}
                   />
                   <Field
                     component={CustomInput}

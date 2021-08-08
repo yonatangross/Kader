@@ -11,6 +11,9 @@ import { imageBaseUrl } from '../../services/axios';
 import { useAuth } from '../../contexts/Auth';
 import { ICategory } from '../../types/ICategory';
 import Fonts from '../../constants/Fonts';
+import { IGroup } from '../../types/IGroup';
+import { getGroup } from '../../services/groups';
+import { IUser } from '../../types/IUser';
 
 export interface SinglePostHeaderItemProps {
   post: IPost;
@@ -23,9 +26,17 @@ const SinglePostHeaderItem = (props: SinglePostHeaderItemProps) => {
   const auth = useAuth();
   const [loading, setLoading] = useState<boolean>(true);
   const { post, groupName, groupCategory } = props;
+  const [group, setGroup] = useState<IGroup>();
 
   const onPressGroupName = (groupId: string) => {
-    navigation.navigate('SingleGroup', { id: groupId });
+    if (!!group) {
+      group.members.forEach((user: IUser) => {
+        if (user.userId === auth.authData?.userId) {
+          navigation.navigate('SingleGroup', { id: groupId, name: groupName });
+        }
+      });
+    }
+    navigation.navigate('SingleGroupDetails', { id: groupId, name: groupName });
   };
 
   const onPressUserProfile = (userId: string) => {
@@ -35,7 +46,28 @@ const SinglePostHeaderItem = (props: SinglePostHeaderItemProps) => {
   };
 
   useEffect(() => {
-    setLoading(false);
+    let mounted = true;
+
+    if (!!post && !!post.group && !!post.group.groupId) {
+      getGroup(post.group.groupId)
+        .then((response) => {
+          if (mounted) {
+            const groupResponse: IGroup = response.data;
+
+            setGroup(groupResponse);
+            setLoading(false);
+          }
+        })
+        .catch((error) => {
+          console.log(`error fetching group ${post.group.groupId}, error:`);
+          console.log(error);
+        });
+    } else {
+      console.log(`error fetching route.params`);
+    }
+    () => {
+      mounted = false;
+    };
   }, []);
 
   if (!!post) {
@@ -106,7 +138,7 @@ const styles = StyleSheet.create({
   creatorContainer: { flexDirection: 'column', marginTop: 10, marginLeft: 20 },
   categoryContainer: {
     margin: 10,
-    marginLeft:0,
+    marginLeft: 0,
     marginVertical: 20,
     backgroundColor: '#f2a853',
     borderRadius: 30,
